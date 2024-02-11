@@ -17,7 +17,7 @@ export default function SlideItem({
   className?: string;
 }) {
   return (
-    <CarouselItem className={cn("w-full h-full", className)}>
+    <CarouselItem className={cn("w-full h-full basis-1/5 sm:basis-1/12")}>
       <Link href={href}>
         <Image
           width={width}

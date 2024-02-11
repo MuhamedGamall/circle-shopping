@@ -1,5 +1,5 @@
 import React from "react";
-import SliderAds from "./slider-ads";
+import SliderAds from "./ads-slider/slider-ads";
 import Link from "next/link";
 import Image from "next/image";
 import CategoriesImages from "./image-categories-section/categorias-images";

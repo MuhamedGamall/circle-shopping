@@ -1,5 +1,5 @@
 import React from "react";
-import { CarouselItem } from "./ui/carousel";
+import { CarouselItem } from "../ui/carousel";
 import Link from "next/link";
 import Image from "next/image";
 

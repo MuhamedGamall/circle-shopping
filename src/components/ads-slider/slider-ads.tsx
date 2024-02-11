@@ -17,10 +17,10 @@ export default function SliderAds({
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   return (
     <Carousel
-    plugins={[plugin.current]}
-    className="w-full"
-    onMouseEnter={plugin.current.stop}
-    onMouseLeave={plugin.current.reset}
+      plugins={[plugin.current]}
+      className="w-full"
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
     >
       <div className="relative">
         <CarouselPrevious className="absolute left-2 z-40 bg-white/50" />

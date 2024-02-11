@@ -10,17 +10,9 @@ export default function CategoriesImages({
   return (
     <div className="bg-[#feeaea] p-3">
       <SliderWrapper>
-        {/* <div className=" "> */}
         {images.map((el) => (
-          <SlideItem
-            key={el.image}
-            {...el}
-            height={100}
-            width={100}
-            className="basis-1/5 sm:basis-1/12"
-          />
+          <SlideItem key={el.image} {...el} height={100} width={100} />
         ))}
-        {/* </div> */}
       </SliderWrapper>
     </div>
   );
