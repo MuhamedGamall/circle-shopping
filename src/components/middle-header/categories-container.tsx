@@ -45,7 +45,7 @@ const categories: { title: string; href: string; description: string }[] = [
 export default function CategoriesContainer() {
   return (
     <div className="bg-[#fcfbf4] overflow-x-auto hidden sm:block">
-      <Menubar className="rounded-none bg-transparent mx-auto border-0 py-1 min-w-fit w-full max-w-screen-2xl px-2.5">
+      <Menubar className="rounded-none bg-transparent mx-auto border-0 py-1 min-w-fit w-full xl:max-w-[1890px]  px-2.5">
         <MenubarMenu>
           <MenubarTrigger>
             <Link href={"/bestsellers"}>BESTSELLERS</Link>
