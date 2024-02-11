@@ -1,21 +1,8 @@
 "use client";
 import Link from "next/link";
 import CategoryItem from "./category-item";
-import {
-  Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
+import { MenubarSeparator } from "@radix-ui/react-menubar";
 
 const categories: { title: string; href: string; description: string }[] = [
   {
@@ -57,14 +44,18 @@ const categories: { title: string; href: string; description: string }[] = [
 
 export default function CategoriesContainer() {
   return (
-
-    <Menubar>
-      <MenubarMenu >
+    <div className="bg-[#fcfbf4] overflow-x-auto hidden sm:block">
+      <Menubar className="rounded-none bg-transparent mx-auto border-0 py-1 min-w-fit w-full max-w-screen-2xl px-2.5">
+        <MenubarMenu>
+          <MenubarTrigger>
+            <Link href={"/bestsellers"}>BESTSELLERS</Link>
+          </MenubarTrigger>
+        </MenubarMenu>
+        <MenubarSeparator className="h-full w-[2px] bg-slate-200" />
         {categories.map((el) => (
           <CategoryItem key={el.title} {...el} />
         ))}
-      </MenubarMenu>
-    </Menubar>
-
+      </Menubar>
+    </div>
   );
 }

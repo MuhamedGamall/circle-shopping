@@ -5,6 +5,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import Link from "next/link";
 import { Fragment } from "react";
 
 const categories: { title: string; href: string; description: string }[] = [
@@ -46,12 +47,17 @@ const categories: { title: string; href: string; description: string }[] = [
 ];
 export default function CategoryItem({ title, description }: any) {
   return (
-    <>
-    
-      {categories.map((el) => (
-          <MenubarItem>{el.description}</MenubarItem>
-          ))}
-        
-    </>
+    <MenubarMenu>
+      <MenubarTrigger className="whitespace-nowrap uppercase">
+        {title}
+      </MenubarTrigger>
+      <MenubarContent>
+        {categories.map((el) => (
+          <MenubarItem key={el.title} asChild>
+            <Link href={el.href}>{el.title}</Link>
+          </MenubarItem>
+        ))}
+      </MenubarContent>
+    </MenubarMenu>
   );
 }
