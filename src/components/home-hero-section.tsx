@@ -2,7 +2,7 @@ import React from "react";
 import SliderAds from "./slider-ads";
 import Link from "next/link";
 import Image from "next/image";
-import CategoriesImages from "./image-categories/categorias-images";
+import CategoriesImages from "./image-categories-section/categorias-images";
 const images = [
   {
     image: "/ads-photos/beauty.avif",
