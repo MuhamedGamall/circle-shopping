@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { BiSolidUpArrow } from "react-icons/bi";
 import { truncateText } from "@/utils/truncate-text";
+import AccountMenu from "../account-menu";
 export default function NavLinks() {
   const user = null;
   return (
@@ -36,19 +37,7 @@ export default function NavLinks() {
           </Link>
         </div>
       ) : (
-        <div
-          className={
-            "flex flex-col whitespace-nowrap  px-1 justify-center text-xs font-semibold  "
-          }
-        >
-          <span className="font-[400] text-slate-600 text-right mr-3 text-[12px]">
-            Hala {truncateText("muhamedgamal", 10)}!
-          </span>
-          <span className="flex text-lg items-center   text-secondMain whitespace-nowrap">
-            My account
-            <MoreVertical className="h-5 w-5" />
-          </span>
-        </div>
+        <AccountMenu />
       )}
       <div className="">
         <Link

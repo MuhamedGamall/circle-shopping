@@ -1,12 +1,10 @@
 import {
-  Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import Link from "next/link";
-import { Fragment } from "react";
 
 const categories: { title: string; href: string; description: string }[] = [
   {
@@ -51,7 +49,7 @@ export default function CategoryItem({ title, description }: any) {
       <MenubarTrigger className="whitespace-nowrap uppercase font-bold">
         {title}
       </MenubarTrigger>
-      <MenubarContent>
+      <MenubarContent className="rounded-none">
         {categories.map((el) => (
           <MenubarItem key={el.title} asChild>
             <Link href={el.href}>{el.title}</Link>
