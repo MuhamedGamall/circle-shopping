@@ -9,7 +9,7 @@ import { BsMenuButtonFill } from "react-icons/bs";
 export default function Sidebar() {
   const pathName = usePathname();
   return (
-    <div className="flex flex-col p-8 sticky left-0 top-0 h-screen w-[280px] bg-white">
+    <div className="hidden sm:flex flex-col p-8 sticky left-0 top-0 h-screen w-[280px] bg-white">
       <div className="flex flex-col border-b pb-5 mb-5 h-fit">
         <h3 className=" font-bold text-[16x]  text-secondMain whitespace-nowrap">
           Hala {"muhamedgamal"}!

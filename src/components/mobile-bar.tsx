@@ -1,6 +1,7 @@
 import { Home, LogIn, Shirt, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import AccountMenu from "./account-menu";
 
 export default function MoblieBar() {
   const user = null;
@@ -25,7 +26,7 @@ export default function MoblieBar() {
         <Shirt className={"h-5 w-5 "} color="green" />
         Fashion
       </Link>
-      {!user ? (
+      {user ? (
         <div className="flex items-center gap-7">
           <Link
             href="/sign-in"
@@ -47,15 +48,7 @@ export default function MoblieBar() {
           </Link>
         </div>
       ) : (
-        <Link
-          href="/account"
-          className={
-            "flex flex-col gap-1 text-secondMain whitespace-nowrap justify-center items-center text-xs font-semibold transition-all hover:opacity-[.6] "
-          }
-        >
-          <User className={"h-5 w-5 "} />
-          My account
-        </Link>
+        <AccountMenu />
       )}
       <Link
         href="/cart"

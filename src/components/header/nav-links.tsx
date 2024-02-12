@@ -37,7 +37,10 @@ export default function NavLinks() {
           </Link>
         </div>
       ) : (
+        <div className="sm:block hidden">
+
         <AccountMenu />
+        </div>
       )}
       <div className="">
         <Link

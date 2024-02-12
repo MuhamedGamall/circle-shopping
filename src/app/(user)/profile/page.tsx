@@ -33,7 +33,7 @@ export default function ProfilePage() {
 console.log(isValid);
 
   return (
-    <section className="bg-white p-8 mt-10">
+    <section className="bg-white p-8 my-10">
       <SectionTitle title="Profile info" className="mb-5" />
       <Form {...form}>
         <form
