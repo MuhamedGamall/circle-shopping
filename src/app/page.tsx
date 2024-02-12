@@ -23,26 +23,27 @@ export default function Home() {
     <main>
       <MaxWidthWrapper>
         <HeroSection />
-        <ProductsContainer />
-        <SliderAds
-          images={images}
-          className="w-full h-full sm:h-[200px] object-cover sm:aspect-auto aspect-[12/4]"
-        />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        <ShowCategories />
-        
+        <section>
+          <ProductsContainer />
+          <SliderAds
+            images={images}
+            className="w-full h-full sm:h-[200px] object-cover sm:aspect-auto aspect-[12/4]"
+          />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+          <ShowCategories />
+        </section>
       </MaxWidthWrapper>
     </main>
   );

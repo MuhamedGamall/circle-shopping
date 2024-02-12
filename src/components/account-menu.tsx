@@ -31,7 +31,7 @@ export default function AccountMenu() {
           </div>
         </MenubarTrigger>
         <MenubarContent className="rounded-none">
-          <MenubarItem>
+          <MenubarItem asChild>
             <Link
               href={"/orders"}
               className="flex items-center text-[18px]  gap-3 text-slate-700"
@@ -42,7 +42,7 @@ export default function AccountMenu() {
               Orders
             </Link>
           </MenubarItem>
-          <MenubarItem>
+          <MenubarItem asChild>
             <Link
               href={"/profile"}
               className="flex items-center text-[18px] gap-3 text-slate-700  "
@@ -54,8 +54,10 @@ export default function AccountMenu() {
             </Link>
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem className="flex items-center text-slate-700 justify-center text-[18px] ">
+          <MenubarItem asChild className="flex items-center text-slate-700 justify-center text-[18px] ">
+            <div>
             Sign out
+            </div>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
