@@ -8,7 +8,7 @@ export default function CategoriesImages({
   images: { image: string; href: string }[];
 }) {
   return (
-    <div className="bg-[#feeaea] p-3">
+    <div className="bg-[#feeaea] py-4 px-2">
       <SliderWrapper>
         {images.map((el) => (
           <SlideItem key={el.image} {...el} height={100} width={100} />

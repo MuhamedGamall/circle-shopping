@@ -6,12 +6,14 @@ import Image from "next/image";
 export default function SliderItem({
   image,
   href,
+  className
 }: {
   image: string;
   href: string;
+  className?:string
 }) {
   return (
-    <CarouselItem className="w-fit h-fit">
+    <CarouselItem>
       <Link href={href}>
         <Image
           width={200}
@@ -19,7 +21,7 @@ export default function SliderItem({
           objectFit="cover"
           src={image}
           alt=""
-          className="w-fit h-full object-cover sm:aspect-auto aspect-[23/8]"
+          className={className}
         />
       </Link>
     </CarouselItem>

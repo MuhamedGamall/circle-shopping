@@ -48,7 +48,7 @@ const categories: { title: string; href: string; description: string }[] = [
 export default function CategoryItem({ title, description }: any) {
   return (
     <MenubarMenu>
-      <MenubarTrigger className="whitespace-nowrap uppercase">
+      <MenubarTrigger className="whitespace-nowrap uppercase font-bold">
         {title}
       </MenubarTrigger>
       <MenubarContent>

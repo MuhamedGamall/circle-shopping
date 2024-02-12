@@ -7,13 +7,11 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-
 import SliderItem from "./slider-ads-item";
-export default function SliderAds({
-  images,
-}: {
-  images: { image: string; href: string }[];
-}) {
+
+
+
+export default function SliderAds({ className,images }: { className?: string,images:{image:string,href:string}[] }) {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   return (
     <Carousel
@@ -23,13 +21,13 @@ export default function SliderAds({
       onMouseLeave={plugin.current.reset}
     >
       <div className="relative">
-        <CarouselPrevious className="absolute left-2 z-40 bg-white/50" />
+        <CarouselPrevious className="absolute left-2 z-40 bg-white/80" />
         <CarouselContent>
-          {images.map((el) => (
-            <SliderItem key={el.image} {...el} />
+          {images?.map((el) => (
+            <SliderItem key={el.image} {...el} className={className} />
           ))}
         </CarouselContent>
-        <CarouselNext className="absolute right-2 z-40 bg-white/50" />
+        <CarouselNext className="absolute right-2 z-40 bg-white/80" />
       </div>
     </Carousel>
   );

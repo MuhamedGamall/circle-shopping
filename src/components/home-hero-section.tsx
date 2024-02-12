@@ -16,18 +16,6 @@ const images = [
     image: "/ads-photos/home-kitchen.avif",
     href: "/",
   },
-  {
-    image: "/ads-photos/home-kitchen.avif",
-    href: "/",
-  },
-  {
-    image: "/ads-photos/home-kitchen2.avif",
-    href: "/",
-  },
-  {
-    image: "/ads-photos/valantine.avif",
-    href: "/",
-  },
 ];
 const categorisImages = [
   {
@@ -116,7 +104,10 @@ export default function HeroSection() {
     <div>
       <div className="flex items-center gap-[1px] h-full">
         <div className="flex-[3.5]">
-          <SliderAds images={images} />
+          <SliderAds
+            images={images}
+            className="w-fit h-full object-cover sm:aspect-auto aspect-[23/8]"
+          />
         </div>
         <div className="hidden sm:flex items-center flex-[1.5] ">
           <Link href={"/fashion-women"} className="flex-1">

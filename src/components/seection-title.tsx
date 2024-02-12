@@ -11,7 +11,7 @@ export default function SectionTitle({
   return (
     <h2
       className={cn(
-        "text-[24px] whitespace-nowrap font-bold text-secondMain my-6",
+        "text-[20px] sm:text-[24px] whitespace-nowrap font-bold text-secondMain",
         className
       )}
     >

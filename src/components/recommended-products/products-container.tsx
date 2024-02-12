@@ -119,8 +119,8 @@ const products = [
 ];
 export default function ProductsContainer() {
   return (
-    <div className="bg-slate-100 p-3">
-      <SectionTitle title="Recommended for you" />
+    <div className="bg-slate-100 pb-3 px-4">
+      <SectionTitle title="Recommended for you" className=" pb-6 pt-2" />
       <SliderWrapper>
         {products.map((el) => (
           <ProductCard key={el.image} {...el} height={200} width={200} />

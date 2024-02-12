@@ -22,9 +22,9 @@ export function SliderWrapper({
       }}
     >
       <div className="relative">
-        <CarouselPrevious className="absolute left-2 z-40 bg-white/50" />
+        <CarouselPrevious className="absolute left-2 z-40 bg-white/80" />
         <CarouselContent className={className}>{children}</CarouselContent>
-        <CarouselNext className="absolute right-2 z-40 bg-white/50" />
+        <CarouselNext className="absolute right-2 z-40 bg-white/80" />
       </div>
     </Carousel>
   );

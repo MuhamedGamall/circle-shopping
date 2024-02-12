@@ -1,0 +1,148 @@
+
+
+
+
+
+details for build crm project
+
+├── E-commerce Website
+│   ├── User (Buyer)
+│   │   ├── Home Page
+│   │   │   ├── Featured Products  = ok
+│   │   │   └── Login/Logout
+│   │   ├── Search Page
+│   │   │   ├── Search Box
+│   │   │   └── Search Results
+│   │   ├── Product Page
+│   │   │   ├── Product Details 
+│   │   │   ├── Add to Cart Button = ok
+│   │   │   └── Ratings and Reviews = ok
+│   │   ├── Cart Page
+│   │   │   ├── Cart Item List
+│   │   │   └── Payment Options
+│   │   ├── Checkout Page
+│   │   │   ├── Order Summary
+│   │   │   ├── Shipping Details
+│   │   │   └── Payment Methods
+│   │   └── User Profile Page
+│   │       ├── Profile Information
+│   │       ├── Past Orders
+│   │       └── Change Password
+│   │
+│   ├── Seller
+│   │   ├── Dashboard
+│   │   │   ├── Sales Statistics
+│   │   │   ├── Product Management
+│   │   │   │   ├── Add New Product
+│   │   │   │   ├── Edit Existing Products
+│   │   │   │   └── Delete Products
+│   │   │   ├── Order Management
+│   │   │   │   ├── Incoming Orders List
+│   │   │   │   └── Order Details
+│   │   │   ├── Offers and Discounts
+│   │   │   └── Support and Service
+│   │   │
+│   │   └── Add Product Page
+│   │       ├── Add Product Form
+│   │       └── Upload Images
+│   │
+│   └── Admin
+│       ├── Admin Dashboard
+│       │   ├── User Monitoring
+│       │   │   ├── User List
+│       │   │   ├── Edit User Information
+│       │   │   └── Delete User Accounts
+│       │   ├── Data Management
+│       │   │   ├── Product List
+│       │   │   ├── Order List
+│       │   │   └── Seller List
+│       │   ├── System Settings
+│       │   │   ├── Email Settings
+│       │   │   ├── Currency Settings
+│       │   │   └── Security Settings
+│       │   ├── Complaints and Reports Management
+│       │   └── Reports and Analytics
+│       │       ├── Sales Report
+│       │       ├── Customer Report
+│       │       └── Site Analytics
+│       │
+│       └── Seller Management Page
+│           ├── Seller List
+│           ├── Edit Seller Information
+│           └── Ban/Unban Seller Accounts
+│
+└── Database
+
+
+
+
+details for build crm project
+
+├── موقع التجارة الإلكترونية
+│   ├── المستخدم (المشتري)
+│   │   ├── صفحة الرئيسية
+│   │   │   ├── عرض المنتجات الشائعة
+│   │   │   └── تسجيل الدخول / الخروج
+│   │   ├── صفحة البحث
+│   │   │   ├── مربع البحث
+│   │   │   └── نتائج البحث
+│   │   ├── صفحة المنتج
+│   │   │   ├── تفاصيل المنتج
+│   │   │   ├── زر الإضافة إلى العربة
+│   │   │   └── التقييمات والتعليقات
+│   │   ├── صفحة العربة
+│   │   │   ├── قائمة بالمنتجات في العربة
+│   │   │   └── خيارات الدفع
+│   │   ├── صفحة الطلب والدفع
+│   │   │   ├── ملخص الطلب
+│   │   │   ├── تفاصيل الشحن
+│   │   │   └── طرق الدفع
+│   │   └── صفحة الحساب الشخصي
+│   │       ├── معلومات الملف الشخصي
+│   │       ├── الطلبات السابقة
+│   │       └── تغيير كلمة المرور
+│   │
+│   ├── البائع
+│   │   ├── لوحة التحكم
+│   │   │   ├── إحصائيات المبيعات
+│   │   │   ├── إدارة المنتجات
+│   │   │   │   ├── إضافة منتج جديد
+│   │   │   │   ├── تحرير المنتجات الحالية
+│   │   │   │   └── حذف المنتجات
+│   │   │   ├── إدارة الطلبات
+│   │   │   │   ├── قائمة الطلبات الواردة
+│   │   │   │   └── تفاصيل الطلبات
+│   │   │   ├── تقديم العروض والخصومات
+│   │   │   └── تقديم الدعم والخدمة
+│   │   │
+│   │   └── صفحة إضافة المنتج
+│   │       ├── نموذج إضافة منتج
+│   │       └── تحميل الصور
+│   │
+│   └── المسؤول
+│       ├── لوحة التحكم الإدارية
+│       │   ├── مراقبة المستخدمين
+│       │   │   ├── قائمة المستخدمين
+│       │   │   ├── تحرير معلومات المستخدمين
+│       │   │   └── حذف حسابات المستخدمين
+│       │   ├── إدارة البيانات
+│       │   │   ├── قائمة المنتجات
+│       │   │   ├── قائمة الطلبات
+│       │   │   └── قائمة البائعين
+│       │   ├── إعدادات النظام
+│       │   │   ├── إعدادات البريد الإلكتروني
+│       │   │   ├── إعدادات العملة
+│       │   │   └── إعدادات الأمان
+│       │   ├── إدارة الشكاوى والتقارير
+│       │   └── تقارير وإحصائيات
+│       │       ├── تقرير المبيعات
+│       │       ├── تقرير العملاء
+│       │       └── إحصائيات الموقع
+│       │
+│       └── صفحة إدارة البائعين
+│           ├── قائمة البائعين
+│           ├── تحرير معلومات البائعين
+│           └── حظر / إلغاء حظر حسابات البائعين
+│
+└── قاعدة البيانات
+

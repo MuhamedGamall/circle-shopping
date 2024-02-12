@@ -25,7 +25,9 @@ export default function ProductCard({
 }) {
   return (
     <CarouselItem
-      className={cn("w-full h-full basis-1/5 sm:basis-1/6 min-w-[230px]")}
+      className={cn(
+        "w-full  min-w-[210px] max-w-[230px] h-full basis-1/5 sm:basis-1/6 "
+      )}
     >
       <div className="bg-white rounded-md p-2 border flex flex-col gap-2 justify-center">
         <Link href={href} className=" p-3 rounded-md bg-slate-100/50 relative">
