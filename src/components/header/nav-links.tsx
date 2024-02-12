@@ -2,12 +2,21 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "../ui/button";
-import { Heart, LogIn, LogOut, ShoppingCart, User } from "lucide-react";
+import {
+  Heart,
+  LogIn,
+  LogOut,
+  MoreVertical,
+  ShoppingCart,
+  User,
+} from "lucide-react";
+import { BiSolidUpArrow } from "react-icons/bi";
+import { truncateText } from "@/utils/truncate-text";
 export default function NavLinks() {
   const user = null;
   return (
     <nav className="flex gap-2 items-center mx-4">
-      {!user && (
+      {user ? (
         <div className="hidden sm:flex gap-2 items-center">
           <Link
             href="/sign-in"
@@ -25,6 +34,20 @@ export default function NavLinks() {
           >
             Sign up <LogIn className={"h-4 w-4 "} />
           </Link>
+        </div>
+      ) : (
+        <div
+          className={
+            "flex flex-col whitespace-nowrap  px-1 justify-center text-xs font-semibold  "
+          }
+        >
+          <span className="font-[400] text-slate-600 text-right mr-3 text-[12px]">
+            Hala {truncateText("muhamedgamal", 10)}!
+          </span>
+          <span className="flex text-lg items-center   text-secondMain whitespace-nowrap">
+            My account
+            <MoreVertical className="h-5 w-5" />
+          </span>
         </div>
       )}
       <div className="">

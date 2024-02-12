@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SectionTitle from "../seection-title";
+import SectionTitle from "../section-title";
 import { SliderWrapper } from "../wrappers/slider-wrapper";
 import CategoryCard from "./category-card";
 import { cn } from "@/lib/utils";
