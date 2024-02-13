@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useState, SetStateAction, Dispatch } from "react";
 
 const countries = [
   "Afghanistan",
@@ -318,10 +318,16 @@ const countries = [
   "Scandinavian Mountains",
 ];
 
-export default function SelectCountry({ form }: { form: any }) {
+export default function SelectCountry({
+  form,
+  setCountry,
+  country,
+}: {
+  form: any;
+  setCountry: Dispatch<SetStateAction<string>>;
+  country: string;
+}) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -331,33 +337,33 @@ export default function SelectCountry({ form }: { form: any }) {
           aria-expanded={open}
           className="w-full justify-between  rounded-sm py-5"
         >
-          {value ? value : "Select country..."}
+          {!!country ? country : "Select country..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
-          <CommandEmpty>No framework found.</CommandEmpty>
+          <CommandInput placeholder="Search country..." />
+          <CommandEmpty>No country found.</CommandEmpty>
           <CommandGroup className=" overflow-y-auto">
             <div className="max-h-[300px]">
-              {countries.map((country, i) => (
+              {countries.map((el, i) => (
                 <CommandItem
                   key={i}
-                  value={country}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    form.setValue("country", value);
+                  value={el}
+                  onSelect={() => {
+                    setCountry(el);
+                    form.setValue("country", el);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === country ? "opacity-100" : "opacity-0"
+                      country === el ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {country}
+                  {el}
                 </CommandItem>
               ))}
             </div>

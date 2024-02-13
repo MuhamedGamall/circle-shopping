@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { LogOut, LucideUserCog, ShieldCheck } from "lucide-react";
+import {LucideUserCog, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHeartCircle } from "react-icons/bi";

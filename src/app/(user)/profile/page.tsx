@@ -4,20 +4,29 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { Form, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { profileSchema } from "./schima";
 import CustomField from "@/components/custom-field";
 import SectionTitle from "@/components/section-title";
 import SelectCountry from "./_components/select-country";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
+  const [country, setCountry] = useState("");
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       first_name: "",
       last_name: "",
-      email: "",
+      email: "lol@gmail.com",
       phone: "",
       street_address: "",
       city: "",
@@ -26,11 +35,15 @@ export default function ProfilePage() {
     },
   });
 
-  const onSubmit = () => {
-    console.log(form.getValues("country"));
+  const { isSubmitting, isSubmitted } = form.formState;
+  const isValid = !Object.values(form.getValues()).every(Boolean);
+
+  const onSubmit = (v: any) => {
+    console.log(v);
   };
-  const { isSubmitting, isSubmitted, isValid } = form.formState;
-console.log(isValid);
+  // useEffect(() => {
+  //   console.log(lol);
+  // }, [lol]);
 
   return (
     <section className="bg-white p-8 my-10">
@@ -48,35 +61,35 @@ console.log(isValid);
               disabled
               name={"email"}
               type={"email"}
-              className={"rounded-sm py-5"}
+              className={"rounded-sm py-5 cursor-not-allowed"}
               placeholder={"example@gmail.com"}
             />
             <CustomField
-              label="First Name"
+              label="First Name *"
               labelClassName={"text-slate-700"}
               form={form}
               disabled={isSubmitting}
               name="first_name"
               type={"text"}
-              minLength={1}
+              minLength={3}
               maxLength={30}
               className={"rounded-sm py-5"}
               placeholder="first name"
             />
             <CustomField
-              label="Last Name"
+              label="Last Name *"
               labelClassName={"text-slate-700"}
               form={form}
               disabled={isSubmitting}
               name="last_name"
               type={"text"}
-              minLength={1}
+              minLength={3}
               maxLength={30}
               className={"rounded-sm py-5"}
               placeholder="last name"
             />
             <CustomField
-              label="Phone number"
+              label="Phone number *"
               labelClassName={"text-slate-700"}
               form={form}
               disabled={isSubmitting}
@@ -89,22 +102,50 @@ console.log(isValid);
             />
             <div className="flex flex-col gap-1">
               <div className="flex flex-col gap-4">
-                <FormLabel className={"text-slate-700"}>Country</FormLabel>
-                <SelectCountry form={form} />
+                <FormLabel className={"text-slate-700"}>Country *</FormLabel>
+                <SelectCountry
+                  form={form}
+                  setCountry={setCountry}
+                  country={country}
+                />
               </div>
               {isSubmitted && !form.getValues("country") && (
                 <span className="text-red-700 text-sm font-semibold">
-                  Field is required.
+                  Invalid Field.
                 </span>
               )}
             </div>
             <CustomField
-              label="Postal code"
+              label="City *"
+              labelClassName={"text-slate-700"}
+              form={form}
+              disabled={isSubmitting}
+              name="city"
+              type={"text"}
+              minLength={2}
+              maxLength={48}
+              className={"rounded-sm py-5"}
+              placeholder="City"
+            />
+            <CustomField
+              label="Street address *"
+              labelClassName={"text-slate-700"}
+              form={form}
+              disabled={isSubmitting}
+              name="street_address"
+              type={"text"}
+              minLength={5}
+              maxLength={191}
+              className={"rounded-sm py-5"}
+              placeholder="Street address"
+            />
+            <CustomField
+              label="Postal code *"
               labelClassName={"text-slate-700"}
               form={form}
               disabled={isSubmitting}
               name="postal_code"
-              type={"string"}
+              type={"text"}
               minLength={4}
               maxLength={6}
               className={"rounded-sm py-5"}
@@ -114,7 +155,7 @@ console.log(isValid);
           <Button
             type="submit"
             className="w-fit rounded-sm"
-            disabled={isSubmitting }
+            disabled={isSubmitting || isValid}
           >
             UPDATE PROFILE
           </Button>
