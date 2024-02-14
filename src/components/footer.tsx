@@ -7,8 +7,8 @@ export default function Footer() {
   return (
     <MaxWidthWrapper>
       <footer className=" border-t my-10">
-        <div className=" flex justify-center flex-col items-center bg-white   ">
-          <div className="bg-slate-100  flex sm:flex-row flex-col gap-20 items-center  justify-between p-7 w-full">
+        <div className=" flex justify-center flex-col items-center   ">
+          <div className="bg-slate-100  flex sm:flex-row flex-col gap-20 items-center  justify-between p-7 w-full border-b">
             <div className="sm:text-left text-center">
               <h6 className="text-[20px] font-bold text-slate-800">
                 We&#39;re Always Here To Help
@@ -33,7 +33,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className=" mb-3 mt-2 flex gap-2 items-center justify-center">
+          <div className=" mb-3 mt-5 flex gap-2 items-center justify-center ">
             <h5 className="text-[15px] ">Social media</h5>
             <ul className="flex items-center gap-2 text-[27px] hover:[&>li]:text-slate-600 [&>li]:cursor-pointer">
               <li>
