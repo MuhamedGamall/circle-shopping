@@ -29,7 +29,7 @@ export default function MoblieBar() {
       {user ? (
         <div className="flex items-center gap-7">
           <Link
-            href="/sign-in"
+            href="/login"
             className={
               "flex flex-col gap-1 text-secondMain whitespace-nowrap justify-center items-center text-xs font-semibold transition-all hover:opacity-[.6]  "
             }
@@ -38,7 +38,7 @@ export default function MoblieBar() {
             Log in
           </Link>
           <Link
-            href="/sign-up"
+            href="/create-account"
             className={
               "flex flex-col gap-1 text-secondMain whitespace-nowrap justify-center items-center text-xs font-semibold transition-all hover:opacity-[.6]  "
             }
