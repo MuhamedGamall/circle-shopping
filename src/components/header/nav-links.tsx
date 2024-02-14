@@ -1,23 +1,12 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import { buttonVariants } from "../ui/button";
-import {
-  Heart,
-  LogIn,
-  LogOut,
-  MoreVertical,
-  ShoppingCart,
-  User,
-} from "lucide-react";
-import { BiSolidUpArrow } from "react-icons/bi";
-import { truncateText } from "@/utils/truncate-text";
+import { Heart, LogIn, ShoppingCart, User } from "lucide-react";
 import AccountMenu from "../account-menu";
 export default function NavLinks() {
   const user = null;
   return (
     <nav className="flex gap-2 items-center mx-4">
-      {user ? (
+      {!user ? (
         <div className="hidden sm:flex gap-2 items-center">
           <Link
             href="/login"
@@ -38,8 +27,7 @@ export default function NavLinks() {
         </div>
       ) : (
         <div className="sm:block hidden">
-
-        <AccountMenu />
+          <AccountMenu />
         </div>
       )}
       <div className="">

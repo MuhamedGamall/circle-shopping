@@ -1,23 +1,17 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { profileSchema } from "./schima";
 import CustomField from "@/components/custom-field";
 import SectionTitle from "@/components/section-title";
+import { Button } from "@/components/ui/button";
+import { Form, FormLabel } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import Sidebar from "../_components/sidebar";
 import SelectCountry from "./_components/select-country";
-import { useEffect, useState } from "react";
+import { profileSchema } from "./schima";
 
 export default function ProfilePage() {
   const [country, setCountry] = useState("");
@@ -41,126 +35,130 @@ export default function ProfilePage() {
   const onSubmit = (v: any) => {
     console.log(v);
   };
-  // useEffect(() => {
-  //   console.log(lol);
-  // }, [lol]);
 
   return (
-    <section className="bg-white p-8 my-10">
-      <SectionTitle title="Profile info" className="mb-5" />
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 mt-4 w-full flex flex-col"
-        >
-          <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
-            <CustomField
-              label="Email"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled
-              name={"email"}
-              type={"email"}
-              className={"rounded-sm py-5 cursor-not-allowed"}
-              placeholder={"example@gmail.com"}
-            />
-            <CustomField
-              label="First Name *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="first_name"
-              type={"text"}
-              minLength={3}
-              maxLength={30}
-              className={"rounded-sm py-5"}
-              placeholder="first name"
-            />
-            <CustomField
-              label="Last Name *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="last_name"
-              type={"text"}
-              minLength={3}
-              maxLength={30}
-              className={"rounded-sm py-5"}
-              placeholder="last name"
-            />
-            <CustomField
-              label="Phone number *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="phone"
-              type={"tel"}
-              minLength={10}
-              maxLength={20}
-              className={"rounded-sm py-5"}
-              placeholder="Mobile number"
-            />
-            <div className="flex flex-col gap-1">
-              <div className="flex flex-col gap-4">
-                <FormLabel className={"text-slate-700"}>Country *</FormLabel>
-                <SelectCountry
+    <div className="bg-slate-100 flex w-full border-t">
+      <Sidebar />
+      <div className="mx-8 w-full">
+        <section className="bg-white p-8 my-10">
+          <SectionTitle title="Profile info" className="mb-5" />
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 mt-4 w-full flex flex-col"
+            >
+              <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
+                <CustomField
+                  label="Email"
+                  labelClassName={"text-slate-700"}
                   form={form}
-                  setCountry={setCountry}
-                  country={country}
+                  disabled
+                  name={"email"}
+                  type={"email"}
+                  className={"rounded-sm py-5 cursor-not-allowed"}
+                  placeholder={"example@gmail.com"}
+                />
+                <CustomField
+                  label="First Name *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="first_name"
+                  type={"text"}
+                  minLength={3}
+                  maxLength={30}
+                  className={"rounded-sm py-5"}
+                  placeholder="first name"
+                />
+                <CustomField
+                  label="Last Name *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="last_name"
+                  type={"text"}
+                  minLength={3}
+                  maxLength={30}
+                  className={"rounded-sm py-5"}
+                  placeholder="last name"
+                />
+                <CustomField
+                  label="Phone number *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="phone"
+                  type={"tel"}
+                  minLength={10}
+                  maxLength={20}
+                  className={"rounded-sm py-5"}
+                  placeholder="Mobile number"
+                />
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-4">
+                    <FormLabel className={"text-slate-700"}>
+                      Country *
+                    </FormLabel>
+                    <SelectCountry
+                      form={form}
+                      setCountry={setCountry}
+                      country={country}
+                    />
+                  </div>
+                  {isSubmitted && !form.getValues("country") && (
+                    <span className="text-red-700 text-sm font-semibold">
+                      Invalid Field.
+                    </span>
+                  )}
+                </div>
+                <CustomField
+                  label="City *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="city"
+                  type={"text"}
+                  minLength={2}
+                  maxLength={48}
+                  className={"rounded-sm py-5"}
+                  placeholder="City"
+                />
+                <CustomField
+                  label="Street address *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="street_address"
+                  type={"text"}
+                  minLength={5}
+                  maxLength={191}
+                  className={"rounded-sm py-5"}
+                  placeholder="Street address"
+                />
+                <CustomField
+                  label="Postal code *"
+                  labelClassName={"text-slate-700"}
+                  form={form}
+                  disabled={isSubmitting}
+                  name="postal_code"
+                  type={"text"}
+                  minLength={4}
+                  maxLength={6}
+                  className={"rounded-sm py-5"}
+                  placeholder="Postal code"
                 />
               </div>
-              {isSubmitted && !form.getValues("country") && (
-                <span className="text-red-700 text-sm font-semibold">
-                  Invalid Field.
-                </span>
-              )}
-            </div>
-            <CustomField
-              label="City *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="city"
-              type={"text"}
-              minLength={2}
-              maxLength={48}
-              className={"rounded-sm py-5"}
-              placeholder="City"
-            />
-            <CustomField
-              label="Street address *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="street_address"
-              type={"text"}
-              minLength={5}
-              maxLength={191}
-              className={"rounded-sm py-5"}
-              placeholder="Street address"
-            />
-            <CustomField
-              label="Postal code *"
-              labelClassName={"text-slate-700"}
-              form={form}
-              disabled={isSubmitting}
-              name="postal_code"
-              type={"text"}
-              minLength={4}
-              maxLength={6}
-              className={"rounded-sm py-5"}
-              placeholder="Postal code"
-            />
-          </div>
-          <Button
-            type="submit"
-            className="w-fit rounded-sm"
-            disabled={isSubmitting || isValid}
-          >
-            UPDATE PROFILE
-          </Button>
-        </form>
-      </Form>
-    </section>
+              <Button
+                type="submit"
+                className="w-fit rounded-sm"
+                disabled={isSubmitting || isValid}
+              >
+                UPDATE PROFILE
+              </Button>
+            </form>
+          </Form>
+        </section>
+      </div>
+    </div>
   );
 }

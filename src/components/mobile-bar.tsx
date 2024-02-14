@@ -26,7 +26,7 @@ export default function MoblieBar() {
         <Shirt className={"h-5 w-5 "} color="green" />
         Fashion
       </Link>
-      {user ? (
+      {!user ? (
         <div className="flex items-center gap-7">
           <Link
             href="/login"
