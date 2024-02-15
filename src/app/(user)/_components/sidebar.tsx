@@ -1,6 +1,8 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {LucideUserCog, ShieldCheck } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHeartCircle } from "react-icons/bi";
@@ -81,7 +83,7 @@ export default function Sidebar() {
         </Link>
       </div>
       <div className="">
-        <span className={cn(" text-slate-500 ")}>Sign out</span>
+        <Button variant={'ghost'} size={'sm'} className={cn(" text-slate-500 ")} onClick={()=>signOut()}>Sign out</Button>
       </div>
     </div>
   );

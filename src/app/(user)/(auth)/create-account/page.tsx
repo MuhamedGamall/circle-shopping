@@ -1,20 +1,50 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
-import Link from "next/link";
-import { BsGoogle } from "react-icons/bs";
+import { Button } from '@/components/ui/button';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import MaxWidthWrapper from '@/components/wrappers/max-width-wrapper';
+import { toaster } from '@/lib/toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
+import AccountForm from '../_components/account-form';
+import { formSchema } from '../schema';
+
+"use client";
 export default function CreateAccountPage() {
+  const [isError, setIsError] = useState<boolean>(false);
+  const router = useRouter();
+  const session = useSession();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { isValid } = form.formState;
+
+  async function onSubmit(values: { password: string; email: string }) {
+    try {
+      setIsError(false);
+      await axios.post("/api/create-account", values);
+      router.replace("/log-in");
+      toaster.success("Account created successfully");
+    } catch (error: any) {
+      if (error.response.status !== 409)
+        toaster.error("Uh oh! Something went wrong try again");
+      error.response.status === 409 ? setIsError(true) : setIsError(false);
+    }
+  }
+
+
+
   return (
     <MaxWidthWrapper>
       <section className="max-w-[800px] mx-auto my-10 px-5 ">
@@ -25,41 +55,23 @@ export default function CreateAccountPage() {
               Enter your email below to create your account
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="w-full">
-              <Button variant="outline" className="w-full">
-                <BsGoogle className="mr-2 h-4 w-4" />
-                Google
+
+          <AccountForm onSubmit={onSubmit} form={form}>
+            <CardFooter className="flex flex-col items-start mt-5  gap-2">
+              <span className="text-[14px] text-red-400">
+                {isError && "This account already exists."}
+              </span>
+              <span className="flex gap-1 items-center text-sm text-slate-700">
+                Already have an account?&nbsp;
+                <Link href={"/log-in"} className="underline font-bold">
+                  Log in
+                </Link>
+              </span>
+              <Button className="w-full" type="submit" disabled={!isValid}>
+                Create account
               </Button>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="m@example.com" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col items-start mt-5 gap-2">
-            <span className="flex gap-1 items-center text-sm text-slate-700">
-              Already have an account?&nbsp;
-              <Link href={"/login"} className="underline font-bold">
-                Log in
-              </Link>
-            </span>
-            <Button className="w-full">Create account</Button>
-          </CardFooter>
+            </CardFooter>
+          </AccountForm>
         </Card>
       </section>
     </MaxWidthWrapper>

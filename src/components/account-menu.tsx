@@ -5,12 +5,14 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from "@/components/ui/menubar";
-import { LogOut, MoreVertical } from "lucide-react";
-import Link from "next/link";
-import { FaRegUserCircle } from "react-icons/fa";
-import { BsMenuButtonWideFill } from "react-icons/bs";
-import { truncateText } from "@/utils/truncate-text";
+} from '@/components/ui/menubar';
+import { truncateText } from '@/utils/truncate-text';
+import { MoreVertical } from 'lucide-react';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { BsMenuButtonWideFill } from 'react-icons/bs';
+import { FaRegUserCircle } from 'react-icons/fa';
+
 export default function AccountMenu() {
   return (
     <Menubar className="bg-transparent border-none">
@@ -54,10 +56,12 @@ export default function AccountMenu() {
             </Link>
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem asChild className="flex items-center text-slate-700 justify-center text-[18px] ">
-            <div>
-            Sign out
-            </div>
+          <MenubarItem
+            asChild
+            className="flex items-center text-slate-700 justify-center text-[18px] "
+            onClick={() => signOut()}
+          >
+            <div>Sign out</div>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>

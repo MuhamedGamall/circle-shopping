@@ -5,6 +5,11 @@ import Navbar from "@/components/header/navbar";
 import { cn } from "@/lib/utils";
 import MoblieBar from "@/components/mobile-bar";
 import Footer from "@/components/footer";
+import AuthSessionProvider from "@/components/providers/session-provider";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ToastProvider from "@/components/providers/toast-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +24,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          inter.className,
-          "min-h-screen bg-background font-sans antialiased"
-        )}
-      >
-        <Navbar />
-        {children}
-        <Footer/>
-        <MoblieBar/>
-      </body>
-    </html>
+    <AuthSessionProvider>
+      <html lang="en">
+        <body
+          className={cn(
+            inter.className,
+            "min-h-screen bg-background font-sans antialiased"
+          )}
+        >
+          <Navbar />
+          <ToastProvider  />
+          {children}
+          <Footer />
+          <MoblieBar />
+        </body>
+      </html>
+    </AuthSessionProvider>
   );
 }

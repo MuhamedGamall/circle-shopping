@@ -9,7 +9,7 @@ export default function NavLinks() {
       {!user ? (
         <div className="hidden sm:flex gap-2 items-center">
           <Link
-            href="/login"
+            href="/log-in"
             className={
               "flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6] px-2 sm:border-r border-slate-600"
             }
