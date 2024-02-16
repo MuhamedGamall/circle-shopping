@@ -7,9 +7,9 @@ import MoblieBar from "@/components/mobile-bar";
 import Footer from "@/components/footer";
 import AuthSessionProvider from "@/components/providers/session-provider";
 
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ToastProvider from "@/components/providers/toast-provider";
+import StoreProvider from "@/components/providers/redux-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,20 +25,22 @@ export default function RootLayout({
 }>) {
   return (
     <AuthSessionProvider>
+      <StoreProvider >
       <html lang="en">
-        <body
-          className={cn(
-            inter.className,
-            "min-h-screen bg-background font-sans antialiased"
-          )}
-        >
-          <Navbar />
-          <ToastProvider  />
-          {children}
-          <Footer />
-          <MoblieBar />
-        </body>
-      </html>
+          <body
+            className={cn(
+              inter.className,
+              "min-h-screen bg-background font-sans antialiased"
+            )}
+          >
+            <Navbar />
+            <ToastProvider />
+            {children}
+            <Footer />
+            <MoblieBar />
+          </body>
+        </html>
+      </StoreProvider>
     </AuthSessionProvider>
   );
 }

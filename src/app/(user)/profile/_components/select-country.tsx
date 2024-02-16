@@ -322,22 +322,31 @@ export default function SelectCountry({
   form,
   setCountry,
   country,
+  disabled,
 }: {
   form: any;
   setCountry: Dispatch<SetStateAction<string>>;
   country: string;
+  disabled?: boolean;
+  
 }) {
   const [open, setOpen] = useState(false);
+  const currentCountry = form.getValues("country");
+  const check =
+    !!country || !!currentCountry
+      ? country || currentCountry
+      : "Select country...";
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          disabled={disabled}
           variant="outline"
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between  rounded-sm py-5"
         >
-          {!!country ? country : "Select country..."}
+          {check}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

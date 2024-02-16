@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-const UserInfosSchema = new Schema(
+const UserInfoSchema = new Schema(
   {
     admin: { type: Boolean, default: false },
     phone: { type: String },
@@ -13,5 +13,5 @@ const UserInfosSchema = new Schema(
   { timestamps: true }
 );
 
-export const UserInfos =
-  models?.UserInfos || model<any>("UserInfos", UserInfosSchema);
+export const UserInfo =
+  models?.UserInfo || model<any>("UserInfo", UserInfoSchema);

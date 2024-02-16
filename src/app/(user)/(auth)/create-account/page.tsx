@@ -1,24 +1,30 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import MaxWidthWrapper from '@/components/wrappers/max-width-wrapper';
-import { toaster } from '@/lib/toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
-import AccountForm from '../_components/account-form';
-import { formSchema } from '../schema';
-
 "use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import AccountForm from "../_components/account-form";
+import { formSchema } from "../schema";
+import toast from "react-hot-toast";
+
 export default function CreateAccountPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
-  const session = useSession();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,15 +41,13 @@ export default function CreateAccountPage() {
       setIsError(false);
       await axios.post("/api/create-account", values);
       router.replace("/log-in");
-      toaster.success("Account created successfully");
+      toast.success("Account created successfully");
     } catch (error: any) {
       if (error.response.status !== 409)
-        toaster.error("Uh oh! Something went wrong try again");
+      toast.error("Uh oh! Something went wrong try again");
       error.response.status === 409 ? setIsError(true) : setIsError(false);
     }
   }
-
-
 
   return (
     <MaxWidthWrapper>

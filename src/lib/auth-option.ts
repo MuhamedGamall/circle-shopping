@@ -1,15 +1,15 @@
 import bcrypt from "bcrypt";
-import * as mongoose from "mongoose";
-import { User } from "@/models/User";
+
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "@/lib/mongoConnect";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { Adapter } from "next-auth/adapters";
-import { UserInfos } from "@/models/UserInfos";
 import mongo_connect from "@/actions/mongo-connect";
-import isAdmin from "@/actions/is-admin";
+import { User } from "@/models/user";
+
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise) as Adapter,
@@ -52,8 +52,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token }) {
       await mongo_connect();
-      const { admin } = await isAdmin(token?.email || "");
-      token.role = admin ? "admin" : "member";
+      const user = await User.findOne({ email: token?.email });
+      const isAdmin = user?.admin;
+      token.role = isAdmin ? "admin" : "member";
       return token;
     },
   },
