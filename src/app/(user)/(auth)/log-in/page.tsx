@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,14 +18,15 @@ import * as z from "zod";
 
 import AccountForm from "../_components/account-form";
 import { formSchema } from "../schema";
+import useProfile from "@/hooks/user-profile";
 
 export default function LogInPage() {
   const [isError, setIsError] = useState<boolean>(false);
-
+  const { data } = useProfile();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      email:"",
       password: "",
     },
   });

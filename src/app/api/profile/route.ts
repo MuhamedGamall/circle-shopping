@@ -46,7 +46,6 @@ export async function GET(req: NextRequest) {
     const user = await User.findOne({ email }).lean();
     const userInfos = await UserInfo.findOne({ email }).lean();
     const fullData = { ...userInfos, ...user };
-console.log(fullData)
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
