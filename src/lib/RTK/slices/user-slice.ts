@@ -1,4 +1,3 @@
-
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { UserData } from "../../../../types";
@@ -24,7 +23,7 @@ export const getUser: any = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       const data = (await axios.get("/api/profile")).data;
-      return data 
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

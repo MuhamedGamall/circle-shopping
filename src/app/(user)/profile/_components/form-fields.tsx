@@ -44,7 +44,7 @@ export default function FormFields({
       city: data?.city || "",
       postal_code: data?.postal_code || "",
       country: data?.country || "",
-    },
+    } as any,
   });
 
   const { isSubmitting, isSubmitted } = form.formState;
