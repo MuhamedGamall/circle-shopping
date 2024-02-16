@@ -12,6 +12,7 @@ import * as z from "zod";
 import Sidebar from "../_components/sidebar";
 import SelectCountry from "./_components/select-country";
 import { profileSchema } from "./schima";
+import SidebarSheet from "../_components/sidebar-sheet";
 
 export default function ProfilePage() {
   const [country, setCountry] = useState("");
@@ -38,9 +39,16 @@ export default function ProfilePage() {
 
   return (
     <div className="bg-slate-100 flex w-full border-t">
-      <Sidebar />
-      <div className="mx-8 w-full">
-        <section className="bg-white p-8 my-10">
+      <div>
+        <div className="md:block hidden">
+          <Sidebar />
+        </div>
+      </div>
+      <div className="mt-5 md:mt-0 mx-8 w-full relative">
+        <SidebarSheet
+          className={"bg-white absolute top-0 left-[40px] px-5 py-3"}
+        />
+        <section className="bg-white p-8 my-10 ">
           <SectionTitle title="Profile info" className="mb-5" />
           <Form {...form}>
             <form
