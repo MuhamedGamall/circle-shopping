@@ -44,6 +44,20 @@ export const editProfile: any = createAsyncThunk(
     }
   }
 );
+export const deleteUser: any = createAsyncThunk(
+  "usersSlice/editProfile",
+  async (email: string, thunkApi) => {
+
+    const { rejectWithValue } = thunkApi;
+    try {
+      await axios.delete("/api/profile?email="+email)
+      toast.success("Account deleted successfully!");
+    } catch (error: any) {
+      toast.error("Something went wrong deleting account try again!");
+      return rejectWithValue(error.message);
+    }
+  }
+);
 type UserState = {
   users: UserData[];
   profile: null | UserData;
@@ -119,6 +133,29 @@ const usersSlice = createSlice({
           state.error = action.payload;
         }
       );
+      //TODO: create delete user 
+    // builder
+    //   .addCase(
+    //     deleteUser.pending,
+    //     (state: UserState, action: PayloadAction<any>) => {
+    //       state.loading = true;
+    //       state.error = null;
+    //     }
+    //   )
+    //   .addCase(
+    //     deleteUser.fulfilled,
+    //     (state: UserState, action: PayloadAction<any>) => {
+    //       state.loading = false;
+    //       state.us = { ...state.profile, ...action.payload };
+    //     }
+    //   )
+    //   .addCase(
+    //     deleteUser.rejected,
+    //     (state: UserState, action: PayloadAction<any>) => {
+    //       state.loading = false;
+    //       state.error = action.payload;
+    //     }
+    //   );
   },
 });
 export default usersSlice.reducer;

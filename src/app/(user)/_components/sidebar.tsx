@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import useProfile from "@/hooks/user-profile";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
-import { LucideUserCog, ShieldCheck } from "lucide-react";
+import { LucideUserCog, ShieldCheck, ShoppingCart } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,17 +14,18 @@ export default function Sidebar() {
   const pathName = usePathname();
   const { data, loading } = useProfile();
   const name = data?.name?.split(" ")?.[0] || data?.email?.split("@")?.[0];
+
   return (
     <div>
       <div className="flex flex-col p-8 sticky left-0 top-0 h-screen w-[280px] bg-white">
         <div className="flex flex-col border-b pb-5 mb-5 h-fit">
           {!loading ? (
             <>
-              <h3 className=" font-bold text-[16x]  text-secondMain whitespace-nowrap">
-                Hala {name}!
+              <h3 className=" font-bold text-[16x]  text-secondMain whitespace-nowrap ">
+                Hala {truncateText(name || "", 15)}!
               </h3>
-              <p className="font-[400] text-slate-600 text-[14px] ">
-                {data?.email}
+              <p className="font-[400] text-[#7e859b] text-[14px]  ">
+                {truncateText(data?.email || "", 25)}
               </p>
             </>
           ) : (
@@ -35,14 +36,14 @@ export default function Sidebar() {
         </div>
         <div className="flex flex-col gap-6  border-b  pb-5 mb-5 h-fit">
           <Link
-            href={"/wishlist"}
+            href={"/account/wishlist"}
             className="group flex items-center gap-2 hover:underline"
           >
             <span className="text-[25px] text-yellow-600">
               <BiHeartCircle />
             </span>
             <span
-              className={cn("group-hover:text-black text-slate-500 ", {
+              className={cn("group-hover:text-black text-[#7e859b] ", {
                 "underline text-black": pathName.includes("wishlist"),
               })}
             >
@@ -50,14 +51,14 @@ export default function Sidebar() {
             </span>
           </Link>
           <Link
-            href={"/orders"}
+            href={"/account/orders"}
             className="group flex items-center gap-2 hover:underline"
           >
             <span className="text-[25px] text-yellow-600">
               <BsMenuButtonFill />
             </span>
             <span
-              className={cn("group-hover:text-black text-slate-500 ", {
+              className={cn("group-hover:text-black text-[#7e859b] ", {
                 "underline text-black": pathName.includes("orders"),
               })}
             >
@@ -65,14 +66,29 @@ export default function Sidebar() {
             </span>
           </Link>
           <Link
-            href={"/profile"}
+            href={"/account/cart"}
+            className="group flex items-center gap-2 hover:underline"
+          >
+            <span className="text-[25px] text-yellow-600">
+              <ShoppingCart />
+            </span>
+            <span
+              className={cn("group-hover:text-black text-[#7e859b] ", {
+                "underline text-black": pathName.includes("cart"),
+              })}
+            >
+              Cart
+            </span>
+          </Link>
+          <Link
+            href={"/account/profile"}
             className="group flex items-center gap-2 hover:underline"
           >
             <span className="text-[25px] text-yellow-600">
               <LucideUserCog />
             </span>
             <span
-              className={cn("group-hover:text-black text-slate-500 ", {
+              className={cn("group-hover:text-black text-[#7e859b] ", {
                 "underline text-black": pathName.includes("profile"),
               })}
             >
@@ -80,14 +96,14 @@ export default function Sidebar() {
             </span>
           </Link>
           <Link
-            href={"/security-settings"}
+            href={"/account/security-settings"}
             className="group flex items-center gap-2 hover:underline"
           >
             <span className="text-[25px] text-yellow-600">
               <ShieldCheck />
             </span>
             <span
-              className={cn("group-hover:text-black text-slate-500 ", {
+              className={cn("group-hover:text-black text-[#7e859b] ", {
                 "underline text-black": pathName.includes("security settings"),
               })}
             >
@@ -99,7 +115,7 @@ export default function Sidebar() {
           <Button
             variant={"ghost"}
             size={"sm"}
-            className={cn(" text-slate-500 ")}
+            className={cn(" text-[#7e859b] ")}
             onClick={() => signOut()}
           >
             Sign out

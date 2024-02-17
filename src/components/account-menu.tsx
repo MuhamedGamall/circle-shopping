@@ -43,7 +43,7 @@ export default function AccountMenu({
         <MenubarContent className="rounded-none">
           <MenubarItem asChild>
             <Link
-              href={"/orders"}
+              href={"/account/orders"}
               className="flex items-center text-[18px]  gap-3 text-slate-700"
             >
               <span className=" text-gray-700">
@@ -54,7 +54,7 @@ export default function AccountMenu({
           </MenubarItem>
           <MenubarItem asChild>
             <Link
-              href={"/profile"}
+              href={"/account/profile"}
               className="flex items-center text-[18px] gap-3 text-slate-700  "
             >
               <span className=" text-gray-700">

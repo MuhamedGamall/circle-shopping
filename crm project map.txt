@@ -9,7 +9,7 @@ details for build crm project
 │   ├── User (Buyer)
 │   │   ├── Home Page
 │   │   │   ├── Featured Products  = ok
-│   │   │   └── Login/Logout
+│   │   │   └── Login/Logout = ok
 │   │   ├── Search Page
 │   │   │   ├── Search Box
 │   │   │   └── Search Results
@@ -25,8 +25,8 @@ details for build crm project
 │   │   │   ├── Shipping Details
 │   │   │   └── Payment Methods
 │   │   └── User Profile Page
-│   │       ├── Profile Information
-│   │       ├── Past Orders
+│   │       ├── Profile Information = ok
+│   │       ├── Past Orders 
 │   │       └── Change Password
 │   │
 │   ├── Seller

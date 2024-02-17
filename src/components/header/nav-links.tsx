@@ -14,7 +14,7 @@ export default function NavLinks() {
         !data ? (
           <div className="hidden sm:flex gap-2 items-center">
             <Link
-              href="/log-in"
+              href="/account/log-in"
               className={
                 "flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6] px-2 sm:border-r border-slate-600"
               }
@@ -22,7 +22,7 @@ export default function NavLinks() {
               Log in <User className={"h-4 w-4 text-secondMain/50"} />
             </Link>
             <Link
-              href="/create-account"
+              href="/account/create-account"
               className={
                 "flex gap-1  bg-secondMain py-2 px-3 hover:bg-slate-900 rounded-md items-center whitespace-nowrap text-sm text-white font-semibold transition-all "
               }
@@ -41,7 +41,7 @@ export default function NavLinks() {
 
       <div className="">
         <Link
-          href="/wishlist"
+          href="/account/wishlist"
           className={
             "flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6] px-2 sm:border-x border-slate-600"
           }
@@ -52,7 +52,7 @@ export default function NavLinks() {
       </div>
       <div className="">
         <Link
-          href="/cart"
+          href="/account/cart"
           className={
             "hidden sm:flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6]"
           }

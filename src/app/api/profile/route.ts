@@ -23,9 +23,11 @@ export async function PATCH(req: NextRequest) {
 
     const userInfo = await UserInfo.findOneAndUpdate(
       { email: user?.email },
-      otherData
+      otherData,
+      { upsert: true }
     ).lean();
     const fullData = { ...userData, ...userInfo };
+    console.log(userInfo);
 
     if (!user || !Object.values(data).every(Boolean) || !userInfo) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -51,6 +53,27 @@ export async function GET(req: NextRequest) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     return NextResponse.json(fullData);
+  } catch (error) {
+    console.log("[PROFILE]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+export async function DELETE(req: NextRequest) {
+  try {
+    await mongo_connect();
+    const url = new URL(req.url);
+    const email = url.searchParams.get("email")
+    const session = await getServerSession(authOptions);
+    const user = session?.user;
+    
+    if (!user) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    await User.deleteOne({ email }).lean();
+    await UserInfo.deleteOne({ email }).lean();
+
+    return new NextResponse("success deleting", { status: 200 });
   } catch (error) {
     console.log("[PROFILE]", error);
     return new NextResponse("Internal Error", { status: 500 });
