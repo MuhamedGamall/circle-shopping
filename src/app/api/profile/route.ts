@@ -29,7 +29,7 @@ export async function PATCH(req: NextRequest) {
     const fullData = { ...userData, ...userInfo };
     console.log(userInfo);
 
-    if (!user || !Object.values(data).every(Boolean) || !userInfo) {
+    if (!user || !Object.values(data).every(Boolean) ) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

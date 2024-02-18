@@ -35,7 +35,7 @@ export default function MoblieBar() {
           <div className="flex items-center gap-7" >
             <Link
             
-              href="/log-in"
+              href="/account/log-in"
               className={
                 "flex flex-col gap-1 text-secondMain whitespace-nowrap justify-center items-center text-xs font-semibold transition-all hover:opacity-[.6]  "
               }
