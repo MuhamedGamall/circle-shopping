@@ -9,7 +9,7 @@ import useProfile from "@/hooks/user-profile";
 
 export default function SecuritySettingsPage() {
   const {data}=useProfile()
-  console.log(data);
+  console.log( data);
   
   return (
     <div className="bg-slate-100 flex w-full border-t">

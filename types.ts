@@ -1,8 +1,9 @@
 export type User = {
   _id: string;
   email: string;
-  name:string
+  name?:string
   image?:string
+  password?:string
   createdAt: any;
   updatedAt: any;
   __v: number;
@@ -22,8 +23,9 @@ export type UserInfo = {
 export type UserData = {
   _id: string;
   email: string;
-  name:string
-  image:string
+  name?:string
+  image?:string
+  password?:string
   createdAt: any;
   updatedAt: any;
   admin: string;
