@@ -97,7 +97,7 @@ export default function Sidebar() {
           </Link>
           <Link
             href={"/account/security-settings"}
-            className="group flex items-center gap-2 hover:underline"
+            className={cn("group flex items-center gap-2 hover:underline ",{'hidden':!data?.password})}
           >
             <span className="text-[25px] text-yellow-600">
               <ShieldCheck />

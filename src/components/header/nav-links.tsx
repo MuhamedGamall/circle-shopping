@@ -7,7 +7,7 @@ import AccountMenu from "../account-menu";
 import useProfile from "@/hooks/user-profile";
 
 export default function NavLinks() {
-  const {data,loading} = useProfile();
+  const { data, loading } = useProfile();
   return (
     <nav className="flex gap-2 items-center mx-4">
       {!loading ? (

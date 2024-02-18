@@ -1,16 +1,13 @@
 'use client'
 import SectionTitle from "@/components/section-title";
 import React from "react";
-import PasswordSection from "./_components/passord-section";
+import PasswordSection from "./_components/password-section";
 import DeleteAccountSection from "./_components/delete-account-section";
 import Sidebar from "../../_components/sidebar";
 import SidebarSheet from "../../_components/sidebar-sheet";
-import useProfile from "@/hooks/user-profile";
 
 export default function SecuritySettingsPage() {
-  const {data}=useProfile()
-  console.log( data);
-  
+
   return (
     <div className="bg-slate-100 flex w-full border-t">
       <div className="md:block hidden">

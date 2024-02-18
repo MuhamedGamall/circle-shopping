@@ -22,7 +22,6 @@ import useProfile from "@/hooks/user-profile";
 
 export default function LogInPage() {
   const [isError, setIsError] = useState<boolean>(false);
-  const { data } = useProfile();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,12 +33,12 @@ export default function LogInPage() {
   const { isValid } = form.formState;
 
   async function onSubmit(values: { password: string; email: string }) {
-    const lol = signIn("credentials", {
+    const sign_in = signIn("credentials", {
       ...values,
       redirect: false,
       callbackUrl: "/",
     });
-    await lol.then((res) =>
+    await sign_in.then((res) =>
       res?.status === 401 ? setIsError(true) : setIsError(false)
     );
   }

@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import useProfile from "@/hooks/user-profile";
-import { profileSchema } from "../schima";
+import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
 
 export default function FormFields({

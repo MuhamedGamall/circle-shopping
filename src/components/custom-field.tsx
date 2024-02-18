@@ -1,4 +1,4 @@
-
+import { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -7,6 +7,8 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function CustomField({
   form,
@@ -33,7 +35,56 @@ export default function CustomField({
   minLength?: number;
   maxLength?: number;
 }) {
-  return (
+  const [show, setShow] = useState(false);
+
+  const toggleShow = () => {
+    setShow((prevShow) => !prevShow);
+  };
+
+  return type === "password" ? (
+    <div className="relative">
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className={labelClassName}>{label}</FormLabel>
+            <FormControl>
+              <div className="relative">
+                <Input
+                  disabled={disabled}
+                  placeholder={placeholder}
+                  type={show ? "text" : "password"}
+                  maxLength={maxLength}
+                  minLength={minLength}
+                  required={required}
+                  {...field}
+                  className={className}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={toggleShow}
+                >
+                  {show ? (
+                    <EyeIcon className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  <span className="sr-only">
+                    {show ? "Hide" : "Show"} password
+                  </span>
+                </Button>
+              </div>
+            </FormControl>
+            <FormMessage className="text-red-700" />
+          </FormItem>
+        )}
+      />
+    </div>
+  ) : (
     <FormField
       control={form.control}
       name={name}

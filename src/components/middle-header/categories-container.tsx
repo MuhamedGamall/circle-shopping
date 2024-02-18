@@ -46,7 +46,6 @@ const categories: { title: string; href: string; description: string }[] = [
 
 export default function CategoriesContainer() {
   const pathname = usePathname();
-  console.log(pathname.includes("account"));
 
   return (
     <nav

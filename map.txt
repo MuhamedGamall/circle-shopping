@@ -1,2 +1,1 @@
-+ finish home page 
-+ create account page ui & account auth
+لو  ان سجلت عن طريق الأيميل يجب ان اظهر  صفحه ال security settings عن طريق middleware
