@@ -17,7 +17,7 @@ export default function AccountMenu({
   name,
   email,
 }: {
-  name: string;
+  name?: string;
   email: string;
 }) {
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
