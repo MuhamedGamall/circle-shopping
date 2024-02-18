@@ -63,9 +63,8 @@ export async function DELETE(req: NextRequest) {
     await mongo_connect();
     const url = new URL(req.url);
     const email = url.searchParams.get("email")
-    const session = await getServerSession(authOptions);
-    const user = session?.user;
-    
+    const user = await User.findOne({ email }).lean();
+
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
