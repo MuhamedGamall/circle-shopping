@@ -7,7 +7,6 @@ import MoblieBar from "@/components/mobile-bar";
 import Footer from "@/components/footer";
 import AuthSessionProvider from "@/components/providers/session-provider";
 
-import "react-toastify/dist/ReactToastify.css";
 import ToastProvider from "@/components/providers/toast-provider";
 import StoreProvider from "@/components/providers/redux-provider";
 
