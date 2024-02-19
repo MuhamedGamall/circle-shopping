@@ -7,7 +7,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { truncateText } from "@/utils/truncate-text";
-import { MoreVertical } from "lucide-react";
+import { LucideLayoutDashboard, MoreVertical } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { BsMenuButtonWideFill } from "react-icons/bs";
@@ -61,6 +61,17 @@ export default function AccountMenu({
                 <FaRegUserCircle />
               </span>
               Profile
+            </Link>
+          </MenubarItem>
+          <MenubarItem asChild>
+            <Link
+              href={"/seller-dashboard"}
+              className="flex items-center text-[18px] gap-3 text-slate-700  "
+            >
+              <span className=" text-gray-700">
+                <LucideLayoutDashboard className="h-4 w-4" />
+              </span>
+              Seller dashboard
             </Link>
           </MenubarItem>
           <MenubarSeparator />

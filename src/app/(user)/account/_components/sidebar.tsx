@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import useProfile from "@/hooks/user-profile";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
@@ -97,25 +97,6 @@ export default function Sidebar() {
           </Link>
           <Link
             href={"/account/security-settings"}
-            className={cn("group flex items-center gap-2 hover:underline ", {
-              hidden: !data?.password,
-            })}
-          >
-            <span className="text-[25px] text-yellow-600">
-              <ShieldCheck />
-            </span>
-            <span
-              className={cn("group-hover:text-black text-[#7e859b] ", {
-                "underline text-black": pathName.includes("security-settings"),
-              })}
-            >
-              Security settings
-            </span>
-          </Link>
-        </div>
-        <div className="border-b pb-5 mb-5 h-fit">
-          <Link
-            href={"/seller"}
             className={cn("group flex items-center gap-2 hover:underline ", {
               hidden: !data?.password,
             })}

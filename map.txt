@@ -1,1 +1,53 @@
 لو  ان سجلت عن طريق الأيميل يجب ان اظهر  صفحه ال security settings عن طريق middleware
+
+
+
+for create product 
+
+page-1 select category
+1- select main category
+2- select supcategory
+3- select product brand
+
+
+page-2 create product
+
+pricing section
+1- product price
+
+offers section
+1- Typical price
+2- 
+
+stock info section
+1- select in stock or out stock
+
+add images section
+1- select images
+2- Image Instructions
+
+basic section
+1- add title
+2- add Long Description
+3- Department قسم
+4- Model Number
+5- Item Pack Quantity
+6- select sizes
+
+
+SKU Creation Attributes section
+1- Item Condition
+
+Product Detail section
+1- Item Condition
+2- Model Name
+3- select Colour 
+4- What's In The Box
+5- add Specifications
+6- add highLights
+
+Shipping section
+1- Shipping Length
+2- Shipping Height
+3- Shipping Width/Depth
+4- Shipping Weight
