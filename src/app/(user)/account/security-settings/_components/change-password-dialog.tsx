@@ -32,8 +32,6 @@ export function ChangePassword() {
     },
   });
 
-
-
   const onSubmit = async (values: any) => {
     if (values.new_password !== values.confirm_password) {
       setPassIsMatch(false);
@@ -46,11 +44,13 @@ export function ChangePassword() {
         confirmPassword: values.confirm_password,
         currPass: values.current_password,
       });
-
+      form.setValue("current_password", "");
+      form.setValue("new_password", "");
+      form.setValue("confirm_password", "");
       if (req.status === 200) {
         setPassIsCorrect(true);
         toast.success("Password updated successfully!");
-        setOpen(false)
+        setOpen(false);
       }
     } catch (error: any) {
       if (error?.response?.status !== 406) {
@@ -127,7 +127,11 @@ export function ChangePassword() {
             </span>
 
             <DialogFooter>
-              <Button type="submit" disabled={!isValid}>
+              <Button
+                type="submit"
+                disabled={!isValid}
+                className="bg-blue-600 hover:bg-blue-800"
+              >
                 Save
               </Button>
             </DialogFooter>

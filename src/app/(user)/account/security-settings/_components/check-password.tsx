@@ -74,7 +74,7 @@ export function CheckPassword({
           <span className="text-red-500 text-[11px] mt-2">
             {!passIsCorrect ? "Incorrect password. Please try again." : ""}
           </span>
-          <Button type="submit" disabled={!isValid}>
+          <Button type="submit" disabled={!isValid} className="bg-blue-600 hover:bg-blue-800">
             Save
           </Button>
         </form>
