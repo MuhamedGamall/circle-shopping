@@ -92,7 +92,7 @@ export default function Sidebar() {
                 "underline text-black": pathName.includes("profile"),
               })}
             >
-              Profile
+              Profile settings
             </span>
           </Link>
           <Link
@@ -104,7 +104,7 @@ export default function Sidebar() {
             </span>
             <span
               className={cn("group-hover:text-black text-[#7e859b] ", {
-                "underline text-black": pathName.includes("security settings"),
+                "underline text-black": pathName.includes("security-settings"),
               })}
             >
               Security settings
