@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const Icons = {
-  mainLogo:()=> (
+  mainLogo: () => (
     <Link href={"/"} className="flex items-center gap-1  whitespace-nowrap ">
       <svg
         id="logo-83"
@@ -37,12 +37,13 @@ const Icons = {
       </span>
     </Link>
   ),
-  storeLogo:()=> (
-    <Link href={"/"} className="whitespace-nowrap ">
-      <span className="font-semibold text-secondMain text-[35px] tracking-[0px] flex items-center whitespace-nowrap">
-        circle
-      </span>
-    </Link>
+  storeLogo: () => (
+    <div className="flex items-center">
+      <Link href={"/"} className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap">
+          circle
+      </Link>
+      <span className="font-[200] text-secondMain text-[38px]">Store</span>
+    </div>
   ),
 };
-export default Icons
+export default Icons;

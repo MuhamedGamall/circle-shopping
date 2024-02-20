@@ -12,6 +12,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
+import { PiStorefrontLight } from "react-icons/pi";
 
 export default function AccountMenu({
   name,
@@ -21,7 +22,7 @@ export default function AccountMenu({
   email: string;
 }) {
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
-
+  const haveStore = true;
   return (
     <Menubar className="bg-transparent border-none">
       <MenubarMenu>
@@ -64,21 +65,33 @@ export default function AccountMenu({
             </Link>
           </MenubarItem>
           <MenubarItem asChild>
-            <Link
-              href={"/seller-dashboard"}
-              className="flex items-center text-[18px] gap-3 text-slate-700  "
-            >
-              <span className=" text-gray-700">
-                <LucideLayoutDashboard className="h-4 w-4" />
-              </span>
-              Seller dashboard
-            </Link>
+            {!haveStore ? (
+              <Link
+                href={"/store-dashboard"}
+                className="flex items-center text-[18px] gap-3 text-slate-700  "
+              >
+                <span className=" text-gray-700">
+                  <LucideLayoutDashboard className="h-4 w-4" />
+                </span>
+                Store dashboard
+              </Link>
+            ) : (
+              <Link
+                href={"/create-store"}
+                className="flex items-center text-[18px] gap-3 text-slate-700  "
+              >
+                <span className=" text-gray-700">
+                  <PiStorefrontLight  className="h-4 w-4" />
+                </span>
+                Create store
+              </Link>
+            )}
           </MenubarItem>
           <MenubarSeparator />
           <MenubarItem
             asChild
             className=" text-slate-500"
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
             <div>Sign out</div>
           </MenubarItem>

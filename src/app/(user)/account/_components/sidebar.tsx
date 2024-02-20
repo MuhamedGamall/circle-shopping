@@ -118,7 +118,7 @@ export default function Sidebar() {
             variant={"ghost"}
             size={"sm"}
             className={cn(" text-[#7e859b] ")}
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
             Sign out
           </Button>
