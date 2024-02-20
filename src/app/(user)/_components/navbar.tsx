@@ -1,7 +1,6 @@
 import NavLinks from "@/components/header/nav-links";
 import NavSearch from "@/components/header/nav-search";
 import Icons from "@/components/icons";
-import CategoriesContainer from "@/components/middle-header/categories-container";
 
 export default function Navbar() {
   return (
