@@ -48,12 +48,7 @@ export default function CategoriesContainer() {
   const pathname = usePathname();
 
   return (
-    <nav
-      className={cn(
-        pathname.includes("account") ? "hidden" : "hidden sm:block",
-        "bg-[#fcfbf4] overflow-x-auto py-1"
-      )}
-    >
+    <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto py-1")}>
       <Menubar className="rounded-none bg-transparent mx-auto border-0  min-w-fit w-full xl:max-w-[1890px]  px-2.5">
         <MenubarMenu>
           <MenubarTrigger>

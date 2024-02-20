@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
-import Navbar from "@/components/header/navbar";
 import MoblieBar from "@/components/mobile-bar";
+import Navbar from "./_components/navbar";
 
 export default function RootLayout({
   children,
