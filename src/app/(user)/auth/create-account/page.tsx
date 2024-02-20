@@ -40,7 +40,7 @@ export default function CreateAccountPage() {
     try {
       setIsError(false);
       await axios.post("/api/create-account", values);
-      router.replace("/account/log-in");
+      router.replace("/auth/log-in");
       toast.success("Account created successfully");
     } catch (error: any) {
       if (error.response.status !== 409)
@@ -67,7 +67,7 @@ export default function CreateAccountPage() {
               </span>
               <span className="flex gap-1 items-center text-sm text-slate-700">
                 Already have an account?&nbsp;
-                <Link href={"/account/log-in"} className="underline font-bold">
+                <Link href={"/auth/log-in"} className="underline font-bold">
                   Log in
                 </Link>
               </span>

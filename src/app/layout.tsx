@@ -24,19 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <AuthSessionProvider>
-      <StoreProvider >
-      <html lang="en">
+      <StoreProvider>
+        <html lang="en">
           <body
             className={cn(
               inter.className,
               "min-h-screen bg-background font-sans antialiased"
             )}
           >
-            <Navbar />
             <ToastProvider />
             {children}
-            <Footer />
-            <MoblieBar />
           </body>
         </html>
       </StoreProvider>
