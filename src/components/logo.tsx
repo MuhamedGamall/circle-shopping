@@ -1,8 +1,9 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Logo() {
   return (
-    <div className="flex items-center gap-1  whitespace-nowrap ">
+    <Link href={'/'} className="flex items-center gap-1  whitespace-nowrap ">
       <svg
         id="logo-83"
         width="40"
@@ -34,6 +35,6 @@ export default function Logo() {
       <span className="font-semibold text-secondMain text-[35px] tracking-[0px] flex items-center whitespace-nowrap">
         circle
       </span>
-    </div>
+    </Link>
   );
 }
