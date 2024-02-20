@@ -69,7 +69,7 @@ export function CheckPassword({
             disabled={isSubmitting}
             name={"password"}
             type={"password"}
-            className={"rounded-sm py-5 "}
+            className={"rounded-sm py-6 "}
           />
           <span className="text-red-500 text-[11px] mt-2">
             {!passIsCorrect ? "Incorrect password. Please try again." : ""}

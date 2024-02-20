@@ -8,7 +8,7 @@ export function AvatarContainer({
   username: string;
 }) {
   return (
-    <div className=" w-[40px] h-[40px]">
+    <div className=" w-[40px] h-[40px]  rounded-full border-[3px]">
       {!!image ? (
         <Image
           src={image || ""}

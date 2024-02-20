@@ -60,7 +60,7 @@ export default function AccountForm({
             name={"email"}
             disabled={isSubmitting}
             type={"email"}
-            className={"rounded-sm py-5 "}
+            className={" "}
             placeholder={"example@gmail.com"}
           />
           <CustomField
@@ -70,7 +70,7 @@ export default function AccountForm({
             disabled={isSubmitting}
             name={"password"}
             type={"password"}
-            className={"rounded-sm py-5 "}
+            className={" "}
             placeholder={"password"}
           />
         </CardContent>

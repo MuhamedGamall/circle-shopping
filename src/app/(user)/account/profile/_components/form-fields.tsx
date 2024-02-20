@@ -11,18 +11,27 @@ import * as z from "zod";
 import useProfile from "@/hooks/user-profile";
 import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
+import { useAppDispatch } from "@/hooks/redux";
+import { editProfile } from "@/lib/RTK/slices/user-slice";
 
-export default function FormFields({
-  onSubmit,
-}: {
-  onSubmit: (val: any) => Promise<void>;
-}) {
+export default function FormFields() {
+
   const [country, setCountry] = useState("");
   const { data } = useProfile();
 
   const firstName = data?.name?.split(" ")?.[0] || "";
   const lastName = data?.name?.split(" ")?.[1] || "";
+  const dispatch = useAppDispatch();
 
+  async function onSubmit(value: any) {
+    const isValid = Object.values(value).every(Boolean);
+    if (isValid) {
+      const values = {
+        ...value,
+      };
+      await dispatch(editProfile(values));
+    }
+  }
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -64,7 +73,7 @@ export default function FormFields({
             disabled
             name={"email"}
             type={"email"}
-            className={"rounded-sm py-5 cursor-not-allowed"}
+            className={" cursor-not-allowed"}
             placeholder={"example@gmail.com"}
           />
           <CustomField
@@ -76,7 +85,7 @@ export default function FormFields({
             type={"text"}
             minLength={3}
             maxLength={30}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="first name"
           />
           <CustomField
@@ -88,7 +97,7 @@ export default function FormFields({
             type={"text"}
             minLength={3}
             maxLength={30}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="last name"
           />
           <CustomField
@@ -100,7 +109,7 @@ export default function FormFields({
             type={"tel"}
             minLength={10}
             maxLength={20}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="Mobile number"
           />
           <div className="flex flex-col gap-1">
@@ -128,7 +137,7 @@ export default function FormFields({
             type={"text"}
             minLength={2}
             maxLength={48}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="City"
           />
           <CustomField
@@ -140,7 +149,7 @@ export default function FormFields({
             type={"text"}
             minLength={5}
             maxLength={191}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="Street address"
           />
           <CustomField
@@ -152,7 +161,7 @@ export default function FormFields({
             type={"text"}
             minLength={4}
             maxLength={6}
-            className={"rounded-sm py-5"}
+            className={""}
             placeholder="Postal code"
           />
         </div>

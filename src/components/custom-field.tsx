@@ -9,6 +9,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function CustomField({
   form,
@@ -47,7 +48,7 @@ export default function CustomField({
         control={form.control}
         name={name}
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="w-full">
             <FormLabel className={labelClassName}>{label}</FormLabel>
             <FormControl>
               <div className="relative">
@@ -59,7 +60,7 @@ export default function CustomField({
                   minLength={minLength}
                   required={required}
                   {...field}
-                  className={className}
+                  className={cn("rounded-sm py-5", className)}
                 />
                 <Button
                   type="button"
@@ -89,7 +90,7 @@ export default function CustomField({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           <FormLabel className={labelClassName}>{label}</FormLabel>
           <FormControl>
             <Input
@@ -100,7 +101,7 @@ export default function CustomField({
               minLength={minLength}
               required={required}
               {...field}
-              className={className}
+              className={cn("rounded-sm py-5", className)}
             />
           </FormControl>
           <FormMessage className="text-red-700" />

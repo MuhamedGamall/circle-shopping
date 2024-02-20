@@ -95,7 +95,7 @@ export function ChangePassword() {
               disabled={isSubmitting}
               name={"current_password"}
               type={"password"}
-              className={"rounded-sm py-5 "}
+              className={" "}
             />
             <span className="text-red-500 text-[11px] mt-2">
               {!passIsCorrect ? "Incorrect password. Please try again." : ""}
@@ -109,7 +109,7 @@ export function ChangePassword() {
               type={"password"}
               minLength={5}
               maxLength={100}
-              className={"rounded-sm py-5"}
+              className={""}
             />
             <CustomField
               label="Confirm password"
@@ -120,7 +120,7 @@ export function ChangePassword() {
               type={"password"}
               minLength={5}
               maxLength={100}
-              className={"rounded-sm py-5"}
+              className={""}
             />
             <span className="text-red-500 text-[11px] mt-2">
               {!passIsMatch ? "Passwords do not match" : ""}

@@ -1,3 +1,4 @@
+import Navbar from "./_components/navbar";
 
 export default function RootLayout({
   children,
@@ -5,8 +6,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className="mt-[77px]">
+      <Navbar />
       {children}
-    </>
+    </div>
   );
 }

@@ -42,6 +42,6 @@ export const profileSchema = z.object({
         /^\d+$/.test(`${value}`) && value.length <= 6 && value.length >= 4,
       "Invalid Field."
     ),
-  email: z.string(),
+  email: z.string().trim().email("Please enter valid email address"),
   country: z.string().trim(),
 });
