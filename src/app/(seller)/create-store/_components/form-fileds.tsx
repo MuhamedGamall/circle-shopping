@@ -11,7 +11,6 @@ import * as z from "zod";
 import { createStoreSchema } from "../schema";
 
 export default function FormFields() {
-  function onSubmit(params: any) {}
   const form = useForm<z.infer<typeof createStoreSchema>>({
     resolver: zodResolver(createStoreSchema),
     defaultValues: {
@@ -21,6 +20,12 @@ export default function FormFields() {
       store_phone_number: "",
     },
   });
+
+  function onSubmit(values:any) {
+    console.log(values);
+    
+  }
+
 
   const { isSubmitting, isValid } = form.formState;
 
