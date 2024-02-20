@@ -36,3 +36,15 @@ export type UserData = {
   country: string;
   __v: number;
 };
+
+export type Store = {
+  _id: string;
+  personal_email: string,
+  display_name: string,
+  business_email:string,
+  finance_email: string,
+  store_phone_number: string,
+  createdAt: any;
+  updatedAt: any;
+  __v: number;
+};

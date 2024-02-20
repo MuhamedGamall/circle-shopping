@@ -1,12 +1,10 @@
 import { User } from "@/models/user";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import mongo_connect from "@/actions/mongo-connect";
-import bcryptDecode from "@/lib/bcrypt-decode";
 import { User as UserType } from "../../../../types";
 import bcrypt from "bcrypt";
 
@@ -95,7 +93,7 @@ export async function PUT(req: NextRequest) {
       body?.currPass || "",
       currPassword || ""
     );
-    
+
     const notHashedPassword = body?.confirmPassword;
     const salt = bcrypt.genSaltSync(10);
     body.confirmPassword = bcrypt.hashSync(notHashedPassword, salt);

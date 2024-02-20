@@ -6,6 +6,7 @@ import userSlice from "./slices/user-slice";
 // import favoriteSlice from "./slices/favorite-slice";
 // import cartSlice from "./slices/cart-slice";
 // import ordersSlice from "./slices/orders-slice";
+import storeSlice from './slices/store-slice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     // categories: categoriesSlice,
     // menuProducts: menuProductsSlice,
     userData: userSlice,
+    stores: storeSlice,
     // favoritesData: favoriteSlice,
     // productsCart: cartSlice,
     // ordersData:ordersSlice

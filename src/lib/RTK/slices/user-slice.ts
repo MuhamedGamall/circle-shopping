@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UserData } from "../../../../types";
+import { UserData } from "../../../types";
 import toast from "react-hot-toast";
 
 // export const getUsers: any = createAsyncThunk(
@@ -47,10 +47,9 @@ export const editProfile: any = createAsyncThunk(
 export const deleteUser: any = createAsyncThunk(
   "usersSlice/editProfile",
   async (email: string, thunkApi) => {
-
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.delete("/api/profile?email="+email)
+      await axios.delete("/api/profile?email=" + email);
       toast.success("Account deleted successfully!");
     } catch (error: any) {
       toast.error("Something went wrong deleting account try again!");
@@ -133,7 +132,7 @@ const usersSlice = createSlice({
           state.error = action.payload;
         }
       );
-      //TODO: create delete user 
+    //TODO: create delete user
     // builder
     //   .addCase(
     //     deleteUser.pending,

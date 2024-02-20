@@ -3,14 +3,17 @@
 import CustomField from "@/components/custom-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { createStoreSchema } from "../schema";
+import toast from "react-hot-toast";
 
 export default function FormFields() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof createStoreSchema>>({
     resolver: zodResolver(createStoreSchema),
     defaultValues: {
@@ -21,11 +24,15 @@ export default function FormFields() {
     },
   });
 
-  function onSubmit(values:any) {
-    console.log(values);
-    
+  async function onSubmit(values: z.infer<typeof createStoreSchema>) {
+    try {
+      const data = (await axios.post("/api/store", values)).data;
+      toast.success("Store created successfully");
+      router.replace(`/store/store-dashboard/${data?._id}`);
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
-
 
   const { isSubmitting, isValid } = form.formState;
 

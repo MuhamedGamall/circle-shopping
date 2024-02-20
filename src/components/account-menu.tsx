@@ -67,7 +67,7 @@ export default function AccountMenu({
           <MenubarItem asChild>
             {!haveStore ? (
               <Link
-                href={"/store-dashboard"}
+                href={"/store/store-dashboard"}
                 className="flex items-center text-[18px] gap-3 text-slate-700  "
               >
                 <span className=" text-gray-700">
@@ -77,7 +77,7 @@ export default function AccountMenu({
               </Link>
             ) : (
               <Link
-                href={"/create-store"}
+                href={"/store/create-store"}
                 className="flex items-center text-[18px] gap-3 text-slate-700  "
               >
                 <span className=" text-gray-700">

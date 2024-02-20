@@ -1,5 +1,5 @@
 import mongo_connect from "./mongo-connect";
-import { UserData } from "../../types";
+import { UserData } from "../types";
 import { UserInfo } from "@/models/user-info";
 import { User } from "@/models/user";
 
