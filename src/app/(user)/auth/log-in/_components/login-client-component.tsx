@@ -60,7 +60,7 @@ export default function LoginClientComponent() {
               )}
               <span className="flex gap-1 items-center text-sm text-slate-700">
                 Don&apos;t have an account?
-                <Link href={"/create-account"} className="underline font-bold">
+                <Link href={"/auth/create-account"} className="underline font-bold">
                   Sign up
                 </Link>
               </span>
