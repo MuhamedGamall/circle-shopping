@@ -6,10 +6,12 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import useStore from "@/hooks/use-store";
 import { truncateText } from "@/utils/truncate-text";
 import { LucideLayoutDashboard, MoreVertical } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { PiStorefrontLight } from "react-icons/pi";
@@ -21,8 +23,11 @@ export default function AccountMenu({
   name?: string;
   email: string;
 }) {
+
+  const { data, loading } = useStore();
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
-  const haveStore = true;
+  console.log(data);
+
   return (
     <Menubar className="bg-transparent border-none">
       <MenubarMenu>
@@ -65,26 +70,30 @@ export default function AccountMenu({
             </Link>
           </MenubarItem>
           <MenubarItem asChild>
-            {!haveStore ? (
-              <Link
-                href={"/store/store-dashboard"}
-                className="flex items-center text-[18px] gap-3 text-slate-700  "
-              >
-                <span className=" text-gray-700">
-                  <LucideLayoutDashboard className="h-4 w-4" />
-                </span>
-                Store dashboard
-              </Link>
+            {!loading ? (
+              !data ? (
+                <Link
+                  href={"/store/create-store"}
+                  className="flex items-center text-[18px] gap-3 text-slate-700  "
+                >
+                  <span className=" text-gray-700">
+                    <PiStorefrontLight className="h-4 w-4" />
+                  </span>
+                  Create store
+                </Link>
+              ) : (
+                <Link
+                  href={"/store/store-dashboard/"+data?._id}
+                  className="flex items-center text-[18px] gap-3 text-slate-700  "
+                >
+                  <span className=" text-gray-700">
+                    <LucideLayoutDashboard className="h-4 w-4" />
+                  </span>
+                  Store dashboard
+                </Link>
+              )
             ) : (
-              <Link
-                href={"/store/create-store"}
-                className="flex items-center text-[18px] gap-3 text-slate-700  "
-              >
-                <span className=" text-gray-700">
-                  <PiStorefrontLight  className="h-4 w-4" />
-                </span>
-                Create store
-              </Link>
+              "loading..."
             )}
           </MenubarItem>
           <MenubarSeparator />

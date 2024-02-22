@@ -5,29 +5,39 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createStoreSchema } from "../schema";
 import toast from "react-hot-toast";
+import { storeSchema } from "../schema";
+import useStore from "@/hooks/use-store";
 
 export default function FormFields() {
   const router = useRouter();
-  const form = useForm<z.infer<typeof createStoreSchema>>({
-    resolver: zodResolver(createStoreSchema),
+
+  const { data, loading } = useStore();
+  const form = useForm<z.infer<typeof storeSchema>>({
+    resolver: zodResolver(storeSchema),
     defaultValues: {
       display_name: "",
       business_email: "",
       finance_email: "",
       store_phone_number: "",
     },
+    values: {
+      display_name: data?.display_name || "",
+      business_email: data?.business_email || "",
+      finance_email: data?.finance_email || "",
+      store_phone_number: data?.store_phone_number || "",
+    },
   });
 
-  async function onSubmit(values: z.infer<typeof createStoreSchema>) {
+  async function onSubmit(values: z.infer<typeof storeSchema>) {
+    
     try {
-      const data = (await axios.post("/api/store", values)).data;
-      toast.success("Store created successfully");
+      const data = (await axios.patch("/api/store" , values)).data;
+      toast.success("Store updated successfully");
       router.replace(`/store/store-dashboard/${data?._id}`);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
@@ -47,7 +57,7 @@ export default function FormFields() {
             label="Display name *"
             labelClassName={"text-slate-700"}
             form={form}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
             name="display_name"
             type={"text"}
             minLength={1}
@@ -59,7 +69,7 @@ export default function FormFields() {
             label="Business email *"
             labelClassName={"text-slate-700"}
             form={form}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
             name="business_email"
             type={"email"}
             className={""}
@@ -69,7 +79,7 @@ export default function FormFields() {
             label="Finance email *"
             labelClassName={"text-slate-700"}
             form={form}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
             name="finance_email"
             type={"email"}
             placeholder="Finance email "
@@ -78,7 +88,7 @@ export default function FormFields() {
             label="Store phone number *"
             labelClassName={"text-slate-700"}
             form={form}
-            disabled={isSubmitting}
+            disabled={isSubmitting || loading}
             name="store_phone_number"
             type={"text"}
             className={""}
@@ -88,9 +98,9 @@ export default function FormFields() {
         <Button
           type="submit"
           className="w-full font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
-          disabled={isSubmitting || !isValid}
+          disabled={isSubmitting || loading || !isValid}
         >
-          CREATE CIRCLE STORE
+          SAVE CHANGES
         </Button>
       </form>
     </Form>

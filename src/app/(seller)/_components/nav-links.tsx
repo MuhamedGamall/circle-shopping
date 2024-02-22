@@ -6,7 +6,8 @@ import AccountMenu from "./account-menu";
 
 export default function NavLinks() {
   return (
-    <nav >
+    <nav>
+      
       <AccountMenu />
     </nav>
   );

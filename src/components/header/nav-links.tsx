@@ -5,7 +5,6 @@ import React from "react";
 import { Heart, LogIn, ShoppingCart, User } from "lucide-react";
 import AccountMenu from "../account-menu";
 import useProfile from "@/hooks/use-profile";
-import { useSession } from "next-auth/react";
 
 export default function NavLinks() {
   const { data, loading } = useProfile();

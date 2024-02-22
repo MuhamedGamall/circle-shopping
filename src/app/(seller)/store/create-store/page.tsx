@@ -1,5 +1,5 @@
 import React from "react";
-import FormFields from "./_components/form-fileds";
+import FormFields from "./_components/form-fields";
 import SectionTitle from "@/components/section-title";
 import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 

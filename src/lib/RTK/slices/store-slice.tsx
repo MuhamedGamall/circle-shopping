@@ -18,10 +18,10 @@ import toast from "react-hot-toast";
 // );
 export const getStore: any = createAsyncThunk(
   "storeSlice/getStore",
-  async (id, thunkApi) => {
+  async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/store?id=" + id)).data;
+      const data = (await axios.get("/api/store" )).data;
       console.log(data);
       
       return data;
