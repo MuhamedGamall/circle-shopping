@@ -4,11 +4,11 @@ import Link from "next/link";
 import React from "react";
 import { Heart, LogIn, ShoppingCart, User } from "lucide-react";
 import AccountMenu from "../account-menu";
-import useProfile from "@/hooks/user-profile";
+import useProfile from "@/hooks/use-profile";
 import { useSession } from "next-auth/react";
 
 export default function NavLinks() {
-  const { data,loading} = useProfile();
+  const { data, loading } = useProfile();
 
   return (
     <nav className="flex gap-2 items-center mx-4">

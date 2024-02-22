@@ -1,14 +1,13 @@
-'use client'
-import useProfile from '@/hooks/user-profile';
-import { Home, LogIn, Shirt, ShoppingCart, User } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
+"use client";
+import useProfile from "@/hooks/use-profile";
+import { Home, LogIn, Shirt, ShoppingCart, User } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-import AccountMenu from './account-menu';
-
+import AccountMenu from "./account-menu";
 
 export default function MoblieBar() {
-  const {data,loading}= useProfile()
+  const { data, loading } = useProfile();
 
   return (
     <nav className="mobilebar  sm:hidden flex items-center gap-7 justify-center w-full max-w-[400px] rounded-sm bg-white fixed mx-auto left-0 right-0 h-[60px] -bottom-1 px-3 py-2">
@@ -32,9 +31,8 @@ export default function MoblieBar() {
       </Link>
       {!loading ? (
         !data ? (
-          <div className="flex items-center gap-7" >
+          <div className="flex items-center gap-7">
             <Link
-            
               href="/auth/log-in"
               className={
                 "flex flex-col gap-1 text-secondMain whitespace-nowrap justify-center items-center text-xs font-semibold transition-all hover:opacity-[.6]  "
@@ -54,7 +52,7 @@ export default function MoblieBar() {
             </Link>
           </div>
         ) : (
-          <AccountMenu {...data}/>
+          <AccountMenu {...data} />
         )
       ) : (
         "loading..."

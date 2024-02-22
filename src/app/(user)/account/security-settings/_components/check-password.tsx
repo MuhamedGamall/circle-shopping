@@ -9,7 +9,7 @@ import * as z from "zod";
 import { checkPassword } from "../schema";
 import { useAppDispatch } from "@/hooks/redux";
 import { deleteUser } from "@/lib/RTK/slices/user-slice";
-import useProfile from "@/hooks/user-profile";
+import useProfile from "@/hooks/use-profile";
 import bcryptDecode from "@/actions/bcrypt-decode";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -73,7 +73,11 @@ export function CheckPassword({
           <span className="text-red-500 text-[11px] mt-2">
             {!passIsCorrect ? "Incorrect password. Please try again." : ""}
           </span>
-          <Button type="submit" disabled={!isValid} className="bg-blue-600 hover:bg-blue-800">
+          <Button
+            type="submit"
+            disabled={!isValid}
+            className="bg-blue-600 hover:bg-blue-800"
+          >
             Save
           </Button>
         </form>

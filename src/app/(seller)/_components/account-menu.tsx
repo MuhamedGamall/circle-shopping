@@ -1,17 +1,8 @@
 "use client";
 import React from "react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
+
 import { AvatarContainer } from "@/components/avatar";
-import useProfile from "@/hooks/user-profile";
+import useProfile from "@/hooks/use-profile";
 import { truncateText } from "@/utils/truncate-text";
 import { signOut } from "next-auth/react";
 import {

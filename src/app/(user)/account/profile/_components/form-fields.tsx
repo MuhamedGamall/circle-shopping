@@ -8,14 +8,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import useProfile from "@/hooks/user-profile";
+import useProfile from "@/hooks/use-profile";
 import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
 import { editProfile } from "@/lib/RTK/slices/user-slice";
 
 export default function FormFields() {
-
   const [country, setCountry] = useState("");
   const { data } = useProfile();
 

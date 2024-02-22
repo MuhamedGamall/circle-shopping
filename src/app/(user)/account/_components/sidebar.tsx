@@ -1,6 +1,6 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
-import useProfile from "@/hooks/user-profile";
+import useProfile from "@/hooks/use-profile";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
 import { LucideUserCog, ShieldCheck, ShoppingCart } from "lucide-react";

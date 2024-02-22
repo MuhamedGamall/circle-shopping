@@ -1,7 +1,7 @@
 import Sidebar from "./_components/sidebar";
 import SidebarSheet from "./_components/sidebar-sheet";
 
-export default function RootLayout({
+export default function AccountLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
