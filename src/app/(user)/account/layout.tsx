@@ -8,7 +8,7 @@ export default function AccountLayout({
 }>) {
   return (
     <>
-      <div className="bg-slate-100 flex w-full border-t">
+      <div className="bg-[#f2f3f8] flex w-full border-t">
         <div className="md:block hidden">
           <Sidebar />
         </div>

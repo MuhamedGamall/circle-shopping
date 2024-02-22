@@ -76,7 +76,7 @@ export function CheckPassword({
           <Button
             type="submit"
             disabled={!isValid}
-            className="bg-blue-600 hover:bg-blue-800"
+            variant={'blue'}
           >
             Save
           </Button>

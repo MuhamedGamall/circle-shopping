@@ -11,7 +11,7 @@ export default function ProfilePage() {
         title="Profile settings"
         className="mb-5 text-[19px] sm:text-[22px] w-fit"
       />
-      <section className=" bg-white py-6 px-8 ">
+      <section className=" bg-white py-6 px-8 shadow-section">
         <SectionTitle
           title="Profile info"
           className="mb-5 text-[17px] sm:text-[19px]"

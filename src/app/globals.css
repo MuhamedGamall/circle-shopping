@@ -5,7 +5,14 @@
   height: 5px;
   width: 5px; /* Width of the scrollbar */
 }
-
+.select-category::-webkit-scrollbar {
+  height: 0;
+  width: 0; /* Width of the scrollbar */
+}
+.select-category::-webkit-scrollbar-thumb {
+  display: none; /* Thumb color on hover */
+  
+}
 ::-webkit-scrollbar-track {
   background: #e7e7e7; /* Track color */
 }
@@ -15,6 +22,7 @@
   background: #88888870; /* Thumb color */
   border-radius: 6px; /* Rounded corners */
 }
+
 
 ::-webkit-scrollbar-thumb:hover {
   background: #55555598; /* Thumb color on hover */

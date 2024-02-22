@@ -45,7 +45,6 @@ const categories: { title: string; href: string; description: string }[] = [
 ];
 
 export default function CategoriesContainer() {
-  const pathname = usePathname();
 
   return (
     <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto py-1")}>

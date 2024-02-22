@@ -7,7 +7,7 @@ export default function CreateStorePage() {
   return (
     <div className="create-store-img">
       <MaxWidthWrapper>
-        <section className="  w-full max-w-[600px] gap-5 mx-auto p-8 ">
+        <section className="  w-full max-w-[600px] mx-auto p-8 ">
           <div className="flex flex-col gap-1 mb-5">
             <SectionTitle title="Circle Store Details" />
             <span className="font-[400] text-[#7e859b] text-sm">

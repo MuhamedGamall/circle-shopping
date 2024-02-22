@@ -165,8 +165,9 @@ export default function FormFields() {
           />
         </div>
         <Button
+        variant={'blue'}
           type="submit"
-          className="w-fit rounded-sm bg-blue-600 hover:bg-blue-800"
+          className="w-fit rounded-sm"
           disabled={isSubmitting || !isValid}
         >
           UPDATE PROFILE
