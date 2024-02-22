@@ -1,3 +1,4 @@
+'use client'
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import {

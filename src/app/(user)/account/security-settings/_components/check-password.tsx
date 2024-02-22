@@ -11,7 +11,6 @@ import { useAppDispatch } from "@/hooks/redux";
 import { deleteUser } from "@/lib/RTK/slices/user-slice";
 import useProfile from "@/hooks/user-profile";
 import bcryptDecode from "@/actions/bcrypt-decode";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 

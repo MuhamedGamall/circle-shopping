@@ -1,4 +1,3 @@
-"use client";
 import SectionTitle from "@/components/section-title";
 import React from "react";
 import PasswordSection from "./_components/password-section";
