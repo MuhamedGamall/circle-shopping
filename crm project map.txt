@@ -11,7 +11,7 @@ details for build crm project
 │   │   │   ├── Featured Products  = ok
 │   │   │   └── Login/Logout = ok
 │   │   ├── Search Page
-│   │   │   ├── Search Box
+│   │   │   ├── Search Box = ok
 │   │   │   └── Search Results
 │   │   ├── Product Page
 │   │   │   ├── Product Details 
@@ -27,7 +27,7 @@ details for build crm project
 │   │   └── User Profile Page
 │   │       ├── Profile Information = ok
 │   │       ├── Past Orders 
-│   │       └── Change Password
+│   │       └── Change Password = ok
 │   │
 │   ├── Seller
 │   │   ├── Dashboard
