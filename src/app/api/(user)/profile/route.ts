@@ -110,7 +110,6 @@ export async function PUT(req: NextRequest) {
       { email },
       { password: body?.confirmPassword }
     );
-    console.log(isMatch, body, currPassword);
 
     return NextResponse.json(update);
   } catch (error) {

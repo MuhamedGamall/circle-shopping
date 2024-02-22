@@ -22,8 +22,6 @@ export const getStore: any = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       const data = (await axios.get("/api/store" )).data;
-      console.log(data);
-      
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

@@ -26,7 +26,6 @@ export default function AccountMenu({
 
   const { data, loading } = useStore();
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
-  console.log(data);
 
   return (
     <Menubar className="bg-transparent border-none">

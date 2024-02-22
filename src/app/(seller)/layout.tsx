@@ -6,9 +6,9 @@ export default function StoreLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mt-[77px]">
+    <div className="">
       <Navbar />
-      {children}
+      <div className="mt-[77px]">{children}</div>
     </div>
   );
 }

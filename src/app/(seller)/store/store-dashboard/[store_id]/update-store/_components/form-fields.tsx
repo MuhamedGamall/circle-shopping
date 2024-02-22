@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -34,9 +34,8 @@ export default function FormFields() {
   });
 
   async function onSubmit(values: z.infer<typeof storeSchema>) {
-    
     try {
-      const data = (await axios.patch("/api/store" , values)).data;
+      await axios.patch("/api/store", values);
       toast.success("Store updated successfully");
       router.replace(`/store/store-dashboard/${data?._id}`);
     } catch (error) {

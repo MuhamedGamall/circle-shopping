@@ -39,11 +39,7 @@ export default function CreateAccountClientComponent() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsError(false);
-      console.log("lol");
-
-      const res = await axios.post("/api/create-account", values);
-      console.log(res);
-
+      await axios.post("/api/create-account", values);
       router.replace("/auth/log-in");
       toast.success("Account created successfully");
     } catch (error: any) {
