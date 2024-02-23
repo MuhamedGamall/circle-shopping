@@ -16,8 +16,10 @@ pricing section
 1- product price
 
 offers section
-1- Typical price
-2- 
+1- isOffered 
+2- start_date
+3- end_date
+4- discount_percentage
 
 stock info section
 1- select in stock or out stock
@@ -38,6 +40,7 @@ basic section
 SKU Creation Attributes section
 1- Item Condition
 
+
 Product Detail section
 1- Item Condition
 2- Model Name
@@ -45,6 +48,8 @@ Product Detail section
 4- What's In The Box
 5- add Specifications
 6- add highLights
+7- quantity_in_stock
+8- max_purchase_quantity
 
 Shipping section
 1- Shipping Length

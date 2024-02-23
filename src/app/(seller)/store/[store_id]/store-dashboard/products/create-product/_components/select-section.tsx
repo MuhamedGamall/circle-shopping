@@ -7,97 +7,11 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { BadgePercent } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import useStore from "@/hooks/use-store";
+import { useParams, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 const categories: { title: string }[] = [
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
   {
     title: "Alert Dialog",
   },
@@ -118,20 +32,48 @@ const categories: { title: string }[] = [
   },
 ];
 export default function SelectSection() {
+  const { store_id } = useParams();
+  const router = useRouter();
   const [mainCategory, setMainCategory] = useState({ title: "" });
   const [subCategory, setSubCategory] = useState({ title: "" });
-  const [productBrand, setProductBrand] = useState("");
-  const fullData = { productBrand, subCategory, mainCategory };
-  const checkData = Object.values(fullData).every(Boolean);
+  const [productBrand, setProductBrand] = useState({ title: "" });
 
+  const checkData =
+    productBrand.title.trim() &&
+    subCategory.title.trim() &&
+    mainCategory.title.trim() &&
+    productBrand.title.length <= 50;
+
+  const fullData = {
+    productBrand: { title: productBrand.title.trim() },
+    subCategory,
+    mainCategory,
+  };
+
+  const onSubmit = async () => {
+    if (checkData) {
+      try {
+        const data = (
+          await axios.post("/api/store/" + store_id + "/products", fullData)
+        ).data;
+        router.replace(
+          `/store/${store_id}/store-dashboard/products/${data?._id}/update-product`
+        );
+        toast.success("Product created successfully");
+      } catch (error) {
+        toast.error("Uh oh! Something went wrong");
+      }
+    }
+  };
   return (
     <div className="max-w-[650px] w-full  mx-auto ">
       <div className="w-full flex  justify-end">
         <Button
-          className="font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
+          onClick={onSubmit}
+          className="font-bold  bg-[#004e92] hover:bg-[#004e92]/90"
           disabled={!checkData}
         >
-          Save
+          CREATE
         </Button>
       </div>
 
@@ -154,7 +96,7 @@ export default function SelectSection() {
               <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
               <span>{subCategory.title}</span>
               <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
-              <span>{productBrand}</span>
+              <span>{productBrand.title}</span>
             </div>
           </div>
         )}
@@ -163,11 +105,13 @@ export default function SelectSection() {
           data={categories}
           label={"Select category"}
           setValue={setMainCategory}
+          value={mainCategory}
         />
         <SelectCategory
           data={categories}
           label={"Select sub category"}
           setValue={setSubCategory}
+          value={subCategory}
         />
         <div className="w-full mx-auto ">
           <div className="flex flex-col  items-center justify-center">
@@ -186,15 +130,18 @@ export default function SelectSection() {
             <Input
               type="text"
               name="brand"
-              value={productBrand}
+              value={productBrand.title}
               placeholder="Enter your product brand"
-              onChange={(e) => setProductBrand(e.target.value)}
+              onChange={(e) => setProductBrand({ title: e.target.value })}
+              maxLength={50}
+              minLength={1}
             />
           </Label>
           <span className="text-red-500 text-[11px] mt-2">
-            {(productBrand.length === 0 || productBrand.length < 1) &&
+            {(productBrand.title.length === 0 ||
+              productBrand.title.length < 1) &&
               "Brand field is required and should be at least one character long!"}
-            {productBrand.length >= 50 &&
+            {productBrand.title.length > 50 &&
               "This filed must not exceed 50 characters!"}
           </span>
         </div>

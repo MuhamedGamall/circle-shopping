@@ -23,7 +23,6 @@ export default function AccountMenu({
   name?: string;
   email: string;
 }) {
-
   const { data, loading } = useStore();
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
 
@@ -82,7 +81,7 @@ export default function AccountMenu({
                 </Link>
               ) : (
                 <Link
-                  href={"/store/store-dashboard/"+data?._id}
+                  href={"/store/" + data?._id + "/store-dashboard/"}
                   className="flex items-center text-[18px] gap-3 text-slate-700  "
                 >
                   <span className=" text-gray-700">

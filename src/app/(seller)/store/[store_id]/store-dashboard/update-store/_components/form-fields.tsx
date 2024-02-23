@@ -35,9 +35,9 @@ export default function FormFields() {
 
   async function onSubmit(values: z.infer<typeof storeSchema>) {
     try {
-      await axios.patch("/api/store", values);
+      await axios.patch(`/api/store/${data?._id}`, values);
       toast.success("Store updated successfully");
-      router.replace(`/store/store-dashboard/${data?._id}`);
+      router.replace(`/store/${data?._id}/store-dashboard`);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
     }

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 import { FaCaretRight } from "react-icons/fa";
 
@@ -5,10 +6,12 @@ export default function SelectCategory({
   data,
   label,
   setValue,
+  value,
 }: {
   data: any;
   label: string;
   setValue: Dispatch<SetStateAction<{ title: string }>>;
+  value: { title: string };
 }) {
   return (
     <div className=" flex flex-col justify-center mb-[50px]">
@@ -23,7 +26,10 @@ export default function SelectCategory({
               <div
                 onClick={() => setValue(el)}
                 key={i}
-                className="cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between"
+                className={cn(
+                  "cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between",
+                  { "bg-sky-700/20 text-sky-700 font-bold" : el.title === value?.title }
+                )}
               >
                 {el.title}
                 <FaCaretRight />

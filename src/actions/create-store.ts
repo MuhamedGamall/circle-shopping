@@ -9,6 +9,6 @@ export default async function createStore(store: Store) {
     toast.success("Store created successfully");
     return data;
   } catch (error: any) {
-    toast.error("Uh oh, something went wrong!");
+    toast.error("Uh oh! Something went wrong");
   }
 }

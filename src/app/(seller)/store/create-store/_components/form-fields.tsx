@@ -28,13 +28,13 @@ export default function FormFields() {
     try {
       const data = (await axios.post("/api/store", values)).data;
       toast.success("Store created successfully");
-      router.replace(`/store/store-dashboard/${data?._id}`);
+      router.replace(`/store/${data?._id}/store-dashboard/`);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
     }
   }
 
-  const { isSubmitting, isValid } = form.formState
+  const { isSubmitting, isValid } = form.formState;
 
   return (
     <Form {...form}>
