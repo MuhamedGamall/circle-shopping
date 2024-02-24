@@ -16,7 +16,7 @@ export default function Navbar() {
           <Icons.storeLogo />
           {!!data && (
             <Link
-              href={"/store/" + data?._id +"/store-dashboard/update-store"}
+              href={"/store/" + data?._id +"/store-dashboard/store-settings"}
               className="hover:bg-slate-100/40 rounded-md border py-1 pl-2 pr-8 leading-[inherit] flex items-center gap-2"
             >
               <span className="h-[35px] px-2.5 text-sky-700 flex items-center font-bold rounded-md bg-slate-100 ">
