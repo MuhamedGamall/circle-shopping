@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -37,7 +37,6 @@ export default function FormFields() {
     try {
       await axios.patch(`/api/store/${data?._id}`, values);
       toast.success("Store updated successfully");
-      router.replace(`/store/${data?._id}/store-dashboard`);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
     }
@@ -49,9 +48,9 @@ export default function FormFields() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="gap-5 flex flex-col items-center justify-center"
+        className="gap-5 flex flex-col items-center justify-center "
       >
-        <div className="flex flex-col justify-center items-center gap-5 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3 w-full ">
           <CustomField
             label="Display name *"
             labelClassName={"text-slate-700"}
@@ -61,7 +60,7 @@ export default function FormFields() {
             type={"text"}
             minLength={1}
             maxLength={30}
-            className={"rounded-sm "}
+            className={"  w-full"}
             placeholder="Display name "
           />
           <CustomField
@@ -71,7 +70,7 @@ export default function FormFields() {
             disabled={isSubmitting || loading}
             name="business_email"
             type={"email"}
-            className={""}
+            className={"  w-full"}
             placeholder="Business email "
           />
           <CustomField
@@ -81,6 +80,7 @@ export default function FormFields() {
             disabled={isSubmitting || loading}
             name="finance_email"
             type={"email"}
+            className={"  w-full"}
             placeholder="Finance email "
           />
           <CustomField
@@ -90,13 +90,13 @@ export default function FormFields() {
             disabled={isSubmitting || loading}
             name="store_phone_number"
             type={"text"}
-            className={""}
+            className={"  w-full"}
             placeholder="Store phone number"
           />
         </div>
         <Button
           type="submit"
-          className="w-full font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
+          className="mr-auto font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
           disabled={isSubmitting || loading || !isValid}
         >
           SAVE CHANGES

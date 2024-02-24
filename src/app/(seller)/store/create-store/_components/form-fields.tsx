@@ -28,7 +28,7 @@ export default function FormFields() {
     try {
       const data = (await axios.post("/api/store", values)).data;
       toast.success("Store created successfully");
-      router.replace(`/store/${data?._id}/store-dashboard/`);
+      router.replace(`/store/${data?._id}/dashboard`);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
     }

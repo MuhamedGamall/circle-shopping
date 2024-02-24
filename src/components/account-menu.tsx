@@ -11,10 +11,9 @@ import { truncateText } from "@/utils/truncate-text";
 import { LucideLayoutDashboard, MoreVertical } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
-import { PiStorefrontLight } from "react-icons/pi";
+import { MdStorefront } from "react-icons/md";
 
 export default function AccountMenu({
   name,
@@ -75,13 +74,13 @@ export default function AccountMenu({
                   className="flex items-center text-[18px] gap-3 text-slate-700  "
                 >
                   <span className=" text-gray-700">
-                    <PiStorefrontLight className="h-4 w-4" />
+                    <MdStorefront className="h-4 w-4" />
                   </span>
                   Create store
                 </Link>
               ) : (
                 <Link
-                  href={"/store/" + data?._id + "/store-dashboard/"}
+                  href={"/store/" + data?._id + "/dashboard"}
                   className="flex items-center text-[18px] gap-3 text-slate-700  "
                 >
                   <span className=" text-gray-700">
