@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 import { User as UserType } from "../../../../types";
 import bcrypt from "bcrypt";
 
 export async function PATCH(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const data = await req.json();
     const { email, name, image, ...otherData } = data;
     const userName = data?.first_name + " " + data?.last_name;
@@ -42,7 +42,7 @@ export async function PATCH(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
     const user = await User.findOne({ email }).lean();
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const url = new URL(req.url);
     const email = url.searchParams.get("email");
     const user = await User.findOne({ email }).lean();
@@ -82,7 +82,7 @@ export async function DELETE(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const body = await req.json();
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;

@@ -7,8 +7,8 @@ const shipping_details = new Schema({
 const ProductSchema = new Schema(
   {
     is_live: { type: Boolean, default: false },
-    store_id: { type: String, required: true ,},
-    store_personal_email: { type: String, required: true ,},
+    store_id: { type: String, required: true },
+    store_personal_email: { type: String, required: true },
     title: { type: String },
     image: { type: String },
     is_stock: { type: Boolean, default: true },
@@ -37,7 +37,7 @@ const ProductSchema = new Schema(
       shipping_weight: shipping_details,
     },
     price: {
-      base_price: { type: Number },
+      base_price: { type: Number, default: 0 },
       offer: {
         is_offered: { type: Boolean, default: false },
         start_date: { type: Date },

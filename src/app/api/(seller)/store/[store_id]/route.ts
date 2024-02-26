@@ -1,4 +1,4 @@
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Store } from "@/models/store";
 import { getServerSession } from "next-auth";
@@ -9,7 +9,7 @@ export async function PATCH(
   { params: { store_id } }: { params: { store_id: string } }
 ) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const body = await req.json();
 
     const session = await getServerSession(authOptions);

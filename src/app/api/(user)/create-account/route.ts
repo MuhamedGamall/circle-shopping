@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { UserInfo } from "@/models/user-info";
 
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 export async function POST(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const body = await req.json();
     const pass = body.password;
     if (!pass?.length || pass.length < 5) {

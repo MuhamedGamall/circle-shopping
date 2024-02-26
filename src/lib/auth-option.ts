@@ -6,9 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "@/lib/mongoConnect";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { Adapter } from "next-auth/adapters";
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 import { User } from "@/models/user";
-
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -38,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         const email = credentials?.email;
         const password = credentials?.password;
-        await mongo_connect();
+        await mongoConnect();
         const user = await User.findOne({ email });
         const passwordOk = user && bcrypt.compareSync(password!, user.password);
         if (passwordOk) {
@@ -51,7 +50,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token }) {
-      await mongo_connect();
+      await mongoConnect();
       const user = await User.findOne({ email: token?.email });
       const isAdmin = user?.admin;
       token.role = isAdmin ? "admin" : "member";

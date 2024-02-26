@@ -1,4 +1,4 @@
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Store } from "@/models/store";
 import { getServerSession } from "next-auth";
@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const body = await req.json();
 
     const session = await getServerSession(authOptions);
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;

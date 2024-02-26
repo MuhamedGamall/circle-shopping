@@ -1,4 +1,4 @@
-import mongo_connect from "@/actions/mongo-connect";
+import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
@@ -10,7 +10,7 @@ export async function POST(
   { params: { store_id } }: { params: { store_id: string } }
 ) {
   try {
-    await mongo_connect();
+    await mongoConnect();
     const { productBrand, subCategory, mainCategory } = await req.json();
 
     const session = await getServerSession(authOptions);
@@ -39,6 +39,31 @@ export async function POST(
     return NextResponse.json(createProduct);
   } catch (error) {
     console.log("[CREATE-PRODUCT]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+export async function GET(
+  req: NextRequest,
+  { params: { store_id } }: { params: { store_id: string } }
+) {
+  try {
+    await mongoConnect();
+    const session = await getServerSession(authOptions);
+    const user = session?.user;
+    const email = session?.user?.email;
+
+    const store = await Store.find({ _id: store_id, personal_email: email });
+
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const products = await Product.find({ store_personal_email: email }).lean();
+
+    return NextResponse.json(products);
+  } catch (error) {
+    console.log("[GET-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
