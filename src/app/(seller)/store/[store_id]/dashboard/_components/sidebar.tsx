@@ -1,8 +1,6 @@
 "use client";
 import { LucideLayoutDashboard } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
 import { BsCartCheck } from "react-icons/bs";
 import { LiaBoxesSolid, LiaComments } from "react-icons/lia";
 import { MdStorefront } from "react-icons/md";
@@ -54,7 +52,6 @@ export default function Sidebar() {
     <div className=" max-w-[60px] md:max-w-[300px] w-full h-screen fixed top-[77px] left-0 border-r py-5 bg-white">
       <ul className="flex flex-col justify-center">
         {routes.map((route, i) => (
-          
           <SidebarItem key={i} dashboardLink={dashboardLink} {...route} />
         ))}
       </ul>
