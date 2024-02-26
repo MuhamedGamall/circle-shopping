@@ -1,3 +1,4 @@
+import BreadCrumbs from "./_components/bread-crumbs";
 import Sidebar from "./_components/sidebar";
 
 export default function StoreLayout({
@@ -8,7 +9,10 @@ export default function StoreLayout({
   return (
     <div className="flex w-full pl-[60px] md:pl-[300px]">
       <Sidebar />
-      <div className="m-5 w-full">{children}</div>
+      <div className="m-5 w-full">
+        <BreadCrumbs />
+        {children}
+      </div>
     </div>
   );
 }

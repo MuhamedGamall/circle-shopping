@@ -66,11 +66,11 @@ export default function SelectSection() {
     }
   };
   return (
-    <div className="max-w-[650px] w-full  mx-auto ">
-      <div className="w-full flex  justify-end">
+    <div className="max-w-[650px] w-full  mx-auto p-5">
+      <div className="w-full sm:flex hidden justify-end">
         <Button
           onClick={onSubmit}
-          className="font-bold  bg-[#004e92] hover:bg-[#004e92]/90"
+          className="font-bold mb-5 bg-[#004e92] hover:bg-[#004e92]/90"
           disabled={!checkData}
         >
           CREATE
@@ -85,13 +85,15 @@ export default function SelectSection() {
         </div>
       </div>
       <div className="my-10 ">
-        <h4 className="">Lets start with categorizing your product</h4>
+        <h4 className="sm:text-start text-center">
+          Lets start with categorizing your product
+        </h4>
         {checkData && (
-          <div className="mt-5 flex items-center gap-2">
+          <div className=" sm:flex hidden mt-5  items-center gap-2 sm:flex-row flex-wrap sm:justify-start justify-center mb-3">
             <span className="text-[12px] text-[#888888] mb-1 block whitespace-nowrap">
               Categories selected
             </span>
-            <div className="flex items-center gap-1 [&>span]:text-sky-700 [&>span]:text-sm w-[90%] border-slate-200 border py-1 px-3 rounded-md">
+            <div className="[&>span]:whitespace-nowrap   flex items-center gap-1 [&>span]:text-sky-700 [&>span]:text-sm w-[90%] border-slate-200 border py-1 px-3 rounded-md">
               <span>{mainCategory.title}</span>
               <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
               <span>{subCategory.title}</span>
@@ -140,10 +142,19 @@ export default function SelectSection() {
           <span className="text-red-500 text-[11px] mt-2">
             {(productBrand.title.length === 0 ||
               productBrand.title.length < 1) &&
-              "Brand field is required and should be at least one character long!"}
+              "Brand field is required"}
             {productBrand.title.length > 50 &&
               "This filed must not exceed 50 characters!"}
           </span>
+          <div className="w-full flex  justify-end">
+            <Button
+              onClick={onSubmit}
+              className="font-bold my-5 w-full sm:hidden block bg-[#004e92] hover:bg-[#004e92]/90"
+              disabled={!checkData}
+            >
+              CREATE
+            </Button>
+          </div>
         </div>
       </div>
     </div>
