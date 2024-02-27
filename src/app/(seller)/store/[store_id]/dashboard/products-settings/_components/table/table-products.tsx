@@ -71,7 +71,7 @@ export function DataTable() {
     <div className="w-full ">
       <Link
         href={
-          "/store/" + store_id + "/dashboard/products-settings/create-product"
+          "/store/" + store_id + "/dashboard/products-settings/create"
         }
         className={cn(
           buttonVariants({

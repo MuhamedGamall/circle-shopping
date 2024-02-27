@@ -70,7 +70,7 @@ export default function AccountMenu({
             {!loading ? (
               !data ? (
                 <Link
-                  href={"/store/create-store"}
+                  href={"/store/create"}
                   className="flex items-center text-[18px] gap-3 text-slate-700  "
                 >
                   <span className=" text-gray-700">

@@ -104,7 +104,7 @@ export const columns: ColumnDef<any>[] = [
               store_id +
               "/dashboard/products-settings/" +
               row.getValue("_id") +
-              "/update-product"
+              "/update"
             }
             className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
           >
@@ -250,7 +250,7 @@ export const columns: ColumnDef<any>[] = [
               store_id +
               "/dashboard/products-settings/" +
               row.getValue("_id") +
-              "/update-product"
+              "/update"
             }
             className={cn(
               buttonVariants({
