@@ -59,7 +59,7 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const products = await Product.find({ store_personal_email: email }).lean();
+    const products = await Product.find({ store_id ,store_personal_email: email }).lean();
 
     return NextResponse.json(products);
   } catch (error) {

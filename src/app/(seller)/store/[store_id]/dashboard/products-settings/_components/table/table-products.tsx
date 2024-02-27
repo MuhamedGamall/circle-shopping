@@ -140,26 +140,31 @@ export function DataTable() {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length
-            ? table.getRowModel().rows.map((row, i) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className="text-center text-[12px] "
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            : <LoadingSkeleton tableColsLength={columns.length}/>}
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row, i) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id} className="text-center text-[12px] ">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : loading ? (
+            <LoadingSkeleton tableColsLength={columns.length} />
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={columns.length + 1}
+                className="h-24 text-center"
+              >
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
       <div className="flex items-center justify-end space-x-2 py-4">
