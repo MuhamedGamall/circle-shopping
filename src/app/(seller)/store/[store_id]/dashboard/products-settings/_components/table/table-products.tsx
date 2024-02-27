@@ -39,6 +39,7 @@ import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useParams } from "next/navigation";
+import { LoadingSkeleton } from "./table-loading";
 
 export function DataTable() {
   const { store_id } = useParams();
@@ -66,7 +67,6 @@ export function DataTable() {
       rowSelection,
     },
   });
-
   return (
     <div className="w-full ">
       <Link
@@ -140,29 +140,26 @@ export function DataTable() {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row, i) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="text-center text-[12px] ">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell
-                colSpan={columns.length + 1}
-                className="h-24 text-center"
-              >
-                {loading ? "Loading..." : "No results."}
-              </TableCell>
-            </TableRow>
-          )}
+          {table.getRowModel().rows?.length
+            ? table.getRowModel().rows.map((row, i) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      className="text-center text-[12px] "
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            : <LoadingSkeleton tableColsLength={columns.length}/>}
         </TableBody>
       </Table>
       <div className="flex items-center justify-end space-x-2 py-4">
