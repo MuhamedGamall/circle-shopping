@@ -13,13 +13,17 @@ export async function POST(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    if (!user) {
+    const store = await Store.findOne({
+      personal_email: email,
+    })
+
+    if (!user || store) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const store = await Store.create({ ...body, personal_email: email });
+    const create = await Store.create({ ...body, personal_email: email });
 
-    return NextResponse.json(store);
+    return NextResponse.json(create);
   } catch (error) {
     console.log("[CREATE-STORE]", error);
     return new NextResponse("Internal Error", { status: 500 });
