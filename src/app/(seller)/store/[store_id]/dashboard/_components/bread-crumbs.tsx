@@ -17,7 +17,7 @@ export default function BreadCrumbs() {
 
   return (
     <div
-      className={cn("flex items-center gap-1 mb-5 break-all  overflow-x-auto", {
+      className={cn("flex items-center gap-3 mb-5 break-all  overflow-x-auto", {
         hidden: crumbs.length === 1,
       })}
     >
