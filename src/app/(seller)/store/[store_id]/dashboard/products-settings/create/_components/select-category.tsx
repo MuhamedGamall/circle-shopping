@@ -10,8 +10,8 @@ export default function SelectCategory({
 }: {
   data: any;
   label: string;
-  setValue: Dispatch<SetStateAction<{ title: string }>>;
-  value: { title: string };
+  setValue: Dispatch<SetStateAction<string>>;
+  value: string;
 }) {
   return (
     <div className=" flex flex-col justify-center mb-[50px]">
@@ -26,13 +26,12 @@ export default function SelectCategory({
           <div className="  w-full h-full flex flex-col justify-center ">
             {data.map((el: any, i: any) => (
               <div
-                onClick={() => setValue(el)}
+                onClick={() => setValue(el?.title)}
                 key={i}
                 className={cn(
                   "cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between",
                   {
-                    "bg-sky-700/20 text-sky-700 font-bold":
-                      el.title === value?.title,
+                    "bg-sky-700/20 text-sky-700 font-bold": el.title === value,
                   }
                 )}
               >

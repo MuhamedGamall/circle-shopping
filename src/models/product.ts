@@ -1,4 +1,4 @@
-import { model, models, Schema } from "mongoose";
+import mongoose, { model, models, Schema } from "mongoose";
 const shipping_details = new Schema({
   size: { type: Number },
   size_type: { type: String },
@@ -11,24 +11,24 @@ const ProductSchema = new Schema(
     store_personal_email: { type: String, required: true },
     title: { type: String },
     image: { type: String },
-    is_stock: { type: Boolean, default: true },
     description: { type: String },
     department: { type: String },
     model_number: { type: String },
     model_name: { type: String },
     item_pack_quantity: { type: Number, default: 1 },
-    warranty: { type: Number },
-    item_condition: { type: String },
+    warranty: { type: String },
+    item_condition: { type: String, default: "new" },
     colour: { type: String },
     box_details: { type: String },
-    model_height: { type: Number },
+    model_height: { type: String },
     sizes: [{ type: String }],
     specifications: [{ type: String }],
     highlights: [{ type: String }],
     category: {
-      main_category: { title: { type: String, required: true } },
-      sub_category: { title: { type: String, required: true } },
-      brand: { title: { type: String, required: true } },
+      main_category: { type: String, required: true },
+      sub_category: { type: String, required: true },
+      brand: { type: String, required: true },
+      _id: mongoose.Types.ObjectId,
     },
     shipping: {
       shipping_length: shipping_details,
@@ -37,7 +37,7 @@ const ProductSchema = new Schema(
       shipping_weight: shipping_details,
     },
     price: {
-      base_price: { type: Number, default: 0 },
+      base_price: { type: Number, default: 0.01 },
       offer: {
         is_offered: { type: Boolean, default: false },
         start_date: { type: Date },

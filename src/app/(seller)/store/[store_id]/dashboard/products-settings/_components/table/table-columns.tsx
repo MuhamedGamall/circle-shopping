@@ -83,7 +83,7 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }: any) => {
       return (
         <span className=" max-w-[150px] overflow-x-auto text-center  whitespace-nowrap">
-          {row.getValue("category")?.main_category?.title}
+          {row.getValue("category")?.main_category}
         </span>
       );
     },

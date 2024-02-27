@@ -34,18 +34,18 @@ const categories: { title: string }[] = [
 export default function SelectSection() {
   const { store_id } = useParams();
   const router = useRouter();
-  const [mainCategory, setMainCategory] = useState({ title: "" });
-  const [subCategory, setSubCategory] = useState({ title: "" });
-  const [productBrand, setProductBrand] = useState({ title: "" });
+  const [mainCategory, setMainCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [productBrand, setProductBrand] = useState("");
 
   const checkData =
-    productBrand.title.trim() &&
-    subCategory.title.trim() &&
-    mainCategory.title.trim() &&
-    productBrand.title.length <= 50;
+    productBrand.trim() &&
+    subCategory &&
+    mainCategory &&
+    productBrand.length <= 50;
 
   const fullData = {
-    productBrand: { title: productBrand.title.trim() },
+    productBrand: productBrand.trim(),
     subCategory,
     mainCategory,
   };
@@ -94,11 +94,11 @@ export default function SelectSection() {
               Categories selected
             </span>
             <div className="[&>span]:whitespace-nowrap   flex items-center gap-1 [&>span]:text-sky-700 [&>span]:text-sm w-[90%] border-slate-200 border py-1 px-3 rounded-md">
-              <span>{mainCategory.title}</span>
+              <span>{mainCategory}</span>
               <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
-              <span>{subCategory.title}</span>
+              <span>{subCategory}</span>
               <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
-              <span>{productBrand.title}</span>
+              <span>{productBrand}</span>
             </div>
           </div>
         )}
@@ -132,18 +132,17 @@ export default function SelectSection() {
             <Input
               type="text"
               name="brand"
-              value={productBrand.title}
+              value={productBrand}
               placeholder="Enter your product brand"
-              onChange={(e) => setProductBrand({ title: e.target.value })}
+              onChange={(e) => setProductBrand(e.target.value)}
               maxLength={50}
               minLength={1}
             />
           </Label>
           <span className="text-red-500 text-[11px] mt-2">
-            {(productBrand.title.length === 0 ||
-              productBrand.title.length < 1) &&
+            {(productBrand.length === 0 || productBrand.length < 1) &&
               "Brand field is required"}
-            {productBrand.title.length > 50 &&
+            {productBrand.length > 50 &&
               "This filed must not exceed 50 characters!"}
           </span>
           <div className="w-full flex  justify-end">
