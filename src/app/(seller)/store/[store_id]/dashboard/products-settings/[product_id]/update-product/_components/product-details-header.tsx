@@ -1,7 +1,17 @@
-import React from 'react'
+"use client";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getProduct } from "@/lib/RTK/slices/products-slice";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function ProductDetailsHeader() {
-  return (
-    <div>ProductDetalsHeader</div>
-  )
+  const { store_id, product_id } = useParams();
+  const dispatch = useAppDispatch();
+  const { product } = useAppSelector((state) => state.products);
+  useEffect(() => {
+    dispatch(getProduct({ store_id, product_id }));
+  }, [dispatch, product_id, store_id]);
+  console.log(product);
+
+  return <div>ProductDetalsHeader</div>;
 }

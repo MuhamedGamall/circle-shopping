@@ -1,7 +1,7 @@
-import React from 'react'
+import ProductDetailsHeader from './_components/product-details-header'
 
 export default function UpdateProductPage() {
   return (
-    <div>UpdateProduct</div>
+    <ProductDetailsHeader/>
   )
 }

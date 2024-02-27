@@ -4,12 +4,28 @@ import axios from "axios";
 export const getProducts: any = createAsyncThunk(
   "productsSlice/getProducts",
   async (store_id, thunkApi) => {
-    
     const { rejectWithValue } = thunkApi;
     try {
       const products = (await axios.get("/api/store/" + store_id + "/products"))
         .data;
       return products;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const getProduct: any = createAsyncThunk(
+  "productsSlice/getProduct",
+  async (data: { store_id: string; product_id: string }, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const product = (
+        await axios.get(
+          "/api/store/" + data?.store_id + "/products/" + data?.product_id
+        )
+      ).data;
+      return product;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -82,6 +98,7 @@ export const getProducts: any = createAsyncThunk(
 
 const initialState: any = {
   products: [],
+  product: null,
   loading: false,
   error: null,
 };
@@ -108,6 +125,28 @@ const productsSlice = createSlice({
       )
       .addCase(
         getProducts.rejected,
+        (state: any, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+      builder
+      .addCase(
+        getProduct.pending,
+        (state: any, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getProduct.fulfilled,
+        (state: any, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.product = action.payload;
+        }
+      )
+      .addCase(
+        getProduct.rejected,
         (state: any, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
