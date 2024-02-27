@@ -16,6 +16,7 @@ export const columns: ColumnDef<any>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
+        className="uppercase"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -50,7 +51,7 @@ export const columns: ColumnDef<any>[] = [
           width={600}
           height={819}
           loading="lazy"
-          className=" rounded-md w-[60px] h-[82px] object-cover"
+          className=" uppercase rounded-md w-[60px] h-[82px] object-cover"
         />
       ) : (
         <div className=" w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">
@@ -64,7 +65,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "category",
     header: ({ column }) => {
-      return <div className="">Category</div>;
+      return <div className="uppercase">Category</div>;
     },
     cell: ({ row }: any) => {
       return (
@@ -82,7 +83,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "_id",
     header: ({ column }) => {
-      return <div className="">Product ID</div>;
+      return <div className="uppercase">Product ID</div>;
     },
     cell: ({ row }) => {
       function ProductIdLink() {
@@ -111,15 +112,14 @@ export const columns: ColumnDef<any>[] = [
     accessorKey: "price",
     header: ({ column }) => {
       return (
-        <div className="">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            price
-            <ArrowUpDown className="ml-2 h-4 w-4 " />
-          </Button>
-        </div>
+        <Button
+          className="uppercase"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          price
+          <ArrowUpDown className="ml-2 h-4 w-4 " />
+        </Button>
       );
     },
     cell: ({ row }: any) => {
@@ -135,6 +135,7 @@ export const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="uppercase"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -156,6 +157,7 @@ export const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="uppercase"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -184,6 +186,7 @@ export const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="uppercase"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -206,6 +209,7 @@ export const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="uppercase"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -226,7 +230,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "actions",
     header: ({ column }) => {
-      return <div className="">actions</div>;
+      return <div className="uppercase">actions</div>;
     },
     cell: ({ row }: any) => {
       function ProductIdLink() {
@@ -243,8 +247,7 @@ export const columns: ColumnDef<any>[] = [
             className={cn(
               buttonVariants({
                 variant: "blue",
-                className:
-                  "w-fit text-[13px] h-[28px] px-4  max-w-[150px] overflow-x-auto  ",
+                className: "w-fit text-[13px] h-[28px] px-4    ",
               })
             )}
           >

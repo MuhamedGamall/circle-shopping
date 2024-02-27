@@ -119,12 +119,12 @@ export function DataTable() {
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <>
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-center uppercase text-[#888888] whitespace-nowrap text-[11px]"
+                      className="text-center  text-[#888888] whitespace-nowrap "
                     >
                       {header.isPlaceholder
                         ? null
