@@ -1,10 +1,9 @@
 "use client";
 import { LucideLayoutDashboard } from "lucide-react";
 import { useParams } from "next/navigation";
-import { BsCartCheck } from "react-icons/bs";
+import { BsArchive, BsCartCheck } from "react-icons/bs";
 import { LiaBoxesSolid, LiaComments } from "react-icons/lia";
 import { MdStorefront } from "react-icons/md";
-import { RiArchiveDrawerLine } from "react-icons/ri";
 import { TbHelp } from "react-icons/tb";
 import SidebarItem from "./sidebar-item";
 const routes = [
@@ -36,7 +35,7 @@ const routes = [
   {
     href: "/dashboard/archive",
     label: "Archive",
-    icon: RiArchiveDrawerLine,
+    icon: BsArchive,
   },
   {
     href: "/dashboard/help",
