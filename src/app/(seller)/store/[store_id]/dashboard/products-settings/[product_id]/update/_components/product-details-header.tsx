@@ -11,7 +11,6 @@ export default function ProductDetailsHeader() {
   useEffect(() => {
     dispatch(getProduct({ store_id, product_id }));
   }, [dispatch, product_id, store_id]);
-  console.log(product);
 
   return <div>ProductDetalsHeader</div>;
 }

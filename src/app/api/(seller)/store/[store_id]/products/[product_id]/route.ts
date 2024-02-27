@@ -28,7 +28,6 @@ export async function GET(
       store_personal_email: email,
       _id: product_id,
     }).lean();
-    console.log(product);
 
     return NextResponse.json(product);
   } catch (error) {
