@@ -26,14 +26,19 @@ export default function SidebarItem({
           className={cn(
             "flex items-center md:justify-start justify-center gap-2  hover:bg-[#fafafa] transition-[.2s] py-4 md:px-6 ",
             {
-              "bg-[#fafafa] border-slate-400 border-r ":
+              "bg-[#fafafa] border-slate-400 border-r [&>span]:text-[#3866df] [&>svg]:text-[#3866df]":
                 pathname.endsWith(href),
             }
           )}
           href={dashboardLink + href}
         >
-          <Icon className="h-5 w-5  text-slate-700" />
-          <span className="md:block hidden text-slate-900">{label}</span>
+          <Icon className={"h-5 w-5  text-slate-700"} />
+          <span
+            className={"md:block hidden text-slate-900"
+              }
+          >
+            {label}
+          </span>
         </Link>
       </li>
     </TooltipWrapper>

@@ -51,14 +51,27 @@ export const columns: ColumnDef<any>[] = [
           width={600}
           height={819}
           loading="lazy"
-          className=" uppercase rounded-md w-[60px] h-[82px] object-cover"
+          className=" mx-auto uppercase rounded-md w-[60px] h-[82px] object-cover"
         />
       ) : (
-        <div className=" w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">
+        <div className=" mx-auto w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">
           <div className="opacity-[.7]">
             <Icons.logo h="20" w="20" />
           </div>
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => {
+      return <div className="uppercase">Title</div>;
+    },
+    cell: ({ row }: any) => {
+      return (
+        <span className=" max-w-[150px] overflow-x-auto  text-center   whitespace-nowrap">
+          {row.getValue("title") || "--"}
+        </span>
       );
     },
   },
@@ -69,14 +82,9 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <div className="flex flex-col justify-center  max-w-[150px] overflow-x-auto ">
-          <span className="text-[16px] font-bold whitespace-nowrap">
-            {row.getValue("category")?.brand?.title || "--"}
-          </span>
-          <span className="text-[16px]  whitespace-nowrap">
-            {row.getValue("category")?.main_category?.title || "--"}
-          </span>
-        </div>
+        <span className=" max-w-[150px] overflow-x-auto text-center  whitespace-nowrap">
+          {row.getValue("category")?.main_category?.title}
+        </span>
       );
     },
   },
@@ -98,7 +106,7 @@ export const columns: ColumnDef<any>[] = [
               row.getValue("_id") +
               "/update-product"
             }
-            className="block whitespace-nowrap max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
+            className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
           >
             {row.getValue("_id")}
           </Link>
@@ -124,7 +132,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <div className=" whitespace-nowrap max-w-[150px] overflow-x-auto ">
+        <div className=" text-center  whitespace-nowrap max-w-[150px] overflow-x-auto ">
           {formatPrice(row.getValue("price")?.base_price || 0)}
         </div>
       );
@@ -146,7 +154,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <div className=" whitespace-nowrap max-w-[150px] overflow-x-auto ">
+        <div className=" text-center  whitespace-nowrap max-w-[150px] overflow-x-auto ">
           {row.getValue("quantity_in_stock")} QTY
         </div>
       );
@@ -173,7 +181,7 @@ export const columns: ColumnDef<any>[] = [
             !row.getValue("is_live")
               ? "border-[#f35f31] text-[#f35f31]"
               : "border-green-700 text-green-700",
-            " rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
+            " mx-auto  rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
           )}
         >
           {row.getValue("is_live") ? "Live" : "Not live"}
@@ -186,7 +194,7 @@ export const columns: ColumnDef<any>[] = [
     header: ({ column }) => {
       return (
         <Button
-          className="uppercase"
+          className="uppercase "
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -198,7 +206,7 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const createdAt: string = row.getValue("createdAt");
       return (
-        <div className="text-right font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
+        <div className=" text-center  font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
           {formatDate(createdAt)}
         </div>
       );
@@ -221,7 +229,7 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const updatedAt: string = row.getValue("updatedAt");
       return (
-        <div className="text-right font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
+        <div className=" text-center  font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
           {formatDate(updatedAt)}
         </div>
       );
@@ -247,7 +255,7 @@ export const columns: ColumnDef<any>[] = [
             className={cn(
               buttonVariants({
                 variant: "blue",
-                className: "w-fit text-[13px] h-[28px] px-4    ",
+                className: " text-center   w-fit text-[13px] h-[28px] px-4    ",
               })
             )}
           >
