@@ -28,7 +28,7 @@ export default function ProductDetailsHeader() {
               </div>
             </div>
           )}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col gap-2 justify-center">
             <div className="flex gap-2 items-center">
               <span className="font-bold text-sm capitalize">
                 {truncateText(data?.category?.brand || "", 20)}
