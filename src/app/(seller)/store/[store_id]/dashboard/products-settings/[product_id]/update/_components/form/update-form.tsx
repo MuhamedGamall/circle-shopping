@@ -13,11 +13,58 @@ import useProduct from "@/hooks/use-product";
 
 export default function UpdateForm() {
   const router = useRouter();
-  const { data } = useProduct();
+  const { data, loading } = useProduct();
 
   const form = useForm<z.infer<typeof Productschema>>({
     resolver: zodResolver(Productschema),
     defaultValues: {
+      is_live: false,
+      title: "",
+      image: "",
+      description: "",
+      department: "",
+      model_number: "",
+      model_name: "",
+      item_pack_quantity: 0,
+      warranty: "",
+      item_condition: "",
+      colour: "",
+      box_details: "",
+      model_height: "",
+      sizes: [],
+      specifications: [],
+      highlights: [],
+      shipping: {
+        shipping_length: {
+          size: 0,
+          size_type: "",
+        },
+        shipping_height: {
+          size: 0,
+          size_type: "",
+        },
+        shipping_width_depth: {
+          size: 0,
+          size_type: "",
+        },
+        shipping_weight: {
+          size: 0,
+          size_type: "",
+        },
+      },
+      price: {
+        base_price: 0.01,
+        offer: {
+          is_offered: false,
+          start_date: null,
+          end_date: null,
+          discount_percentage: 0,
+        },
+      },
+      quantity_in_stock: 0,
+      max_purchase_quantity: 1,
+    },
+    values: {
       is_live: data?.is_live || false,
       title: data?.title || "",
       image: data?.image || "",
@@ -56,8 +103,8 @@ export default function UpdateForm() {
         base_price: data?.price?.base_price || 0.01,
         offer: {
           is_offered: data?.price?.offer?.is_offered || false,
-          start_date: data?.price?.offer?.start_date,
-          end_date: data?.price?.offer?.end_date,
+          start_date: data?.price?.offer?.start_date || null,
+          end_date: data?.price?.offer?.end_date || null,
           discount_percentage: data?.price?.offer?.discount_percentage || 0,
         },
       },
@@ -72,10 +119,22 @@ export default function UpdateForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="gap-5 flex flex-col items-center justify-center"
-      ></form>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <div>
+          <CustomField
+            label="Display name *"
+            labelClassName={"text-slate-700"}
+            form={form}
+            disabled={isSubmitting || loading}
+            name="display_name"
+            type={"text"}
+            minLength={1}
+            maxLength={30}
+            className={"w-full"}
+            placeholder="Display name "
+          />
+        </div>
+      </form>
     </Form>
   );
 }
