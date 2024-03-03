@@ -9,7 +9,7 @@ import { BsChevronRight } from "react-icons/bs";
 export default function ProductDetailsHeader() {
   const { data } = useProduct();
   return (
-    <div className="h-full">
+    <div className="h-full mb-8">
       <div className="bg-[#eff3fd] px-2 py-1 sticky top-[100px] flex items-center justify-between w-full gap-2">
         <div className="flex items-center gap-2 ">
           {!!data?.image ? (
@@ -46,8 +46,12 @@ export default function ProductDetailsHeader() {
             </div>
           </div>
         </div>
-        <Button variant={"blue"} className="rounded-sm px-5 text-[12px]">
-          Save Changes
+        <Button
+          variant={"blue"}
+          disabled
+          className="rounded-sm px-5 text-[12px]"
+        >
+          Live
         </Button>
       </div>
     </div>

@@ -25,6 +25,7 @@ const config = {
       colors: {
         main: "#feee00",
         secondMain: "#404553",
+        shade:'#6f727d',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

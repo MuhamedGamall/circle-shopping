@@ -1,140 +1,34 @@
 "use client";
-import CustomField from "@/components/custom-field";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import toast from "react-hot-toast";
-import { Productschema } from "../../schema";
+import SectionTitle from "@/components/section-title";
 import useProduct from "@/hooks/use-product";
 
+import ProductDetailsHeader from "../product-details-header";
+import ItemConditionForm from "./condition-form";
+import PriceForm from "./price-form";
+import WarrantyForm from "./warranty-form";
+import ImageForm from "./image-form/image-form";
+
 export default function UpdateForm() {
-  const router = useRouter();
   const { data, loading } = useProduct();
 
-  const form = useForm<z.infer<typeof Productschema>>({
-    resolver: zodResolver(Productschema),
-    defaultValues: {
-      is_live: false,
-      title: "",
-      image: "",
-      description: "",
-      department: "",
-      model_number: "",
-      model_name: "",
-      item_pack_quantity: 0,
-      warranty: "",
-      item_condition: "",
-      colour: "",
-      box_details: "",
-      model_height: "",
-      sizes: [],
-      specifications: [],
-      highlights: [],
-      shipping: {
-        shipping_length: {
-          size: 0,
-          size_type: "",
-        },
-        shipping_height: {
-          size: 0,
-          size_type: "",
-        },
-        shipping_width_depth: {
-          size: 0,
-          size_type: "",
-        },
-        shipping_weight: {
-          size: 0,
-          size_type: "",
-        },
-      },
-      price: {
-        base_price: 0.01,
-        offer: {
-          is_offered: false,
-          start_date: null,
-          end_date: null,
-          discount_percentage: 0,
-        },
-      },
-      quantity_in_stock: 0,
-      max_purchase_quantity: 1,
-    },
-    values: {
-      is_live: data?.is_live || false,
-      title: data?.title || "",
-      image: data?.image || "",
-      description: data?.description || "",
-      department: data?.department || "",
-      model_number: data?.model_number || "",
-      model_name: data?.model_name || "",
-      item_pack_quantity: data?.item_pack_quantity || 0,
-      warranty: data?.warranty || "",
-      item_condition: data?.item_condition || "",
-      colour: data?.colour || "",
-      box_details: data?.box_details || "",
-      model_height: data?.model_height || "",
-      sizes: data?.sizes || [],
-      specifications: data?.specifications || [],
-      highlights: data?.highlights || [],
-      shipping: {
-        shipping_length: {
-          size: data?.shipping?.shipping_length?.size || 0,
-          size_type: data?.shipping?.shipping_length?.size_type || "",
-        },
-        shipping_height: {
-          size: data?.shipping?.shipping_height?.size || 0,
-          size_type: data?.shipping?.shipping_height?.size_type || "",
-        },
-        shipping_width_depth: {
-          size: data?.shipping?.shipping_width_depth?.size || 0,
-          size_type: data?.shipping?.shipping_width_depth?.size_type || "",
-        },
-        shipping_weight: {
-          size: data?.shipping?.shipping_weight?.size || 0,
-          size_type: data?.shipping?.shipping_weight?.size_type || "",
-        },
-      },
-      price: {
-        base_price: data?.price?.base_price || 0.01,
-        offer: {
-          is_offered: data?.price?.offer?.is_offered || false,
-          start_date: data?.price?.offer?.start_date || null,
-          end_date: data?.price?.offer?.end_date || null,
-          discount_percentage: data?.price?.offer?.discount_percentage || 0,
-        },
-      },
-      quantity_in_stock: data?.quantity_in_stock || 0,
-      max_purchase_quantity: data?.max_purchase_quantity || 1,
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof Productschema>) {}
-
-  const { isSubmitting, isValid } = form.formState;
-
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
-        <div>
-          <CustomField
-            label="Display name *"
-            labelClassName={"text-slate-700"}
-            form={form}
-            disabled={isSubmitting || loading}
-            name="display_name"
-            type={"text"}
-            minLength={1}
-            maxLength={30}
-            className={"w-full"}
-            placeholder="Display name "
+    <div>
+      <ProductDetailsHeader />
+      <div className="rounded-sm border ">
+        <div className="flex items-center gap-2 p-3 border-b">
+          <SectionTitle
+            title="Product Details"
+            className="text-[16px]  sm:text-[16px]"
           />
+          <p className="text-[11px] text-shade ">
+            Fill all details to get your products online
+          </p>
         </div>
-      </form>
-    </Form>
+        <PriceForm data={data} loading={loading} />
+        <ImageForm data={data} loading={loading} />
+        <ItemConditionForm data={data} loading={loading} />
+        <WarrantyForm data={data} loading={loading} />
+      </div>
+    </div>
   );
 }

@@ -103,7 +103,6 @@
   box-shadow: rgba(0, 0, 0, 0.1) 0px -1px 8px;
 }
 .create-store-img {
-
   min-height: calc(-77px + 100vh);
   display: flex;
   flex-direction: column;

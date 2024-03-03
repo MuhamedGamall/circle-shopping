@@ -25,7 +25,7 @@ export default function NavLinks() {
               "flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6] px-2 sm:border-r border-slate-600"
             }
           >
-            Log in <User className={"h-4 w-4 text-secondMain/50"} />
+            Log in 
           </Link>
           <Link
             href="/auth/create-account"
