@@ -66,7 +66,7 @@ export default function WarrantyForm({
                     defaultValue={field.value}
                   >
                     <SelectTrigger className=" ">
-                      <SelectValue placeholder="Warranty" />
+                      <SelectValue placeholder="Select Warranty" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

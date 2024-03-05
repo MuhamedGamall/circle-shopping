@@ -13,7 +13,6 @@ export const priceSchema = z.object({
   //   .trim()
   //   .min(5, { message: "Field is required" })
   //   .max(200, { message: "Titel should be on a lot of 200 characters." }),
-  // image: z.string(),
   // description: z
   //   .string()
   //   .trim()
@@ -81,34 +80,33 @@ export const priceSchema = z.object({
   //   shipping_weight: shipping,
   // }),
   price: z.object({
-    base_price: z
+    base_price: z.coerce
       .number()
-      .refine((value) => value >= 0.01, "Invalid Price")
-      .default(0.01),
+      .refine((value) => value >= 0.01, "Invalid Price"),
     offer: z.object({
-      is_offered: z
+      is_offered: z.coerce
         .boolean()
-        .refine((value) => value === true || false, "Field is required")
-        .default(false),
-      start_date: z
+        .refine((value) => value, "Field is required"),
+
+      start_date: z.coerce
         .date()
-        .refine(
-          (value) => !isNaN(new Date(value).getTime()),
-          "Date format should be YYYY-MM-DD HH:mm:ss."
-        )
+        .refine((value) => !isNaN(new Date(value).getTime()), {
+          message: "Date format should be DD-MM-YYYY.",
+        })
+        .nullable(),
+      end_date: z.coerce
+        .date()
+        .refine((value) => !isNaN(new Date(value).getTime()), {
+          message: "Date format should be DD-MM-YYYY.",
+        })
         .nullable(),
 
-      end_date: z
-        .date()
-        .refine(
-          (value) => !isNaN(new Date(value).getTime()),
-          "Date format should be YYYY-MM-DD HH:mm:ss."
-        )
-        .nullable(),
-
-      discount_percentage: z
+      discount_percentage: z.coerce
         .number()
-        .refine((value) => value > -1 && value <= 100),
+        .refine(
+          (value) => value >= 1 && value <= 100,
+          "Discount percentage must be between 1% and 100%."
+        ),
     }),
   }),
   // quantity_in_stock: z
@@ -126,6 +124,31 @@ export const itemConditionSchema = z.object({
 export const warrantySchema = z.object({
   warranty: z.string().min(1, { message: "Field is required" }),
 });
-export const imageSchema = z.object({
-  image: z.string().refine(value=> value),
+
+export const productBasicSchema = z.object({
+  title: z
+    .string()
+    .trim()
+    .min(5, { message: "Field is required" })
+    .max(200, { message: "Titel should be on a lot of 200 characters." }),
+  description: z
+    .string()
+    .trim()
+    .max(4000, {
+      message: "description should be on a lot of 4000 characters.",
+    })
+    .optional(),
+  model_number: z
+    .string()
+    .trim()
+    .max(1000, {
+      message: "Model number should be on a lot of 1000 characters.",
+    })
+    .optional(),
+  item_pack_quantity: z.coerce
+    .number()
+    .refine((value) => value >= 0, "Field is required"),
+  sizes: z
+    .array(z.string().trim())
+    .min(1, { message: "At least one size must be added." }),
 });

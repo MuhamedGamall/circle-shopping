@@ -53,7 +53,7 @@ export default function PriceForm({
             title="Pricing."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
           />
-          <div className="grid grid-cols-1 gap-y-3 gap-x-5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-y-3 gap-x-5 sm:grid-cols-2 mb-5 items-baseline">
             <CustomField
               label="Base price *"
               labelClassName={"text-shade text-[12px]"}

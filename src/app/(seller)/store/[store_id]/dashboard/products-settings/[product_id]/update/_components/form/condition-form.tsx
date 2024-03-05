@@ -35,10 +35,10 @@ export default function ItemConditionForm({
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
     defaultValues: {
-      item_condition: "new",
+      item_condition: "New",
     },
     values: {
-      item_condition: data?.item_condition || "new",
+      item_condition: data?.item_condition || "New",
     },
   });
 
@@ -67,13 +67,13 @@ export default function ItemConditionForm({
                     defaultValue={field.value}
                   >
                     <SelectTrigger className=" ">
-                      <SelectValue placeholder="Item condition" />
+                      <SelectValue placeholder="Select Condition" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Conditions</SelectLabel>
-                        <SelectItem value="new">New</SelectItem>
-                        <SelectItem value="used">Used</SelectItem>
+                        <SelectItem value="New">New</SelectItem>
+                        <SelectItem value="Used">Used</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>

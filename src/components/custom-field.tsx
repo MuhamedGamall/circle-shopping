@@ -49,7 +49,9 @@ export default function CustomField({
         name={name}
         render={({ field }) => (
           <FormItem className="w-full">
-            <FormLabel className={labelClassName}>{label}</FormLabel>
+            <FormLabel className={cn("capitalize", labelClassName)}>
+              {label}
+            </FormLabel>
             <FormControl>
               <div className="relative">
                 <Input
@@ -91,7 +93,9 @@ export default function CustomField({
       name={name}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className={labelClassName}>{label}</FormLabel>
+          <FormLabel className={cn("capitalize", labelClassName)}>
+            {label}
+          </FormLabel>
           <FormControl>
             <Input
               disabled={disabled}
