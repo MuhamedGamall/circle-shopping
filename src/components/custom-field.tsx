@@ -82,7 +82,7 @@ export default function CustomField({
                 </Button>
               </div>
             </FormControl>
-            <FormMessage className="text-red-700" />
+            <FormMessage className="text-red-700 text-sm" />
           </FormItem>
         )}
       />
@@ -108,7 +108,7 @@ export default function CustomField({
               className={cn("rounded-sm py-5", className)}
             />
           </FormControl>
-          <FormMessage className="text-red-700" />
+          <FormMessage className="text-red-700 text-sm" />
         </FormItem>
       )}
     />

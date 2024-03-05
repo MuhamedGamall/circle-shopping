@@ -7,6 +7,8 @@ const shipping_details = new Schema({
 const ProductSchema = new Schema(
   {
     is_live: { type: Boolean, default: false },
+    purchase_quantity:{ type: Number },
+    rate: { type: Number},
     store_id: { type: String, required: true },
     store_personal_email: { type: String, required: true },
     title: { type: String },

@@ -8,6 +8,7 @@ import PriceForm from "./price-form";
 import WarrantyForm from "./warranty-form";
 import ImageForm from "./image-form/image-form";
 import BasicForm from "./basic-form";
+import DetailsForm from "./details-form";
 
 export default function UpdateForm() {
   const { data, loading } = useProduct();
@@ -28,6 +29,7 @@ export default function UpdateForm() {
         <PriceForm data={data} loading={loading} />
         <ImageForm data={data} loading={loading} />
         <BasicForm data={data} loading={loading} />
+        <DetailsForm data={data} loading={loading} />
         <ItemConditionForm data={data} loading={loading} />
         <WarrantyForm data={data} loading={loading} />
       </div>

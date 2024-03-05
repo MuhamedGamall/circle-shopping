@@ -34,7 +34,7 @@ export default function WarrantyForm({
   const form = useForm<z.infer<typeof warrantySchema>>({
     resolver: zodResolver(warrantySchema),
     defaultValues: {
-      warranty: "No Warranty",
+      warranty: "",
     },
     values: {
       warranty: data?.item_condition || "No Warranty",

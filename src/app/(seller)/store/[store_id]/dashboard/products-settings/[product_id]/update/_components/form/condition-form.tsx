@@ -23,7 +23,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { itemConditionSchema } from "../../schema";
-import UploadButton from "@/components/upload-button";
 
 export default function ItemConditionForm({
   data,
@@ -35,7 +34,7 @@ export default function ItemConditionForm({
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
     defaultValues: {
-      item_condition: "New",
+      item_condition: "",
     },
     values: {
       item_condition: data?.item_condition || "New",
