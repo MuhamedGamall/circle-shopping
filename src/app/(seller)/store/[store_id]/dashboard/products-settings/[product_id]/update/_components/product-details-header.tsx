@@ -9,8 +9,8 @@ import { BsChevronRight } from "react-icons/bs";
 export default function ProductDetailsHeader() {
   const { data } = useProduct();
   return (
-    <div className="h-full mb-8">
-      <div className="bg-[#eff3fd] px-2 py-1 sticky top-[100px] flex items-center justify-between w-full gap-2">
+    <div className=" mb-8">
+      <div className="bg-[#eff3fd] px-2 py-1  flex items-center justify-between w-full gap-2">
         <div className="flex items-center gap-2 ">
           {!!data?.image ? (
             <Image

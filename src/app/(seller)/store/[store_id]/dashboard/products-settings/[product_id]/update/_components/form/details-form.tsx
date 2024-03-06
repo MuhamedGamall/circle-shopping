@@ -65,7 +65,7 @@ export default function DetailsForm({
   });
 
   async function onSubmit(values: z.infer<typeof productDeitalsSchema>) {
-    console.log({...values,specifications,highlights});
+    console.log({ ...values, specifications, highlights });
   }
   const { isSubmitting, isValid } = form.formState;
   return (
@@ -93,7 +93,7 @@ export default function DetailsForm({
               form={form}
               disabled={isSubmitting || loading}
               name="max_purchase_quantity"
-              type={"text"}
+              type={"number"}
               className={"w-full"}
               placeholder="max_purchase_quantity"
             />
@@ -123,7 +123,7 @@ export default function DetailsForm({
               form={form}
               disabled={isSubmitting || loading}
               name="quantity_in_stock"
-              type={"text"}
+              type={"number"}
               className={"w-full"}
               placeholder="quantity in stock"
             />
