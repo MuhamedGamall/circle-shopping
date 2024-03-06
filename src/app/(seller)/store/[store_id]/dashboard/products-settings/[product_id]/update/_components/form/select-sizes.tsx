@@ -59,7 +59,7 @@ export function SizesDropdownMenu({ form }: any) {
           </Button>
         </DropdownMenuTrigger>
         {errorMessage ? (
-          <span className="text-red-700 text-sm my-2 font-semibold">
+          <span className="text-red-700 text-[11px] my-2 font-semibold">
             At least one size must be added.
           </span>
         ) : (

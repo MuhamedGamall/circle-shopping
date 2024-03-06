@@ -191,7 +191,7 @@ export const warrantySchema = z.object({
 });
 
 const shipping = z.object({
-  size: z.number().refine((value) => value >= 1, "Field is required"),
+  size: z.coerce.number().refine((value) => value >= 1, {message:"Field is required"}),
   size_type: z.string().min(1, { message: "Field is required" }),
 });
 export const shippingSchema = z.object({

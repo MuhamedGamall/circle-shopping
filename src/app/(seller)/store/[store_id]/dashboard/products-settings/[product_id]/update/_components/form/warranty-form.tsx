@@ -94,7 +94,7 @@ export default function WarrantyForm({
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage className="text-red-700" />
+                <FormMessage className="text-red-700 text-[11px]" />
               </FormItem>
             )}
           />

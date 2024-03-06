@@ -168,7 +168,7 @@ export default function DetailsForm({
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  <FormMessage className="text-red-700" />
+                  <FormMessage className="text-red-700 text-[11px] "/>
                 </FormItem>
               )}
             />

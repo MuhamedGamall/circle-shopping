@@ -122,7 +122,7 @@ export default function FormFields() {
               />
             </div>
             {isSubmitted && !form.getValues("country") && (
-              <span className="text-red-700 text-sm font-semibold">
+              <span className="text-red-700 text-[11px] font-semibold">
                 Invalid Field.
               </span>
             )}

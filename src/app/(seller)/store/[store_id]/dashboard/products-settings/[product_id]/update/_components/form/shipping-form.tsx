@@ -1,13 +1,30 @@
 import CustomField from "@/components/custom-field";
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { shippingSchema } from "../../schema";
+import { Label } from "@/components/ui/label";
+import CustomSelectField from "@/components/custom-select-field";
 
 export default function ShippingForm({
   data,
@@ -48,7 +65,9 @@ export default function ShippingForm({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof shippingSchema>) {}
+  async function onSubmit(values: z.infer<typeof shippingSchema>) {
+    console.log(values);
+  }
 
   const { isSubmitting, isValid } = form.formState;
   return (
@@ -56,21 +75,97 @@ export default function ShippingForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="">
         <div className="pricing-section p-5 border-b">
           <SectionTitle
-            title="Pricing."
+            title="Shipping."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
           />
-          <div className="grid grid-cols-1 gap-y-3 gap-x-5 sm:grid-cols-2 mb-5 items-baseline">
+          <div className="flex flex-col gap-3 justify-center">
             <div>
-              <CustomField
-                label="Base price *"
-                labelClassName={"text-shade text-[12px]"}
-                form={form}
-                disabled={isSubmitting || loading}
-                name="price.base_price"
-                type={"number"}
-                className={"w-full"}
-                placeholder="Base price"
-              />
+              <Label className="text-shade text-[12px] mb-2 block">
+                Shipping Length *
+              </Label>
+              <div className="flex items-center">
+                <CustomField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  name="shipping.shipping_length.size"
+                  type={"number"}
+                  className={"w-full flex-[3] space-y-0 py-0"}
+                  placeholder="Shipping length"
+                />
+                <CustomSelectField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  className={"flex-[1] py-0 space-y-0"}
+                  name="shipping.shipping_length.size_type"
+                  selectData={["mm", "cm", "in", "m", "ft"]}
+                />
+              </div>
+            </div>
+            <div>
+              <Label className="text-shade text-[12px] mb-2 block">
+                Shipping Height *
+              </Label>
+              <div className="flex items-center">
+                <CustomField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  name="shipping.shipping_height.size"
+                  type={"number"}
+                  className={"w-full flex-[3] space-y-0 py-0"}
+                  placeholder="Shipping height"
+                />
+                <CustomSelectField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  className={"flex-[1] py-0 space-y-0"}
+                  name="shipping.shipping_height.size_type"
+                  selectData={["mm", "cm", "in", "m", "ft"]}
+                />
+              </div>
+            </div>
+            <div>
+              <Label className="text-shade text-[12px] mb-2 block">
+                Shipping Width/Depth *
+              </Label>
+              <div className="flex items-center">
+                <CustomField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  name="shipping.shipping_width_depth.size"
+                  type={"number"}
+                  className={"w-full flex-[3] space-y-0 py-0"}
+                  placeholder="Shipping width/depth"
+                />
+                <CustomSelectField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  className={"flex-[1] py-0 space-y-0"}
+                  name="shipping.shipping_width_depth.size_type"
+                  selectData={["mm", "cm", "in", "m", "mg", "ft"]}
+                />
+              </div>
+            </div>
+            <div>
+              <Label className="text-shade text-[12px] mb-2 block">
+                Shipping Weight *
+              </Label>
+              <div className="flex items-center">
+                <CustomField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  name="shipping.shipping_weight.size"
+                  type={"number"}
+                  className={"w-full flex-[3] space-y-0 py-0"}
+                  placeholder="Shipping length"
+                />
+                <CustomSelectField
+                  form={form}
+                  disabled={isSubmitting || loading}
+                  className={"flex-[1] py-0 space-y-0"}
+                  name="shipping.shipping_weight.size_type"
+                  selectData={["g", "lb", "KG", "ft"]}
+                />
+              </div>
             </div>
           </div>
           <Button

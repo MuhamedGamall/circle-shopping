@@ -50,7 +50,7 @@ export default function CustomTextarea({
               className={cn("rounded-sm py-5", className)}
             />
           </FormControl>
-          <FormMessage className="text-red-700" />
+          <FormMessage className="text-red-700 text-[11px]" />
         </FormItem>
       )}
     />
