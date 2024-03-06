@@ -26,14 +26,12 @@ export default function UpdateForm() {
             Fill all details to get your products online
           </p>
         </div>
-        <div>
-          <PriceForm data={data} loading={loading} />
-          <ImageForm data={data} loading={loading} />
-          <BasicForm data={data} loading={loading} />
-          <DetailsForm data={data} loading={loading} />
-          <ItemConditionForm data={data} loading={loading} />
-          <WarrantyForm data={data} loading={loading} />
-        </div>
+        <PriceForm data={data} loading={loading} />
+        <ImageForm data={data} loading={loading} />
+        <BasicForm data={data} loading={loading} />
+        <DetailsForm data={data} loading={loading} />
+        <ItemConditionForm data={data} loading={loading} />
+        <WarrantyForm data={data} loading={loading} />
       </div>
     </div>
   );
