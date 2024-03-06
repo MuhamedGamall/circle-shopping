@@ -174,14 +174,12 @@ export default function DetailsForm({
             />
           </div>
           <AddDetails
-            form={form}
             data={specifications}
             setData={setSpecifications}
             name={"specifications"}
             label={"specifications"}
           />
           <AddDetails
-            form={form}
             data={highlights}
             setData={setHighlights}
             name={"highlights"}
