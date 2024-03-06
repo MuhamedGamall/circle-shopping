@@ -22,7 +22,7 @@ export default function SelectCategory({
         <div className=" bg-slate-100  p-2 w-full text-sky-700 text-sm font-semibold">
           {label}
         </div>
-        <div className=" select-category  max-h-[430px]  overflow-y-auto w-full h-full">
+        <div className=" hide-scroll  max-h-[430px]  overflow-y-auto w-full h-full">
           <div className="  w-full h-full flex flex-col justify-center ">
             {data.map((el: any, i: any) => (
               <div

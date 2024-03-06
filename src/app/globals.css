@@ -5,11 +5,11 @@
   height: 5px;
   width: 5px; /* Width of the scrollbar */
 }
-.select-category::-webkit-scrollbar {
+.hide-scroll::-webkit-scrollbar {
   height: 0;
   width: 0; /* Width of the scrollbar */
 }
-.select-category::-webkit-scrollbar-thumb {
+.hide-scroll::-webkit-scrollbar-thumb {
   display: none; /* Thumb color on hover */
   
 }
