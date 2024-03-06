@@ -13,13 +13,14 @@ export default function BreadCrumbs() {
     .split("/")
     .slice(1, 3)
     .join("/")}/`;
+console.log(crumbs.length);
 
   return (
     <div
       className={cn(
         " hidden sm:flex sm:items-center gap-3 mb-5 break-all  overflow-x-auto",
         {
-          'hidden': crumbs.length === 1,
+          'sm:hidden': crumbs.length === 1,
         }
       )}
     >
