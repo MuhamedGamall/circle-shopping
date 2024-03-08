@@ -1,17 +1,15 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import ImageInstructions from "./image-instructions";
-import { FaCirclePlus } from "react-icons/fa6";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types";
-import { FormEvent } from "react";
-import { TbReplace } from "react-icons/tb";
-import { X } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { FaCirclePlus } from "react-icons/fa6";
+
+import ImageInstructions from "./image-instructions";
 import ImageItem from "./image-item";
+
 export default function ImageForm({
   data,
   loading,
@@ -21,42 +19,68 @@ export default function ImageForm({
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const images: FileList | null = e.target.files;
     if (!images) return;
 
-    // تصفية الصور المحددة لضمان توافق حجمها ونوعها مع الشروط المحددة
     const filteredImages = Array.from(images).filter(
       (file) => file.size <= 10 * 1024 * 1024 && file.type.startsWith("image/")
     );
 
     if (images.length !== filteredImages.length) {
-      toast.error("Some files are not images or exceed 10MB");
+      toast.error("Some files are not images or exceed 10MB", {
+        duration: 2000,
+      });
+      return;
     }
 
-    const numUploadedImages = imageValue.length + images.length;
-    if (numUploadedImages <= 10) {
-      filteredImages.forEach((image: File) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImageValue((prevImages) => [
-            ...prevImages,
-            reader.result as string,
-          ]);
-        };
-        reader.readAsDataURL(image);
-      });
-    } else toast.error("You can only upload up to 10 images.");
+    const numUploadedImages = imageValue.length + filteredImages.length;
+
+    if (numUploadedImages > 10) {
+      toast.error("You can only upload up to 10 images.", { duration: 2000 });
+      return;
+    }
+
+    for (const image of filteredImages) {
+      const isValidImage = await checkImageDimensions(image);
+      if (isValidImage) {
+        readerImage(image);
+      } else {
+        toast.error(
+          "Image dimensions should be at least 660px width and 900px height.",
+          { duration: 2000 }
+        );
+      }
+    }
   };
+
+  const checkImageDimensions = async (image: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(image);
+      img.onload = () => {
+        resolve(img.width >= 660 && img.height >= 900);
+      };
+    });
+  };
+
+  const readerImage = (image: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageValue((prevImages) => [...prevImages, reader.result as string]);
+    };
+    reader.readAsDataURL(image);
+  };
+
   return (
     <div className="image-section p-5 border-b">
       <SectionTitle
         title="Product Images."
         className="text-[16px] sm:text-[16px] text-slate-700 my-3"
       />
-      <form onSubmit={(e: FormEvent) => e.preventDefault()}>
+      <form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
         <div className="mb-5">
-          <span className=" text-[10px] text-shade sm:text-left text-center block">
+          <span className="text-[10px] text-shade sm:text-left text-center block">
             Upload image/s
           </span>
           <div className="py-3 hide-scroll flex items-center sm:justify-start justify-center flex-wrap gap-5 w-full sm:max-h-full max-h-[480px] sm:overflow-y-visible overflow-y-auto">
@@ -71,7 +95,12 @@ export default function ImageForm({
               Add image/s
             </label>
             {imageValue.map((el, i) => (
-              <ImageItem key={i} src={el} />
+              <ImageItem
+                key={i}
+                src={el}
+                idx={i}
+                setImageValue={setImageValue}
+              />
             ))}
           </div>
           <Input
@@ -80,7 +109,6 @@ export default function ImageForm({
             id="upload"
             className="hidden"
             accept="image/*"
-            maxLength={10}
             multiple
             disabled={imageValue.length === 10}
           />

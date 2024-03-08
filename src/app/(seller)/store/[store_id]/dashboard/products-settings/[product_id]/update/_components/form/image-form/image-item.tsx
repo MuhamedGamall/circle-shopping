@@ -1,9 +1,72 @@
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
 import { TbReplace } from "react-icons/tb";
 
-export default function ImageItem({ src }: { src: string }) {
+export default function ImageItem({
+  src,
+  idx,
+  setImageValue,
+}: {
+  src: string;
+  idx: number;
+  setImageValue: Dispatch<SetStateAction<string[]>>;
+}) {
+  const onDelete = (idx: number) => {
+    setImageValue((curr) => curr.filter((el, i) => i !== idx));
+  };
+
+  const onUpdate = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image: File | undefined = e.target.files?.[0];
+    if (!image) return;
+
+    if (image.size > 10 * 1024 * 1024 || !image.type.startsWith("image/")) {
+      toast.error(
+        image.size > 10 * 1024 * 1024
+          ? "File size should be less than 10MB"
+          : "This type of image is not supported",
+        { duration: 2000 }
+      );
+      return;
+    }
+    
+    const isValidImage = await checkImageDimensions(image);
+    if (isValidImage) {
+      readerImage(image);
+    } else {
+      toast.error(
+        "Image dimensions should be at least 660px width and 900px height.",
+        { duration: 2000 }
+      );
+    }
+  };
+
+  const checkImageDimensions = async (image: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(image);
+      img.onload = () => {
+        resolve(img.width >= 660 && img.height >= 900);
+      };
+    });
+  };
+
+  const readerImage = (image: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageValue((prevImages) => {
+        const newArr = [...prevImages];
+        newArr[idx] = reader.result as string;
+        return newArr;
+      });
+    };
+    reader.readAsDataURL(image);
+  };
+
   return (
     <div className="relative ">
       <Image
@@ -11,10 +74,25 @@ export default function ImageItem({ src }: { src: string }) {
         alt="image"
         height={200}
         width={200}
-        className="min-w-[140px] w-[140px] h-[230px] object-cover rounded-sm shadow-md"
+        className={cn(
+          "min-w-[140px] w-[140px] h-[230px] object-cover rounded-sm shadow-md"
+        )}
       />
-      <TbReplace className="cursor-pointer absolute shadow-md -top-3 right-5 h-6 w-6 text-slate-100 bg-slate-600 p-1 rounded-full" />
-      <X className="cursor-pointer absolute shadow-md -top-3 -right-2 h-6 w-6 text-slate-100 bg-red-600 p-1 rounded-full" />
+      <Label htmlFor={"image-" + idx}>
+        <Input
+          onChange={onUpdate}
+          id={"image-" + idx}
+          className="hidden"
+          type="file"
+          accept="image/*"
+          multiple
+        />
+        <TbReplace className="cursor-pointer absolute shadow-md -top-3 right-5 h-6 w-6 text-slate-100 bg-slate-600 p-1 rounded-full" />
+      </Label>
+      <X
+        onClick={() => onDelete(idx)}
+        className="cursor-pointer  absolute shadow-md -top-3 -right-2 h-6 w-6 text-slate-100 bg-red-600 p-1 rounded-full"
+      />
     </div>
   );
 }
