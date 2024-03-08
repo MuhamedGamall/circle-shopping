@@ -27,7 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { productDeitalsSchema } from "../../schema";
+import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
 import { useState } from "react";
 
@@ -40,8 +40,8 @@ export default function DetailsForm({
 }) {
   const [specifications, setSpecifications] = useState<string[]>([""]);
   const [highlights, setHighlights] = useState<string[]>([""]);
-  const form = useForm<z.infer<typeof productDeitalsSchema>>({
-    resolver: zodResolver(productDeitalsSchema),
+  const form = useForm<z.infer<typeof productDetailsSchema>>({
+    resolver: zodResolver(productDetailsSchema),
     defaultValues: {
       box_details: "",
       colour: "",
@@ -64,7 +64,7 @@ export default function DetailsForm({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof productDeitalsSchema>) {
+  async function onSubmit(values: z.infer<typeof productDetailsSchema>) {
     console.log({ ...values, specifications, highlights });
   }
   const { isSubmitting, isValid } = form.formState;

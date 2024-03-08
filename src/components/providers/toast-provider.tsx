@@ -9,13 +9,14 @@ export default function ToastProvider() {
         style: {
           padding: "10px",
           fontSize: "16px",
+          borderRadius: "0",
         },
         position: "top-right",
-        duration: 1800,
+        duration: 2100,
       }}
       containerStyle={{
-        top: 10,
-        left: 20,
+        top: 0,
+        left: -20,
       }}
     />
   );

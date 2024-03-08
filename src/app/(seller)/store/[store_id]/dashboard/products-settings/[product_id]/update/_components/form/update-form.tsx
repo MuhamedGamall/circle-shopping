@@ -10,6 +10,7 @@ import ImageForm from "./image-form/image-form";
 import BasicForm from "./basic-form";
 import DetailsForm from "./details-form";
 import ShippingForm from "./shipping-form";
+import OfferForm from "./offer-form";
 
 export default function UpdateForm() {
   const { data, loading } = useProduct();
@@ -28,6 +29,7 @@ export default function UpdateForm() {
           </p>
         </div>
         <PriceForm data={data} loading={loading} />
+        <OfferForm data={data} loading={loading} />
         <ImageForm data={data} loading={loading} />
         <BasicForm data={data} loading={loading} />
         <DetailsForm data={data} loading={loading} />

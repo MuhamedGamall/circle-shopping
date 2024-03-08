@@ -40,7 +40,6 @@ const ProductSchema = new Schema(
     price: {
       base_price: { type: Number, default: 0.01 },
       offer: {
-        is_offered: { type: Boolean, default: false },
         start_date: { type: Date },
         end_date: { type: Date },
         discount_percentage: { type: Number },

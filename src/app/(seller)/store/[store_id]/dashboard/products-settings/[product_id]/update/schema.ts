@@ -9,31 +9,50 @@ export const priceSchema = z.object({
     base_price: z.coerce
       .number()
       .refine((value) => value >= 0.01, "Invalid Price"),
-    offer: z.object({
-      is_offered: z.coerce
-        .boolean()
-        .refine((value) => value, "Field is required"),
+    // offer: z.object({
+    //   is_offered: z.coerce
+    //     .boolean()
+    //     .refine((value) => value, "Field is required"),
 
-      start_date: z.coerce
-        .date({
-          required_error: "Start date is required.",
-        })
-        .nullable(),
-      end_date: z.coerce
-        .date({
-          required_error: "End date is required.",
-        })
-        .nullable(),
-      discount_percentage: z.coerce
-        .number()
-        .refine(
-          (value) => value >= 1 && value <= 100,
-          "Discount percentage must be between 1% and 100%."
-        ),
-    }),
+    //   start_date: z.coerce
+    //     .date({
+    //       required_error: "Start date is required.",
+    //     })
+    //     .nullable(),
+    //   end_date: z.coerce
+    //     .date({
+    //       required_error: "End date is required.",
+    //     })
+    //     .nullable(),
+    //   discount_percentage: z.coerce
+    //     .number()
+    //     .refine(
+    //       (value) => value >= 1 && value <= 100,
+    //       "Discount percentage must be between 1% and 100%."
+    //     ),
+    // }),
   }),
 });
-
+export const offerSchema = z.object({
+  offer: z.object({
+    start_date: z.coerce
+      .date({
+        required_error: "Start date is required.",
+      })
+      .nullable(),
+    end_date: z.coerce
+      .date({
+        required_error: "End date is required.",
+      })
+      .nullable(),
+    discount_percentage: z.coerce
+      .number()
+      .refine(
+        (value) => value >= 1 && value <= 100,
+        "Discount percentage must be between 1% and 100%."
+      ),
+  }),
+});
 export const productBasicSchema = z.object({
   title: z
     .string()
@@ -92,7 +111,7 @@ export const productBasicSchema = z.object({
     .min(1, { message: "At least one size must be added." }),
 });
 
-export const productDeitalsSchema = z.object({
+export const productDetailsSchema = z.object({
   quantity_in_stock: z.coerce
     .number()
     .refine((value) => value >= 0, "Invalid Field"),
@@ -191,7 +210,9 @@ export const warrantySchema = z.object({
 });
 
 const shipping = z.object({
-  size: z.coerce.number().refine((value) => value >= 1, {message:"Field is required"}),
+  size: z.coerce
+    .number()
+    .refine((value) => value >= 1, { message: "Field is required" }),
   size_type: z.string().min(1, { message: "Field is required" }),
 });
 export const shippingSchema = z.object({
