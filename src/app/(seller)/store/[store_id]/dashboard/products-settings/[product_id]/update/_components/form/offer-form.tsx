@@ -44,8 +44,8 @@ export default function OfferForm({
       return;
     }
 
-    const endDate = new Date(values?.offer?.end_date)?.setHours(0, 0, 0, 0);
-    const startDate = new Date(values?.offer?.start_date)?.setHours(0, 0, 0, 0);
+    const endDate = new Date(values?.offer?.end_date as Date)?.setHours(0, 0, 0, 0);
+    const startDate = new Date(values?.offer?.start_date as Date)?.setHours(0, 0, 0, 0);
     const dateNow = new Date().setHours(0, 0, 0, 0);
 
     if (startDate < dateNow) {
