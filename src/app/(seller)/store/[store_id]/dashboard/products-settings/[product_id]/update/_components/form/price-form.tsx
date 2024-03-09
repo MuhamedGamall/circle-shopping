@@ -36,12 +36,11 @@ export default function PriceForm({
   });
 
   async function onSubmit(values: z.infer<typeof priceSchema>) {
-    console.log(values);
     try {
-      await axios.patch(
-        "/api/store/" + store_id + "/products/" + product_id,
-        values
-      );
+        await axios.patch(
+          "/api/store/" + store_id + "/products/" + product_id+'/price',
+          values
+        );
 
       toast.success("Product Updated successfully");
     } catch (error) {

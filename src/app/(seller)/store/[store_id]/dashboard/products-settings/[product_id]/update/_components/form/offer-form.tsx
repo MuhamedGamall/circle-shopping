@@ -11,7 +11,7 @@ import { offerSchema } from "../../schema";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
-import { CalendarDateRangePicker } from "./date-range";
+import { formatDate, format } from "date-fns";
 
 export default function OfferForm({
   data,
@@ -21,6 +21,9 @@ export default function OfferForm({
   loading: boolean;
 }) {
   const { store_id, product_id } = useParams();
+  const dateAfterFormating = (date: any): any => {
+    return date ? formatDate(date, "yyyy-MM-dd") : null;
+  };
   const form = useForm<z.infer<typeof offerSchema>>({
     resolver: zodResolver(offerSchema),
     defaultValues: {
@@ -32,8 +35,8 @@ export default function OfferForm({
     },
     values: {
       offer: {
-        start_date: data?.price?.offer?.start_date || null,
-        end_date: data?.price?.offer?.end_date || null,
+        start_date: dateAfterFormating(data?.price?.offer?.start_date) || null,
+        end_date: dateAfterFormating(data?.price?.offer?.end_date) || null,
         discount_percentage: data?.price?.offer?.discount_percentage || 0,
       },
     },
@@ -44,35 +47,41 @@ export default function OfferForm({
       return;
     }
 
-    const endDate = new Date(values?.offer?.end_date as Date)?.setHours(0, 0, 0, 0);
-    const startDate = new Date(values?.offer?.start_date as Date)?.setHours(0, 0, 0, 0);
+    const endDate = new Date(values?.offer?.end_date as Date)?.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+    const startDate = new Date(values?.offer?.start_date as Date)?.setHours(
+      0,
+      0,
+      0,
+      0
+    );
     const dateNow = new Date().setHours(0, 0, 0, 0);
 
-    if (startDate < dateNow) {
-      toast.error(
-        "The Start Date must be greater than or equal to today's date"
-      );
-      return;
-    }
-
-    if (startDate >= endDate) {
-      toast.error("Schedule the offer start date before the end date");
-      return;
-    }
-    console.log(values);
-
-    // try {
-    //   // const data = (
-    //   //   await axios.patch(
-    //   //     "/api/store/" + store_id + "/products/" + product_id,
-    //   //     values
-    //   //   )
-    //   // ).data;
-
-    //   toast.success("Product Updated successfully");
-    // } catch (error) {
-    //   toast.error("Uh oh! Something went wrong");
+    // if (startDate < dateNow) {
+    //   toast.error(
+    //     "The Start Date must be greater than or equal to today's date"
+    //   );
+    //   return;
     // }
+
+    // if (startDate >= endDate) {
+    //   toast.error("Schedule the offer start date before the end date");
+    //   return;
+    // }
+
+    try {
+      await axios.patch(
+        "/api/store/" + store_id + "/products/" + product_id+'/offer',
+        values
+      );
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
 
   const { isSubmitting, isValid } = form.formState;
