@@ -127,7 +127,7 @@ export default function OfferForm({
           </div>
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            // disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting || !isValid}
             variant={"blue"}
             size={"sm"}
           >

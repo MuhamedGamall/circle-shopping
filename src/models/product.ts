@@ -12,7 +12,7 @@ const ProductSchema = new Schema(
     store_id: { type: String, required: true },
     store_personal_email: { type: String, required: true },
     title: { type: String },
-    image: { type: String },
+    image: [{ type: String }],
     description: { type: String },
     model_number: { type: String },
     model_name: { type: String },
