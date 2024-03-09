@@ -8,6 +8,9 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { priceSchema } from "../../schema";
+import { useParams } from "next/navigation";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function PriceForm({
   data,
@@ -16,6 +19,8 @@ export default function PriceForm({
   data: Product | null;
   loading: boolean;
 }) {
+  const { store_id, product_id } = useParams();
+
   const form = useForm<z.infer<typeof priceSchema>>({
     resolver: zodResolver(priceSchema),
     defaultValues: {
@@ -30,7 +35,19 @@ export default function PriceForm({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof priceSchema>) {}
+  async function onSubmit(values: z.infer<typeof priceSchema>) {
+    console.log(values);
+    try {
+      await axios.patch(
+        "/api/store/" + store_id + "/products/" + product_id,
+        values
+      );
+
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
+  }
 
   const { isSubmitting, isValid } = form.formState;
   return (
@@ -50,42 +67,12 @@ export default function PriceForm({
               name="price.base_price"
               type={"number"}
               className={"w-full"}
-              placeholder="Base price"
+              placeholder="Base price in US $"
             />
-            {/* <CustomField
-              label="Offer Discount percentage *"
-              labelClassName={"text-shade text-[12px]"}
-              form={form}
-              disabled={isSubmitting || loading}
-              name="price.offer.discount_percentage"
-              type={"number"}
-              className={"w-full"}
-              placeholder="Discount percentage "
-            />
-            <CustomField
-              label="offer Start date *"
-              labelClassName={"text-shade text-[12px]"}
-              form={form}
-              disabled={isSubmitting || loading}
-              name="price.offer.start_date"
-              type={"date"}
-              className={"w-full"}
-              placeholder="Start date"
-            />
-            <CustomField
-              label="offer End date *"
-              labelClassName={"text-shade text-[12px]"}
-              form={form}
-              disabled={isSubmitting || loading}
-              name="price.offer.end_date"
-              type={"date"}
-              className={"w-full"}
-              placeholder="End date"
-            /> */}
           </div>
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            // disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting || !isValid}
             variant={"blue"}
             size={"sm"}
           >
