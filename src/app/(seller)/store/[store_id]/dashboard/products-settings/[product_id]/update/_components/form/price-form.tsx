@@ -37,10 +37,9 @@ export default function PriceForm({
 
   async function onSubmit(values: z.infer<typeof priceSchema>) {
     try {
-        await axios.patch(
-          "/api/store/" + store_id + "/products/" + product_id+'/price',
-          values
-        );
+      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
+        "price.base_price": values.price.base_price,
+      });
 
       toast.success("Product Updated successfully");
     } catch (error) {

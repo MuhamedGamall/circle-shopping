@@ -53,7 +53,6 @@ export async function PATCH(
     if (!user || !store || !product_id) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    console.log(body);
 
     const updateProduct = await Product.updateOne(
       {

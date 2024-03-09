@@ -74,10 +74,9 @@ export default function OfferForm({
     }
 
     try {
-      await axios.patch(
-        "/api/store/" + store_id + "/products/" + product_id+'/offer',
-        values
-      );
+      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
+        "price.offer": values.offer,
+      });
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
