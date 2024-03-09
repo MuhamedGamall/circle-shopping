@@ -58,7 +58,7 @@ export type Product = {
   store_id: string;
   store_personal_email: string;
   title: string;
-  image: string;
+  images: string[];
   description: string;
   department: string;
   model_number: string;

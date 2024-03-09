@@ -10,13 +10,25 @@ import { TbReplace } from "react-icons/tb";
 export default function ImageItem({
   src,
   idx,
+  imageValue,
   setImageValue,
+  setIdsForDeleteFromCloudinary,
 }: {
   src: string;
   idx: number;
+  imageValue: string[];
   setImageValue: Dispatch<SetStateAction<string[]>>;
+  setIdsForDeleteFromCloudinary: Dispatch<SetStateAction<string[]>>;
 }) {
-  const onDelete = (idx: number) => {
+  const publicIdForDelete = (image: string) => {
+    const startIndex = image.indexOf("circle-shopping/");
+    const endIndex = image.lastIndexOf(".");
+    return image.slice(startIndex, endIndex);
+  };
+
+  const onDelete = async (idx: number) => {
+    const id = publicIdForDelete(imageValue[idx]);
+    if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
     setImageValue((curr) => curr.filter((el, i) => i !== idx));
   };
 
@@ -33,7 +45,7 @@ export default function ImageItem({
       );
       return;
     }
-    
+
     const isValidImage = await checkImageDimensions(image);
     if (isValidImage) {
       readerImage(image);
@@ -72,8 +84,8 @@ export default function ImageItem({
       <Image
         src={src}
         alt="image"
-        height={200}
-        width={200}
+        height={900}
+        width={660}
         className={cn(
           "min-w-[140px] w-[140px] h-[230px] object-cover rounded-sm shadow-md"
         )}

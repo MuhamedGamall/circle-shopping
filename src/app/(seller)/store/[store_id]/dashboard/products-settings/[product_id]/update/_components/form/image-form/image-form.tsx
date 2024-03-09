@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCirclePlus } from "react-icons/fa6";
 
 import ImageInstructions from "./image-instructions";
 import ImageItem from "./image-item";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function ImageForm({
   data,
@@ -18,6 +21,15 @@ export default function ImageForm({
   loading: boolean;
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
+  const [idsForDeleteFromCloudinary, setIdsForDeleteFromCloudinary] = useState<
+    string[]
+  >([]);
+
+  const { store_id, product_id } = useParams();
+
+  useEffect(() => {
+    setImageValue(data?.images || []);
+  }, [data?.images]);
 
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const images: FileList | null = e.target.files;
@@ -34,7 +46,7 @@ export default function ImageForm({
       return;
     }
 
-    const numUploadedImages = imageValue.length + filteredImages.length;
+    const numUploadedImages = imageValue?.length + filteredImages.length;
 
     if (numUploadedImages > 10) {
       toast.error("You can only upload up to 10 images.", { duration: 2000 });
@@ -72,6 +84,30 @@ export default function ImageForm({
     reader.readAsDataURL(image);
   };
 
+  const onSubmit = async () => {
+    try {
+      await axios.patch(
+        "/api/store/" + store_id + "/products/" + product_id + "/image",
+        imageValue
+      );
+      const product: any = (
+        await axios.get("/api/store/" + store_id + "/products/" + product_id)
+      ).data;
+
+      setImageValue(product?.images);
+
+      if (idsForDeleteFromCloudinary.length > 0) {
+        await axios.delete(
+          `/api/store/${store_id}/products/${product_id}/image?ids=${idsForDeleteFromCloudinary}`
+          );
+        setIdsForDeleteFromCloudinary([]);
+      }
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
+  };
+
   return (
     <div className="image-section p-5 border-b">
       <SectionTitle
@@ -88,18 +124,20 @@ export default function ImageForm({
               htmlFor="upload"
               className={cn(
                 "flex items-center justify-center gap-3 flex-col text-[9px] cursor-pointer min-w-[140px] w-[140px] h-[230px] border-[#3866df] border rounded-md bg-[#eff3fd]",
-                { "opacity-[.5] cursor-not-allowed": imageValue.length === 10 }
+                { "opacity-[.5] cursor-not-allowed": imageValue?.length === 10 }
               )}
             >
               <FaCirclePlus className="text-[#3866df] h-5 w-5" />
               Add image/s
             </label>
-            {imageValue.map((el, i) => (
+            {imageValue?.map((el, i) => (
               <ImageItem
                 key={i}
                 src={el}
                 idx={i}
+                imageValue={imageValue}
                 setImageValue={setImageValue}
+                setIdsForDeleteFromCloudinary={setIdsForDeleteFromCloudinary}
               />
             ))}
           </div>
@@ -110,13 +148,14 @@ export default function ImageForm({
             className="hidden"
             accept="image/*"
             multiple
-            disabled={imageValue.length === 10}
+            disabled={imageValue?.length === 10}
           />
         </div>
         <ImageInstructions />
         <Button
+          onClick={onSubmit}
           className="text-[11px] my-3 h-[30px] rounded-sm"
-          disabled={loading}
+          disabled={loading || imageValue?.length > 10}
           variant="blue"
           size="sm"
         >
