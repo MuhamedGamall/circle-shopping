@@ -61,17 +61,17 @@ export default function OfferForm({
     );
     const dateNow = new Date().setHours(0, 0, 0, 0);
 
-    // if (startDate < dateNow) {
-    //   toast.error(
-    //     "The Start Date must be greater than or equal to today's date"
-    //   );
-    //   return;
-    // }
+    if (startDate < dateNow) {
+      toast.error(
+        "The Start Date must be greater than or equal to today's date"
+      );
+      return;
+    }
 
-    // if (startDate >= endDate) {
-    //   toast.error("Schedule the offer start date before the end date");
-    //   return;
-    // }
+    if (startDate >= endDate) {
+      toast.error("Schedule the offer start date before the end date");
+      return;
+    }
 
     try {
       await axios.patch(
