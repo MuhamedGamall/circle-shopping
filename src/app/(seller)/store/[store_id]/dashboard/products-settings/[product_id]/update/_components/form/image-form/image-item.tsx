@@ -72,8 +72,10 @@ export default function ImageItem({
     reader.onloadend = () => {
       setImageValue((prevImages) => {
         const newArr = [...prevImages];
+        //- caching image id for deleting from cloudinary
         const id = publicIdForDelete(newArr[idx]);
         if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
+        //-
         newArr[idx] = reader.result as string;
         return newArr;
       });
