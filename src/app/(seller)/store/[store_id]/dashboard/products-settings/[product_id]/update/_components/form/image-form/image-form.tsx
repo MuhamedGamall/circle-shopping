@@ -12,6 +12,7 @@ import ImageItem from "./image-item";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import LoaderLayout from "@/components/loader-layout";
 
 export default function ImageForm({
   data,
@@ -21,6 +22,7 @@ export default function ImageForm({
   loading: boolean;
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [idsForDeleteFromCloudinary, setIdsForDeleteFromCloudinary] = useState<
     string[]
   >([]);
@@ -86,6 +88,7 @@ export default function ImageForm({
 
   const onSubmit = async () => {
     try {
+      setIsSubmitting(true);
       await axios.patch(
         "/api/store/" + store_id + "/products/" + product_id + "/image",
         imageValue
@@ -99,17 +102,19 @@ export default function ImageForm({
       if (idsForDeleteFromCloudinary.length > 0) {
         await axios.delete(
           `/api/store/${store_id}/products/${product_id}/image?ids=${idsForDeleteFromCloudinary}`
-          );
+        );
         setIdsForDeleteFromCloudinary([]);
       }
       toast.success("Product Updated successfully");
+      setIsSubmitting(false);
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
     }
   };
 
   return (
-    <div className="image-section p-5 border-b">
+    <div className="image-section p-5 border-b relative">
+      <LoaderLayout loadingCondition={isSubmitting || loading }/>
       <SectionTitle
         title="Product Images."
         className="text-[16px] sm:text-[16px] text-slate-700 my-3"
@@ -124,7 +129,10 @@ export default function ImageForm({
               htmlFor="upload"
               className={cn(
                 "flex items-center justify-center gap-3 flex-col text-[9px] cursor-pointer min-w-[140px] w-[140px] h-[230px] border-[#3866df] border rounded-md bg-[#eff3fd]",
-                { "opacity-[.5] cursor-not-allowed": imageValue?.length === 10 }
+                {
+                  "opacity-[.5] cursor-not-allowed":
+                    imageValue?.length === 10 || isSubmitting || loading,
+                }
               )}
             >
               <FaCirclePlus className="text-[#3866df] h-5 w-5" />
@@ -148,14 +156,14 @@ export default function ImageForm({
             className="hidden"
             accept="image/*"
             multiple
-            disabled={imageValue?.length === 10}
+            disabled={imageValue?.length === 10 || isSubmitting || loading}
           />
         </div>
         <ImageInstructions />
         <Button
           onClick={onSubmit}
           className="text-[11px] my-3 h-[30px] rounded-sm"
-          disabled={loading || imageValue?.length > 10}
+          disabled={loading || imageValue?.length > 10 || isSubmitting}
           variant="blue"
           size="sm"
         >

@@ -72,6 +72,8 @@ export default function ImageItem({
     reader.onloadend = () => {
       setImageValue((prevImages) => {
         const newArr = [...prevImages];
+        const id = publicIdForDelete(newArr[idx]);
+        if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
         newArr[idx] = reader.result as string;
         return newArr;
       });
@@ -87,7 +89,7 @@ export default function ImageItem({
         height={900}
         width={660}
         className={cn(
-          "min-w-[140px] w-[140px] h-[230px] object-cover rounded-sm shadow-md"
+          "w-full max-w-[140px] h-[230px] object-cover rounded-sm shadow-md"
         )}
       />
       <Label htmlFor={"image-" + idx}>

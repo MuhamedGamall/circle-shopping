@@ -24,7 +24,7 @@ export default function UpdateForm() {
             title="Product Details"
             className="text-[16px]  sm:text-[16px]"
           />
-          <p className="text-[11px] text-shade ">
+          <p className="text-[11px] text-shade  ">
             Fill all details to get your products online
           </p>
         </div>
