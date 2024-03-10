@@ -2,25 +2,7 @@
 
 import CustomField from "@/components/custom-field";
 import SectionTitle from "@/components/section-title";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-import * as React from "react";
-
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Form } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
@@ -31,6 +13,11 @@ import * as z from "zod";
 import { productBasicSchema } from "../../schema";
 import CustomTextarea from "@/components/custom-textarea";
 import { SizesDropdownMenu } from "./select-sizes";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import toast from "react-hot-toast";
+import LoaderLayout from "@/components/loader-layout";
+import { useEffect, useState } from "react";
 
 export default function BasicForm({
   data,
@@ -39,6 +26,8 @@ export default function BasicForm({
   data: Product | null;
   loading: boolean;
 }) {
+  const { store_id, product_id } = useParams();
+  const [selectSizes, setSelectSizes] = useState<string[]>([]);
   const form = useForm<z.infer<typeof productBasicSchema>>({
     resolver: zodResolver(productBasicSchema),
     defaultValues: {
@@ -53,18 +42,35 @@ export default function BasicForm({
       description: data?.description || "",
       item_pack_quantity: data?.item_pack_quantity || 1,
       model_number: data?.model_number || "",
-      sizes: data?.sizes || [],
+      sizes: [],
     },
   });
+  useEffect(() => {
+    const sizes = data?.sizes || [];
+    setSelectSizes((prevSizes) => {
+      const uniqueSizes: any = new Set([...prevSizes, ...sizes]);
+      return [...uniqueSizes];
+    });
+  }, [data?.sizes, setSelectSizes]);
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
-    console.log(values);
+    if (selectSizes.length === 0) return;
+    try {
+      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
+        ...values,
+        sizes: selectSizes,
+      });
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={isSubmitting || loading} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Basic."
@@ -101,7 +107,12 @@ export default function BasicForm({
               className={"w-full"}
               placeholder="Model Number"
             />
-            <SizesDropdownMenu form={form} />
+
+            <SizesDropdownMenu
+              selectSizes={selectSizes}
+              setSelectSizes={setSelectSizes}
+              disabled={isSubmitting || loading}
+            />
           </div>
           <CustomTextarea
             label="Long Description"
@@ -114,7 +125,7 @@ export default function BasicForm({
           />
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            // disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting}
             variant={"blue"}
             size={"sm"}
           >

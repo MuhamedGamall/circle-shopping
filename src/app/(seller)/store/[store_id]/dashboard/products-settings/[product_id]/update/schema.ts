@@ -53,7 +53,7 @@ export const offerSchema = z.object({
       ),
   }),
 });
-export const productBasicSchema = z.object({
+export const productBasicSchema  = z.object({
   title: z
     .string()
     .trim()
@@ -61,7 +61,7 @@ export const productBasicSchema = z.object({
     .max(200, { message: "Titel should be on a lot of 200 characters." })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
         ),
       {
@@ -77,10 +77,12 @@ export const productBasicSchema = z.object({
     })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+      !!value?
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
-        ),
+        ):true,
       {
+      
         message:
           "Please enter English characters, numbers, and symbols only. The value should not start or end with symbols.",
       }
@@ -94,7 +96,7 @@ export const productBasicSchema = z.object({
     })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
         ),
       {
@@ -106,9 +108,7 @@ export const productBasicSchema = z.object({
   item_pack_quantity: z.coerce
     .number()
     .refine((value) => value >= 0, "Field is required"),
-  sizes: z
-    .array(z.string().trim())
-    .min(1, { message: "At least one size must be added." }),
+  sizes: z.array(z.string()),
 });
 
 export const productDetailsSchema = z.object({
@@ -153,7 +153,7 @@ export const productDetailsSchema = z.object({
     })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
         ),
       {
@@ -172,7 +172,7 @@ export const productDetailsSchema = z.object({
     })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
         ),
       {
@@ -189,7 +189,7 @@ export const productDetailsSchema = z.object({
     })
     .refine(
       (value) =>
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?$/.test(
+        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
           value
         ),
       {
