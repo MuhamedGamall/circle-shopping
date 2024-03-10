@@ -1,22 +1,7 @@
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
+
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -49,8 +34,6 @@ export default function ItemConditionForm({
   });
 
   async function onSubmit(values: z.infer<typeof itemConditionSchema>) {
-    console.log(values);
-
     try {
       await axios.patch(
         "/api/store/" + store_id + "/products/" + product_id,

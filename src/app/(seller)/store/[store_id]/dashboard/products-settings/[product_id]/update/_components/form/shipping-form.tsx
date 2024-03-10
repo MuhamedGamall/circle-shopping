@@ -1,30 +1,20 @@
 import CustomField from "@/components/custom-field";
+import CustomSelectField from "@/components/custom-select-field";
+import LoaderLayout from "@/components/loader-layout";
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
+import {
+  Form
+} from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { shippingSchema } from "../../schema";
-import { Label } from "@/components/ui/label";
-import CustomSelectField from "@/components/custom-select-field";
 
 export default function ShippingForm({
   data,
@@ -33,6 +23,7 @@ export default function ShippingForm({
   data: Product | null;
   loading: boolean;
 }) {
+  const { store_id, product_id } = useParams();
   const form = useForm<z.infer<typeof shippingSchema>>({
     resolver: zodResolver(shippingSchema),
     defaultValues: {
@@ -67,12 +58,23 @@ export default function ShippingForm({
 
   async function onSubmit(values: z.infer<typeof shippingSchema>) {
     console.log(values);
+
+    try {
+      await axios.patch(
+        "/api/store/" + store_id + "/products/" + product_id,
+        values
+      );
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
 
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Shipping."

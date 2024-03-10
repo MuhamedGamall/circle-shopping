@@ -1,14 +1,15 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { Trash2 } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
+import { cn } from "@/lib/utils";
+import { Info, Trash2 } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function AddDetails({
   label,
@@ -16,17 +17,15 @@ export default function AddDetails({
   setData,
   name,
   setErrorMessages,
-  errorMessages
+  errorMessages,
 }: {
   label: string;
   data: string[];
   setData: Dispatch<SetStateAction<string[]>>;
   name: string;
-  setErrorMessages :Dispatch<SetStateAction<boolean[]>>;
-  errorMessages:boolean[]
+  setErrorMessages: Dispatch<SetStateAction<boolean[]>>;
+  errorMessages: boolean[];
 }) {
-  // const [errorMessages, setErrorMessages] = useState<boolean[]>([]);
-
   const isValid = (val: string) =>
     /^[a-zA-Z][a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*$/.test(val);
   // update  error messages
@@ -67,7 +66,19 @@ export default function AddDetails({
     >
       <AccordionItem value={name} className="border-none ">
         <AccordionTrigger className="">
-          <Label className={"text-shade  capitalize block"}>{label}</Label>
+          <Label
+            className={
+              "text-shade flex items-center justify-between w-full gap-2  capitalize "
+            }
+          >
+            <div className="flex items-center gap-2">
+              {label}
+              <TooltipWrapper label={"Repeats will be deleted"}>
+                <Info className="h-3 w-3 text-shade" />
+              </TooltipWrapper>
+            </div>
+            <span className="mr-2">( {data?.length} )</span>
+          </Label>
         </AccordionTrigger>
         <AccordionContent className="w-full max-h-[400px] overflow-y-auto">
           <div className="mx-2">

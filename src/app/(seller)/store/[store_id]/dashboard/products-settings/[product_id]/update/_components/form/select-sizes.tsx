@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -9,7 +10,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
-import { Button } from "@/components/ui/button";
 
 export function SizesDropdownMenu({
   disabled,

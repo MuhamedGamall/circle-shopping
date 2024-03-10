@@ -7,10 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { priceSchema } from "../../schema";
+import LoaderLayout from "@/components/loader-layout";
+import axios from "axios";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
-import axios from "axios";
+import { priceSchema } from "../../schema";
 
 export default function PriceForm({
   data,
@@ -50,7 +51,8 @@ export default function PriceForm({
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Pricing."

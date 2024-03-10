@@ -1,6 +1,5 @@
-import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
-import ProductDetailsHeader from "./_components/product-details-header";
 import SectionTitle from "@/components/section-title";
+import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import UpdateForm from "./_components/form/update-form";
 
 export default function UpdateProductPage() {

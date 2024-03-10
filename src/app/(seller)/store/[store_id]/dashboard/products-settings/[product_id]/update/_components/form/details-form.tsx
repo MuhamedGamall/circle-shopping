@@ -2,24 +2,7 @@
 
 import CustomField from "@/components/custom-field";
 import SectionTitle from "@/components/section-title";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 
 import { Button } from "@/components/ui/button";
 import { Product } from "@/types";
@@ -27,14 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { productDetailsSchema } from "../../schema";
-import AddDetails from "./add-details";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
 import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { productDetailsSchema } from "../../schema";
+import AddDetails from "./add-details";
 
 export default function DetailsForm({
   data,
@@ -100,11 +83,17 @@ export default function DetailsForm({
       toast.error("Fixing specifications fields for submitting");
       return;
     }
+    const removeRepeateValue = {
+      specifications: [...(new Set(specifications) as any)],
+      highlights: [...(new Set(highlights) as any)],
+    };
+
+    console.log(removeRepeateValue);
+
     try {
       await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
         ...values,
-        specifications,
-        highlights,
+        ...removeRepeateValue,
       });
       toast.success("Product Updated successfully");
     } catch (error) {

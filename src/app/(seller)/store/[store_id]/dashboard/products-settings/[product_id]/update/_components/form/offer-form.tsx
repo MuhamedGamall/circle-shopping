@@ -7,11 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { offerSchema } from "../../schema";
+import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { formatDate } from "date-fns";
 import { useParams } from "next/navigation";
-import { formatDate, format } from "date-fns";
+import toast from "react-hot-toast";
+import { offerSchema } from "../../schema";
 
 export default function OfferForm({
   data,
@@ -86,7 +87,8 @@ export default function OfferForm({
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Pricing Offer."
