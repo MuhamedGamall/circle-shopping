@@ -15,13 +15,17 @@ export default function AddDetails({
   data,
   setData,
   name,
+  setErrorMessages,
+  errorMessages
 }: {
   label: string;
   data: string[];
   setData: Dispatch<SetStateAction<string[]>>;
   name: string;
+  setErrorMessages :Dispatch<SetStateAction<boolean[]>>;
+  errorMessages:boolean[]
 }) {
-  const [errorMessages, setErrorMessages] = useState<boolean[]>([]);
+  // const [errorMessages, setErrorMessages] = useState<boolean[]>([]);
 
   const isValid = (val: string) =>
     /^[a-zA-Z][a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*$/.test(val);

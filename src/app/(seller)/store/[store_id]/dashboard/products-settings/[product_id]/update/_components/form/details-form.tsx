@@ -29,7 +29,12 @@ import * as z from "zod";
 
 import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import CustomSelectField from "@/components/custom-select-field";
+import LoaderLayout from "@/components/loader-layout";
 
 export default function DetailsForm({
   data,
@@ -38,8 +43,15 @@ export default function DetailsForm({
   data: Product | null;
   loading: boolean;
 }) {
+  const { store_id, product_id } = useParams();
+
+  const [errorSpecifications, setErrorSpecifications] = useState<boolean[]>([]);
+  const [errorHighlights, setErrorHighlights] = useState<boolean[]>([]);
+
   const [specifications, setSpecifications] = useState<string[]>([""]);
   const [highlights, setHighlights] = useState<string[]>([""]);
+  const [colour, setClolour] = useState<string>("");
+
   const form = useForm<z.infer<typeof productDetailsSchema>>({
     resolver: zodResolver(productDetailsSchema),
     defaultValues: {
@@ -55,22 +67,56 @@ export default function DetailsForm({
     values: {
       box_details: data?.box_details || "",
       colour: data?.colour || "",
-      highlights: data?.highlights || [],
+      highlights: [],
       max_purchase_quantity: data?.max_purchase_quantity || 1,
       model_height: data?.model_height || "",
       model_name: data?.model_name || "",
-      quantity_in_stock: data?.quantity_in_stock || 1,
-      specifications: data?.specifications || [],
+      quantity_in_stock: data?.quantity_in_stock || 0,
+      specifications: [],
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      const highlights = data.highlights;
+      const specifications = data.specifications;
+
+      setHighlights((curr) => {
+        const unique: any = new Set([...highlights, ...curr]);
+        return [...unique];
+      });
+      setSpecifications((curr) => {
+        const unique: any = new Set([...specifications, ...curr]);
+        return [...unique];
+      });
+    }
+  }, [data, data?.highlights, data?.specifications]);
+
   async function onSubmit(values: z.infer<typeof productDetailsSchema>) {
-    console.log({ ...values, specifications, highlights });
+    if (errorHighlights.includes(true)) {
+      toast.error("Fixing highlights fields for submitting");
+      return;
+    }
+    if (errorSpecifications.includes(true)) {
+      toast.error("Fixing specifications fields for submitting");
+      return;
+    }
+    try {
+      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
+        ...values,
+        specifications,
+        highlights,
+      });
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Product Details."
@@ -127,65 +173,49 @@ export default function DetailsForm({
               className={"w-full"}
               placeholder="quantity in stock"
             />
-            <FormField
-              control={form.control}
+            <CustomSelectField
               name={"colour"}
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel className={"text-shade text-[12px]"}>
-                    Colour *
-                  </FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="rounded-sm py-5">
-                        <SelectValue placeholder="Select Colour" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Colours</SelectLabel>
-                          <SelectItem value="Beige">Beige</SelectItem>
-                          <SelectItem value="Black">Black</SelectItem>
-                          <SelectItem value="Blue">Blue</SelectItem>
-                          <SelectItem value="Brown">Brown</SelectItem>
-                          <SelectItem value="Clear">Clear</SelectItem>
-                          <SelectItem value="Gold">Gold</SelectItem>
-                          <SelectItem value="Green">Green</SelectItem>
-                          <SelectItem value="Grey">Grey</SelectItem>
-                          <SelectItem value="Multicolour">
-                            Multicolour
-                          </SelectItem>
-                          <SelectItem value="Orange">Orange</SelectItem>
-                          <SelectItem value="Pink">Pink</SelectItem>
-                          <SelectItem value="Purple">Purple</SelectItem>
-                          <SelectItem value="Red">Red</SelectItem>
-                          <SelectItem value="Silver">Silver</SelectItem>
-                          <SelectItem value="White">White</SelectItem>
-                          <SelectItem value="Yellow">Yellow</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage className="text-red-700 text-[11px] "/>
-                </FormItem>
-              )}
+              labelClassName={"text-shade text-[12px]"}
+              label="Colour *"
+              form={form}
+              selectData={[
+                "Beige",
+                "Black",
+                "Blue",
+                "Brown",
+                "Clear",
+                "Gold",
+                "Green",
+                "Grey",
+                "Multicolour",
+                "Orange",
+                "Pink",
+                "Purple",
+                "Red",
+                "Silver",
+                "White",
+                "Yellow",
+              ]}
             />
           </div>
           <AddDetails
+            setErrorMessages={setErrorSpecifications}
+            errorMessages={errorSpecifications}
             data={specifications}
             setData={setSpecifications}
             name={"specifications"}
             label={"specifications"}
           />
           <AddDetails
+            setErrorMessages={setErrorHighlights}
+            errorMessages={errorHighlights}
             data={highlights}
             setData={setHighlights}
             name={"highlights"}
             label={"highlights"}
           />
           <Button
+            type="submit"
             className="text-[11px] my-3 h-[30px] rounded-sm  "
             // disabled={loading || isSubmitting || !isValid}
             variant={"blue"}

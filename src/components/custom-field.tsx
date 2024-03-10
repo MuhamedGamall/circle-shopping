@@ -48,7 +48,7 @@ export default function CustomField({
         control={form.control}
         name={name}
         render={({ field }) => (
-          <FormItem className={cn("rounded-sm py-5 w-full", className)}>
+          <FormItem className={cn("w-full", className)}>
             <FormLabel className={cn("capitalize", labelClassName)}>
               {label}
             </FormLabel>
@@ -62,6 +62,7 @@ export default function CustomField({
                   minLength={minLength}
                   required={required}
                   {...field}
+                  className="rounded-sm py-5"
                 />
                 <Button
                   type="button"
@@ -91,7 +92,7 @@ export default function CustomField({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("rounded-sm py-5 w-full", className)}>
+        <FormItem className={cn(" w-full", className)}>
           <FormLabel className={cn("capitalize", labelClassName)}>
             {label}
           </FormLabel>
@@ -104,6 +105,7 @@ export default function CustomField({
               minLength={minLength}
               required={required}
               {...field}
+              className="rounded-sm py-5"
             />
           </FormControl>
           <FormMessage className="text-red-700 text-[11px]" />

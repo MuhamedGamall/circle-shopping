@@ -53,7 +53,7 @@ export const offerSchema = z.object({
       ),
   }),
 });
-export const productBasicSchema  = z.object({
+export const productBasicSchema = z.object({
   title: z
     .string()
     .trim()
@@ -77,12 +77,12 @@ export const productBasicSchema  = z.object({
     })
     .refine(
       (value) =>
-      !!value?
-        /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
-          value
-        ):true,
+        !!value
+          ? /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
+              value
+            )
+          : true,
       {
-      
         message:
           "Please enter English characters, numbers, and symbols only. The value should not start or end with symbols.",
       }

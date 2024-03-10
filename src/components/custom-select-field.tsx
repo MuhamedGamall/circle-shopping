@@ -6,10 +6,17 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { useEffect, useState } from "react";
 
 export default function CustomSelectField({
   form,
@@ -39,9 +46,9 @@ export default function CustomSelectField({
         <FormItem className={cn("w-full rounded-sm", className)}>
           <FormLabel className={cn(labelClassName)}>{label}</FormLabel>
           <FormControl>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange} value={field.value}>
               <SelectTrigger className=" ">
-                <SelectValue placeholder={label} />
+                <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
