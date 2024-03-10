@@ -23,6 +23,11 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { itemConditionSchema } from "../../schema";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import LoaderLayout from "@/components/loader-layout";
+import CustomSelectField from "@/components/custom-select-field";
 
 export default function ItemConditionForm({
   data,
@@ -31,59 +36,52 @@ export default function ItemConditionForm({
   data: Product | null;
   loading: boolean;
 }) {
+  const { store_id, product_id } = useParams();
+
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
     defaultValues: {
       item_condition: "",
     },
     values: {
-      item_condition: data?.item_condition || "New",
+      item_condition: data?.item_condition || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof itemConditionSchema>) {
     console.log(values);
+
+    try {
+      await axios.patch(
+        "/api/store/" + store_id + "/products/" + product_id,
+        values
+      );
+      toast.success("Product Updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+    }
   }
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+        <LoaderLayout loadingCondition={isSubmitting || loading} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
             title="Item Condition."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
           />
-          <FormField
-            control={form.control}
+          <CustomSelectField
             name={"item_condition"}
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className={""}>Item condition</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger className=" ">
-                      <SelectValue placeholder="Select Condition" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Conditions</SelectLabel>
-                        <SelectItem value="New">New</SelectItem>
-                        <SelectItem value="Used">Used</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage className="text-red-700 text-[11px]" />
-              </FormItem>
-            )}
+            labelClassName={"text-shade text-[12px]"}
+            label="Item Condition *"
+            form={form}
+            selectData={["New", "Used"]}
           />
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting}
             variant={"blue"}
             size={"sm"}
           >

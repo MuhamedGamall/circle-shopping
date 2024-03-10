@@ -50,7 +50,6 @@ export default function DetailsForm({
 
   const [specifications, setSpecifications] = useState<string[]>([""]);
   const [highlights, setHighlights] = useState<string[]>([""]);
-  const [colour, setClolour] = useState<string>("");
 
   const form = useForm<z.infer<typeof productDetailsSchema>>({
     resolver: zodResolver(productDetailsSchema),
