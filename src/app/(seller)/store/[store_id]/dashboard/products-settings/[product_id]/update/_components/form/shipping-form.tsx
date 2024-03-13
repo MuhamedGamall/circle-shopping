@@ -58,7 +58,6 @@ export default function ShippingForm({
 
   async function onSubmit(values: z.infer<typeof shippingSchema>) {
     console.log(values);
-
     try {
       await axios.patch(
         "/api/store/" + store_id + "/products/" + product_id,
@@ -69,7 +68,6 @@ export default function ShippingForm({
       toast.error("Uh oh! Something went wrong");
     }
   }
-
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>

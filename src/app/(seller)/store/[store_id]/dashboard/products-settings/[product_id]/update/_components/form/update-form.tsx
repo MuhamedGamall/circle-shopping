@@ -1,6 +1,5 @@
 "use client";
 import SectionTitle from "@/components/section-title";
-
 import ProductDetailsHeader from "../product-details-header";
 import ItemConditionForm from "./condition-form";
 import PriceForm from "./price-form";
