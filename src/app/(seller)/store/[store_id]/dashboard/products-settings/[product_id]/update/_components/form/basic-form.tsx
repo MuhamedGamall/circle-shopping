@@ -13,7 +13,6 @@ import * as z from "zod";
 import { productBasicSchema } from "../../schema";
 import CustomTextarea from "@/components/custom-textarea";
 import { SizesDropdownMenu } from "./select-sizes";
-import { useParams } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
@@ -22,11 +21,14 @@ import { useEffect, useState } from "react";
 export default function BasicForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
-  const { store_id, product_id } = useParams();
   const [selectSizes, setSelectSizes] = useState<string[]>([]);
   const form = useForm<z.infer<typeof productBasicSchema>>({
     resolver: zodResolver(productBasicSchema),

@@ -1,14 +1,18 @@
-"use client";
 import Icons from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import useProduct from "@/hooks/use-product";
 import { truncateText } from "@/utils/truncate-text";
 import Image from "next/image";
 import { BsChevronRight } from "react-icons/bs";
 import HeaderLoading from "./header-loading";
+import { Product } from "@/types";
 
-export default function ProductDetailsHeader() {
-  const { data, loading } = useProduct();
+export default function ProductDetailsHeader({
+  data,
+  loading,
+}: {
+  data: Product | null;
+  loading: boolean;
+}) {
   return (
     <div className=" mb-8 ">
       <div className="bg-[#eff3fd] px-2 py-1  flex items-center justify-between w-full gap-2 ">

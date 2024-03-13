@@ -9,18 +9,20 @@ import * as z from "zod";
 
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { priceSchema } from "../../schema";
 
 export default function PriceForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
-  const { store_id, product_id } = useParams();
 
   const form = useForm<z.infer<typeof priceSchema>>({
     resolver: zodResolver(priceSchema),

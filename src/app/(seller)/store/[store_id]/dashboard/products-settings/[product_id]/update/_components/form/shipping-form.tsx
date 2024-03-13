@@ -3,14 +3,11 @@ import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
-import {
-  Form
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
@@ -19,11 +16,14 @@ import { shippingSchema } from "../../schema";
 export default function ShippingForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string | string[];
+  product_id: string | string[];
 }) {
-  const { store_id, product_id } = useParams();
   const form = useForm<z.infer<typeof shippingSchema>>({
     resolver: zodResolver(shippingSchema),
     defaultValues: {

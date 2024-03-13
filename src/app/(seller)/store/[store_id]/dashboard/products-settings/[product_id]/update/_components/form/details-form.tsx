@@ -13,7 +13,6 @@ import * as z from "zod";
 import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { productDetailsSchema } from "../../schema";
@@ -22,11 +21,15 @@ import AddDetails from "./add-details";
 export default function DetailsForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
-  const { store_id, product_id } = useParams();
+
 
   const [errorSpecifications, setErrorSpecifications] = useState<boolean[]>([]);
   const [errorHighlights, setErrorHighlights] = useState<boolean[]>([]);

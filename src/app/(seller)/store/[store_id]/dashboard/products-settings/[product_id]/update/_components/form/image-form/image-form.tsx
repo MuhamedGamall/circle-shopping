@@ -17,9 +17,13 @@ import LoaderLayout from "@/components/loader-layout";
 export default function ImageForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -27,8 +31,7 @@ export default function ImageForm({
     string[]
   >([]);
 
-  const { store_id, product_id } = useParams();
-
+ 
   useEffect(() => {
     setImageValue(data?.images || []);
   }, [data?.images]);

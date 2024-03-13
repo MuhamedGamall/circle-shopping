@@ -1,8 +1,6 @@
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
-import {
-  Form
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,19 +9,20 @@ import * as z from "zod";
 import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { warrantySchema } from "../../schema";
 
 export default function WarrantyForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string | string[];
+  product_id: string | string[];
 }) {
-  const { store_id, product_id } = useParams();
-
   const form = useForm<z.infer<typeof warrantySchema>>({
     resolver: zodResolver(warrantySchema),
     defaultValues: {

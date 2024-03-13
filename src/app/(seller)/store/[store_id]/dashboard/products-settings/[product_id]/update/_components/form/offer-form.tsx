@@ -10,18 +10,21 @@ import * as z from "zod";
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
 import { formatDate } from "date-fns";
-import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { offerSchema } from "../../schema";
 
 export default function OfferForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
-  const { store_id, product_id } = useParams();
+
   const dateAfterFormating = (date: any): any => {
     return date ? formatDate(date, "yyyy-MM-dd") : null;
   };

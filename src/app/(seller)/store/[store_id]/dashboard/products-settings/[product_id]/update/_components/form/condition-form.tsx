@@ -10,18 +10,21 @@ import * as z from "zod";
 import { itemConditionSchema } from "../../schema";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
 import LoaderLayout from "@/components/loader-layout";
 import CustomSelectField from "@/components/custom-select-field";
 
 export default function ItemConditionForm({
   data,
   loading,
+  store_id,
+  product_id,
 }: {
   data: Product | null;
   loading: boolean;
+  store_id: string|string[];
+  product_id: string |string[];
 }) {
-  const { store_id, product_id } = useParams();
+
 
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
