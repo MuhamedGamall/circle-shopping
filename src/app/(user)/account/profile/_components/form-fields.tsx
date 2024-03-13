@@ -13,10 +13,11 @@ import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
 import { editProfile } from "@/lib/RTK/slices/user-slice";
+import LoaderLayout from "@/components/loader-layout";
 
 export default function FormFields() {
   const [country, setCountry] = useState("");
-  const { data } = useProfile();
+  const { data, loading } = useProfile();
 
   const firstName = data?.name?.split(" ")?.[0] || "";
   const lastName = data?.name?.split(" ")?.[1] || "";
@@ -64,6 +65,7 @@ export default function FormFields() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 mt-4 w-full flex flex-col"
       >
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
           <CustomField
             label="Email"
@@ -165,7 +167,7 @@ export default function FormFields() {
           />
         </div>
         <Button
-        variant={'blue'}
+          variant={"blue"}
           type="submit"
           className="w-fit rounded-sm"
           disabled={isSubmitting || !isValid}

@@ -5,17 +5,18 @@ import React from "react";
 import { Heart, LogIn, ShoppingCart, User } from "lucide-react";
 import AccountMenu from "../account-menu";
 import useProfile from "@/hooks/use-profile";
-
+import { Skeleton } from "../ui/skeleton";
+const LoadingSkeleton = () => {
+  return <Skeleton className="h-[25px] w-[150px] rounded-md bg-slate-400" />;
+};
 export default function NavLinks() {
   const { data, loading } = useProfile();
 
   return (
     <nav className="flex gap-2 items-center mx-4">
-      {loading ? (
-        <span>loading...</span>
-      ) : !!data ? (
+      {data ? (
         <div className="sm:block hidden">
-          <AccountMenu {...data} />
+          {loading ? <LoadingSkeleton /> : <AccountMenu {...data} />}
         </div>
       ) : (
         <div className="hidden sm:flex gap-2 items-center">
@@ -25,7 +26,7 @@ export default function NavLinks() {
               "flex gap-1 text-secondMain items-center whitespace-nowrap text-sm font-semibold transition-all hover:opacity-[.6] px-2 sm:border-r border-slate-600"
             }
           >
-            Log in 
+            Log in
           </Link>
           <Link
             href="/auth/create-account"

@@ -22,11 +22,10 @@ export default function AccountMenu({
   name?: string;
   email: string;
 }) {
-  const { data, loading } = useStore();
+  const { data } = useStore();
   const userName = name?.split(" ")?.[0] || email?.split("@")?.[0] || "";
 
-  return (
-    <Menubar className="bg-transparent border-none">
+  return  <Menubar className="bg-transparent border-none">
       <MenubarMenu>
         <MenubarTrigger className="border-none cursor-pointer p-0  bg-transparent data-[state=open]:bg-transparent">
           <div
@@ -67,30 +66,26 @@ export default function AccountMenu({
             </Link>
           </MenubarItem>
           <MenubarItem asChild>
-            {!loading ? (
-              !data ? (
-                <Link
-                  href={"/store/create"}
-                  className="flex items-center text-[18px] gap-3 text-slate-700  "
-                >
-                  <span className=" text-gray-700">
-                    <MdStorefront className="h-4 w-4" />
-                  </span>
-                  Create store
-                </Link>
-              ) : (
-                <Link
-                  href={"/store/" + data?._id + "/dashboard"}
-                  className="flex items-center text-[18px] gap-3 text-slate-700  "
-                >
-                  <span className=" text-gray-700">
-                    <LucideLayoutDashboard className="h-4 w-4" />
-                  </span>
-                  Store dashboard
-                </Link>
-              )
+            {!data ? (
+              <Link
+                href={"/store/create"}
+                className="flex items-center text-[18px] gap-3 text-slate-700  "
+              >
+                <span className=" text-gray-700">
+                  <MdStorefront className="h-4 w-4" />
+                </span>
+                Create store
+              </Link>
             ) : (
-              "loading..."
+              <Link
+                href={"/store/" + data?._id + "/dashboard"}
+                className="flex items-center text-[18px] gap-3 text-slate-700  "
+              >
+                <span className=" text-gray-700">
+                  <LucideLayoutDashboard className="h-4 w-4" />
+                </span>
+                Store dashboard
+              </Link>
             )}
           </MenubarItem>
           <MenubarSeparator />
@@ -104,5 +99,5 @@ export default function AccountMenu({
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  );
+  
 }

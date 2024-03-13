@@ -5,7 +5,7 @@ import { ChangePassword } from "./change-password-dialog";
 
 export default function PasswordSection() {
   return (
-    <section className="bg-white p-6 px-8 mb-10 shadow-section">
+    <section className="bg-white p-6 px-8 mb-10 shadow-section relative">
       <SectionTitle
         title="Security"
         className="mb-5 text-[17px] sm:text-[19px]"

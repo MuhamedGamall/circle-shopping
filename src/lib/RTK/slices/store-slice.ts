@@ -4,10 +4,10 @@ import { Store } from "../../../types";
 
 export const getStore: any = createAsyncThunk(
   "storeSlice/getStore",
-  async (store_id, thunkApi) => {
+  async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/store/" + store_id)).data;
+      const data = (await axios.get("/api/store")).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

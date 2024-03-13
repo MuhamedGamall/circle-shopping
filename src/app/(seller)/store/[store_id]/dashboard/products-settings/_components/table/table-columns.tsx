@@ -1,44 +1,18 @@
-import * as React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import Image from "next/image";
 import Icons from "@/components/icons";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { formatPrice } from "@/utils/format";
+import { formatDate } from "date-fns";
+import { ArrowUpDown } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { formatPrice } from "@/utils/format";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
-import { format } from "path";
-import { formatDate } from "date-fns";
+import DeleteBtn from "./delete-btn";
 
 export const columns: ColumnDef<any>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        className="uppercase"
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value: any) =>
-          table.toggleAllPageRowsSelected(!!value)
-        }
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value: any) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "images",
 
@@ -246,23 +220,26 @@ export const columns: ColumnDef<any>[] = [
       function ProductIdLink() {
         const { store_id } = useParams();
         return (
-          <Link
-            href={
-              "/store/" +
-              store_id +
-              "/dashboard/products-settings/" +
-              row.getValue("_id") +
-              "/update"
-            }
-            className={cn(
-              buttonVariants({
-                variant: "blue",
-                className: " text-center   w-fit text-[13px] h-[28px] px-4    ",
-              })
-            )}
-          >
-            Fix
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link
+              href={
+                "/store/" +
+                store_id +
+                "/dashboard/products-settings/" +
+                row.getValue("_id") +
+                "/update"
+              }
+              className={cn(
+                buttonVariants({
+                  variant: "blue",
+                  className: " w-fit text-[13px] h-[28px] px-4    ",
+                })
+              )}
+            >
+              Fix
+            </Link>
+            <DeleteBtn store_id={store_id} product_id={row.getValue("_id")} />
+          </div>
         );
       }
       return <ProductIdLink />;

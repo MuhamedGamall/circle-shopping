@@ -5,12 +5,12 @@ import { useParams } from "next/navigation";
 
 export default function useStore() {
   const dispatch = useAppDispatch();
-const {store_id}=useParams()
+
   const { store, loading } = useAppSelector((state) => state.stores);
 
   useEffect(() => {
-    dispatch(getStore(store_id));
-  }, [dispatch,store_id]);
+    dispatch(getStore());
+  }, [dispatch]);
 
   return { loading, data: store };
 }

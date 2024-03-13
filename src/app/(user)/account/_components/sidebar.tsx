@@ -1,5 +1,6 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import useProfile from "@/hooks/use-profile";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
@@ -9,7 +10,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHeartCircle } from "react-icons/bi";
 import { BsMenuButtonFill } from "react-icons/bs";
-
+const LoadingSkeleton = () => {
+  return (
+    <div className="w-full flex flex-col gap-1 justify-center">
+      <Skeleton className="h-[15px] w-[50%] rounded-[30px]" />
+      <Skeleton className="h-[15px] w-full rounded-[30px]" />
+    </div>
+  );
+};
 export default function Sidebar() {
   const pathName = usePathname();
   const { data, loading } = useProfile();
@@ -29,9 +37,7 @@ export default function Sidebar() {
               </p>
             </>
           ) : (
-            <span className="font-bold text-[16x]  text-secondMain whitespace-nowrap">
-              loading...
-            </span>
+            <LoadingSkeleton />
           )}
         </div>
         <div className="flex flex-col gap-6  border-b  pb-5 mb-5 h-fit">

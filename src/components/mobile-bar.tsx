@@ -5,7 +5,10 @@ import Link from "next/link";
 import React from "react";
 
 import AccountMenu from "./account-menu";
-
+import { Skeleton } from "./ui/skeleton";
+const LoadingSkeleton = () => {
+  return <Skeleton className="h-[25px] w-[100px]  rounded-sm bg-slate-300" />;
+};
 export default function MoblieBar() {
   const { data, loading } = useProfile();
 
@@ -55,7 +58,7 @@ export default function MoblieBar() {
           <AccountMenu {...data} />
         )
       ) : (
-        "loading..."
+        <LoadingSkeleton />
       )}
 
       <Link

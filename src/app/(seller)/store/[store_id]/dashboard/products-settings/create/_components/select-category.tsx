@@ -2,6 +2,10 @@ import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 import { FaCaretRight } from "react-icons/fa";
 
+
+const LoadingSkeleton =()=>{
+
+}
 export default function SelectCategory({
   data,
   label,
