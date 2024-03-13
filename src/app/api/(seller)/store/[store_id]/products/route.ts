@@ -22,10 +22,12 @@ export async function POST(
       _id: store_id,
     }).lean();
 
-    if (!user || !store) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
+    if (!store) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     const createProduct = await Product.create({
       category: {
         main_category: mainCategory,
@@ -55,11 +57,16 @@ export async function GET(
 
     const store = await Store.find({ _id: store_id, personal_email: email });
 
-    if (!user || !store) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    const products = await Product.find({ store_id ,store_personal_email: email }).lean();
+    if (!store) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+    const products = await Product.find({
+      store_id,
+      store_personal_email: email,
+    }).lean();
 
     return NextResponse.json(products);
   } catch (error) {

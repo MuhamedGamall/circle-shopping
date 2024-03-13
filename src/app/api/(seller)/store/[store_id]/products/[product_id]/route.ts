@@ -19,10 +19,12 @@ export async function GET(
 
     const store = await Store.find({ _id: store_id, personal_email: email });
 
-    if (!user || !store || !product_id) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
+    if (!store || !product_id) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     const product = await Product.findOne({
       store_id,
       store_personal_email: email,
@@ -35,6 +37,7 @@ export async function GET(
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
 export async function PATCH(
   req: NextRequest,
   {
@@ -50,10 +53,12 @@ export async function PATCH(
 
     const store = await Store.find({ _id: store_id, personal_email: email });
 
-    if (!user || !store || !product_id) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
+    if (!store || !product_id) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     const updateProduct = await Product.updateOne(
       {
         store_id,

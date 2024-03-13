@@ -15,10 +15,14 @@ export async function POST(req: NextRequest) {
 
     const store = await Store.findOne({
       personal_email: email,
-    })
+    });
 
-    if (!user || store) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (store) {
+      return new NextResponse("Conflict", { status: 409 });
     }
 
     const create = await Store.create({ ...body, personal_email: email });
@@ -41,10 +45,12 @@ export async function GET(req: NextRequest) {
       personal_email: email,
     }).lean();
 
-    if (!user || !store) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
+    if (!store) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     return NextResponse.json(store);
   } catch (error) {
     console.log("[GET-STORE]", error);

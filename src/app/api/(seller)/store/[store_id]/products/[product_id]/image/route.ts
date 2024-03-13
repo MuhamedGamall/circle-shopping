@@ -72,12 +72,17 @@ export async function DELETE(
     const ids = url.searchParams.get("ids");
 
     const session = await getServerSession(authOptions);
+    const user = session?.user;
     const email = session?.user?.email;
 
     const store = await Store.findOne({ _id: store_id, personal_email: email });
-    if (!email || !store || !product_id)
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
-
+    }
+    
+    if (!store || !product_id) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     const remove = await removeImage({
       public_ids: ids?.split(","),
     });
