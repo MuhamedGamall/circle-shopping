@@ -91,8 +91,6 @@ export default function DetailsForm({
       highlights: [...(new Set(highlights) as any)],
     };
 
-    console.log(removeRepeateValue);
-
     try {
       await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
         ...values,

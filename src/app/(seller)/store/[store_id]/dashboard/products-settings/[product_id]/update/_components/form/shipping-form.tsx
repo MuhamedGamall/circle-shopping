@@ -57,7 +57,6 @@ export default function ShippingForm({
   });
 
   async function onSubmit(values: z.infer<typeof shippingSchema>) {
-    console.log(values);
     try {
       await axios.patch(
         "/api/store/" + store_id + "/products/" + product_id,

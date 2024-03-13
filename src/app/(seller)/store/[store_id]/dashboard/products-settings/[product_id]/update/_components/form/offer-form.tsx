@@ -21,26 +21,25 @@ export default function OfferForm({
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
+  store_id: string | string[];
+  product_id: string | string[];
 }) {
-
   const dateAfterFormating = (date: any): any => {
-    return date ? formatDate(date, "yyyy-MM-dd") : null;
+    return date ? formatDate(date, "yyyy-MM-dd") : "";
   };
   const form = useForm<z.infer<typeof offerSchema>>({
     resolver: zodResolver(offerSchema),
     defaultValues: {
       offer: {
-        start_date: null,
-        end_date: null,
+        start_date: "",
+        end_date: "",
         discount_percentage: 0,
-      },
+      } as any,
     },
     values: {
       offer: {
-        start_date: dateAfterFormating(data?.price?.offer?.start_date) || null,
-        end_date: dateAfterFormating(data?.price?.offer?.end_date) || null,
+        start_date: dateAfterFormating(data?.price?.offer?.start_date) || "",
+        end_date: dateAfterFormating(data?.price?.offer?.end_date) || "",
         discount_percentage: data?.price?.offer?.discount_percentage || 0,
       },
     },
@@ -90,7 +89,7 @@ export default function OfferForm({
   const { isSubmitting, isValid } = form.formState;
   return (
     <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="pricing-section p-5 border-b">
           <SectionTitle
@@ -131,7 +130,7 @@ export default function OfferForm({
           </div>
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting}
             variant={"blue"}
             size={"sm"}
           >

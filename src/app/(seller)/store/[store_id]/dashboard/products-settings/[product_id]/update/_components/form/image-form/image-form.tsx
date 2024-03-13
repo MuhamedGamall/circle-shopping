@@ -22,16 +22,17 @@ export default function ImageForm({
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
+  store_id: string | string[];
+  product_id: string | string[];
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [idsForDeleteFromCloudinary, setIdsForDeleteFromCloudinary] = useState<
     string[]
   >([]);
+  const isValid =
+    imageValue.length === 0 && idsForDeleteFromCloudinary.length === 0;
 
- 
   useEffect(() => {
     setImageValue(data?.images || []);
   }, [data?.images]);
@@ -45,17 +46,17 @@ export default function ImageForm({
     );
 
     if (images.length !== filteredImages.length) {
-      toast.error("Some files are not images or exceed 10MB", {
+      return toast.error("Some files are not images or exceed 10MB", {
         duration: 2000,
       });
-      return;
     }
 
     const numUploadedImages = imageValue?.length + filteredImages.length;
 
     if (numUploadedImages > 10) {
-      toast.error("You can only upload up to 10 images.", { duration: 2000 });
-      return;
+      return toast.error("You can only upload up to 10 images.", {
+        duration: 2000,
+      });
     }
 
     for (const image of filteredImages) {
@@ -90,6 +91,7 @@ export default function ImageForm({
   };
 
   const onSubmit = async () => {
+    if (isValid) return toast.error("Please enter a valid image url.");
     try {
       setIsSubmitting(true);
       await axios.patch(
@@ -117,7 +119,7 @@ export default function ImageForm({
 
   return (
     <div className="image-section p-5 border-b relative">
-      <LoaderLayout loadingCondition={isSubmitting || loading }/>
+      <LoaderLayout loadingCondition={isSubmitting || loading} />
       <SectionTitle
         title="Product Images."
         className="text-[16px] sm:text-[16px] text-slate-700 my-3"
@@ -161,6 +163,9 @@ export default function ImageForm({
             multiple
             disabled={imageValue?.length === 10 || isSubmitting || loading}
           />
+          <span className="text-red-700 text-[11px] font-semibold">
+            {isValid && "Image filed is required"}
+          </span>
         </div>
         <ImageInstructions />
         <Button

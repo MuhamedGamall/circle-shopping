@@ -34,7 +34,7 @@ export function SizesDropdownMenu({
   return (
     <DropdownMenu>
       <div className="flex flex-col">
-        <Label className="text-shade text-[12px] mb-2">Sizes *</Label>
+        <Label className="text-shade text-[12px] mb-2">Sizes</Label>
         <DropdownMenuTrigger asChild disabled={disabled}>
           <Button
             variant="outline"
@@ -54,11 +54,6 @@ export function SizesDropdownMenu({
                 })}
           </Button>
         </DropdownMenuTrigger>
-        {selectSizes?.length === 0 && (
-          <span className="text-red-700 text-[11px] my-2 font-semibold">
-            At least one size must be added.
-          </span>
-        )}
       </div>
       <DropdownMenuContent className={cn("w-56 ")}>
         <DropdownMenuLabel>Sizes</DropdownMenuLabel>

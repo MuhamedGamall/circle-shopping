@@ -1,36 +1,10 @@
 import * as z from "zod";
 
 export const priceSchema = z.object({
-  // is_live: z
-  //   .boolean()
-  //   .refine((value) => value === true || false, "Field is required")
-  //   .default(false),
   price: z.object({
     base_price: z.coerce
       .number()
       .refine((value) => value >= 0.01, "Invalid Price"),
-    // offer: z.object({
-    //   is_offered: z.coerce
-    //     .boolean()
-    //     .refine((value) => value, "Field is required"),
-
-    //   start_date: z.coerce
-    //     .date({
-    //       required_error: "Start date is required.",
-    //     })
-    //     .nullable(),
-    //   end_date: z.coerce
-    //     .date({
-    //       required_error: "End date is required.",
-    //     })
-    //     .nullable(),
-    //   discount_percentage: z.coerce
-    //     .number()
-    //     .refine(
-    //       (value) => value >= 1 && value <= 100,
-    //       "Discount percentage must be between 1% and 100%."
-    //     ),
-    // }),
   }),
 });
 export const offerSchema = z.object({

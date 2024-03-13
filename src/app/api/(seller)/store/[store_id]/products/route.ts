@@ -55,7 +55,7 @@ export async function GET(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.find({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({ _id: store_id, personal_email: email });
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });

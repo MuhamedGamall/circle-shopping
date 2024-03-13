@@ -163,7 +163,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "is_live",
+    accessorKey: "is_published",
     header: ({ column }) => {
       return (
         <Button

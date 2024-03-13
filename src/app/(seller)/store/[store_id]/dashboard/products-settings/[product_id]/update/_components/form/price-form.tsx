@@ -74,7 +74,7 @@ export default function PriceForm({
           </div>
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
-            disabled={loading || isSubmitting || !isValid}
+            disabled={loading || isSubmitting}
             variant={"blue"}
             size={"sm"}
           >

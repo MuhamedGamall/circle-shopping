@@ -11,13 +11,28 @@ import ShippingForm from "./shipping-form";
 import OfferForm from "./offer-form";
 import { useParams } from "next/navigation";
 import useProduct from "@/hooks/use-product";
+import useProducts from "@/hooks/use-products";
+import { useAppDispatch } from "@/hooks/redux";
+import { useEffect } from "react";
+import { resetForm } from "@/lib/RTK/slices/products-slice";
 
 export default function UpdateForm() {
   const { store_id, product_id } = useParams();
   const { data, loading } = useProduct();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(resetForm());
+    };
+  }, [dispatch]);
   return (
     <div>
-      <ProductDetailsHeader data={data} loading={loading} />
+      <ProductDetailsHeader
+        data={data}
+        loading={loading}
+        store_id={store_id}
+        product_id={product_id}
+      />
       <div className="rounded-sm border ">
         <div className="flex items-center gap-2 p-3 border-b">
           <SectionTitle

@@ -56,7 +56,6 @@ export default function BasicForm({
   }, [data?.sizes, setSelectSizes]);
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
-    if (selectSizes.length === 0) return;
     try {
       await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
         ...values,

@@ -1,27 +1,13 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Store } from "../../../types";
-import toast from "react-hot-toast";
 
-// export const createStore: any = createAsyncThunk(
-//   "storeSlice/createStore",
-//   async (store, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.post("/api/store", store)).data;
-//       toast.success("Store created successfully");
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const getStore: any = createAsyncThunk(
   "storeSlice/getStore",
-  async (_, thunkApi) => {
+  async (store_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/store" )).data;
+      const data = (await axios.get("/api/store/" + store_id)).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

@@ -77,7 +77,7 @@ export default function AddDetails({
                 <Info className="h-3 w-3 text-shade" />
               </TooltipWrapper>
             </div>
-            <span className="mr-2">( {data?.length} )</span>
+            <span className="mr-2">( {data?.length -1} )</span>
           </Label>
         </AccordionTrigger>
         <AccordionContent className="w-full max-h-[400px] overflow-y-auto">
