@@ -28,11 +28,6 @@ const routes = [
     icon: MdStorefront,
   },
   {
-    href: "/dashboard/comments",
-    label: "Comments",
-    icon: LiaComments,
-  },
-  {
     href: "/dashboard/archive",
     label: "Archive",
     icon: BsArchive,
