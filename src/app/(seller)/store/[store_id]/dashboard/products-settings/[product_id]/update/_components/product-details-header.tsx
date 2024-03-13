@@ -57,7 +57,7 @@ export default function ProductDetailsHeader({
         {loading ? (
           <HeaderLoading />
         ) : (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center   gap-2">
             {!!data?.images?.[0] ? (
               <Image
                 src={data?.images?.[0]}
@@ -65,7 +65,7 @@ export default function ProductDetailsHeader({
                 width={600}
                 height={819}
                 loading="lazy"
-                className="mx-auto rounded-md w-[42px] h-[58px] object-cover"
+                className="mx-auto  w-[42px] h-[58px] object-cover"
               />
             ) : (
               <div className="mx-auto w-[42px] h-[58px] bg-[#f7f6fb] flex items-center justify-center text-sm">
@@ -74,12 +74,12 @@ export default function ProductDetailsHeader({
                 </div>
               </div>
             )}
-            <div className="flex flex-col gap-2 justify-center">
-              <div className="flex gap-2 items-center">
+            <div className="hidden  sm:flex flex-col gap-2 justify-center">
+              <div className="flex gap-2 items-center ">
                 <span className="font-bold text-sm capitalize">
                   {truncateText(data?.category?.brand || "", 20)}
                 </span>
-                <span className="font-bold text-[11px] text-[#65727d]">
+                <span className="font-bold text-[11px] text-[#65727d] ">
                   {truncateText(data?.title || "", 20) || "--"}
                 </span>
               </div>

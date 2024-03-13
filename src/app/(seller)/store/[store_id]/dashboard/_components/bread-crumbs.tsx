@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { LucideLayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { BsChevronRight } from "react-icons/bs";
 
 export default function BreadCrumbs() {
@@ -15,33 +16,30 @@ export default function BreadCrumbs() {
     .join("/")}/`;
 
   return (
-    <div
-      className={cn(
-        " hidden sm:flex sm:items-center gap-3 mb-5 break-all  overflow-x-auto",
-        {
-          "sm:hidden": crumbs.length === 1,
-        }
-      )}
-    >
+    <div className={cn("flex sm:items-center gap-3 mb-5 flex-wrap")}>
       {crumbs.map((crumb, i) => {
         return (
           <>
             {parseFloat(crumb) ? (
-              <span className="cursor-default  font-semibold sm:text-sm text-[11px] text-slate-600">
+              <span className="cursor-default  font-semibold sm:text-sm text-[12px] text-slate-600">
                 {crumb}
               </span>
             ) : (
               <Link
                 href={`${hiddenLink}${crumbs.slice(0, i + 1).join("/")}`}
                 className={cn(
-                  "capitalize  font-semibold sm:text-sm text-[11px] text-slate-600 hover:underline",
+                  "capitalize  font-semibold sm:text-sm text-[12px] text-slate-600 hover:underline",
                   {
                     " text-[#3866df]": i === crumbs.length - 1,
                   }
                 )}
               >
                 {crumb === "dashboard" ? (
-                  <LucideLayoutDashboard className="sm:h-4 sm:w-4 h-3 w-3 text-slate-600" />
+                  <LucideLayoutDashboard
+                    className={cn(" h-4 w-4 text-slate-600", {
+                      hidden:  crumbs.length  === 1,
+                    })}
+                  />
                 ) : (
                   crumb.split("-").join(" ")
                 )}

@@ -38,7 +38,7 @@ export default function UpdateForm() {
         setIsPublished={setIsPublished}
       />
       <div className="rounded-sm border ">
-        <div className="flex items-center gap-2 p-3 border-b">
+        <div className="flex sm:items-center sm:flex-row flex-col items-start gap-2 p-3 border-b">
           <SectionTitle
             title="Product Details"
             className="text-[16px]  sm:text-[16px]"
