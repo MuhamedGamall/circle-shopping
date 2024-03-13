@@ -184,7 +184,7 @@ export const columns: ColumnDef<any>[] = [
             " mx-auto  rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
           )}
         >
-          {row.getValue("is_published") ? "Published" : "Not Publish"}
+          {row.getValue("is_published") ? "Published" : "Not Published"}
         </div>
       );
     },

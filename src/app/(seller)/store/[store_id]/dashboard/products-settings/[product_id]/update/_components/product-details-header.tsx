@@ -56,7 +56,7 @@ export default function ProductDetailsHeader() {
           disabled
           className=" rounded-sm px-5 text-[12px]"
         >
-          Live
+          Publish
         </Button>
       </div>
     </div>
