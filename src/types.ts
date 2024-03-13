@@ -54,13 +54,13 @@ export type Shipping = {
 };
 export type Product = {
   _id: string;
-  is_live: boolean;
+  is_published: boolean;
   store_id: string;
+  rate: number;
   store_personal_email: string;
   title: string;
   images: string[];
   description: string;
-  department: string;
   model_number: string;
   model_name: string;
   item_pack_quantity: number;
@@ -76,7 +76,7 @@ export type Product = {
     main_category: string;
     sub_category: string;
     brand: string;
-    _id?: string;
+    _id: string;
   };
   shipping: {
     shipping_length: Shipping;
@@ -87,7 +87,6 @@ export type Product = {
   price: {
     base_price: number;
     offer: {
-      is_offered: boolean;
       start_date: Date;
       end_date: Date;
       discount_percentage: number;

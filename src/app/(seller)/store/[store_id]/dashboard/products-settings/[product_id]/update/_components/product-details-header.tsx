@@ -60,7 +60,7 @@ export default function ProductDetailsHeader({
           disabled
           className=" rounded-sm px-5 text-[12px]"
         >
-          Publish
+         { !data?.is_published? 'Published' : 'Unpublished' }
         </Button>
       </div>
     </div>

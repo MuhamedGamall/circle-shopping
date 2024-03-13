@@ -7,9 +7,11 @@ import Icons from "@/components/icons";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { formatDate, formatPrice } from "@/utils/format";
+import { formatPrice } from "@/utils/format";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import { format } from "path";
+import { formatDate } from "date-fns";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -184,7 +186,7 @@ export const columns: ColumnDef<any>[] = [
             " mx-auto  rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
           )}
         >
-          {row.getValue("is_published") ? "Published" : "Not Published"}
+          {row.getValue("is_published") ? "Published" : "Draft"}
         </div>
       );
     },
@@ -207,7 +209,7 @@ export const columns: ColumnDef<any>[] = [
       const createdAt: string = row.getValue("createdAt");
       return (
         <div className=" text-center  font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
-          {formatDate(createdAt)}
+          {formatDate(createdAt, "dd/MM/yyyy HH:mm:ss")}
         </div>
       );
     },
@@ -230,7 +232,7 @@ export const columns: ColumnDef<any>[] = [
       const updatedAt: string = row.getValue("updatedAt");
       return (
         <div className=" text-center  font-medium lowercase max-w-[150px] overflow-x-auto whitespace-nowrap">
-          {formatDate(updatedAt)}
+          {formatDate(updatedAt, " dd/MM/yyyy HH:mm:ss")}
         </div>
       );
     },
