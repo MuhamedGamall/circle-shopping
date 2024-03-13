@@ -12,18 +12,21 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
 import CustomSelectField from "@/components/custom-select-field";
+import { Dispatch, SetStateAction } from "react";
 
 export default function ItemConditionForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
-}) {
+  store_id: string | string[];
+  product_id: string | string[];
+  setIsPublished:Dispatch<SetStateAction<boolean>>
+})  {
 
 
   const form = useForm<z.infer<typeof itemConditionSchema>>({
@@ -42,6 +45,7 @@ export default function ItemConditionForm({
         "/api/store/" + store_id + "/products/" + product_id,
         values
       );
+      setIsPublished(false)
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

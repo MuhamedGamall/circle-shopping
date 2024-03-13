@@ -5,7 +5,7 @@ import Image from "next/image";
 import { BsChevronRight } from "react-icons/bs";
 import HeaderLoading from "./header-loading";
 import { Product } from "@/types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -14,28 +14,21 @@ export default function ProductDetailsHeader({
   loading,
   store_id,
   product_id,
+  isPublished,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
+  isPublished: boolean;
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isPublished, setIsPublished] = useState(false);
 
   useEffect(() => {
-    const fetchPublishedState = async () => {
-      try {
-        const { is_published } = (
-          await axios.get(`/api/store/${store_id}/products/${product_id}`)
-        ).data;
-        setIsPublished(is_published);
-      } catch (error) {
-        console.error("Error fetching published state:", error);
-      }
-    };
-    fetchPublishedState();
-  }, [store_id, product_id]);
+    setIsPublished(data?.is_published || false);
+  }, [data?.is_published, setIsPublished]);
 
   const togglePublishState = async () => {
     try {

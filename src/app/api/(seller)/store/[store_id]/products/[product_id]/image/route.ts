@@ -45,10 +45,9 @@ export async function PATCH(
 
     const images = [...uploadBase64, ...filterImagesAlreadyUploaded];
 
-    // Update product in the database with new images
     const updateProduct = await Product.updateOne(
       { store_id, store_personal_email: email, _id: product_id },
-      { images }
+      { images, is_published: false }
     );
 
     return NextResponse.json(updateProduct);
@@ -79,7 +78,7 @@ export async function DELETE(
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     if (!store || !product_id) {
       return new NextResponse("Not Found", { status: 404 });
     }

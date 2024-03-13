@@ -12,17 +12,20 @@ import axios from "axios";
 import { formatDate } from "date-fns";
 import toast from "react-hot-toast";
 import { offerSchema } from "../../schema";
+import { Dispatch, SetStateAction } from "react";
 
 export default function OfferForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const dateAfterFormating = (date: any): any => {
     return date ? formatDate(date, "yyyy-MM-dd") : "";
@@ -64,22 +67,19 @@ export default function OfferForm({
     );
     const dateNow = new Date().setHours(0, 0, 0, 0);
 
-    if (startDate < dateNow) {
-      toast.error(
+    if (startDate < dateNow)
+      return toast.error(
         "The Start Date must be greater than or equal to today's date"
       );
-      return;
-    }
 
-    if (startDate >= endDate) {
-      toast.error("Schedule the offer start date before the end date");
-      return;
-    }
+    if (startDate >= endDate)
+      return toast.error("Schedule the offer start date before the end date");
 
     try {
       await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
         "price.offer": values.offer,
       });
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

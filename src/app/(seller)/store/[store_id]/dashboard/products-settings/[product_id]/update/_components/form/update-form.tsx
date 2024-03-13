@@ -13,7 +13,7 @@ import { useParams } from "next/navigation";
 import useProduct from "@/hooks/use-product";
 import useProducts from "@/hooks/use-products";
 import { useAppDispatch } from "@/hooks/redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { resetForm } from "@/lib/RTK/slices/products-slice";
 
 export default function UpdateForm() {
@@ -25,6 +25,8 @@ export default function UpdateForm() {
       dispatch(resetForm());
     };
   }, [dispatch]);
+  const [isPublished, setIsPublished] = useState(false);
+
   return (
     <div>
       <ProductDetailsHeader
@@ -32,6 +34,8 @@ export default function UpdateForm() {
         loading={loading}
         store_id={store_id}
         product_id={product_id}
+        isPublished={isPublished}
+        setIsPublished={setIsPublished}
       />
       <div className="rounded-sm border ">
         <div className="flex items-center gap-2 p-3 border-b">
@@ -48,48 +52,56 @@ export default function UpdateForm() {
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <OfferForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <ImageForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <BasicForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <DetailsForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <ItemConditionForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <WarrantyForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
         <ShippingForm
           data={data}
           loading={loading}
           store_id={store_id}
           product_id={product_id}
+          setIsPublished={setIsPublished}
         />
       </div>
     </div>

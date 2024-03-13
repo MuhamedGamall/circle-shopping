@@ -3,15 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCirclePlus } from "react-icons/fa6";
 
 import ImageInstructions from "./image-instructions";
 import ImageItem from "./image-item";
 import axios from "axios";
-import { useParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+
 import LoaderLayout from "@/components/loader-layout";
 
 export default function ImageForm({
@@ -19,11 +18,13 @@ export default function ImageForm({
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const [imageValue, setImageValue] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -45,19 +46,19 @@ export default function ImageForm({
       (file) => file.size <= 10 * 1024 * 1024 && file.type.startsWith("image/")
     );
 
-    if (images.length !== filteredImages.length) {
+    if (images.length !== filteredImages.length) 
       return toast.error("Some files are not images or exceed 10MB", {
         duration: 2000,
       });
-    }
+    
 
     const numUploadedImages = imageValue?.length + filteredImages.length;
 
-    if (numUploadedImages > 10) {
+    if (numUploadedImages > 10) 
       return toast.error("You can only upload up to 10 images.", {
         duration: 2000,
       });
-    }
+    
 
     for (const image of filteredImages) {
       const isValidImage = await checkImageDimensions(image);
@@ -101,9 +102,8 @@ export default function ImageForm({
       const product: any = (
         await axios.get("/api/store/" + store_id + "/products/" + product_id)
       ).data;
-
+      setIsPublished(false);
       setImageValue(product?.images);
-
       if (idsForDeleteFromCloudinary.length > 0) {
         await axios.delete(
           `/api/store/${store_id}/products/${product_id}/image?ids=${idsForDeleteFromCloudinary}`

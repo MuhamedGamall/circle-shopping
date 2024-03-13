@@ -13,7 +13,7 @@ import * as z from "zod";
 import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
@@ -23,14 +23,14 @@ export default function DetailsForm({
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
+  store_id: string | string[];
+  product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
-
-
   const [errorSpecifications, setErrorSpecifications] = useState<boolean[]>([]);
   const [errorHighlights, setErrorHighlights] = useState<boolean[]>([]);
 
@@ -78,14 +78,12 @@ export default function DetailsForm({
   }, [data, data?.highlights, data?.specifications]);
 
   async function onSubmit(values: z.infer<typeof productDetailsSchema>) {
-    if (errorHighlights.includes(true)) {
-      toast.error("Fixing highlights fields for submitting");
-      return;
-    }
-    if (errorSpecifications.includes(true)) {
-      toast.error("Fixing specifications fields for submitting");
-      return;
-    }
+    if (errorHighlights.includes(true))
+      return toast.error("Fixing highlights fields for submitting");
+
+    if (errorSpecifications.includes(true))
+      return toast.error("Fixing specifications fields for submitting");
+
     const removeRepeateValue = {
       specifications: [...(new Set(specifications) as any)],
       highlights: [...(new Set(highlights) as any)],
@@ -96,6 +94,7 @@ export default function DetailsForm({
         ...values,
         ...removeRepeateValue,
       });
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

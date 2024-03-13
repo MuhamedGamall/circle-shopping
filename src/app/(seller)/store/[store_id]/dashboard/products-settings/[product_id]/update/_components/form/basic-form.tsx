@@ -16,18 +16,20 @@ import { SizesDropdownMenu } from "./select-sizes";
 import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function BasicForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
+  store_id: string | string[];
+  product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const [selectSizes, setSelectSizes] = useState<string[]>([]);
   const form = useForm<z.infer<typeof productBasicSchema>>({
@@ -61,6 +63,7 @@ export default function BasicForm({
         ...values,
         sizes: selectSizes,
       });
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

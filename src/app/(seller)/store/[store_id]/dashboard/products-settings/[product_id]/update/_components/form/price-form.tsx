@@ -11,19 +11,21 @@ import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { priceSchema } from "../../schema";
+import { Dispatch, SetStateAction } from "react";
 
 export default function PriceForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
-  store_id: string|string[];
-  product_id: string |string[];
+  store_id: string | string[];
+  product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
-
   const form = useForm<z.infer<typeof priceSchema>>({
     resolver: zodResolver(priceSchema),
     defaultValues: {
@@ -43,7 +45,7 @@ export default function PriceForm({
       await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
         "price.base_price": values.price.base_price,
       });
-
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

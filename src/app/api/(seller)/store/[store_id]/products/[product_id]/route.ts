@@ -65,7 +65,7 @@ export async function PATCH(
         store_personal_email: email,
         _id: product_id,
       },
-      { ...body }
+      { ...body, is_published: false }
     );
 
     return NextResponse.json(updateProduct);

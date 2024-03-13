@@ -12,17 +12,20 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { shippingSchema } from "../../schema";
+import { Dispatch, SetStateAction } from "react";
 
 export default function ShippingForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const form = useForm<z.infer<typeof shippingSchema>>({
     resolver: zodResolver(shippingSchema),
@@ -62,6 +65,7 @@ export default function ShippingForm({
         "/api/store/" + store_id + "/products/" + product_id,
         values
       );
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");

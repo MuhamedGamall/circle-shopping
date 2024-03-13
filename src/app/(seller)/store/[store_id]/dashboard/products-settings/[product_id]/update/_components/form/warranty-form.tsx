@@ -11,17 +11,20 @@ import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { warrantySchema } from "../../schema";
+import { Dispatch, SetStateAction } from "react";
 
 export default function WarrantyForm({
   data,
   loading,
   store_id,
   product_id,
+  setIsPublished,
 }: {
   data: Product | null;
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const form = useForm<z.infer<typeof warrantySchema>>({
     resolver: zodResolver(warrantySchema),
@@ -39,6 +42,7 @@ export default function WarrantyForm({
         "/api/store/" + store_id + "/products/" + product_id,
         values
       );
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
