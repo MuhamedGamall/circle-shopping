@@ -38,20 +38,20 @@ export const columns: ColumnDef<any>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "image",
+    accessorKey: "images",
 
     header: ({ column }) => {
       return <div className="">Image</div>;
     },
     cell: ({ row }: any) => {
-      return row.getValue("image") ? (
+      return !!row.getValue("images")?.[0] ? (
         <Image
-          src={row.getValue("image")}
+          src={row.getValue("images")?.[0]}
           alt="image"
           width={600}
           height={819}
           loading="lazy"
-          className=" mx-auto uppercase rounded-md w-[60px] h-[82px] object-cover"
+          className=" mx-auto uppercase  w-full min-w-[60px] h-[82px] object-cover"
         />
       ) : (
         <div className=" mx-auto w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">
@@ -178,13 +178,13 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div
           className={cn(
-            !row.getValue("is_live")
+            !row.getValue("is_published")
               ? "border-[#f35f31] text-[#f35f31]"
               : "border-green-700 text-green-700",
             " mx-auto  rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
           )}
         >
-          {row.getValue("is_live") ? "Live" : "Not live"}
+          {row.getValue("is_published") ? "Published" : "Not Publish"}
         </div>
       );
     },
