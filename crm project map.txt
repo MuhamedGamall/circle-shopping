@@ -12,39 +12,38 @@ details for build crm project
 │   │   │   └── Login/Logout = ok
 │   │   ├── Search Page
 │   │   │   ├── Search Box = ok
-│   │   │   └── Search Results
+│   │   │   └── Search Results ---------------------------
 │   │   ├── Product Page
-│   │   │   ├── Product Details 
-│   │   │   ├── Add to Cart Button = ok
-│   │   │   └── Ratings and Reviews = ok
+│   │   │   ├── Product Details  ---------------------------
+│   │   │   ├── Add to Cart Button ---------------------------
+│   │   │   └── Ratings and Reviews ---------------------------
 │   │   ├── Cart Page
-│   │   │   ├── Cart Item List
-│   │   │   └── Payment Options
+│   │   │   ├── Cart Item List ---------------------------
+│   │   │   └── Payment Options ---------------------------
 │   │   ├── Checkout Page
-│   │   │   ├── Order Summary
-│   │   │   ├── Shipping Details
-│   │   │   └── Payment Methods
+│   │   │   ├── Order Summary ---------------------------
+│   │   │   ├── Shipping Details ---------------------------
+│   │   │   └── Payment Methods ---------------------------
 │   │   └── User Profile Page
 │   │       ├── Profile Information = ok
-│   │       ├── Past Orders 
+│   │       ├── Past Orders  ---------------------------
 │   │       └── Change Password = ok
 │   │
 │   ├── Seller
 │   │   ├── Dashboard
-│   │   │   ├── Sales Statistics
-│   │   │   ├── Product Management
-│   │   │   │   ├── Add New Product
-│   │   │   │   ├── Edit Existing Products
-│   │   │   │   └── Delete Products
-│   │   │   ├── Order Management
-│   │   │   │   ├── Incoming Orders List
-│   │   │   │   └── Order Details
-│   │   │   ├── Offers and Discounts
-│   │   │   └── Support and Service
+│   │   │   ├── Sales Statistics ---------------------------
+│   │   │   ├── Product Management  = ok
+│   │   │   │   ├── Add New Product  = ok
+│   │   │   │   ├── Edit Existing Products  = ok
+│   │   │   │   └── Delete Products  = ok
+│   │   │   ├── Order Management ---------------------------
+│   │   │   │   ├── Incoming Orders List 
+│   │   │   │   └── Order Details 
+│   │   │   ├── Offers and Discounts  = ok
 │   │   │
 │   │   └── Add Product Page
-│   │       ├── Add Product Form
-│   │       └── Upload Images
+│   │       ├── Add Product Form  = ok
+│   │       └── Upload Images  = ok
 │   │
 │   └── Admin
 │       ├── Admin Dashboard
