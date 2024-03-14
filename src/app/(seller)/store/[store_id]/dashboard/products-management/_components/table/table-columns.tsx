@@ -27,7 +27,7 @@ export const columns: ColumnDef<any>[] = [
           width={600}
           height={819}
           loading="lazy"
-          className=" mx-auto uppercase  w-full min-w-[60px] h-[82px] object-cover"
+          className=" mx-auto uppercase  max-w-[60px] min-w-[60px] h-[82px] object-cover"
         />
       ) : (
         <div className=" mx-auto w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">

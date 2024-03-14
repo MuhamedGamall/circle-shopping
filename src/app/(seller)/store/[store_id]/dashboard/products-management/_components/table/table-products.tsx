@@ -40,6 +40,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import { LoadingSkeleton } from "./table-loading";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function DataTable() {
   const { store_id } = useParams();
@@ -70,9 +71,7 @@ export function DataTable() {
   return (
     <div className="w-full ">
       <Link
-        href={
-          "/store/" + store_id + "/dashboard/products-management/create"
-        }
+        href={"/store/" + store_id + "/dashboard/products-management/create"}
         className={cn(
           buttonVariants({
             variant: "blue",
@@ -115,58 +114,65 @@ export function DataTable() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <>
-              <TableRow key={headerGroup.id} className="">
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      className="text-center  text-[#888888] whitespace-nowrap "
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <>
+                <TableRow key={headerGroup.id} className="">
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead
+                        key={header.id}
+                        className="text-center  text-[#888888] whitespace-nowrap "
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              </>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row, i) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      className="text-center text-[12px] "
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : loading ? (
+              <LoadingSkeleton tableColsLength={columns.length} />
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length + 1}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
               </TableRow>
-            </>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row, i) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="text-center text-[12px] ">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : loading ? (
-            <LoadingSkeleton tableColsLength={columns.length} />
-          ) : (
-            <TableRow>
-              <TableCell
-                colSpan={columns.length + 1}
-                className="h-24 text-center"
-              >
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            )}
+          </TableBody>
+        </Table>
+
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="space-x-2">
           <Button
