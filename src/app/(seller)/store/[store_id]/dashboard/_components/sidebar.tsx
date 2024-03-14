@@ -27,11 +27,6 @@ const routes = [
     label: "Store settings",
     icon: MdStorefront,
   },
-  {
-    href: "/dashboard/help",
-    label: "Help",
-    icon: TbHelp,
-  },
 ];
 export default function Sidebar() {
   const { store_id } = useParams();

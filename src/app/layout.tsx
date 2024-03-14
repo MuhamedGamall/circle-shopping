@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/header/navbar";
 import { cn } from "@/lib/utils";
-import MoblieBar from "@/components/mobile-bar";
-import Footer from "@/components/footer";
+
 import AuthSessionProvider from "@/components/providers/session-provider";
 
 import ToastProvider from "@/components/providers/toast-provider";
