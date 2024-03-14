@@ -57,7 +57,7 @@ export default function SelectSection() {
           await axios.post("/api/store/" + store_id + "/products", fullData)
         ).data;
         router.replace(
-          `/store/${store_id}/dashboard/products-settings/${data?._id}/update`
+          `/store/${store_id}/dashboard/products-management/${data?._id}/update`
         );
         toast.success("Product created successfully");
       } catch (error) {

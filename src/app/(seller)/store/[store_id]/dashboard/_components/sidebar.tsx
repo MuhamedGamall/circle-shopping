@@ -18,8 +18,8 @@ const routes = [
     icon: BsCartCheck,
   },
   {
-    href: "/dashboard/products-settings",
-    label: "Products settings",
+    href: "/dashboard/products-management",
+    label: "Products management",
     icon: LiaBoxesSolid,
   },
   {

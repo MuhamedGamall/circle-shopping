@@ -78,7 +78,7 @@ export const columns: ColumnDef<any>[] = [
             href={
               "/store/" +
               store_id +
-              "/dashboard/products-settings/" +
+              "/dashboard/products-management/" +
               row.getValue("_id") +
               "/update"
             }
@@ -225,7 +225,7 @@ export const columns: ColumnDef<any>[] = [
               href={
                 "/store/" +
                 store_id +
-                "/dashboard/products-settings/" +
+                "/dashboard/products-management/" +
                 row.getValue("_id") +
                 "/update"
               }
