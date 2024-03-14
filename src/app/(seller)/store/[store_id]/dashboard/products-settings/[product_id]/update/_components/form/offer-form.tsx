@@ -12,7 +12,8 @@ import axios from "axios";
 import { formatDate } from "date-fns";
 import toast from "react-hot-toast";
 import { offerSchema } from "../../schema";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import resetOffer from "@/actions/reset-offer";
 
 export default function OfferForm({
   data,
@@ -27,9 +28,10 @@ export default function OfferForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
-  const dateAfterFormating = (date: any): any => {
+  const dateFormating = (date: any): any => {
     return date ? formatDate(date, "yyyy-MM-dd") : "";
   };
+
   const form = useForm<z.infer<typeof offerSchema>>({
     resolver: zodResolver(offerSchema),
     defaultValues: {
@@ -41,12 +43,21 @@ export default function OfferForm({
     },
     values: {
       offer: {
-        start_date: dateAfterFormating(data?.price?.offer?.start_date) || "",
-        end_date: dateAfterFormating(data?.price?.offer?.end_date) || "",
+        start_date: dateFormating(data?.price?.offer?.start_date) || "",
+        end_date: dateFormating(data?.price?.offer?.end_date) || "",
         discount_percentage: data?.price?.offer?.discount_percentage || 0,
       },
     },
   });
+  // Reset the form when offer time expires
+  useEffect(() => {
+    resetOffer({
+      data,
+      form,
+      store_id,
+      product_id,
+    });
+  }, [data, form, product_id, store_id]);
 
   async function onSubmit(values: z.infer<typeof offerSchema>) {
     if (!Object.values(values.offer).every(Boolean)) {
