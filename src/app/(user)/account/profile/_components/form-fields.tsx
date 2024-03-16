@@ -14,6 +14,7 @@ import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
 import { editProfile } from "@/lib/RTK/slices/user-slice";
 import LoaderLayout from "@/components/loader-layout";
+import { Label } from "@/components/ui/label";
 
 export default function FormFields() {
   const [country, setCountry] = useState("");
@@ -37,7 +38,6 @@ export default function FormFields() {
     defaultValues: {
       first_name: "",
       last_name: "",
-      email: "",
       phone: "",
       street_address: "",
       city: "",
@@ -47,7 +47,6 @@ export default function FormFields() {
     values: {
       first_name: firstName,
       last_name: lastName,
-      email: data?.email || "",
       phone: data?.phone || "",
       street_address: data?.street_address || "",
       city: data?.city || "",
@@ -67,16 +66,12 @@ export default function FormFields() {
       >
         <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
-          <CustomField
-            label="Email"
-            labelClassName={"text-slate-700"}
-            form={form}
-            disabled
-            name={"email"}
-            type={"email"}
-            className={" cursor-not-allowed"}
-            placeholder={"example@gmail.com"}
-          />
+          <div className=" flex flex-col gap-3 w-full mt-2  ">
+            <Label className={"text-slate-700 "}>Email</Label>
+            <div className=" text-shade border rounded-sm py-2.5 px-2 text-sm cursor-not-allowed select-none">
+              {data?.email}
+            </div>
+          </div>
           <CustomField
             label="First Name *"
             labelClassName={"text-slate-700"}

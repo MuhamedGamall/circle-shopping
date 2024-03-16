@@ -1,7 +1,17 @@
-import React from 'react'
+import React from "react";
+import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
+import SectionTitle from "@/components/section-title";
+import { DataTable } from "./_components/table/table-products";
 
-export default function page() {
+export default function ProductsSettingsPage() {
   return (
-    <div>page</div>
-  )
+    <MaxWidthWrapper>
+      <div className="relative w-full mr-[50px]">
+        <section className="p-5 shadow-section w-full ">
+          <SectionTitle title="Products" className="mb-5" />
+          <DataTable/>
+        </section>
+      </div>
+    </MaxWidthWrapper>
+  );
 }

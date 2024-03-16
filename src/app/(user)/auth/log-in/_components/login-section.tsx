@@ -42,35 +42,24 @@ export default function LoginClientComponent() {
   }
 
   return (
-    <MaxWidthWrapper>
-      <section className="max-w-[800px] mx-auto my-10 px-5 ">
-        <Card>
-          <CardHeader className="space-y-1 ">
-            <CardTitle className="text-2xl">Log in </CardTitle>
-            <CardDescription>Enter your email below to Sig in</CardDescription>
-          </CardHeader>
-
-          <AccountForm onSubmit={onSubmit} form={form}>
-            <CardFooter className="flex flex-col items-start mt-5  gap-2">
-              {isError && (
-                <span className="text-[14px] text-red-400 flex items-center gap-1">
-                  <MdErrorOutline color="red" />
-                  Wrong email or password
-                </span>
-              )}
-              <span className="flex gap-1 items-center text-sm text-slate-700">
-                Don&apos;t have an account?
-                <Link href={"/auth/create-account"} className="underline font-bold">
-                  Sign up
-                </Link>
-              </span>
-              <Button className="w-full" type="submit" disabled={!isValid}>
-                Log in
-              </Button>
-            </CardFooter>
-          </AccountForm>
-        </Card>
-      </section>
-    </MaxWidthWrapper>
+    <AccountForm onSubmit={onSubmit} form={form}>
+      <CardFooter className="flex flex-col items-start mt-5  gap-2">
+        {isError && (
+          <span className="text-[14px] text-red-400 flex items-center gap-1">
+            <MdErrorOutline color="red" />
+            Wrong email or password
+          </span>
+        )}
+        <span className="flex gap-1 items-center text-sm text-slate-700">
+          Don&apos;t have an account?
+          <Link href={"/auth/create-account"} className="underline font-bold">
+            Sign up
+          </Link>
+        </span>
+        <Button className="w-full" type="submit" disabled={!isValid}>
+          Log in
+        </Button>
+      </CardFooter>
+    </AccountForm>
   );
 }

@@ -23,14 +23,7 @@ export async function POST(req: NextRequest) {
 
     const { email } = body;
     const createUser = await User.create(body);
-    const createUserInfo = await UserInfo.create({
-      email,
-      phone: " ",
-      street_address: " ",
-      postal_code: " ",
-      city: " ",
-      country: " ",
-    });
+    const createUserInfo = await UserInfo.create({ email });
 
     return NextResponse.json({ ...createUser, ...createUserInfo });
   } catch (error) {

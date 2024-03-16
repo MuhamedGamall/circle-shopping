@@ -28,7 +28,7 @@ export type UserData = {
   password?: string;
   createdAt: any;
   updatedAt: any;
-  admin: string;
+  admin: boolean;
   phone: number;
   street_address: string;
   postal_code: number;

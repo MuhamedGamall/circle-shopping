@@ -8,6 +8,9 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { Adapter } from "next-auth/adapters";
 import mongoConnect from "@/actions/mongo-connect";
 import { User } from "@/models/user";
+import { UserInfo } from "@/models/user-info";
+import axios from "axios";
+import { userInfo } from "os";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -35,23 +38,38 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const email = credentials?.email;
-        const password = credentials?.password;
+        const { email, password }: any = credentials;
         await mongoConnect();
         const user = await User.findOne({ email });
-        const passwordOk = user && bcrypt.compareSync(password!, user.password);
-        if (passwordOk) {
-          return user;
+        if (!user) {
+          throw new Error("Invalid email or password");
         }
-        return null;
+
+        const passwordOk = await bcrypt.compare(password, user.password);
+        if (!passwordOk) {
+          throw new Error("Invalid email or password");
+        }
+
+        return user;
       },
     }),
   ],
 
   callbacks: {
+    async signIn({ user }) {
+      try {
+        await mongoConnect();
+        const existingUser = await UserInfo.findOne({ email: user?.email });
+        if (!existingUser) await UserInfo.create({ email: user?.email });
+        return true;
+      } catch (err) {
+        console.log(`Error with callback: ${err}`);
+        return false;
+      }
+    },
     async jwt({ token }) {
       await mongoConnect();
-      const user = await User.findOne({ email: token?.email });
+      const user = await UserInfo.findOne({ email: token?.email });
       const isAdmin = user?.admin;
       token.role = isAdmin ? "admin" : "member";
       return token;

@@ -22,14 +22,17 @@ export async function PATCH(req: NextRequest) {
       { name: userName }
     ).lean();
 
-    const userInfo = await UserInfo.findOneAndUpdate(
+    const userInfo = await UserInfo.updateOne(
       { email: user?.email },
-      otherData,
-      { upsert: true }
+      otherData
     ).lean();
     const fullData = { ...userData, ...userInfo };
 
-    if (!user || !Object.values(data).every(Boolean)) {
+    if (!user) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (!user || !userInfo || !Object.values(data).every(Boolean)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
