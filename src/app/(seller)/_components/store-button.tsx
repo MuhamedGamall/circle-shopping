@@ -23,7 +23,7 @@ export default function StoreButton() {
     <div className="md:block  hidden">
       {data && (
         <Link
-          href={"/store/" + data?._id + "/dashboard/store-settings"}
+          href={"/store/" + data?._id + "/store-settings"}
           className={cn(
             buttonVariants({
               variant: "outline",

@@ -48,6 +48,17 @@ const Icons = {
       <span className="font-[200] text-secondMain text-[38px]">Store</span>
     </div>
   ),
+  adminLogo: () => (
+    <div className="flex items-center">
+      <Link
+        href={"/"}
+        className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap"
+      >
+        circle
+      </Link>
+      <span className="font-[200] text-secondMain text-[38px]">Admin</span>
+    </div>
+  ),
   logo: ({h,w}:{h?:string,w?:string}) => (
     <div >
       <svg

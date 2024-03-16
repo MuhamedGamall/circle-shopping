@@ -1,5 +1,6 @@
-import BreadCrumbs from "./_components/bread-crumbs";
-import Sidebar from "./_components/sidebar";
+import BreadCrumbs from "../_components/bread-crumbs";
+import Sidebar from "../_components/sidebar";
+
 
 export default function StoreLayout({
   children,
