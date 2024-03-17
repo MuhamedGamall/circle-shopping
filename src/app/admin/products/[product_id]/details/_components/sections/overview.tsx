@@ -27,8 +27,7 @@ export default function Overview({
             }
           >
             {label}
-
-            <span className="mr-2">( {data?.length } )</span>
+            <span className="mr-2">( {data?.length} )</span>
           </Label>
         </AccordionTrigger>
         <AccordionContent className="w-full max-h-[400px] overflow-y-auto">
