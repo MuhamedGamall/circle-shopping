@@ -1,10 +1,12 @@
 "use client";
-import { DeleteConfirm } from "@/components/delete-confirm";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
 import { unpublishProduct_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
+import DeleteConfirm from "./delete-reason";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const UnpublishBtn = ({
   store_id,
@@ -16,21 +18,29 @@ const UnpublishBtn = ({
   store_personal_email: string;
 }) => {
   const dispatch = useAppDispatch();
-  const onSubmit = async () => {
-    dispatch(
-      unpublishProduct_admin({
+  const onSubmit = async (reasonSelectedValue: string) => {
+    if (!reasonSelectedValue) return toast.error("Please select a reason");
+    try {
+      dispatch(
+        unpublishProduct_admin({
+          store_id,
+          product_id,
+          store_personal_email,
+        })
+      );
+      await axios.post("/api/admin/notifications", {
         store_id,
         product_id,
-        store_personal_email,
-      })
-    );
+        personal_email: store_personal_email,
+        message: reasonSelectedValue,
+      });
+    } catch (err) {
+      console.log("error when delete product", err);
+    }
   };
 
   return (
-    <DeleteConfirm
-      onDelete={onSubmit}
-      title=" Are you sure to delete this product?"
-    >
+    <DeleteConfirm onDelete={onSubmit}>
       <div
         className={cn(
           buttonVariants({

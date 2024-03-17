@@ -16,7 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { useEffect, useState } from "react";
 
 export default function CustomSelectField({
   form,
