@@ -25,10 +25,8 @@ export default function ItemConditionForm({
   loading: boolean;
   store_id: string | string[];
   product_id: string | string[];
-  setIsPublished:Dispatch<SetStateAction<boolean>>
-})  {
-
-
+  setIsPublished: Dispatch<SetStateAction<boolean>>;
+}) {
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
     defaultValues: {
@@ -45,7 +43,7 @@ export default function ItemConditionForm({
         "/api/store/" + store_id + "/products/" + product_id,
         values
       );
-      setIsPublished(false)
+      setIsPublished(false);
       toast.success("Product Updated successfully");
     } catch (error) {
       toast.error("Uh oh! Something went wrong");
@@ -57,7 +55,7 @@ export default function ItemConditionForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <LoaderLayout loadingCondition={isSubmitting || loading} />
-        <div className="pricing-section p-5 border-b">
+        <div className="  p-5 border-b">
           <SectionTitle
             title="Item Condition."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"

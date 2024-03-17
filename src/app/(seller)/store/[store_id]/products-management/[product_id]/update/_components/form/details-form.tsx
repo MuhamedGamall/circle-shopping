@@ -105,12 +105,12 @@ export default function DetailsForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <LoaderLayout loadingCondition={loading || isSubmitting} />
-        <div className="pricing-section p-5 border-b">
+        <div className="  p-5 border-b">
           <SectionTitle
             title="Product Details."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
           />
-          <div className="grid grid-cols-1 gap-y-3 gap-x-5 sm:grid-cols-2 items-baseline">
+          <div className="grid grid-cols-1 gap-y-5 gap-x-7 sm:grid-cols-2 items-baseline">
             <CustomField
               label="Box Details *"
               labelClassName={"text-shade text-[12px]"}

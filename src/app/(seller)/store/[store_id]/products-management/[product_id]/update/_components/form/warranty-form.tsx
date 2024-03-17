@@ -54,7 +54,7 @@ export default function WarrantyForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <LoaderLayout loadingCondition={loading || isSubmitting} />
-        <div className="pricing-section p-5 border-b">
+        <div className="  p-5 border-b">
           <SectionTitle
             title="Additional Info."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"

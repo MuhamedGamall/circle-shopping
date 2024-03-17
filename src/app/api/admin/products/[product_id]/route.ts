@@ -16,10 +16,10 @@ export async function GET(req: NextRequest) {
     if (!user || !userInfos?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const products = await Product.find({ is_published: true });
-    return NextResponse.json(products);
+    const product = await Product.findOne({ is_published: true });
+    return NextResponse.json(product);
   } catch (error) {
-    console.log("[ADMIN:GET-PRODUCTS]", error);
+    console.log("[ADMIN:GET-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

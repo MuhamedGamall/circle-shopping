@@ -8,7 +8,7 @@ export const getProducts_admin: any = createAsyncThunk(
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const products = (await axios.get("/api/admin/products/")).data;
+      const products = (await axios.get("/api/admin/products")).data;
       return products;
     } catch (error: any) {
       console.log(error);

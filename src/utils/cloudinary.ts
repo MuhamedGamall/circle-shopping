@@ -25,8 +25,16 @@ export const uploadImages = async ({
       const uploadOptions: any = {
         folder: folderName,
       };
-
-      const result = await cloudinaryV2.uploader.upload(image, uploadOptions);
+      const result = await cloudinaryV2.uploader.upload(image, {
+        ...uploadOptions,
+        transformation: [
+          {
+            width: 140,
+            height: 230,
+            crop: "fill",
+          },
+        ],
+      });
       uploadResults.push(result.secure_url);
     }
 
@@ -48,7 +56,7 @@ export const removeImage = async ({
     const result = await cloudinaryV2.api.delete_resources(
       deleteOptions.public_ids
     );
-    return result
+    return result;
   } catch (error) {
     throw error;
   }

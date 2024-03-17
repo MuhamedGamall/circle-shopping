@@ -76,12 +76,12 @@ export default function ShippingForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
         <LoaderLayout loadingCondition={loading || isSubmitting} />
-        <div className="pricing-section p-5 border-b">
+        <div className="p-5">
           <SectionTitle
             title="Shipping."
             className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
           />
-          <div className="flex flex-col gap-3 justify-center">
+          <div className="flex flex-col gap-5 justify-center">
             <div>
               <Label className="text-shade text-[12px] mb-2 block">
                 Shipping Length *

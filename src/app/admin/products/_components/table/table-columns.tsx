@@ -72,7 +72,7 @@ export const columns: ColumnDef<any>[] = [
       function ProductActions() {
         return (
           <Link
-            href={"/admin/products/" + row.getValue("_id") + "/view"}
+            href={"/admin/products/" + row.getValue("_id") + "/details"}
             className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
           >
             {row.getValue("_id")}
@@ -183,7 +183,7 @@ export const columns: ColumnDef<any>[] = [
         return (
           <div className="flex items-center gap-2">
             <Link
-              href={"/admin/products/" + row.getValue("_id") + "/view"}
+              href={"/admin/products/" + row.getValue("_id") + "/details"}
               className={cn(
                 buttonVariants({
                   variant: "outline",
