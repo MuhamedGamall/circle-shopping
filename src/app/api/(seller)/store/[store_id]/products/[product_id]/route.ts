@@ -33,7 +33,7 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.log("[GET-PRODUCT]", error);
+    console.log("[SELLER:GET-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -70,7 +70,7 @@ export async function PATCH(
 
     return NextResponse.json(updateProduct);
   } catch (error) {
-    console.log("[UPDATE-PRODUCT]", error);
+    console.log("[SELLER:UPDATE-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -102,7 +102,7 @@ export async function DELETE(
 
     return NextResponse.json(deleteProduct);
   } catch (error) {
-    console.log("[DELETE-PRODUCT]", error);
+    console.log("[SELLER:DELETE-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

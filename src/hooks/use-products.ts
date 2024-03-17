@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { getProducts } from "@/lib/RTK/slices/products-slice";
-import useStore from "./use-store";
+import { getProducts_seller } from "@/lib/RTK/slices/seller-slices/products-slice";
 
-export default function useProducts() {
+export default function useProducts(store_id: string | string[]) {
   const dispatch = useAppDispatch();
-  const { data } = useStore();
-  const { products, loading } = useAppSelector((state) => state.products);
+  const { products, loading } = useAppSelector(
+    (state) => state.seller_products
+  );
 
   useEffect(() => {
-    dispatch(getProducts(data?._id));
-  }, [data?._id, dispatch]);
+    dispatch(getProducts_seller(store_id));
+  }, [store_id, dispatch]);
 
   return { loading, data: products };
 }

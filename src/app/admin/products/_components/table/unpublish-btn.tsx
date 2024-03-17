@@ -1,32 +1,41 @@
+"use client";
 import { DeleteConfirm } from "@/components/delete-confirm";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { deleteProduct } from "@/lib/RTK/slices/products-slice";
+import { unpublishProduct_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 
-const DeleteBtn = ({
+const UnpublishBtn = ({
   store_id,
   product_id,
+  store_personal_email,
 }: {
-  store_id: string | string[];
+  store_id: string;
   product_id: string | string[];
+  store_personal_email: string;
 }) => {
   const dispatch = useAppDispatch();
-  const onDelete = () => {
-    dispatch(deleteProduct({ store_id, product_id }));
+  const onSubmit = async () => {
+    dispatch(
+      unpublishProduct_admin({
+        store_id,
+        product_id,
+        store_personal_email,
+      })
+    );
   };
 
   return (
     <DeleteConfirm
-      onDelete={() => onDelete()}
+      onDelete={onSubmit}
       title=" Are you sure to delete this product?"
     >
       <div
         className={cn(
           buttonVariants({
             className:
-              "   bg-red-800 hover:bg-red-900 rounded-sm  w-fit text-[13px] h-[28px] px-2  ",
+              "bg-red-800 hover:bg-red-900 rounded-sm  w-fit text-[13px] h-[28px] px-2  ",
           })
         )}
       >
@@ -35,4 +44,4 @@ const DeleteBtn = ({
     </DeleteConfirm>
   );
 };
-export default DeleteBtn
+export default UnpublishBtn;

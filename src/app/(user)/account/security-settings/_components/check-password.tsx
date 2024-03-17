@@ -8,7 +8,7 @@ import * as z from "zod";
 
 import { checkPassword } from "../schema";
 import { useAppDispatch } from "@/hooks/redux";
-import { deleteUser } from "@/lib/RTK/slices/user-slice";
+import { deleteUser_user } from "@/lib/RTK/slices/user-slices/user-slice";
 import useProfile from "@/hooks/use-profile";
 import bcryptDecode from "@/actions/bcrypt-decode";
 import { signOut } from "next-auth/react";
@@ -38,7 +38,7 @@ export function CheckPassword({
     if (checkPass) {
       try {
         setPassIsCorrect(true);
-        dispatch(deleteUser(data?.email));
+        dispatch(deleteUser_user(data?.email));
         setOpen(false);
         setTimeout(() => {
           signOut({ callbackUrl: "/" });

@@ -1,10 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UserData } from "../../../types";
+import { UserData } from "../../../../types";
 import toast from "react-hot-toast";
 
 // export const getUsers: any = createAsyncThunk(
-//   "usersSlice/getUsers",
+//   "userSlice/getUsers",
 //   async (_, thunkApi) => {
 //     const { rejectWithValue } = thunkApi;
 //     try {
@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 //     }
 //   }
 // );
-export const getUser: any = createAsyncThunk(
+export const getUser_user: any = createAsyncThunk(
   "userSlice/getUser",
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
@@ -30,8 +30,8 @@ export const getUser: any = createAsyncThunk(
   }
 );
 
-export const editProfile: any = createAsyncThunk(
-  "usersSlice/editProfile",
+export const editProfile_user: any = createAsyncThunk(
+  "userSlice/editProfile",
   async (values: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -44,8 +44,8 @@ export const editProfile: any = createAsyncThunk(
     }
   }
 );
-export const deleteUser: any = createAsyncThunk(
-  "usersSlice/editProfile",
+export const deleteUser_user: any = createAsyncThunk(
+  "userSlice/editProfile",
   async (email: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -70,8 +70,8 @@ const initialState: UserState = {
   error: null,
 };
 
-const usersSlice = createSlice({
-  name: "usersSlice",
+const userSlice = createSlice({
+  name: "userSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -90,21 +90,21 @@ const usersSlice = createSlice({
     //   });
     builder
       .addCase(
-        getUser.pending,
+        getUser_user.pending,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getUser.fulfilled,
+        getUser_user.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.profile = action.payload;
         }
       )
       .addCase(
-        getUser.rejected,
+        getUser_user.rejected,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -112,49 +112,27 @@ const usersSlice = createSlice({
       );
     builder
       .addCase(
-        editProfile.pending,
+        editProfile_user.pending,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        editProfile.fulfilled,
+        editProfile_user.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.profile = { ...state.profile, ...action.payload };
         }
       )
       .addCase(
-        editProfile.rejected,
+        editProfile_user.rejected,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
         }
       );
-    //TODO: create delete user
-    // builder
-    //   .addCase(
-    //     deleteUser.pending,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     deleteUser.fulfilled,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.us = { ...state.profile, ...action.payload };
-    //     }
-    //   )
-    //   .addCase(
-    //     deleteUser.rejected,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
+
   },
 });
-export default usersSlice.reducer;
+export default userSlice.reducer;

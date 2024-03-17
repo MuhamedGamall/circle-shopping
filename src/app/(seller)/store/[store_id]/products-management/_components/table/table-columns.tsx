@@ -70,7 +70,7 @@ export const columns: ColumnDef<any>[] = [
       return <div className="uppercase">Product ID</div>;
     },
     cell: ({ row }) => {
-      function ProductIdLink() {
+      function ProductActions() {
         const { store_id } = useParams();
 
         return (
@@ -89,7 +89,7 @@ export const columns: ColumnDef<any>[] = [
         );
       }
 
-      return <ProductIdLink />;
+      return <ProductActions />;
     },
   },
   {
@@ -217,7 +217,7 @@ export const columns: ColumnDef<any>[] = [
       return <div className="uppercase">actions</div>;
     },
     cell: ({ row }: any) => {
-      function ProductIdLink() {
+      function ProductActions() {
         const { store_id } = useParams();
         return (
           <div className="flex items-center gap-1">
@@ -242,7 +242,7 @@ export const columns: ColumnDef<any>[] = [
           </div>
         );
       }
-      return <ProductIdLink />;
+      return <ProductActions />;
     },
   },
 ];

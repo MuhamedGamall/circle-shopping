@@ -11,10 +11,9 @@ import ShippingForm from "./shipping-form";
 import OfferForm from "./offer-form";
 import { useParams } from "next/navigation";
 import useProduct from "@/hooks/use-product";
-import useProducts from "@/hooks/use-products";
 import { useAppDispatch } from "@/hooks/redux";
 import { useEffect, useState } from "react";
-import { resetForm } from "@/lib/RTK/slices/products-slice";
+import { resetForm } from "@/lib/RTK/slices/seller-slices/products-slice";
 
 export default function UpdateForm() {
   const { store_id, product_id } = useParams();

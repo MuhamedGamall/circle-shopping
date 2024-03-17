@@ -52,7 +52,7 @@ export async function PATCH(
 
     return NextResponse.json(updateProduct);
   } catch (error) {
-    console.error("[PATCH-PRODUCT]", error);
+    console.error("[SELLER:PATCH-IMAGES]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -88,7 +88,7 @@ export async function DELETE(
 
     return NextResponse.json(remove);
   } catch (error) {
-    console.error("[PATCH-PRODUCT]", error);
+    console.error("[SELLER:DELETE-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

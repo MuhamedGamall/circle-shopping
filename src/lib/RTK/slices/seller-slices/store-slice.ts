@@ -1,9 +1,9 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Store } from "../../../types";
+import { Store } from "../../../../types";
 
-export const getStore: any = createAsyncThunk(
-  "storeSlice/getStore",
+export const getStore_seller: any = createAsyncThunk(
+  "sellerStoreSlice/getStore",
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -16,20 +16,19 @@ export const getStore: any = createAsyncThunk(
 );
 
 type StoreState = {
-  stores: Store[];
+
   store: null | Store;
   loading: boolean;
   error: null;
 };
 const initialState: StoreState = {
   store: null,
-  stores: [],
   loading: false,
   error: null,
 };
 
 const storeSlice = createSlice({
-  name: "storeSlice",
+  name: "sellerStoreSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -57,21 +56,21 @@ const storeSlice = createSlice({
     //   );
     builder
       .addCase(
-        getStore.pending,
+        getStore_seller.pending,
         (state: StoreState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getStore.fulfilled,
+        getStore_seller.fulfilled,
         (state: StoreState, action: PayloadAction<any>) => {
           state.loading = false;
           state.store = action.payload;
         }
       )
       .addCase(
-        getStore.rejected,
+        getStore_seller.rejected,
         (state: StoreState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

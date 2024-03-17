@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 
 import Icons from "@/components/icons";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format";
 import { formatDate } from "date-fns";
@@ -9,7 +9,7 @@ import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import DeleteBtn from "./delete-btn";
+import UnPublishBtn from "./unpublish-btn";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -69,15 +69,10 @@ export const columns: ColumnDef<any>[] = [
       return <div className="uppercase">Product ID</div>;
     },
     cell: ({ row }) => {
-      function ProductIdLink() {
+      function ProductActions() {
         return (
           <Link
-            href={
-              "/admin/" +
-              "/products/" +
-              row.getValue("_id") +
-              "/view"
-            }
+            href={"/admin/products/" + row.getValue("_id") + "/view"}
             className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
           >
             {row.getValue("_id")}
@@ -85,7 +80,7 @@ export const columns: ColumnDef<any>[] = [
         );
       }
 
-      return <ProductIdLink />;
+      return <ProductActions />;
     },
   },
   {
@@ -128,35 +123,6 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div className=" text-center  whitespace-nowrap max-w-[150px] overflow-x-auto ">
           {row.getValue("quantity_in_stock")} QTY
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "is_published",
-    header: ({ column }) => {
-      return (
-        <Button
-          className="uppercase"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Product status
-          <ArrowUpDown className="ml-2 h-4 w-4 " />
-        </Button>
-      );
-    },
-    cell: ({ row }: any) => {
-      return (
-        <div
-          className={cn(
-            !row.getValue("is_published")
-              ? "border-[#f35f31] text-[#f35f31]"
-              : "border-green-700 text-green-700",
-            " mx-auto  rounded-sm whitespace-nowrap max-w-[150px] border overflow-x-auto font-bold w-fit px-1"
-          )}
-        >
-          {row.getValue("is_published") ? "Published" : "Draft"}
         </div>
       );
     },
@@ -213,13 +179,30 @@ export const columns: ColumnDef<any>[] = [
       return <div className="uppercase">actions</div>;
     },
     cell: ({ row }: any) => {
-      function ProductIdLink() {
-        const { store_id } = useParams();
+      function ProductActions() {
         return (
-          <DeleteBtn store_id={store_id} product_id={row.getValue("_id")} />
+          <div className="flex items-center gap-2">
+            <Link
+              href={"/admin/products/" + row.getValue("_id") + "/view"}
+              className={cn(
+                buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                  className: " rounded-sm  w-fit text-[13px] h-[28px] px-2 ",
+                })
+              )}
+            >
+              View
+            </Link>
+            <UnPublishBtn
+              store_id={row?.original?.store_id}
+              store_personal_email={row?.original?.store_personal_email}
+              product_id={row.getValue("_id")}
+            />
+          </div>
         );
       }
-      return <ProductIdLink />;
+      return <ProductActions />;
     },
   },
 ];

@@ -37,34 +37,7 @@ export async function PATCH(
 
     return NextResponse.json(updateStore);
   } catch (error) {
-    console.log("[UPDATE-STORE]", error);
+    console.log("[SELLER:UPDATE-STORE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
-// export async function GET(
-//   req: NextRequest,
-//   { params: { store_id } }: { params: { store_id: string } }
-// ) {
-//   try {
-//     await mongoConnect();
-//     const session = await getServerSession(authOptions);
-//     const user = session?.user;
-//     const email = session?.user?.email;
-
-//     const store = await Store.findOne({
-//       personal_email: email,
-//       _id: store_id,
-//     }).lean();
-
-//     if (!user) {
-//       return new NextResponse("Unauthorized", { status: 401 });
-//     }
-//     if (!store) {
-//       return new NextResponse("Not Found", { status: 404 });
-//     }
-//     return NextResponse.json(store);
-//   } catch (error) {
-//     console.log("[GET-STORE]", error);
-//     return new NextResponse("Internal Error", { status: 500 });
-//   }
-// }

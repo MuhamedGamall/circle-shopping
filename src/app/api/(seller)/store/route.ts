@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(create);
   } catch (error) {
-    console.log("[CREATE-STORE]", error);
+    console.log("[SELLER:CREATE-STORE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     }
     return NextResponse.json(store);
   } catch (error) {
-    console.log("[GET-STORE]", error);
+    console.log("[SELLER:GET-STORE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

@@ -1,10 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Product } from "../../../types";
+import { Product } from "../../../../types";
 import toast from "react-hot-toast";
 
-export const getProducts: any = createAsyncThunk(
-  "productsSlice/getProducts",
+export const getProducts_seller: any = createAsyncThunk(
+  "sellerProductsSlice/getProducts",
   async (store_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -17,8 +17,8 @@ export const getProducts: any = createAsyncThunk(
     }
   }
 );
-export const getProduct: any = createAsyncThunk(
-  "productsSlice/getProduct",
+export const getProduct_seller: any = createAsyncThunk(
+  "sellerProductsSlice/getProduct",
   async (data: { store_id: string; product_id: string }, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -34,8 +34,8 @@ export const getProduct: any = createAsyncThunk(
     }
   }
 );
-export const deleteProduct: any = createAsyncThunk(
-  "productsSlice/deleteProduct",
+export const deleteProduct_seller: any = createAsyncThunk(
+  "sellerProductsSlice/deleteProduct",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -53,7 +53,7 @@ export const deleteProduct: any = createAsyncThunk(
 );
 
 // export const updateProduct: any = createAsyncThunk(
-//   "productsSlice/updateProduct",
+//   "sellerProductsSlice/updateProduct",
 //   async (product: any, thunkApi) => {
 //     const { rejectWithValue } = thunkApi;
 //     try {
@@ -88,8 +88,8 @@ const initialState: ProductsState = {
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: "productsSlice",
+const sellerProductsSlice = createSlice({
+  name: "sellerProductsSlice",
   initialState,
   reducers: {
     resetForm: (state) => {
@@ -99,21 +99,21 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        getProducts.pending,
+        getProducts_seller.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getProducts.fulfilled,
+        getProducts_seller.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.products = action.payload;
         }
       )
       .addCase(
-        getProducts.rejected,
+        getProducts_seller.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -121,21 +121,21 @@ const productsSlice = createSlice({
       );
     builder
       .addCase(
-        getProduct.pending,
+        getProduct_seller.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getProduct.fulfilled,
+        getProduct_seller.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.product = action.payload;
         }
       )
       .addCase(
-        getProduct.rejected,
+        getProduct_seller.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -143,14 +143,14 @@ const productsSlice = createSlice({
       );
     builder
       .addCase(
-        deleteProduct.pending,
+        deleteProduct_seller.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        deleteProduct.fulfilled,
+        deleteProduct_seller.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.products = state.products.filter(
@@ -159,7 +159,7 @@ const productsSlice = createSlice({
         }
       )
       .addCase(
-        deleteProduct.rejected,
+        deleteProduct_seller.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -194,6 +194,6 @@ const productsSlice = createSlice({
     //   );
   },
 });
-export default productsSlice.reducer;
+export default sellerProductsSlice.reducer;
 
-export const { resetForm } = productsSlice.actions;
+export const { resetForm } = sellerProductsSlice.actions;

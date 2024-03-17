@@ -1,7 +1,7 @@
 import { DeleteConfirm } from "@/components/delete-confirm";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { deleteProduct } from "@/lib/RTK/slices/products-slice";
+import { deleteProduct_seller } from "@/lib/RTK/slices/seller-slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 
@@ -14,7 +14,7 @@ const DeleteBtn = ({
 }) => {
   const dispatch = useAppDispatch();
   const onDelete = () => {
-    dispatch(deleteProduct({ store_id, product_id }));
+    dispatch(deleteProduct_seller({ store_id, product_id }));
   };
 
   return (
@@ -35,4 +35,4 @@ const DeleteBtn = ({
     </DeleteConfirm>
   );
 };
-export default DeleteBtn
+export default DeleteBtn;

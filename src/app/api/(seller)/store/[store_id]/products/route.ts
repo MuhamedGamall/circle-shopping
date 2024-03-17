@@ -21,7 +21,6 @@ export async function POST(
       personal_email: email,
       _id: store_id,
     }).lean();
-
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -40,7 +39,7 @@ export async function POST(
 
     return NextResponse.json(createProduct);
   } catch (error) {
-    console.log("[CREATE-PRODUCT]", error);
+    console.log("[SELLER:CREATE-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -70,7 +69,7 @@ export async function GET(
 
     return NextResponse.json(products);
   } catch (error) {
-    console.log("[GET-PRODUCT]", error);
+    console.log("[SELLER:GET-PRODUCTS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

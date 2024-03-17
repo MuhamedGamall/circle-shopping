@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { getStore } from "@/lib/RTK/slices/store-slice";
-import { useParams } from "next/navigation";
+import { getStore_seller } from "@/lib/RTK/slices/seller-slices/store-slice";
 
 export default function useStore() {
   const dispatch = useAppDispatch();
 
-  const { store, loading } = useAppSelector((state) => state.stores);
+  const { store, loading } = useAppSelector((state) => state.seller_store);
 
   useEffect(() => {
-    dispatch(getStore());
+    dispatch(getStore_seller());
   }, [dispatch]);
 
   return { loading, data: store };

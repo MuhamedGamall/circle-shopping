@@ -1,24 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { getProducts } from "@/app/admin/actions/get-products";
 import { ProductsTable } from "@/components/table/table-products";
-import { Product } from "@/types";
 import { columns } from "./table-columns";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getProducts_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
 
 export function DataTable() {
-  const [products, setProducts] = useState<Product[] | []>([]);
-  const [loading, setLoading] = useState(true);
-
+  const dispatch = useAppDispatch();
+  const { products, loading } = useAppSelector((state) => state.admin_products);
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getProducts();
-      setProducts(data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+    dispatch(getProducts_admin());
+  }, [dispatch]);
 
-  return <ProductsTable  data={products} loading={loading} columns={columns}  />;
+  return <ProductsTable data={products} loading={loading} columns={columns} />;
 }

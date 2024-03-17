@@ -24,25 +24,26 @@ export async function PATCH(
       store_id,
       store_personal_email: email,
       _id: product_id,
-    }).lean()
+    }).lean();
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store || !product_id) {
+    console.log(store);
+    if (!store || !product_id || !product) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
     if (
       product?.is_published ||
-      !product?.title||
+      !product?.title ||
       !product?.model_name ||
       !product?.model_height ||
       !product?.warranty ||
       !product?.item_condition ||
       !product?.colour ||
       !product?.box_details ||
-      product?.images.length === 0||
+      product?.images.length === 0 ||
       !(product?.item_pack_quantity > 0) ||
       !(product?.price?.base_price >= 0.01) ||
       !(product?.quantity_in_stock >= 0) ||
@@ -67,7 +68,7 @@ export async function PATCH(
 
     return NextResponse.json(updateProduct);
   } catch (error) {
-    console.log("[UPDATE-PRODUCT]", error);
+    console.log("[SELLER:PUBLISH-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

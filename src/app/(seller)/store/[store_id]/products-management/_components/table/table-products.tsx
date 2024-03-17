@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ProductsTable } from "@/components/table/table-products";
 import { buttonVariants } from "@/components/ui/button";
 import useProducts from "@/hooks/use-products";
@@ -12,7 +11,7 @@ import { columns } from "./table-columns";
 
 export function DataTable() {
   const { store_id } = useParams();
-  const { data, loading } = useProducts();
+  const { data, loading } = useProducts(store_id);
   return (
     <div>
       <Link

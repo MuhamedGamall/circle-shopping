@@ -12,7 +12,7 @@ import useProfile from "@/hooks/use-profile";
 import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
-import { editProfile } from "@/lib/RTK/slices/user-slice";
+import { editProfile_user } from "@/lib/RTK/slices/user-slices/user-slice";
 import LoaderLayout from "@/components/loader-layout";
 import { Label } from "@/components/ui/label";
 
@@ -30,7 +30,7 @@ export default function FormFields() {
       const values = {
         ...value,
       };
-      await dispatch(editProfile(values));
+      await dispatch(editProfile_user(values));
     }
   }
   const form = useForm<z.infer<typeof profileSchema>>({
