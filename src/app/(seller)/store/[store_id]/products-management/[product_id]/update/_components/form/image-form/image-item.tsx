@@ -28,7 +28,7 @@ export default function ImageItem({
 
   const onDelete = async () => {
     const id = publicIdForDelete(imageValue[idx]);
-    if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
+    if (id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
     setImageValue((curr) => curr.filter((el, i) => i !== idx));
   };
 
@@ -37,13 +37,11 @@ export default function ImageItem({
     if (!image) return;
 
     if (image.size > 10 * 1024 * 1024 || !image.type.startsWith("image/")) {
-      toast.error(
+      return toast.error(
         image.size > 10 * 1024 * 1024
           ? "File size should be less than 10MB"
-          : "This type of image is not supported",
-        { duration: 2000 }
+          : "This type of image is not supported"
       );
-      return;
     }
 
     const isValidImage = await checkImageDimensions(image);
@@ -51,8 +49,7 @@ export default function ImageItem({
       readerImage(image);
     } else {
       toast.error(
-        "Image dimensions should be at least 660px width and 900px height.",
-        { duration: 2000 }
+        "Image dimensions should be at least 660px width and 900px height."
       );
     }
   };
@@ -74,7 +71,7 @@ export default function ImageItem({
         const newArr = [...prevImages];
         //- caching image id for deleting from cloudinary
         const id = publicIdForDelete(newArr[idx]);
-        if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
+        if (id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
         //-
         newArr[idx] = reader.result as string;
         return newArr;

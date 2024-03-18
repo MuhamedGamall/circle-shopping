@@ -9,7 +9,7 @@ export function AvatarContainer({
 }) {
   return (
     <div className=" w-[40px] h-[40px]  rounded-full border-[3px]">
-      {!!image ? (
+      {image ? (
         <Image
           src={image || ""}
           alt="profile image"

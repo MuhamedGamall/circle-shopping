@@ -333,7 +333,7 @@ export default function SelectCountry({
   const [open, setOpen] = useState(false);
   const currentCountry = form.getValues("country");
   const check =
-    !!country || !!currentCountry
+    country || currentCountry
       ? country || currentCountry
       : "Select country...";
   return (

@@ -20,7 +20,7 @@ export const columns: ColumnDef<any>[] = [
       return <div className="">Image</div>;
     },
     cell: ({ row }: any) => {
-      return !!row.getValue("images")?.[0] ? (
+      return row.getValue("images")?.[0] ? (
         <Image
           src={row.getValue("images")?.[0]}
           alt="image"

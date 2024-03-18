@@ -51,7 +51,7 @@ export const productBasicSchema = z.object({
     })
     .refine(
       (value) =>
-        !!value
+        value
           ? /^[a-zA-Z0-9](?:[a-zA-Z0-9\s!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*[a-zA-Z0-9])?/.test(
               value
             )

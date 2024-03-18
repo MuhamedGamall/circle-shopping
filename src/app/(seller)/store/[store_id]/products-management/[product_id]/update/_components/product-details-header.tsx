@@ -58,7 +58,7 @@ export default function ProductDetailsHeader({
           <HeaderLoading />
         ) : (
           <div className="flex items-center   gap-2">
-            {!!data?.images?.[0] ? (
+            {data?.images?.[0] ? (
               <Image
                 src={data?.images?.[0]}
                 alt="image"
