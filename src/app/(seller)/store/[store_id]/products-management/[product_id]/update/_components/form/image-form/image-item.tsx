@@ -26,7 +26,7 @@ export default function ImageItem({
     return image.slice(startIndex, endIndex);
   };
 
-  const onDelete = async (idx: number) => {
+  const onDelete = async () => {
     const id = publicIdForDelete(imageValue[idx]);
     if (!!id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
     setImageValue((curr) => curr.filter((el, i) => i !== idx));
@@ -106,7 +106,7 @@ export default function ImageItem({
         <TbReplace className="cursor-pointer absolute shadow-md -top-3 right-5 h-6 w-6 text-slate-100 bg-slate-600 p-1 rounded-full" />
       </Label>
       <X
-        onClick={() => onDelete(idx)}
+        onClick={onDelete}
         className="cursor-pointer  absolute shadow-md -top-3 -right-2 h-6 w-6 text-slate-100 bg-red-600 p-1 rounded-full"
       />
     </div>
