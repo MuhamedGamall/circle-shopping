@@ -20,13 +20,13 @@ const DeleteBtn = ({
   return (
     <DeleteConfirm
       onDelete={() => onDelete()}
-      title=" Are you sure to delete this product?"
+      title="Are you sure to delete this product?"
     >
       <div
         className={cn(
           buttonVariants({
             className:
-              "   bg-red-800 hover:bg-red-900 rounded-sm  w-fit text-[13px] h-[28px] px-2  ",
+              "bg-red-800 hover:bg-red-900 rounded-sm  w-fit text-[13px] h-[28px] px-2  ",
           })
         )}
       >

@@ -43,45 +43,43 @@ export default function ImageForm({
     if (!images) return;
 
     const filteredImages = Array.from(images).filter(
-      (file) => file.size <= 10 * 1024 * 1024 && file.type.startsWith("image/")
+      (file) =>
+        file.size <= 10 * 1024 * 1024 &&
+        (file.type === "image/jpg" ||
+          file.type === "image/png" ||
+          file.type === "image/jpeg")
     );
 
-    if (images.length !== filteredImages.length) 
-      return toast.error("Some files are not images or exceed 10MB", {
-        duration: 2000,
-      });
-    
+    if (images.length !== filteredImages.length)
+      return toast.error("Some files are not images or exceed 10MB");
 
     const numUploadedImages = imageValue?.length + filteredImages.length;
 
-    if (numUploadedImages > 10) 
-      return toast.error("You can only upload up to 10 images.", {
-        duration: 2000,
-      });
-    
+    if (numUploadedImages > 10)
+      return toast.error("You can only upload up to 10 images.");
 
     for (const image of filteredImages) {
-      const isValidImage = await checkImageDimensions(image);
-      if (isValidImage) {
-        readerImage(image);
-      } else {
-        toast.error(
-          "Image dimensions should be at least 660px width and 900px height.",
-          { duration: 2000 }
-        );
-      }
+      // const isValidImage = await checkImageDimensions(image);
+      // if (isValidImage) {
+      readerImage(image);
+      // } else {
+      //   toast.error(
+      //     "Image dimensions should be at least 660px width and 900px height.",
+      //     { duration: 2000 }
+      //   );
+      // }
     }
   };
 
-  const checkImageDimensions = async (image: File): Promise<boolean> => {
-    return new Promise((resolve) => {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(image);
-      img.onload = () => {
-        resolve(img.width >= 660 && img.height >= 900);
-      };
-    });
-  };
+  // const checkImageDimensions = async (image: File): Promise<boolean> => {
+  //   return new Promise((resolve) => {
+  //     const img = document.createElement("img");
+  //     img.src = URL.createObjectURL(image);
+  //     img.onload = () => {
+  //       resolve(img.width >= 660 && img.height >= 900);
+  //     };
+  //   });
+  // };
 
   const readerImage = (image: File) => {
     const reader = new FileReader();
@@ -159,7 +157,7 @@ export default function ImageForm({
             type="file"
             id="upload"
             className="hidden"
-            accept="image/*"
+            accept=".png,.jpg,.jpeg"
             multiple
             disabled={imageValue?.length === 10 || isSubmitting || loading}
           />

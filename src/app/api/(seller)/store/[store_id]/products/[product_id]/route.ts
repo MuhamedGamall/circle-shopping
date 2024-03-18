@@ -2,6 +2,7 @@ import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
+import { removeFolder } from "@/utils/cloudinary";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -87,6 +88,11 @@ export async function DELETE(
     const email = session?.user?.email;
 
     const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const product = await Product.findOne({
+      store_id,
+      store_personal_email: email,
+      product_id,
+    });
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -94,12 +100,16 @@ export async function DELETE(
     if (!store || !product_id) {
       return new NextResponse("Not Found", { status: 404 });
     }
+  
     const deleteProduct = await Product.deleteOne({
       store_id,
       store_personal_email: email,
       _id: product_id,
     });
-
+    const folderId = `circle-shopping/${email}/products/${product_id}`;
+    if (product?.images?.length) {
+      await removeFolder({ folderId });
+    }
     return NextResponse.json(deleteProduct);
   } catch (error) {
     console.log("[SELLER:DELETE-PRODUCT]", error);

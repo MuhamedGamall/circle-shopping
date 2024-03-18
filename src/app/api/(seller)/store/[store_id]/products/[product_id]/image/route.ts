@@ -68,7 +68,7 @@ export async function DELETE(
     await mongoConnect();
 
     const url = new URL(req.url);
-    const ids = url.searchParams.get("ids");
+    const ids:any= url.searchParams.get("ids");
 
     const session = await getServerSession(authOptions);
     const user = session?.user;
@@ -83,7 +83,7 @@ export async function DELETE(
       return new NextResponse("Not Found", { status: 404 });
     }
     const remove = await removeImage({
-      public_ids: ids?.split(","),
+      public_ids: ids,
     });
 
     return NextResponse.json(remove);
