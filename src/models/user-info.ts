@@ -4,11 +4,11 @@ const UserInfoSchema = new Schema(
   {
     admin: { type: Boolean, default: false },
     phone: { type: String },
-    email: { type: String},
-    street_address: { type: String},
+    email: { type: String, required: true },
+    street_address: { type: String },
     postal_code: { type: String },
-    city: { type: String},
-    country: { type: String},
+    city: { type: String },
+    country: { type: String },
   },
   { timestamps: true }
 );
