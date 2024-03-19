@@ -33,6 +33,7 @@ export default function CategoryCard({
           objectFit="cover"
           src={image}
           alt=""
+          loading="lazy"
           className=" object-cover  rounded-xl shadow-md"
         />
         <span className="text-gray-600 px-5 font-bold text-sm sm:text-[18px] break-all">

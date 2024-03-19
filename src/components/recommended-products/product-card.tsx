@@ -37,6 +37,7 @@ export default function ProductCard({
             objectFit="cover"
             src={image}
             alt=""
+            loading="lazy"
             className="w-full h-full object-cover  rounded-md"
           />
           <Button className="text-[28px] h-9 w-9  bg-white hover:bg-slate-100 rounded-full shadow-md absolute bottom-4 right-2 text-secondMain p-1">
