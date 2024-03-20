@@ -7,19 +7,17 @@ import React from "react";
 import { IconType } from "react-icons/lib";
 
 export default function SidebarItem({
-
   href,
   label,
   icon: Icon,
 }: {
-
   href: string;
   label: string;
   icon: LucideIcon | IconType;
 }) {
   const pathname = usePathname();
   return (
-    <TooltipWrapper label={label} className="md:hidden block">
+    <TooltipWrapper side="right" label={label} className="md:hidden block">
       <li>
         <Link
           className={cn(
@@ -29,15 +27,10 @@ export default function SidebarItem({
                 pathname.includes(href),
             }
           )}
-          href={ href}
+          href={href}
         >
           <Icon className={"h-5 w-5  text-slate-700"} />
-          <span
-            className={"md:block hidden text-slate-900"
-              }
-          >
-            {label}
-          </span>
+          <span className={"md:block hidden text-slate-900"}>{label}</span>
         </Link>
       </li>
     </TooltipWrapper>

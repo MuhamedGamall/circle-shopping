@@ -7,11 +7,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaCirclePlus } from "react-icons/fa6";
 
-import ImageInstructions from "./image-instructions";
 import ImageItem from "./image-item";
 import axios from "axios";
 
 import LoaderLayout from "@/components/loader-layout";
+import Banner from "@/components/banner";
 
 export default function ImageForm({
   data,
@@ -45,9 +45,7 @@ export default function ImageForm({
     const filteredImages = Array.from(images).filter(
       (file) =>
         file.size <= 10 * 1024 * 1024 &&
-        (file.type === "image/jpg" ||
-          file.type === "image/png" ||
-          file.type === "image/jpeg")
+        ["image/jpg", "image/png", "image/jpeg"].includes(file.type)
     );
 
     if (images.length !== filteredImages.length)
@@ -59,27 +57,26 @@ export default function ImageForm({
       return toast.error("You can only upload up to 10 images.");
 
     for (const image of filteredImages) {
-      // const isValidImage = await checkImageDimensions(image);
-      // if (isValidImage) {
-      readerImage(image);
-      // } else {
-      //   toast.error(
-      //     "Image dimensions should be at least 660px width and 900px height.",
-      //     { duration: 2000 }
-      //   );
-      // }
+      const isValidImage = await checkImageDimensions(image);
+      if (isValidImage) {
+        readerImage(image);
+      } else {
+        toast.error(
+          "Image dimensions should be at least 660px width and 900px height."
+        );
+      }
     }
   };
 
-  // const checkImageDimensions = async (image: File): Promise<boolean> => {
-  //   return new Promise((resolve) => {
-  //     const img = document.createElement("img");
-  //     img.src = URL.createObjectURL(image);
-  //     img.onload = () => {
-  //       resolve(img.width >= 660 && img.height >= 900);
-  //     };
-  //   });
-  // };
+  const checkImageDimensions = async (image: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(image);
+      img.onload = () => {
+        resolve(img.width >= 660 && img.height >= 900);
+      };
+    });
+  };
 
   const readerImage = (image: File) => {
     const reader = new FileReader();
@@ -123,6 +120,16 @@ export default function ImageForm({
         className="text-[16px] sm:text-[16px] text-slate-700 my-3"
       />
       <form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
+        <Banner
+          title={"Image Instructions"}
+          instructions={[
+            "660 x 900 or more recommended",
+            "Image height should be greater than 900px",
+            "Image width should be greater than 660px",
+            "File size should be less than 10MB",
+            "Non-backward images are recommended for the product to appear clearly",
+          ]}
+        />
         <div className="mb-5">
           <span className="text-[10px] text-shade sm:text-left text-center block">
             Upload image/s
@@ -162,10 +169,9 @@ export default function ImageForm({
             disabled={imageValue?.length === 10 || isSubmitting || loading}
           />
           <span className="text-red-700 text-[11px] font-semibold">
-            {isValid && "Image filed is required"}
+            {isValid && "Image  field is required"}
           </span>
         </div>
-        <ImageInstructions />
         <Button
           onClick={onSubmit}
           className="text-[11px] my-3 h-[30px] rounded-sm"

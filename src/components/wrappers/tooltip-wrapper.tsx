@@ -11,16 +11,21 @@ export function TooltipWrapper({
   children,
   label,
   className,
+  side,
 }: {
   children: ReactNode;
   label: string;
   className?: string;
+  side?: "right" | "top" | "bottom" | "left" | undefined;
 }) {
   return (
     <TooltipProvider>
       <Tooltip disableHoverableContent={true}>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className={cn("z-[2000000000000] relative", className)} side="right">
+        <TooltipContent
+          className={cn("  max-w-[200px] text-wrap", className)}
+          side={side}
+        >
           <p>{label}</p>
         </TooltipContent>
       </Tooltip>

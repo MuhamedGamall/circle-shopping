@@ -106,7 +106,7 @@ export async function DELETE(
       store_personal_email: email,
       _id: product_id,
     });
-    const folderId = `circle-shopping/${email}/products/${product_id}`;
+    const folderId = `circle-shopping/products/${email}/${product_id}`;
     if (product?.images?.length) {
       await removeFolder({ folderId });
     }

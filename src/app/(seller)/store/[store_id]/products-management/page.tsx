@@ -5,7 +5,7 @@ import SectionTitle from "@/components/section-title";
 
 export default function ProductsSettingsPage() {
   return (
-    <div className="relative w-full mr-[50px]">
+    <div className="relative w-full ">
       <section className="p-5 shadow-section w-full ">
         <SectionTitle title="Products management" className="mb-5" />
         <DataTable />

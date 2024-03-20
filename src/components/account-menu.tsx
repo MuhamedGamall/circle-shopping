@@ -128,7 +128,7 @@ export default function AccountMenu() {
           </MenubarMenu>
         </Menubar>
       ) : (
-        <div className="hidden sm:flex gap-2 items-center">
+        <div className="flex gap-4 items-center">
           <Link
             href="/auth/log-in"
             className={

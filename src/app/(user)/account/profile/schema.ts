@@ -3,12 +3,12 @@ export const profileSchema = z.object({
   first_name: z
     .string()
     .trim()
-    .min(3, { message: "Invalid filed." })
+    .min(3, { message: "Invalid  field." })
     .max(30, { message: "First name should be on a lot of 30 characters." }),
   last_name: z
     .string()
     .trim()
-    .min(3, { message: "Invalid filed." })
+    .min(3, { message: "Invalid  field." })
 
     .max(30, { message: "Last name should be on a lot of 30 characters." }),
   phone: z

@@ -6,7 +6,7 @@ import ViewDetailsSection from "./_components/details-section";
 export default function DetailsProductPage() {
   return (
     <MaxWidthWrapper>
-      <div className="relative w-full mr-[50px]">
+      <div className="relative w-full  ">
         <section className="p-5 shadow-section w-full  ">
           <SectionTitle title="product details" className="mb-5" />
           <ViewDetailsSection />

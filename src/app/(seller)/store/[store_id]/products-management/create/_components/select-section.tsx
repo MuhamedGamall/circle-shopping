@@ -54,7 +54,7 @@ export default function SelectSection() {
     if (checkData) {
       try {
         const data = (
-          await axios.post("/api/store/" + store_id + "/products", fullData)
+          await axios.post("/api/store/" + store_id + "/products/create", fullData)
         ).data;
         router.replace(
           `/store/${store_id}/products-management/${data?._id}/update`
@@ -143,7 +143,7 @@ export default function SelectSection() {
             {(productBrand.length === 0 || productBrand.length < 1) &&
               "Brand field is required"}
             {productBrand.length > 50 &&
-              "This filed must not exceed 50 characters!"}
+              "This  field must not exceed 50 characters!"}
           </span>
           <div className="w-full flex  justify-end">
             <Button

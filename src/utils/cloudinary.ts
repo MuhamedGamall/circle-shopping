@@ -24,8 +24,8 @@ export const uploadImages = async ({
         ...uploadOptions,
         transformation: [
           {
-            width: 140,
-            height: 230,
+            width: 240,
+            height: 327,
             crop: "fill",
           },
         ],
@@ -36,6 +36,40 @@ export const uploadImages = async ({
     return uploadResults;
   } catch (error) {
     console.error("Error Cloudinary: uploadImages ", error);
+    throw error;
+  }
+};
+export const uploadSubCategoryImages = async ({
+  data,
+  folderName,
+}: {
+  data: { name: string; image: string }[];
+  folderName: string;
+}): Promise<{ name: string; image: string }[]> => {
+  try {
+    const uploadResults = [];
+
+    for (const el of data) {
+      const uploadOptions = {
+        folder: folderName,
+      };
+
+      const result = await cloudinaryV2.uploader.upload(el?.image, {
+        ...uploadOptions,
+        transformation: [
+          {
+            width: 240,
+            height: 327,
+            crop: "fill",
+          },
+        ],
+      });
+      uploadResults.push({ ...el, image: result.secure_url });
+    }
+
+    return uploadResults;
+  } catch (error) {
+    console.error("Error Cloudinary: uploadSubCategoriesImages ", error);
     throw error;
   }
 };

@@ -40,7 +40,7 @@ const routes = [
 ];
 export default function Sidebar() {
   return (
-    <div className=" max-w-[60px] md:max-w-[250px] w-full h-screen fixed top-[77px] left-0 border-r py-5 bg-white">
+    <div className=" max-w-[60px] md:max-w-[250px] w-full h-screen fixed z-[50] top-[77px] left-0 border-r py-5 bg-white">
       <ul className="flex flex-col justify-center">
         {routes.map((route, i) => (
           <SidebarItem key={i} {...route} />

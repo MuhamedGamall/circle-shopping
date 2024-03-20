@@ -28,7 +28,7 @@ const UnpublishBtn = ({
           store_personal_email,
         })
       );
-      await axios.post("/api/admin/notifications", {
+      await axios.post("/api/admin/notifications/create", {
         store_id,
         product_id,
         personal_email: store_personal_email,

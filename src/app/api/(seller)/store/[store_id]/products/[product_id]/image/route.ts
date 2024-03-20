@@ -32,7 +32,7 @@ export async function PATCH(
       (image: string) => !image.includes("base64")
     );
 
-    const folderName = `/circle-shopping/${email}/products/${product_id}`;
+    const folderName = `/circle-shopping/products/${email}/${product_id}`;
 
     // Upload base64 images to Cloudinary
     const uploadBase64 =

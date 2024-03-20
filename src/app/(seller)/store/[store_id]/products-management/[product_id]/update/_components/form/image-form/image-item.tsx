@@ -36,38 +36,31 @@ export default function ImageItem({
     const image: File | undefined = e.target.files?.[0];
     if (!image) return;
 
-    if (
-      image.size > 10 * 1024 * 1024 ||
-      (image.type !== "image/jpg" &&
-        image.type !== "image/png" &&
-        image.type !== "image/jpeg")
-    ) {
-      return toast.error(
-        image.size > 10 * 1024 * 1024
-          ? "File size should be less than 10MB"
-          : "This type of image is not supported"
+    if (!["image/jpg", "image/png", "image/jpeg"].includes(image.type))
+      return toast.error("We do not support this file type");
+
+    if (image?.size > 10 * 1024 * 1024)
+      return toast.error("This file is larger than 10MB");
+
+    const isValidImage = await checkImageDimensions(image);
+    if (isValidImage) {
+      readerImage(image);
+    } else {
+      toast.error(
+        "Image dimensions should be at least 660px width and 900px height."
       );
     }
-
-    // const isValidImage = await checkImageDimensions(image);
-    // if (isValidImage) {
-    readerImage(image);
-    // } else {
-    //   toast.error(
-    //     "Image dimensions should be at least 660px width and 900px height."
-    //   );
-    // }
   };
 
-  // const checkImageDimensions = async (image: File): Promise<boolean> => {
-  //   return new Promise((resolve) => {
-  //     const img = document.createElement("img");
-  //     img.src = URL.createObjectURL(image);
-  //     img.onload = () => {
-  //       resolve(img.width >= 660 && img.height >= 900);
-  //     };
-  //   });
-  // };
+  const checkImageDimensions = async (image: File): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(image);
+      img.onload = () => {
+        resolve(img.width >= 660 && img.height >= 900);
+      };
+    });
+  };
 
   const readerImage = (image: File) => {
     const reader = new FileReader();
@@ -103,7 +96,7 @@ export default function ImageItem({
           className="hidden"
           type="file"
           accept=".jpg,.jpeg,.png,"
-/>
+        />
         <TbReplace className="cursor-pointer absolute shadow-md -top-3 right-5 h-6 w-6 text-slate-100 bg-slate-600 p-1 rounded-full" />
       </Label>
       <X

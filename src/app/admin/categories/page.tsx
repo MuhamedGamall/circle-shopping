@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function CategoriesPage() {
   return (
     <MaxWidthWrapper>
-      <div className="relative w-full mr-[50px]">
+      <div className="relative w-full  ">
         <section className="p-5 shadow-section w-full ">
           <SectionTitle title="Categories" className="mb-5" />
           <Link href={"/admin/categories/create"}>create</Link>

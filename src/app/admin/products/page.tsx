@@ -6,10 +6,10 @@ import { DataTable } from "./_components/table/table-products";
 export default function ProductsSettingsPage() {
   return (
     <MaxWidthWrapper>
-      <div className="relative w-full mr-[50px]">
+      <div className="relative w-full  ">
         <section className="p-5 shadow-section w-full ">
           <SectionTitle title="Products" className="mb-5" />
-          <DataTable/>
+          <DataTable />
         </section>
       </div>
     </MaxWidthWrapper>
