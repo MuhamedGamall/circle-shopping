@@ -27,7 +27,7 @@ export const uploadImages = async ({
             {
               width: 240,
               height: 327,
-              crop: "fitnish",
+              crop: "fit",
             },
           ],
         });
