@@ -34,24 +34,25 @@ export default function SubmitData() {
   const filterSubCate = trimSubCateVlues?.filter(
     (el) => Object.values(el).every(Boolean) && cateIsValid(el?.name)
   );
-  if (!Object.values(trimMainCateVlues).every(Boolean))
-    return toast.error(
-      "Please complete the incomplete fields in main category section."
-    );
 
-  if (!cateIsValid(trimMainCateVlues?.name))
-    return toast.error(
-      " Main category name must be 2-50 characters long, containing only English letters."
-    );
-
-  if (filterSubCate.length === 0)
-    return toast.error(
-      "At least one sub category must be added and completed."
-    );
   const onSubmit = async () => {
+    if (!Object.values(trimMainCateVlues).every(Boolean))
+      return toast.error(
+        "Please complete the incomplete fields in main category section."
+      );
+
+    if (!cateIsValid(trimMainCateVlues?.name))
+      return toast.error(
+        " Main category name must be 2-50 characters long, containing only English letters."
+      );
+
+    if (filterSubCate.length === 0)
+      return toast.error(
+        "At least one sub category must be added and completed."
+      );
     try {
       setIsSubmitting(true);
-      await axios.post("/api/admin/categories/create", {
+      await axios.post("/api/admin/categories", {
         main_category: trimMainCateVlues,
         sub_categories: filterSubCate,
       });

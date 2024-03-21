@@ -8,11 +8,12 @@ import userSlice from "./slices/user-slices/user-slice";
 import sellerStoreSlice from "./slices/seller-slices/store-slice";
 import sellerProductsSlice from "./slices/seller-slices/products-slice";
 import adminProductsSlice from "./slices/admin-slices/products-slice";
+import categoriesSlice from "./slices/categories-slice";
 
 const store = configureStore({
   reducer: {
     // imageURL: uploadImageSlice,
-    // categories: categoriesSlice,
+    categories: categoriesSlice,
     // seller slices
     seller_products: sellerProductsSlice,
     seller_store: sellerStoreSlice,

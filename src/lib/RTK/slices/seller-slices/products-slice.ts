@@ -39,11 +39,11 @@ export const deleteProduct_seller: any = createAsyncThunk(
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      toast.success("Product deleted successfully");
       await axios.delete(
-        "/api/store/" + params?.store_id + "/products/" + params?.product_id
-      );
-
+        "/api/store/" + params?.store_id + "/products" 
+        );
+        
+        toast.success("Product deleted successfully");
       return params?.product_id;
     } catch (error: any) {
       toast.error("Uh oh! Something went wrong while deleting the product");

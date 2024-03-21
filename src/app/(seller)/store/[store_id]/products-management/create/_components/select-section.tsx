@@ -54,7 +54,7 @@ export default function SelectSection() {
     if (checkData) {
       try {
         const data = (
-          await axios.post("/api/store/" + store_id + "/products/create", fullData)
+          await axios.post("/api/store/" + store_id + "/products", fullData)
         ).data;
         router.replace(
           `/store/${store_id}/products-management/${data?._id}/update`

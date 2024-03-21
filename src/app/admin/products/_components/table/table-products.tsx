@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-import { ProductsTable } from "@/components/table/table-products";
 import { columns } from "./table-columns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getProducts_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
+import { ProductsTable } from "@/components/table/table";
 
 export function DataTable() {
   const dispatch = useAppDispatch();

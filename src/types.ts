@@ -98,3 +98,12 @@ export type Product = {
   updatedAt: Date;
   __v: number;
 };
+export type Category = {
+  _id: string;
+  main_category: { name: string; image: string };
+  sub_categories: { name: string; image: string }[];
+  folder_cloudinary_images_id: string;
+  createdAt: any;
+  updatedAt: any;
+  __v: number;
+};

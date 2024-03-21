@@ -1,6 +1,5 @@
 "use client";
 
-import { ProductsTable } from "@/components/table/table-products";
 import { buttonVariants } from "@/components/ui/button";
 import useProducts from "@/hooks/use-products";
 import { cn } from "@/lib/utils";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { columns } from "./table-columns";
+import { ProductsTable } from "@/components/table/table";
 
 export function DataTable() {
   const { store_id } = useParams();
@@ -29,7 +29,6 @@ export function DataTable() {
         data={data}
         loading={loading}
         columns={columns}
-        store_id={store_id}
       />
     </div>
   );

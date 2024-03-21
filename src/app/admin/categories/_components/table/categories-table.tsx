@@ -13,13 +13,6 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
 import {
@@ -31,22 +24,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { LoadingSkeleton } from "@/components/table/table-loading";
 import { Product } from "@/types";
-import { ChevronDown } from "lucide-react";
-import SearchInputs from "./search-inputs";
+import SearchInputs from "@/components/table/search-inputs";
+import { LoadingSkeleton } from "@/components/table/table-loading";
+import useCategories from "@/hooks/use-categories";
+import { columns } from './table-columns';
 
-export function ProductsTable({
-  data,
-  loading,
-  store_id,
-  columns
-}: {
-  data: Product[];
-  loading: boolean;
-  store_id?: string | string[];
-  columns:any[]
-}) {
+export function CategoriesTable() {
+  const {data,loading} = useCategories()
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -74,36 +59,6 @@ export function ProductsTable({
     <div className="w-full ">
       <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
         <SearchInputs dataLength={data?.length} table={table} />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="mx-2">
-            <Button
-              type="button"
-              variant="outline"
-              className=" px-3 py-2 rounded-sm"
-              size={"sm"}
-            >
-              Categories
-              <ChevronDown className="ml-2 h-4 w-4  " />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="center" className="rounded-none">
-            <DropdownMenuItem className="capitalize">
-              All categories
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 1
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 2
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 3
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 4
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <Table>
         <TableHeader>
@@ -157,7 +112,6 @@ export function ProductsTable({
           )}
         </TableBody>
       </Table>
-
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="space-x-2">
           <Button

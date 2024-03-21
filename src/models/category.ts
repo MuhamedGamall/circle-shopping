@@ -12,6 +12,7 @@ const CategorySchema = new Schema(
         image: { type: String, required: true },
       },
     ],
+    folder_cloudinary_images_id: { type: String, required: true },
   },
   { timestamps: true }
 );
