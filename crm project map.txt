@@ -52,7 +52,7 @@ details for build crm project
 │       │   │   ├── Edit User Information
 │       │   │   └── Delete User Accounts
 │       │   ├── Data Management
-│       │   │   ├── Product List
+│       │   │   ├── Product List   = ok
 │       │   │   ├── Order List
 │       │   │   └── Seller List
 │       │   ├── System Settings

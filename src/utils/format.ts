@@ -5,18 +5,8 @@ export function formatPrice(price: number) {
   }).format(price);
 }
 
-export function formatDate(dateString: string) {
-  const date = new Date(dateString);
-
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short",
-  };
-
-  return date.toLocaleString("UTC", options);
+export function getPublicId(image: string) {
+  const startIndex = image.indexOf("circle-shopping/");
+  const endIndex = image.lastIndexOf(".");
+  return image.slice(startIndex, endIndex);
 }

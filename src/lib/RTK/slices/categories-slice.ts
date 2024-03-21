@@ -16,6 +16,19 @@ export const getCategories: any = createAsyncThunk(
     }
   }
 );
+export const getCategory: any = createAsyncThunk(
+  "categoriesSlice/getCategory",
+  async (_id, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const data = (await axios.get("/api/admin/categories/" + _id)).data;
+      return data;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // export const postCategory: any = createAsyncThunk(
 //   "categoriesSlice/postCategory",
@@ -37,28 +50,29 @@ export const deleteCategory: any = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       await axios.delete("/api/admin/categories?_id=" + _id);
-      return _id
+      return _id;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-
-// export const editCategory: any = createAsyncThunk(
-//   "categoriesSlice/editCategory",
-//   async (item: FormCategoryValues, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       await axios.put("/api/admin/categories", item);
-//       toast.success("Category updated");
-//       return item;
-//     } catch (error: any) {
-//       toast.error("Something wnt worng try again");
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const updateCategory: any = createAsyncThunk(
+  "categoriesSlice/updateCategory",
+  async (item: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      console.log(item);
+      
+      await axios.patch("/api/admin/categories/" + item?.category_id, item);
+      toast.success("Category updated successfully");
+      return item;
+    } catch (error: any) {
+      toast.error("Uh oh! Something wnt worng with your request");
+      return rejectWithValue(error.message);
+    }
+  }
+);
 type CategoryState = {
   categories: Category[];
   category: null | Category;
@@ -75,7 +89,11 @@ const initialState: CategoryState = {
 const categoriesSlice = createSlice({
   name: "categoriesSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetForm: (state) => {
+      state.category = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -99,28 +117,28 @@ const categoriesSlice = createSlice({
           state.error = action.payload;
         }
       );
-    // builder
-    //   .addCase(
-    //     postCategory.pending,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     postCategory.fulfilled,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.categories.push(action.payload);
-    //     }
-    //   )
-    //   .addCase(
-    //     postCategory.rejected,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
+    builder
+      .addCase(
+        getCategory.pending,
+        (state: CategoryState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getCategory.fulfilled,
+        (state: CategoryState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.category = action.payload;
+        }
+      )
+      .addCase(
+        getCategory.rejected,
+        (state: CategoryState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
     builder
       .addCase(
         deleteCategory.pending,
@@ -145,54 +163,7 @@ const categoriesSlice = createSlice({
           state.error = action.payload;
         }
       );
-    // builder
-    //   .addCase(
-    //     deleteAllCategories.pending,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     deleteAllCategories.fulfilled,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.categories = [];
-    //     }
-    //   )
-    //   .addCase(
-    //     deleteAllCategories.rejected,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
-    // builder
-    //   .addCase(
-    //     editCategory.pending,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     editCategory.fulfilled,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.categories = state.categories.map((el) =>
-    //         el?._id === action.payload?._id
-    //           ? { ...state.categories, ...action.payload }
-    //           : el
-    //       );
-    //     }
-    //   )
-    //   .addCase(
-    //     editCategory.rejected,
-    //     (state: CategoryState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
   },
 });
 export default categoriesSlice.reducer;
+export const { resetForm } = categoriesSlice.actions;

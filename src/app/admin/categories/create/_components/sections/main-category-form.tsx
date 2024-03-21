@@ -8,7 +8,7 @@ import * as z from "zod";
 import { Form } from "@/components/ui/form";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ImageForm from "../../../_components/image-form";
+import ImageForm from "../image-form";
 
 export const schema = z.object({
   main_category: z

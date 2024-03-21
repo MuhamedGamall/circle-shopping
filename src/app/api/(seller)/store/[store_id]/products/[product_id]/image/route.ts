@@ -26,7 +26,7 @@ export async function PATCH(
     // Filter images: base64 and already uploaded
     const filterImagesBase64 = body.filter(
       (image: string) =>
-        image.startsWith("data:image") || image.includes("base64")
+        image.startsWith("data:image") && image.includes("base64")
     );
     const filterImagesAlreadyUploaded = body.filter(
       (image: string) => !image.includes("base64")

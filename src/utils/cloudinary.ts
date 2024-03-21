@@ -20,17 +20,19 @@ export const uploadImages = async ({
       const uploadOptions = {
         folder: folderName,
       };
-      const result = await cloudinaryV2.uploader.upload(image, {
-        ...uploadOptions,
-        transformation: [
-          {
-            width: 240,
-            height: 327,
-            crop: "fill",
-          },
-        ],
-      });
-      uploadResults.push(result.secure_url);
+      if (image?.startsWith("data:image") && image?.includes("base64")) {
+        const result = await cloudinaryV2.uploader.upload(image, {
+          ...uploadOptions,
+          transformation: [
+            {
+              width: 240,
+              height: 327,
+              crop: "fitnish",
+            },
+          ],
+        });
+        uploadResults.push(result.secure_url);
+      } else uploadResults.push(image);
     }
 
     return uploadResults;
@@ -53,18 +55,22 @@ export const uploadSubCategoryImages = async ({
       const uploadOptions = {
         folder: folderName,
       };
-
-      const result = await cloudinaryV2.uploader.upload(el?.image, {
-        ...uploadOptions,
-        transformation: [
-          {
-            width: 240,
-            height: 327,
-            crop: "fill",
-          },
-        ],
-      });
-      uploadResults.push({ ...el, image: result.secure_url });
+      if (
+        el?.image?.startsWith("data:image") &&
+        el?.image?.includes("base64")
+      ) {
+        const result = await cloudinaryV2.uploader.upload(el?.image, {
+          ...uploadOptions,
+          transformation: [
+            {
+              width: 240,
+              height: 327,
+              crop: "fill",
+            },
+          ],
+        });
+        uploadResults.push({ ...el, image: result.secure_url });
+      } else uploadResults.push({ ...el, image: el?.image });
     }
 
     return uploadResults;

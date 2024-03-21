@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { getPublicId } from "@/utils/format";
 import { X } from "lucide-react";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";
@@ -20,14 +21,8 @@ export default function ImageItem({
   setImageValue: Dispatch<SetStateAction<string[]>>;
   setIdsForDeleteFromCloudinary: Dispatch<SetStateAction<string[]>>;
 }) {
-  const publicIdForDelete = (image: string) => {
-    const startIndex = image.indexOf("circle-shopping/");
-    const endIndex = image.lastIndexOf(".");
-    return image.slice(startIndex, endIndex);
-  };
-
   const onDelete = async () => {
-    const id = publicIdForDelete(imageValue[idx]);
+    const id = getPublicId(imageValue[idx]);
     if (id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
     setImageValue((curr) => curr.filter((el, i) => i !== idx));
   };
@@ -68,7 +63,7 @@ export default function ImageItem({
       setImageValue((prevImages) => {
         const newArr = [...prevImages];
         //- caching image id for deleting from cloudinary
-        const id = publicIdForDelete(newArr[idx]);
+        const id = getPublicId(newArr[idx]);
         if (id) setIdsForDeleteFromCloudinary((curr) => [...curr, id]);
         //-
         newArr[idx] = reader.result as string;

@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
     }
     const idForCloudonaryImages = randomBytes(12).toString("hex");
 
-    const mainCatefolderName = `/circle-shopping/categories/mian-categories/${idForCloudonaryImages}`;
-    const subCatesfolderName = `/circle-shopping/categories/mian-categories/sub-categories/${idForCloudonaryImages}`;
+    const mainCatefolderName = `circle-shopping/categories/${idForCloudonaryImages}/main-categories`;
+    const subCatesfolderName = `circle-shopping/categories/${idForCloudonaryImages}/sub-categories`;
 
     // Upload base64 images to Cloudinary
 
@@ -91,13 +91,14 @@ export async function DELETE(req: NextRequest) {
       { _id },
       { folder_cloudinary_images_id: 1 }
     );
+    const folderId = getCloudinaryImagesId?.folder_cloudinary_images_id;
+    if (!folderId) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
 
-    const mainCatefolderName = `circle-shopping/categories/mian-categories/${getCloudinaryImagesId?.folder_cloudinary_images_id}`;
-    const subCatesfolderName = `circle-shopping/categories/mian-categories/sub-categories/${getCloudinaryImagesId?.folder_cloudinary_images_id}`;
-
+    const folderName = `circle-shopping/categories/${folderId}`;
     await Promise.all([
-      removeFolder({ folderId: mainCatefolderName }),
-      removeFolder({ folderId: subCatesfolderName }),
+      removeFolder({ folderId: folderName }),
     ]);
     const deleteOne = await Category.deleteOne({ _id });
 

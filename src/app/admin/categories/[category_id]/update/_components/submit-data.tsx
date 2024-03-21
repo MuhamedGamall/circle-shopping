@@ -1,27 +1,59 @@
 "use client";
+import LoaderLayout from "@/components/loader-layout";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import {
+  getCategory,
+  resetForm,
+  updateCategory,
+} from "@/lib/RTK/slices/categories-slice";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import MainCategoryForm from "./sections/main-category-form";
 import SubCategortiesForm from "./sections/sub-categories-form";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import axios from "axios";
-import LoaderLayout from "@/components/loader-layout";
 export default function SubmitData() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { category_id } = useParams();
+  const { category, loading } = useAppSelector((state) => state.categories);
+
+  const [
+    categoriesIdsForDeleteFromCloudinary,
+    setCategoriesIdsForDeleteFromCloudinary,
+  ] = useState<string[]>([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [subCateValues, setSubCateValues] = useState<
     { image: any; name: string }[]
   >([{ name: "", image: "" }]);
+
   const [mainCateValues, setMainCateValues] = useState<{
     image: any;
     name: string;
   }>({ name: "", image: "" });
+
   const trimSubCateVlues = subCateValues.map((el) => ({
     ...el,
     name: el.name.trim(),
   }));
+
+  useEffect(() => {
+    dispatch(getCategory(category_id));
+  }, [category_id, dispatch]);
+
+  useEffect(() => {
+    dispatch(resetForm());
+    if (category) {
+      setSubCateValues((curr) => [
+        ...category?.sub_categories,
+        { name: "", image: "" },
+      ]);
+      setMainCateValues(category?.main_category);
+    }
+  }, [category, dispatch]);
+
   const trimMainCateVlues = {
     ...mainCateValues,
     name: mainCateValues.name.trim(),
@@ -34,6 +66,12 @@ export default function SubmitData() {
   );
 
   const onSubmit = async () => {
+    console.log({
+      main_category: trimMainCateVlues,
+      sub_categories: filterSubCate,
+      categoriesIdsForDeleteFromCloudinary,
+    });
+
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."
@@ -48,38 +86,43 @@ export default function SubmitData() {
       return toast.error(
         "At least one sub category must be added and completed."
       );
-    try {
-      setIsSubmitting(true);
-      await axios.post("/api/admin/categories", {
+    setIsSubmitting(true);
+    await dispatch(
+      updateCategory({
         main_category: trimMainCateVlues,
         sub_categories: filterSubCate,
-      });
-      setIsSubmitting(false);
-      toast.success("Category created successfully.");
-      router.replace("/admin/categories");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong with your request.");
-    }
+        categoriesIdsForDeleteFromCloudinary,
+        category_id,
+      })
+    );
+    setIsSubmitting(false);
+    router.replace("/admin/categories");
   };
 
   return (
     <div className="w-full ">
-      <LoaderLayout loadingCondition={isSubmitting} />
+      <LoaderLayout loadingCondition={isSubmitting || loading} />
       <div className="flex justify-end items-center my-5">
         <Button
           disabled={isSubmitting}
           onClick={onSubmit}
           className="font-bold rounded-sm bg-[#004e92] hover:bg-[#004e92]/90"
         >
-          Create
+          Update
         </Button>
       </div>
       <div>
         <MainCategoryForm
+          setCategoriesIdsForDeleteFromCloudinary={
+            setCategoriesIdsForDeleteFromCloudinary
+          }
           setMainCateValues={setMainCateValues}
           mainCateValues={mainCateValues}
         />
         <SubCategortiesForm
+          setCategoriesIdsForDeleteFromCloudinary={
+            setCategoriesIdsForDeleteFromCloudinary
+          }
           setSubCateValues={setSubCateValues}
           subCateValues={subCateValues}
         />

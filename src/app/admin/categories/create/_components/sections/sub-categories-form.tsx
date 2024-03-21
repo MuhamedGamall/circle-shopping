@@ -6,11 +6,8 @@ import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import { cn } from "@/lib/utils";
 import { Info, Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import ImageForm from "../../../_components/image-form";
-type CateValueProps = {
-  name: string;
-  image: string;
-};
+import ImageForm from "../image-form";
+
 export default function SubCategoriesForm({
   setSubCateValues,
   subCateValues,
@@ -42,16 +39,14 @@ export default function SubCategoriesForm({
     setSubCateValues((curr) => {
       const newArr = [...curr];
       newArr[idx] = { ...newArr[idx], [name]: value };
-      if (curr.length >= 1) {
-        if (
-          idx === newArr.length - 1 &&
-          cateIsValid(newArr[idx].name) &&
-          newArr[idx].image
-        ) {
-          newArr.push({ name: "", image: "" });
-        }
-        updateErrorMessages(idx, cateIsValid(newArr[idx].name));
+      if (
+        idx === newArr.length - 1 &&
+        cateIsValid(newArr[idx].name) &&
+        newArr[idx].image
+      ) {
+        newArr.push({ name: "", image: "" });
       }
+      updateErrorMessages(idx, cateIsValid(newArr[idx].name));
       return newArr;
     });
   };
