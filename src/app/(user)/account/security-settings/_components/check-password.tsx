@@ -8,11 +8,11 @@ import * as z from "zod";
 
 import { checkPassword } from "../schema";
 import { useAppDispatch } from "@/hooks/redux";
-import { deleteUser_user } from "@/lib/RTK/slices/user-slices/user-slice";
-import useProfile from "@/hooks/use-profile";
+import useAccount from "@/hooks/use-account";
 import bcryptDecode from "@/actions/bcrypt-decode";
 import { signOut } from "next-auth/react";
 import LoaderLayout from "@/components/loader-layout";
+import { deleteAccount } from "@/lib/RTK/slices/account-slice";
 
 export function CheckPassword({
   setOpen,
@@ -21,7 +21,7 @@ export function CheckPassword({
 }) {
   const dispatch = useAppDispatch();
   const [passIsCorrect, setPassIsCorrect] = useState(true);
-  const { data, loading } = useProfile();
+  const { data, loading } = useAccount();
   const form = useForm<z.infer<typeof checkPassword>>({
     resolver: zodResolver(checkPassword),
     defaultValues: {
@@ -38,7 +38,7 @@ export function CheckPassword({
     if (checkPass) {
       try {
         setPassIsCorrect(true);
-        dispatch(deleteUser_user(data?.email));
+        dispatch(deleteAccount(data?.email));
         setOpen(false);
         setTimeout(() => {
           signOut({ callbackUrl: "/" });

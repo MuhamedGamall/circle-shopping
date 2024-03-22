@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import useProducts from "@/hooks/use-products";
+import useProductsSeller from "@/hooks/seller/use-products_seller";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -11,7 +11,7 @@ import { ProductsTable } from "@/components/table/table";
 
 export function DataTable() {
   const { store_id } = useParams();
-  const { data, loading } = useProducts(store_id);
+  const { data, loading } = useProductsSeller(store_id);
   return (
     <div>
       <Link
@@ -25,11 +25,7 @@ export function DataTable() {
       >
         <FaPlus /> Add New
       </Link>
-      <ProductsTable
-        data={data}
-        loading={loading}
-        columns={columns}
-      />
+      <ProductsTable data={data} loading={loading} columns={columns} />
     </div>
   );
 }

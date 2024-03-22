@@ -1,10 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UserData } from "../../../../types";
+import { AccountData } from "../../../types";
 import toast from "react-hot-toast";
 
-// export const getUsers: any = createAsyncThunk(
-//   "userSlice/getUsers",
+// export const getAccounts: any = createAsyncThunk(
+//   "accountSlice/getAccounts",
 //   async (_, thunkApi) => {
 //     const { rejectWithValue } = thunkApi;
 //     try {
@@ -17,8 +17,8 @@ import toast from "react-hot-toast";
 //     }
 //   }
 // );
-export const getUser_user: any = createAsyncThunk(
-  "userSlice/getUser",
+export const getAccount: any = createAsyncThunk(
+  "accountSlice/getAccount",
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -30,8 +30,8 @@ export const getUser_user: any = createAsyncThunk(
   }
 );
 
-export const editProfile_user: any = createAsyncThunk(
-  "userSlice/editProfile",
+export const updateAccount: any = createAsyncThunk(
+  "accountSlice/updateAccount",
   async (values: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -44,8 +44,8 @@ export const editProfile_user: any = createAsyncThunk(
     }
   }
 );
-export const deleteUser_user: any = createAsyncThunk(
-  "userSlice/editProfile",
+export const deleteAccount: any = createAsyncThunk(
+  "accountSlice/deleteAccount",
   async (email: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -57,82 +57,81 @@ export const deleteUser_user: any = createAsyncThunk(
     }
   }
 );
-type UserState = {
-  users: UserData[];
-  profile: null | UserData;
+type AccountState = {
+  users: AccountData[];
+  account: null | AccountData;
   loading: boolean;
   error: null;
 };
-const initialState: UserState = {
+const initialState: AccountState = {
   users: [],
-  profile: null,
+  account: null,
   loading: false,
   error: null,
 };
 
-const userSlice = createSlice({
-  name: "userSlice",
+const accountSlice = createSlice({
+  name: "accountSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     // builder
-    //   .addCase(getUsers.pending, (state: UserState, action: PayloadAction<any>) => {
+    //   .addCase(getAccounts.pending, (state: AccountState, action: PayloadAction<any>) => {
     //     state.loading = true;
     //     state.error = null;
     //   })
-    //   .addCase(getUsers.fulfilled, (state: UserState, action: PayloadAction<any>) => {
+    //   .addCase(getAccounts.fulfilled, (state: AccountState, action: PayloadAction<any>) => {
     //     state.loading = false;
     //     state.users = action.payload;
     //   })
-    //   .addCase(getUsers.rejected, (state: UserState, action: PayloadAction<any>) => {
+    //   .addCase(getAccounts.rejected, (state: AccountState, action: PayloadAction<any>) => {
     //     state.loading = false;
     //     state.error = action.payload;
     //   });
     builder
       .addCase(
-        getUser_user.pending,
-        (state: UserState, action: PayloadAction<any>) => {
+        getAccount.pending,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getUser_user.fulfilled,
-        (state: UserState, action: PayloadAction<any>) => {
+        getAccount.fulfilled,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
-          state.profile = action.payload;
+          state.account = action.payload;
         }
       )
       .addCase(
-        getUser_user.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
+        getAccount.rejected,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
         }
       );
     builder
       .addCase(
-        editProfile_user.pending,
-        (state: UserState, action: PayloadAction<any>) => {
+        updateAccount.pending,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        editProfile_user.fulfilled,
-        (state: UserState, action: PayloadAction<any>) => {
+        updateAccount.fulfilled,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
-          state.profile = { ...state.profile, ...action.payload };
+          state.account = { ...state.account, ...action.payload };
         }
       )
       .addCase(
-        editProfile_user.rejected,
-        (state: UserState, action: PayloadAction<any>) => {
+        updateAccount.rejected,
+        (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
         }
       );
-
   },
 });
-export default userSlice.reducer;
+export default accountSlice.reducer;

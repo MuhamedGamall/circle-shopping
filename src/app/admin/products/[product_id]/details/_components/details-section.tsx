@@ -2,7 +2,7 @@
 import SectionTitle from "@/components/section-title";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProduct_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
+import { getProduct } from "@/lib/RTK/slices/products-slice";
 import { formatDate } from "date-fns";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
@@ -13,17 +13,19 @@ import BasicSection from "./sections/basic";
 import ShippingSection from "./sections/shipping";
 import OfferSection from "./sections/offer";
 import ImagesSection from "./sections/images";
+import LoaderLayout from "@/components/loader-layout";
 
 export default function ViewDetailsSection() {
   const dispatch = useAppDispatch();
   const { product_id } = useParams();
-  const { product, loading } = useAppSelector((state) => state.admin_products);
+  const { product, loading } = useAppSelector((state) => state.allProducts);
   useEffect(() => {
-    dispatch(getProduct_admin(product_id));
+    dispatch(getProduct(product_id));
   }, [dispatch, product_id]);
 
   return (
     <div className="rounded-sm border">
+      <LoaderLayout loadingCondition={loading}/>
       <div className="p-3 border-b">
         <SectionTitle
           title="Product Details"
@@ -43,7 +45,7 @@ export default function ViewDetailsSection() {
         </Label>
       </div>
       <OfferSection data={product} />
-      <ImagesSection images={product?.images||[]} />
+      <ImagesSection images={product?.images || []} />
       <BasicSection data={product} />
       <ProductDetailsSection data={product} />
       <div className="p-5 border-b">

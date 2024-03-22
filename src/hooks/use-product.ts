@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { getProduct_seller } from "@/lib/RTK/slices/seller-slices/products-slice";
 import { useParams } from "next/navigation";
+import { getProduct } from "@/lib/RTK/slices/products-slice";
 
 export default function useProduct() {
   const dispatch = useAppDispatch();
   const { store_id, product_id } = useParams();
-  const { product, loading } = useAppSelector((state) => state.seller_products);
+  const { product, loading } = useAppSelector((state) => state.allProducts);
   useEffect(() => {
-    dispatch(getProduct_seller({ store_id, product_id }));
+    dispatch(getProduct({ store_id, product_id }));
   }, [dispatch, product_id, store_id]);
 
   return { loading, data: product };

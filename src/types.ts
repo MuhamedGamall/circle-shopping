@@ -1,4 +1,4 @@
-export type User = {
+export type Account = {
   _id: string;
   email: string;
   name?: string;
@@ -8,7 +8,7 @@ export type User = {
   updatedAt: any;
   __v: number;
 };
-export type UserInfo = {
+export type AccountInfo = {
   admin: string;
   phone: number;
   email: string;
@@ -20,7 +20,7 @@ export type UserInfo = {
   updatedAt: any;
   __v: number;
 };
-export type UserData = {
+export type AccountData = {
   _id: string;
   email: string;
   name?: string;

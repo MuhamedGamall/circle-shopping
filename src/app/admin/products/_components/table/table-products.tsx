@@ -4,14 +4,14 @@ import { useEffect } from "react";
 
 import { columns } from "./table-columns";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProducts_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
+import { getAllProducts } from "@/lib/RTK/slices/products-slice";
 import { ProductsTable } from "@/components/table/table";
 
 export function DataTable() {
   const dispatch = useAppDispatch();
-  const { products, loading } = useAppSelector((state) => state.admin_products);
+  const { products, loading } = useAppSelector((state) => state.allProducts);
   useEffect(() => {
-    dispatch(getProducts_admin());
+    dispatch(getAllProducts());
   }, [dispatch]);
 
   return <ProductsTable data={products} loading={loading} columns={columns} />;

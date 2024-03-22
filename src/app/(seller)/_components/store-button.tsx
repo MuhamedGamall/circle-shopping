@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import useStore from "@/hooks/use-store";
+import useStore from "@/hooks/seller/use-store_seller";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
 import Link from "next/link";

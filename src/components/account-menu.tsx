@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Menubar,
   MenubarContent,
@@ -7,8 +7,8 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import useProfile from "@/hooks/use-profile";
-import useStore from "@/hooks/use-store";
+import useAccount from "@/hooks/use-account";
+import useStore from "@/hooks/seller/use-store_seller";
 import { truncateText } from "@/utils/truncate-text";
 import {
   LayoutList,
@@ -29,7 +29,7 @@ const LoadingSkeleton = () => {
 };
 export default function AccountMenu() {
   const { data, loading } = useStore();
-  const { data: account, loading: loadingAccount } = useProfile();
+  const { data: account, loading: loadingAccount } = useAccount();
   const userName =
     account?.name?.split(" ")?.[0] || account?.email?.split("@")?.[0] || "";
 

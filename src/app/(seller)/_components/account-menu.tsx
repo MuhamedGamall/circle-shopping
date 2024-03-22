@@ -2,7 +2,7 @@
 import React from "react";
 
 import { AvatarContainer } from "@/components/avatar";
-import useProfile from "@/hooks/use-profile";
+import useAccount from "@/hooks/use-account";
 import { truncateText } from "@/utils/truncate-text";
 import { signOut } from "next-auth/react";
 import {
@@ -28,7 +28,7 @@ const LoadingSkeleton = () => {
   );
 };
 export default function AccountMenu() {
-  const { data, loading } = useProfile();
+  const { data, loading } = useAccount();
   const username =
     data?.name?.split(" ")?.[0] || data?.email?.split("@")?.[0] || "";
 

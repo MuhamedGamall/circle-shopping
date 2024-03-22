@@ -16,6 +16,7 @@ export const getCategories: any = createAsyncThunk(
     }
   }
 );
+
 export const getCategory: any = createAsyncThunk(
   "categoriesSlice/getCategory",
   async (_id, thunkApi) => {

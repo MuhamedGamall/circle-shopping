@@ -8,17 +8,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import useProfile from "@/hooks/use-profile";
+import useAccount from "@/hooks/use-account";
 import { profileSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
-import { editProfile_user } from "@/lib/RTK/slices/user-slices/user-slice";
+import { updateAccount } from "@/lib/RTK/slices/account-slice";
 import LoaderLayout from "@/components/loader-layout";
 import { Label } from "@/components/ui/label";
 
 export default function FormFields() {
   const [country, setCountry] = useState("");
-  const { data, loading } = useProfile();
+  const { data, loading } = useAccount();
 
   const firstName = data?.name?.split(" ")?.[0] || "";
   const lastName = data?.name?.split(" ")?.[1] || "";
@@ -30,7 +30,7 @@ export default function FormFields() {
       const values = {
         ...value,
       };
-      await dispatch(editProfile_user(values));
+      await dispatch(updateAccount(values));
     }
   }
   const form = useForm<z.infer<typeof profileSchema>>({

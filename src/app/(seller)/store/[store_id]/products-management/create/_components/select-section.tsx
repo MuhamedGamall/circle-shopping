@@ -8,7 +8,7 @@ import { useState } from "react";
 import { BadgePercent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import useStore from "@/hooks/use-store";
+import useStore from "@/hooks/seller/use-store_seller";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 const categories: { title: string }[] = [

@@ -5,17 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import toast from "react-hot-toast";
 import { storeSchema } from "../schema";
-import useStore from "@/hooks/use-store";
+import useStore from "@/hooks/seller/use-store_seller";
 import LoaderLayout from "@/components/loader-layout";
 
 export default function FormFields() {
-  const router = useRouter();
 
   const { data, loading } = useStore();
   const form = useForm<z.infer<typeof storeSchema>>({
@@ -51,7 +49,7 @@ export default function FormFields() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="gap-5 flex flex-col items-center justify-center "
       >
-        <LoaderLayout loadingCondition={loading||isSubmitting}/>
+        <LoaderLayout loadingCondition={loading || isSubmitting} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3 w-full ">
           <CustomField
             label="Display name *"

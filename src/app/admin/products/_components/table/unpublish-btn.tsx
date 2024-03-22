@@ -1,7 +1,7 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { unpublishProduct_admin } from "@/lib/RTK/slices/admin-slices/products-slice";
+import { unpublishProduct} from "@/lib/RTK/slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 import DeleteConfirm from "./delete-reason";
@@ -22,7 +22,7 @@ const UnpublishBtn = ({
     if (!reasonSelectedValue) return toast.error("Please select a reason");
     try {
       dispatch(
-        unpublishProduct_admin({
+        unpublishProduct({
           store_id,
           product_id,
           store_personal_email,

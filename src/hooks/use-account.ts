@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./redux";
-import { getUser_user } from "@/lib/RTK/slices/user-slices/user-slice";
+import { getAccount } from "@/lib/RTK/slices/account-slice";
 import { useSession } from "next-auth/react";
 
-export default function useProfile() {
+export default function useAccount() {
   const dispatch = useAppDispatch();
-  const { profile } = useAppSelector((state) => state.user_userData);
+  const { account } = useAppSelector((state) => state.accountData);
   const { status } = useSession();
   const loading = status === "loading";
   useEffect(() => {
-    dispatch(getUser_user());
+    dispatch(getAccount());
   }, [dispatch]);
 
-  return { loading, data: profile };
+  return { loading, data: account };
 }

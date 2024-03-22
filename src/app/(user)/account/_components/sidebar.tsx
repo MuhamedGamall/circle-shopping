@@ -1,7 +1,7 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import useProfile from "@/hooks/use-profile";
+import useAccount from "@/hooks/use-account";
 import { cn } from "@/lib/utils";
 import { truncateText } from "@/utils/truncate-text";
 import { LucideUserCog, ShieldCheck, ShoppingCart } from "lucide-react";
@@ -20,7 +20,7 @@ const LoadingSkeleton = () => {
 };
 export default function Sidebar() {
   const pathName = usePathname();
-  const { data, loading } = useProfile();
+  const { data, loading } = useAccount();
   const name = data?.name?.split(" ")?.[0] || data?.email?.split("@")?.[0];
 
   return (

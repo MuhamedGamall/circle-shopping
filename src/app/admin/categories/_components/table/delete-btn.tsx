@@ -2,15 +2,10 @@ import { DeleteConfirm } from "@/components/delete-confirm";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
 import { deleteCategory } from "@/lib/RTK/slices/categories-slice";
-import { deleteProduct_seller } from "@/lib/RTK/slices/seller-slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 
-const DeleteBtn = ({
-row
-}: {
-row:any
-}) => {
+const DeleteBtn = ({ row }: { row: any }) => {
   const dispatch = useAppDispatch();
 
   return (
