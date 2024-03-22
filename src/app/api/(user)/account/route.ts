@@ -14,13 +14,14 @@ export async function PATCH(req: NextRequest) {
     await mongoConnect();
     const data = await req.json();
     const { email, name, image, ...otherData } = data;
-    const userName = data?.first_name + " " + data?.last_name;
+    console.log(data);
+    
     const session = await getServerSession(authOptions);
     const user = session?.user;
 
     const userData = await User.updateOne(
       { email: user?.email },
-      { name: userName }
+      { name }
     ).lean();
 
     const userInfo = await UserInfo.updateOne(
@@ -29,12 +30,11 @@ export async function PATCH(req: NextRequest) {
     ).lean();
     const fullData = { ...userData, ...userInfo };
 
-    if (!user) {
+    if (!user || !userInfo ) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    if (!user || !userInfo || !Object.values(data).every(Boolean)) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if (!Object.values(data).every(Boolean)) {
+      return new NextResponse("Not Found", { status: 401 });
     }
 
     return NextResponse.json(fullData);

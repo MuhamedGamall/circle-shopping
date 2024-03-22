@@ -26,11 +26,10 @@ export default function FormFields() {
 
   async function onSubmit(value: any) {
     const isValid = Object.values(value).every(Boolean);
+    const name = value?.first_name + " " + value?.last_name;
     if (isValid) {
-      const values = {
-        ...value,
-      };
-      await dispatch(updateAccount(values));
+      const { first_name, last_name, ...otherData } = value;
+      await dispatch(updateAccount({ ...otherData, name }));
     }
   }
   const form = useForm<z.infer<typeof accountSchema>>({
@@ -68,7 +67,7 @@ export default function FormFields() {
         <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
           <div className=" flex flex-col gap-3 w-full mt-2  ">
             <Label className={"text-slate-700 "}>Email</Label>
-            <div className=" text-shade border rounded-sm py-2.5 px-2 text-sm cursor-not-allowed select-none">
+            <div className=" text-shade border rounded-sm py-2.5 px-2 text-sm cursor-not-allowed select-none overflow-x-auto">
               {data?.email}
             </div>
           </div>

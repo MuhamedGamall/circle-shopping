@@ -125,6 +125,7 @@ const accountSlice = createSlice({
         (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
           state.account = { ...state.account, ...action.payload };
+          
         }
       )
       .addCase(

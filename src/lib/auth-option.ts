@@ -9,9 +9,6 @@ import { Adapter } from "next-auth/adapters";
 import mongoConnect from "@/actions/mongo-connect";
 import { User } from "@/models/user";
 import { UserInfo } from "@/models/user-info";
-import axios from "axios";
-import { userInfo } from "os";
-
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise) as Adapter,

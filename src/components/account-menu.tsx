@@ -23,6 +23,7 @@ import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdStorefront } from "react-icons/md";
 import { Skeleton } from "./ui/skeleton";
+import { useEffect } from "react";
 
 const LoadingSkeleton = () => {
   return <Skeleton className="h-[25px] w-[150px] rounded-md bg-slate-400" />;
@@ -32,7 +33,7 @@ export default function AccountMenu() {
   const { data: account, loading: loadingAccount } = useAccount();
   const userName =
     account?.name?.split(" ")?.[0] || account?.email?.split("@")?.[0] || "";
-
+    
   return (
     <>
       {loadingAccount ? (
