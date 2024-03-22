@@ -1,5 +1,5 @@
 import * as z from "zod";
-export const profileSchema = z.object({
+export const accountSchema = z.object({
   first_name: z
     .string()
     .trim()

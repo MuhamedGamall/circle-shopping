@@ -5,11 +5,13 @@ import MainCategoryForm from "./sections/main-category-form";
 import SubCategortiesForm from "./sections/sub-categories-form";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+
 import LoaderLayout from "@/components/loader-layout";
+import { createCategory } from "@/lib/RTK/slices/categories-slice";
+import { useAppDispatch } from "@/hooks/redux";
 export default function SubmitData() {
   const router = useRouter();
-
+  const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [subCateValues, setSubCateValues] = useState<
     { image: any; name: string }[]
@@ -48,29 +50,22 @@ export default function SubmitData() {
       return toast.error(
         "At least one sub category must be added and completed."
       );
-    try {
-      setIsSubmitting(true);
-      await axios.post("/api/admin/categories", {
+    setIsSubmitting(true);
+    await dispatch(
+      createCategory({
         main_category: trimMainCateVlues,
         sub_categories: filterSubCate,
-      });
-      setIsSubmitting(false);
-      toast.success("Category created successfully.");
-      router.replace("/admin/categories");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong with your request.");
-    }
+      })
+    );
+    setIsSubmitting(false);
+    router.replace("/admin/categories");
   };
 
   return (
     <div className="w-full ">
       <LoaderLayout loadingCondition={isSubmitting} />
       <div className="flex justify-end items-center my-5">
-        <Button
-          disabled={isSubmitting}
-          onClick={onSubmit}
-          className="font-bold rounded-sm bg-[#004e92] hover:bg-[#004e92]/90"
-        >
+        <Button disabled={isSubmitting} onClick={onSubmit} variant={"blue"}>
           Create
         </Button>
       </div>

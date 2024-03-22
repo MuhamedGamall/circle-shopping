@@ -337,7 +337,7 @@ export default function SelectCountry({
       ? country || currentCountry
       : "Select country...";
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} >
       <PopoverTrigger asChild>
         <Button
           disabled={disabled}
@@ -350,15 +350,15 @@ export default function SelectCountry({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search country..." />
+      <PopoverContent  className="w-[200px] p-0">
+        <Command >
+          <CommandInput placeholder="Search country..." name="country"/>
           <CommandEmpty>No country found.</CommandEmpty>
-          <CommandGroup className=" overflow-y-auto">
+          <CommandGroup  className=" overflow-y-auto">
             <div className="max-h-[300px]">
               {countries.map((el, i) => (
-                <CommandItem
-                  key={i}
+                <CommandItem 
+                  key={i} 
                   value={el}
                   onSelect={() => {
                     setCountry(el);

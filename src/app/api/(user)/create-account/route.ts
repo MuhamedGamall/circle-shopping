@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       new Error("password must be at least 5 characters");
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const user = await User.findOne({ email: body.email });
+    const user = await User.findOne({ email: body.email }).lean()
     if (user) {
       return new NextResponse("Conflict", { status: 409 });
     }

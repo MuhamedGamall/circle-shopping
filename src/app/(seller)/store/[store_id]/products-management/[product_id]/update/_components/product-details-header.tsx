@@ -1,13 +1,13 @@
 import Icons from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { Product } from "@/types";
 import { truncateText } from "@/utils/truncate-text";
+import axios from "axios";
 import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { BsChevronRight } from "react-icons/bs";
 import HeaderLoading from "./header-loading";
-import { Product } from "@/types";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import toast from "react-hot-toast";
-import axios from "axios";
 
 export default function ProductDetailsHeader({
   data,
@@ -25,7 +25,6 @@ export default function ProductDetailsHeader({
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   useEffect(() => {
     setIsPublished(data?.is_published || false);
   }, [data?.is_published, setIsPublished]);
@@ -38,10 +37,12 @@ export default function ProductDetailsHeader({
           isPublished ? "unpublish" : "publish"
         }`
       );
+
       setIsPublished(!isPublished);
       toast.success(
         `Product ${isPublished ? "unpublished" : "published"} successfully`
       );
+      setIsSubmitting(false);
     } catch (error: any) {
       if (error?.response?.status === 400)
         toast.error("Please fill all fields before saving");

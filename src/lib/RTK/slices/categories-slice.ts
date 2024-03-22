@@ -31,19 +31,20 @@ export const getCategory: any = createAsyncThunk(
   }
 );
 
-// export const postCategory: any = createAsyncThunk(
-//   "categoriesSlice/postCategory",
-//   async (item, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.post("/api/admin/categories", item)).data;
-//       toast.success("Category added");
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const createCategory: any = createAsyncThunk(
+  "categoriesSlice/createCategory",
+  async (item, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const data = (await axios.post("/api/admin/categories", item)).data;
+      toast.success("Category created successfully.");
+      return data;
+    } catch (error: any) {
+      toast.error("Uh oh! Something went wrong with your request.");
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const deleteCategory: any = createAsyncThunk(
   "categoriesSlice/deleteCategory",
@@ -60,14 +61,12 @@ export const deleteCategory: any = createAsyncThunk(
 
 export const updateCategory: any = createAsyncThunk(
   "categoriesSlice/updateCategory",
-  async (item: any, thunkApi) => {
+  async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      console.log(item);
-      
-      await axios.patch("/api/admin/categories/" + item?.category_id, item);
+      await axios.patch("/api/admin/categories/" + params?.category_id, params);
       toast.success("Category updated successfully");
-      return item;
+      return params;
     } catch (error: any) {
       toast.error("Uh oh! Something wnt worng with your request");
       return rejectWithValue(error.message);

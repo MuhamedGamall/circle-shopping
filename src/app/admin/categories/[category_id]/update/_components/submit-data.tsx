@@ -44,7 +44,12 @@ export default function SubmitData() {
   }, [category_id, dispatch]);
 
   useEffect(() => {
-    dispatch(resetForm());
+    return () => {
+      dispatch(resetForm());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     if (category) {
       setSubCateValues((curr) => [
         ...category?.sub_categories,
@@ -106,7 +111,7 @@ export default function SubmitData() {
         <Button
           disabled={isSubmitting}
           onClick={onSubmit}
-          className="font-bold rounded-sm bg-[#004e92] hover:bg-[#004e92]/90"
+          variant={"blue"}
         >
           Update
         </Button>

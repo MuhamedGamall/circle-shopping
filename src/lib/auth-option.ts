@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         const { email, password }: any = credentials;
         await mongoConnect();
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email })
         if (!user) {
           throw new Error("Invalid email or password");
         }

@@ -3,6 +3,25 @@ import axios from "axios";
 import { Product } from "../../../../types";
 import toast from "react-hot-toast";
 
+export const createProduct_seller: any = createAsyncThunk(
+  "sellerProductsSlice/createProduct",
+  async (params: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const data = (
+        await axios.post(
+          "/api/store/" + params?.store_id + "/products",
+          params?.data
+        )
+      ).data;
+      toast.success("Product created successfully");
+      return data?._id;
+    } catch (error: any) {
+      toast.error("Uh oh! Something went wrong");
+      return rejectWithValue(error.message);
+    }
+  }
+);
 export const getProducts_seller: any = createAsyncThunk(
   "sellerProductsSlice/getProducts",
   async (store_id, thunkApi) => {
@@ -40,10 +59,12 @@ export const deleteProduct_seller: any = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       await axios.delete(
-        "/api/store/" + params?.store_id + "/products" 
-        );
-        
-        toast.success("Product deleted successfully");
+        "/api/store/" +
+          params?.store_id +
+          "/products?product_id=" +
+          params?.product_id
+      );
+      toast.success("Product deleted successfully");
       return params?.product_id;
     } catch (error: any) {
       toast.error("Uh oh! Something went wrong while deleting the product");
@@ -51,30 +72,79 @@ export const deleteProduct_seller: any = createAsyncThunk(
     }
   }
 );
+export const updateProduct_seller: any = createAsyncThunk(
+  "sellerProductsSlice/updateProduct",
+  async (params: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
 
-// export const updateProduct: any = createAsyncThunk(
-//   "sellerProductsSlice/updateProduct",
-//   async (product: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const updatedProduct = (
-//         await axios.patch(
-//           "/api/store/" +
-//             product?.store_id +
-//             "/products/" +
-//             product?.product_id +
-//             "/publish"
-//         )
-//       ).data;
+    try {
+      await axios.patch(
+        "/api/store/" + params?.store_id + "/products/" + params?.product_id,
+        params?.data
+      );
+      toast.success("Product Updated successfully");
+    } catch (error: any) {
+      toast.error("Uh oh! Something went wrong with updating the product.");
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const updateProductImages_seller: any = createAsyncThunk(
+  "sellerProductsSlice/updateProductImages",
+  async (params: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      await axios.patch(
+        "/api/store/" +
+          params?.store_id +
+          "/products/" +
+          params?.product_id +
+          "/image",
+        params?.data
+      );
+      toast.success("Product Updated successfully");
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const deleteProductImages_seller: any = createAsyncThunk(
+  "sellerProductsSlice/deleteProductImages",
+  async (params: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      await axios.delete(
+        `/api/store/${params?.store_id}/products/${params?.product_id}/image?ids=${params?.idsForDeleteFromCloudinary}`
+      );
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const handlePublishedProduct: any = createAsyncThunk(
+  "sellerProductsSlice/handlePublishedProduct",
+  async (params: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      await axios.patch(
+        `/api/store/${params?.store_id}/products/${params?.product_id}/${
+          params?.isPublished ? "unpublish" : "publish"
+        }`
+      );
 
-//       return updatedProduct;
-//     } catch (error: any) {
-//       toast.error("Uh oh! Something went wrong");
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
-
+      toast.success(
+        `Product ${
+          params?.isPublished ? "unpublished" : "published"
+        } successfully`
+      );
+    } catch (error: any) {
+      if (error?.response?.status === 400)
+        toast.error("Please fill all fields before saving");
+      else toast.error("Uh oh! Something went wrong");
+      return rejectWithValue(error);
+    }
+  }
+);
 type ProductsState = {
   products: Product[];
   product: Product | null;
@@ -165,33 +235,6 @@ const sellerProductsSlice = createSlice({
           state.error = action.payload;
         }
       );
-
-    // builder
-    //   .addCase(
-    //     updateProduct.pending,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     updateProduct.fulfilled,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-
-    //       state.products = state.products.map((el) =>
-    //         el?._id === action.payload._id ? action.payload : el
-    //       );
-    //       console.log(state.products);
-    //     }
-    //   )
-    //   .addCase(
-    //     updateProduct.rejected,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
   },
 });
 export default sellerProductsSlice.reducer;

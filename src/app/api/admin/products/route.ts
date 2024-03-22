@@ -11,12 +11,15 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
-    const userInfos = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
-    if (!user || !userInfos?.admin) {
+    if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const products = await Product.find({ is_published: true });
+    if (!products) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     return NextResponse.json(products);
   } catch (error) {
     console.log("[ADMIN:GET-PRODUCTS]", error);

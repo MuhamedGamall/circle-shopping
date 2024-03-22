@@ -17,6 +17,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
+import { useAppDispatch } from "@/hooks/redux";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
 
 export default function DetailsForm({
   data,
@@ -31,6 +33,8 @@ export default function DetailsForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
+
   const [errorSpecifications, setErrorSpecifications] = useState<boolean[]>([]);
   const [errorHighlights, setErrorHighlights] = useState<boolean[]>([]);
 
@@ -89,18 +93,19 @@ export default function DetailsForm({
       highlights: [...(new Set(highlights) as any)],
     };
 
-    try {
-      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
-        ...values,
-        ...removeRepeateValue,
-      });
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      updateProduct_seller({
+        data: {
+          ...values,
+          ...removeRepeateValue,
+        },
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">

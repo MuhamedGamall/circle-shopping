@@ -11,7 +11,7 @@ import { ProductsTable } from "@/components/table/table";
 
 export function DataTable() {
   const { store_id } = useParams();
-  const { data, loading } = useProductsSeller(store_id);
+  const { data, loading } = useProductsSeller();
   return (
     <div>
       <Link

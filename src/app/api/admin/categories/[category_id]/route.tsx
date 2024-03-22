@@ -5,12 +5,10 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { Category } from "@/models/category";
 import {
-  removeFolder,
   removeImage,
   uploadImages,
   uploadSubCategoryImages,
 } from "@/utils/cloudinary";
-import { randomBytes } from "crypto";
 
 export async function PATCH(
   req: NextRequest,
@@ -27,7 +25,7 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -36,6 +34,7 @@ export async function PATCH(
       { _id: category_id },
       { folder_cloudinary_images_id: 1 }
     );
+
     const folderId = getCloudinaryImagesId?.folder_cloudinary_images_id;
     if (!folderId) {
       return new NextResponse("Not Found", { status: 404 });
@@ -78,14 +77,15 @@ export async function GET(
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
-
-    const userInfo = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const category = await Category.findOne({ _id: category_id });
-
+    const category = await Category.findOne({ _id: category_id }).lean()
+    if (!category) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
     return NextResponse.json(category);
   } catch (error) {
     console.log("[ADMIN:GET-CATEGORY]", error);

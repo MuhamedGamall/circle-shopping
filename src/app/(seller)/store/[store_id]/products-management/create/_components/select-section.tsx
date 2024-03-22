@@ -11,6 +11,8 @@ import axios from "axios";
 import useStore from "@/hooks/seller/use-store_seller";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useAppDispatch } from "@/hooks/redux";
+import { createProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
 const categories: { title: string }[] = [
   {
     title: "Alert Dialog",
@@ -32,8 +34,10 @@ const categories: { title: string }[] = [
   },
 ];
 export default function SelectSection() {
+  const dispatch = useAppDispatch();
   const { store_id } = useParams();
   const router = useRouter();
+
   const [mainCategory, setMainCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [productBrand, setProductBrand] = useState("");
@@ -52,17 +56,15 @@ export default function SelectSection() {
 
   const onSubmit = async () => {
     if (checkData) {
-      try {
-        const data = (
-          await axios.post("/api/store/" + store_id + "/products", fullData)
-        ).data;
-        router.replace(
-          `/store/${store_id}/products-management/${data?._id}/update`
-        );
-        toast.success("Product created successfully");
-      } catch (error) {
-        toast.error("Uh oh! Something went wrong");
-      }
+      const product = await dispatch(
+        createProduct_seller({
+          data: fullData,
+          store_id,
+        })
+      );
+      router.replace(
+        `/store/${store_id}/products-management/${product?.payload}/update`
+      );
     }
   };
   return (
@@ -70,8 +72,9 @@ export default function SelectSection() {
       <div className="w-full sm:flex hidden justify-end">
         <Button
           onClick={onSubmit}
-          className="font-bold mb-5 bg-[#004e92] hover:bg-[#004e92]/90"
+          className="mb-5 "
           disabled={!checkData}
+          variant={'blue'}
         >
           CREATE
         </Button>
@@ -148,8 +151,9 @@ export default function SelectSection() {
           <div className="w-full flex  justify-end">
             <Button
               onClick={onSubmit}
-              className="font-bold my-5 w-full sm:hidden block bg-[#004e92] hover:bg-[#004e92]/90"
-              disabled={!checkData}
+              className="my-5 w-full sm:hidden block "
+             
+             variant={'blue'} disabled={!checkData}
             >
               CREATE
             </Button>

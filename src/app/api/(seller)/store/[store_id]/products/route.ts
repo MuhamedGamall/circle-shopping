@@ -55,7 +55,10 @@ export async function GET(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -77,30 +80,31 @@ export async function GET(
 
 export async function DELETE(
   req: NextRequest,
-  {
-    params: { store_id, product_id },
-  }: { params: { store_id: string; product_id: string } }
+  { params: { store_id } }: { params: { store_id: string } }
 ) {
   try {
+    const url = new URL(req.url);
+    const product_id = url.searchParams.get("product_id");
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
-    const product = await Product.findOne({
+    const store = await Store.findOne({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
+    const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,
-      product_id,
-    });
-
+      _id: product_id,
+    }).lean()
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store || !product_id) {
+    if (!store || !product) {
       return new NextResponse("Not Found", { status: 404 });
     }
-  
     const deleteProduct = await Product.deleteOne({
       store_id,
       store_personal_email: email,

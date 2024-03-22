@@ -19,7 +19,10 @@ export async function PATCH(
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
     if (!email || !store || !product_id)
       return new NextResponse("Unauthorized", { status: 401 });
 
@@ -68,13 +71,17 @@ export async function DELETE(
     await mongoConnect();
 
     const url = new URL(req.url);
-    const ids:any= url.searchParams.get("ids");
+    const ids: any = url.searchParams.get("ids");
 
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
+
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -82,11 +89,13 @@ export async function DELETE(
     if (!store || !product_id) {
       return new NextResponse("Not Found", { status: 404 });
     }
-    const remove = await removeImage({
-      public_ids: ids,
-    });
+    if (ids?.length) {
+      const remove = await removeImage({
+        public_ids: ids,
+      });
 
-    return NextResponse.json(remove);
+      return NextResponse.json(remove);
+    }
   } catch (error) {
     console.error("[SELLER:DELETE-PRODUCT]", error);
     return new NextResponse("Internal Error", { status: 500 });

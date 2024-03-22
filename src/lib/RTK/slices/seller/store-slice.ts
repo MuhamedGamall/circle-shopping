@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Store } from "../../../../types";
+import toast from "react-hot-toast";
 
 export const getStore_seller: any = createAsyncThunk(
   "sellerStoreSlice/getStore",
@@ -14,9 +15,36 @@ export const getStore_seller: any = createAsyncThunk(
     }
   }
 );
+// export const createStore_seller: any = createAsyncThunk(
+//   "sellerStoreSlice/createStore",
+//   async (_, thunkApi) => {
+//     const { rejectWithValue } = thunkApi;
+//     try {
+//       const data = (
+//         await axios.post("/api/store/" + store_id + "/products", fullData)
+//       ).data;
+  
+//       toast.success("Store created successfully");
+//     } catch (error) {
+//       toast.error("Uh oh! Something went wrong");
+//     }
+//   }
+// );
+export const UpdateStore_seller: any = createAsyncThunk(
+  "sellerStoreSlice/updateStore",
+  async (params:any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      await axios.patch(`/api/store/${params?._id}`, params?.data);
+      toast.success("Store updated successfully");
+    } catch (error) {
+      toast.error("Uh oh! Something went wrong");
+      return rejectWithValue(error)
+    }
+  }
+);
 
 type StoreState = {
-
   store: null | Store;
   loading: boolean;
   error: null;

@@ -12,6 +12,11 @@ import axios from "axios";
 
 import LoaderLayout from "@/components/loader-layout";
 import Banner from "@/components/banner";
+import { useAppDispatch } from "@/hooks/redux";
+import {
+  deleteProductImages_seller,
+  updateProductImages_seller,
+} from "@/lib/RTK/slices/seller/products-slice";
 
 export default function ImageForm({
   data,
@@ -26,6 +31,8 @@ export default function ImageForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
+
   const [imageValue, setImageValue] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [idsForDeleteFromCloudinary, setIdsForDeleteFromCloudinary] = useState<
@@ -90,25 +97,36 @@ export default function ImageForm({
     if (isValid) return toast.error("Please enter a valid image url.");
     try {
       setIsSubmitting(true);
-      await axios.patch(
-        "/api/store/" + store_id + "/products/" + product_id + "/image",
-        imageValue
+      await dispatch(
+        updateProductImages_seller({
+          data: imageValue,
+          store_id,
+          product_id,
+        })
       );
-      const product: any = (
+
+      // get the image list urls again after submitting
+      const product: Product = (
         await axios.get("/api/store/" + store_id + "/products/" + product_id)
       ).data;
+
       setIsPublished(false);
       setImageValue(product?.images);
-      if (idsForDeleteFromCloudinary.length > 0) {
-        await axios.delete(
-          `/api/store/${store_id}/products/${product_id}/image?ids=${idsForDeleteFromCloudinary}`
+
+      if (idsForDeleteFromCloudinary.length) {
+        await dispatch(
+          deleteProductImages_seller({
+            store_id,
+            product_id,
+            idsForDeleteFromCloudinary,
+          })
         );
         setIdsForDeleteFromCloudinary([]);
       }
-      toast.success("Product Updated successfully");
+
       setIsSubmitting(false);
     } catch (error) {
-      toast.error("Uh oh! Something went wrong");
+      toast.error("Uh oh! Something went wrong with updating the product.");
     }
   };
 

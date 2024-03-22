@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +33,11 @@ export function ChangePassword() {
     },
   });
 
+  useEffect(() => {
+    if (!open) {
+      form.reset();
+    }
+  }, [form, open]);
   const onSubmit = async (values: any) => {
     if (values.new_password !== values.confirm_password) {
       setPassIsMatch(false);
@@ -41,13 +46,10 @@ export function ChangePassword() {
     setPassIsMatch(true);
 
     try {
-      const req = await axios.put("/api/profile", {
+      const req = await axios.put("/api/account", {
         confirmPassword: values.confirm_password,
         currPass: values.current_password,
       });
-      form.setValue("current_password", "");
-      form.setValue("new_password", "");
-      form.setValue("confirm_password", "");
       if (req.status === 200) {
         setPassIsCorrect(true);
         toast.success("Password updated successfully!");
@@ -128,11 +130,7 @@ export function ChangePassword() {
             </span>
 
             <DialogFooter>
-              <Button
-                type="submit"
-                disabled={!isValid}
-                variant={'blue'}
-              >
+              <Button type="submit" disabled={!isValid} variant={"blue"}>
                 Save
               </Button>
             </DialogFooter>

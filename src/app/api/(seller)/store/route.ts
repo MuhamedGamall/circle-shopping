@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const store = await Store.findOne({
       personal_email: email,
-    });
+    }).lean();
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });

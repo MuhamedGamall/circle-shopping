@@ -87,8 +87,9 @@ export default function FormFields() {
         </div>
         <Button
           type="submit"
-          className="w-full font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
+          className="w-full "
           disabled={isSubmitting || !isValid}
+          variant={'blue'}
         >
           CREATE CIRCLE STORE
         </Button>

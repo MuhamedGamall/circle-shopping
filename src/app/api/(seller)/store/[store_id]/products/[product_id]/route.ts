@@ -18,20 +18,25 @@ export async function GET(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.find({ _id: store_id, personal_email: email });
+    const store = await Store.find({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store || !product_id) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
+
     const product = await Product.findOne({
       store_id,
       store_personal_email: email,
       _id: product_id,
     }).lean();
 
+    if (!store || !product) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+    
     return NextResponse.json(product);
   } catch (error) {
     console.log("[SELLER:GET-PRODUCT]", error);
@@ -52,7 +57,7 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({ _id: store_id, personal_email: email }).lean()
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });

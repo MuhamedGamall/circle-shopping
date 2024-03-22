@@ -12,6 +12,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { warrantySchema } from "../../schema";
 import { Dispatch, SetStateAction } from "react";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { useAppDispatch } from "@/hooks/redux";
 
 export default function WarrantyForm({
   data,
@@ -26,6 +28,7 @@ export default function WarrantyForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof warrantySchema>>({
     resolver: zodResolver(warrantySchema),
     defaultValues: {
@@ -37,16 +40,14 @@ export default function WarrantyForm({
   });
 
   async function onSubmit(values: z.infer<typeof warrantySchema>) {
-    try {
-      await axios.patch(
-        "/api/store/" + store_id + "/products/" + product_id,
-        values
-      );
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      updateProduct_seller({
+        data: values,
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import useAccount from "@/hooks/use-account";
-import { profileSchema } from "../schema";
+import { accountSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateAccount } from "@/lib/RTK/slices/account-slice";
@@ -33,8 +33,8 @@ export default function FormFields() {
       await dispatch(updateAccount(values));
     }
   }
-  const form = useForm<z.infer<typeof profileSchema>>({
-    resolver: zodResolver(profileSchema),
+  const form = useForm<z.infer<typeof accountSchema>>({
+    resolver: zodResolver(accountSchema),
     defaultValues: {
       first_name: "",
       last_name: "",

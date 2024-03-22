@@ -13,7 +13,8 @@ import { formatDate } from "date-fns";
 import toast from "react-hot-toast";
 import { offerSchema } from "../../schema";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import resetOffer from "@/actions/reset-offer";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { useAppDispatch } from "@/hooks/redux";
 
 export default function OfferForm({
   data,
@@ -28,6 +29,7 @@ export default function OfferForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
   const dateFormating = (date: any): any => {
     return date ? formatDate(date, "yyyy-MM-dd") : "";
   };
@@ -49,15 +51,6 @@ export default function OfferForm({
       },
     },
   });
-  // Reset the form when offer time expires
-  useEffect(() => {
-    resetOffer({
-      data,
-      form,
-      store_id,
-      product_id,
-    });
-  }, [data, form, product_id, store_id]);
 
   async function onSubmit(values: z.infer<typeof offerSchema>) {
     if (!Object.values(values.offer).every(Boolean)) {
@@ -86,15 +79,14 @@ export default function OfferForm({
     if (startDate >= endDate)
       return toast.error("Schedule the offer start date before the end date");
 
-    try {
-      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
-        "price.offer": values.offer,
-      });
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      updateProduct_seller({
+        data: { "price.offer": values.offer },
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

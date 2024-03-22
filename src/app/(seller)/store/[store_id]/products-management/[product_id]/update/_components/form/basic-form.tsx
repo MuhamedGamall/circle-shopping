@@ -17,6 +17,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { useAppDispatch } from "@/hooks/redux";
 
 export default function BasicForm({
   data,
@@ -31,6 +33,7 @@ export default function BasicForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
   const [selectSizes, setSelectSizes] = useState<string[]>([]);
   const form = useForm<z.infer<typeof productBasicSchema>>({
     resolver: zodResolver(productBasicSchema),
@@ -58,16 +61,17 @@ export default function BasicForm({
   }, [data?.sizes, setSelectSizes]);
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
-    try {
-      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
-        ...values,
-        sizes: selectSizes,
-      });
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    await dispatch(
+      updateProduct_seller({
+        data: {
+          ...values,
+          sizes: selectSizes,
+        },
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
 
   const { isSubmitting } = form.formState;

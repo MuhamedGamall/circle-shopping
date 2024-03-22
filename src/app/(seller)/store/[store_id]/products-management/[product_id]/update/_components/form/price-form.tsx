@@ -12,6 +12,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { priceSchema } from "../../schema";
 import { Dispatch, SetStateAction } from "react";
+import { useAppDispatch } from "@/hooks/redux";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
 
 export default function PriceForm({
   data,
@@ -26,6 +28,8 @@ export default function PriceForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
+
   const form = useForm<z.infer<typeof priceSchema>>({
     resolver: zodResolver(priceSchema),
     defaultValues: {
@@ -41,15 +45,14 @@ export default function PriceForm({
   });
 
   async function onSubmit(values: z.infer<typeof priceSchema>) {
-    try {
-      await axios.patch("/api/store/" + store_id + "/products/" + product_id, {
-        "price.base_price": values.price.base_price,
-      });
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      updateProduct_seller({
+        data: { "price.base_price": values.price.base_price },
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

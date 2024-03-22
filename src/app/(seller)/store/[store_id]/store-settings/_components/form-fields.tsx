@@ -12,9 +12,11 @@ import toast from "react-hot-toast";
 import { storeSchema } from "../schema";
 import useStore from "@/hooks/seller/use-store_seller";
 import LoaderLayout from "@/components/loader-layout";
+import { useAppDispatch } from "@/hooks/redux";
+import { UpdateStore_seller } from "@/lib/RTK/slices/seller/store-slice";
 
 export default function FormFields() {
-
+  const dispatch = useAppDispatch();
   const { data, loading } = useStore();
   const form = useForm<z.infer<typeof storeSchema>>({
     resolver: zodResolver(storeSchema),
@@ -33,12 +35,12 @@ export default function FormFields() {
   });
 
   async function onSubmit(values: z.infer<typeof storeSchema>) {
-    try {
-      await axios.patch(`/api/store/${data?._id}`, values);
-      toast.success("Store updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      UpdateStore_seller({
+        data: values,
+        _id: data?._id,
+      })
+    );
   }
 
   const { isSubmitting, isValid } = form.formState;
@@ -96,8 +98,9 @@ export default function FormFields() {
         </div>
         <Button
           type="submit"
-          className="mr-auto font-bold text-[11px]  bg-[#004e92] hover:bg-[#004e92]/90"
-          disabled={isSubmitting || loading || !isValid}
+          className="mr-auto  "
+          disabled={isSubmitting || loading }
+          variant={'blue'}
         >
           SAVE CHANGES
         </Button>

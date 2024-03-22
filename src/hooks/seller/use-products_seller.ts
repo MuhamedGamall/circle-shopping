@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
 import { getProducts_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { useParams } from "next/navigation";
 
-export default function useProductsSeller(store_id: string | string[]) {
+export default function useProductsSeller() {
   const dispatch = useAppDispatch();
+  const { store_id } = useParams();
   const { products, loading } = useAppSelector(
     (state) => state.seller_products
   );

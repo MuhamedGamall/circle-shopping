@@ -18,7 +18,10 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({
+      _id: store_id,
+      personal_email: email,
+    }).lean();
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -32,7 +35,7 @@ export async function PATCH(
         store_personal_email: email,
         _id: product_id,
       },
-     body
+      body
     );
 
     return NextResponse.json(updateProduct);

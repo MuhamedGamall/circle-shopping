@@ -22,13 +22,7 @@ const resetOffer = async ({
     0
   );
   if (dateNow > endDate) {
-    form.reset({
-      offer: {
-        discount_percentage: 0,
-        end_date: "",
-        start_date: "",
-      } as any,
-    });
+    form.reset();
     try {
       await axios.patch(
         "/api/store/" + store_id + "/products/" + product_id + "/reset-offer",

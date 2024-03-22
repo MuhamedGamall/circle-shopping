@@ -2,8 +2,7 @@ import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
-import { Product as ProductType } from "@/types";
-import { log } from "console";
+
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,7 +18,7 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email });
+    const store = await Store.findOne({ _id: store_id, personal_email: email }).lean()
     const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,
@@ -29,8 +28,7 @@ export async function PATCH(
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    console.log(store);
-    if (!store || !product_id || !product) {
+    if (!store || !product) {
       return new NextResponse("Not Found", { status: 404 });
     }
 

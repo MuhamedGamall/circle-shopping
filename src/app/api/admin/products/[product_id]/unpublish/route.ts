@@ -13,14 +13,13 @@ export async function PATCH(
   try {
     await mongoConnect();
     const {store_id,store_personal_email} = await req.json()
-    console.log(store_id);
-
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: store_personal_email });
-    const userInfo = await UserInfo.findOne({ email });
+    const store = await Store.findOne({ _id: store_id, personal_email: store_personal_email }).lean()
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
+
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

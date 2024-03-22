@@ -5,8 +5,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import mongoConnect from "@/actions/mongo-connect";
-import { User as UserType } from "../../../../types";
+
 import bcrypt from "bcrypt";
+import { Account } from "@/types";
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -51,10 +52,9 @@ export async function GET(req: NextRequest) {
     const user = await User.findOne({ email }).lean();
     const userInfos = await UserInfo.findOne({ email }).lean();
     const fullData = { ...userInfos, ...user };
-    if (!user) {
+    if (!user || !userInfos) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
     return NextResponse.json(fullData);
   } catch (error) {
     console.log("[PROFILE]", error);
@@ -89,7 +89,7 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
-    const user = (await User.findOne({ email }).lean()) as UserType;
+    const user = (await User.findOne({ email }).lean()) as Account;
     const currPassword = user?.password;
 
     const isMatch = await bcrypt.compare(

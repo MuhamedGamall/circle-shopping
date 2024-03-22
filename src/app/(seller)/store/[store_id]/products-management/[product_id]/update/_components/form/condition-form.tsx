@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
 import CustomSelectField from "@/components/custom-select-field";
 import { Dispatch, SetStateAction } from "react";
+import { useAppDispatch } from "@/hooks/redux";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
 
 export default function ItemConditionForm({
   data,
@@ -27,6 +29,7 @@ export default function ItemConditionForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof itemConditionSchema>>({
     resolver: zodResolver(itemConditionSchema),
     defaultValues: {
@@ -38,16 +41,14 @@ export default function ItemConditionForm({
   });
 
   async function onSubmit(values: z.infer<typeof itemConditionSchema>) {
-    try {
-      await axios.patch(
-        "/api/store/" + store_id + "/products/" + product_id,
-        values
-      );
-      setIsPublished(false);
-      toast.success("Product Updated successfully");
-    } catch (error) {
-      toast.error("Uh oh! Something went wrong");
-    }
+    dispatch(
+      updateProduct_seller({
+        data: values,
+        store_id,
+        product_id,
+      })
+    );
+    setIsPublished(false);
   }
 
   const { isSubmitting } = form.formState;

@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -82,7 +82,7 @@ export async function DELETE(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo = await UserInfo.findOne({ email });
+    const userInfo:any = await UserInfo.findOne({ email }).lean()
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });

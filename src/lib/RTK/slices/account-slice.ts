@@ -22,7 +22,7 @@ export const getAccount: any = createAsyncThunk(
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/profile")).data;
+      const data = (await axios.get("/api/account")).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -35,21 +35,23 @@ export const updateAccount: any = createAsyncThunk(
   async (values: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      (await axios.patch("/api/profile", values)).data;
-      toast.success("Profile updated successfully");
+      (await axios.patch("/api/account", values)).data;
+      toast.success("Account updated successfully");
       return values;
     } catch (error: any) {
-      toast.error("Something went wrong updating profile");
+      toast.error("Something went wrong updating account");
       return rejectWithValue(error.message);
     }
   }
 );
+
+
 export const deleteAccount: any = createAsyncThunk(
   "accountSlice/deleteAccount",
   async (email: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.delete("/api/profile?email=" + email);
+      await axios.delete("/api/account?email=" + email);
       toast.success("Account deleted successfully!");
     } catch (error: any) {
       toast.error("Something went wrong deleting account try again!");
