@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 import { shippingSchema } from "../../schema";
 import { Dispatch, SetStateAction } from "react";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 import { useAppDispatch } from "@/hooks/redux";
 
 export default function ShippingForm({

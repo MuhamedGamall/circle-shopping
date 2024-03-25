@@ -12,7 +12,7 @@ import OfferForm from "./offer-form";
 import { useParams } from "next/navigation";
 import { useAppDispatch } from "@/hooks/redux";
 import { useEffect, useState } from "react";
-import { resetForm } from "@/lib/RTK/slices/seller/products-slice";
+import { resetForm } from "@/lib/RTK/slices/seller/products";
 import useProductSeller from "@/hooks/seller/use-product_seller";
 
 export default function UpdateForm() {

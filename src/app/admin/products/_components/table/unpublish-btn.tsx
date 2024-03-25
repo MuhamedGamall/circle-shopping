@@ -1,13 +1,27 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { unpublishProduct} from "@/lib/RTK/slices/products-slice";
+import { unpublishProduct } from "@/lib/RTK/slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
-import DeleteConfirm from "./delete-reason";
+import DeleteReasonsBtn from "@/components/delete-reason-button";
 import toast from "react-hot-toast";
 import axios from "axios";
-
+const reasons = [
+  "Featuring photos of adult nudity or pornography",
+  "Promoting hate speech, discrimination, or violence against any individual or group based on race, ethnicity, national origin",
+  "Product data is incomplete",
+  "Violation of intellectual property rights or copyright infringement",
+  "Selling counterfeit or fraudulent products",
+  "Product is expired or past its use-by date",
+  "Item is prohibited or restricted by law or regulation",
+  "Product description contains misleading or false information",
+  "Product does not meet safety standards or poses health risks",
+  "Multiple customer complaints about the product quality or functionality",
+  "Repeated instances of late or non-delivery of the product",
+  "Manufacturer recalls or warnings regarding the product",
+  "Product is deemed environmentally harmful or unsustainable",
+];
 const UnpublishBtn = ({
   store_id,
   product_id,
@@ -40,7 +54,13 @@ const UnpublishBtn = ({
   };
 
   return (
-    <DeleteConfirm onDelete={onSubmit}>
+    <DeleteReasonsBtn
+      onClick={onSubmit}
+      title="Choose why you delete this product"
+      description="Select an option below to provide a reason for deleting the product,
+    This information will be used to messaged to the user who posted it."
+      reasons={reasons}
+    >
       <div
         className={cn(
           buttonVariants({
@@ -51,7 +71,7 @@ const UnpublishBtn = ({
       >
         <Trash className="h-4 w-4" />
       </div>
-    </DeleteConfirm>
+    </DeleteReasonsBtn>
   );
 };
 export default UnpublishBtn;

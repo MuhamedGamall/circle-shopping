@@ -18,7 +18,7 @@ import toast from "react-hot-toast";
 import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
 import { useAppDispatch } from "@/hooks/redux";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 
 export default function DetailsForm({
   data,

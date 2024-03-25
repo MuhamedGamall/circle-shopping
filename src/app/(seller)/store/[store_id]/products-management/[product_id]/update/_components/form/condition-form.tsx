@@ -14,7 +14,7 @@ import LoaderLayout from "@/components/loader-layout";
 import CustomSelectField from "@/components/custom-select-field";
 import { Dispatch, SetStateAction } from "react";
 import { useAppDispatch } from "@/hooks/redux";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 
 export default function ItemConditionForm({
   data,

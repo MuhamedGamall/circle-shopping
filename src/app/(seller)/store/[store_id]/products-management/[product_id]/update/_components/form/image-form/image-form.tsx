@@ -16,7 +16,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import {
   deleteProductImages_seller,
   updateProductImages_seller,
-} from "@/lib/RTK/slices/seller/products-slice";
+} from "@/lib/RTK/slices/seller/products";
 
 export default function ImageForm({
   data,

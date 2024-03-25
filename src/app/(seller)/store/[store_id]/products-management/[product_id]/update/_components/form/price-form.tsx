@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { priceSchema } from "../../schema";
 import { Dispatch, SetStateAction } from "react";
 import { useAppDispatch } from "@/hooks/redux";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 
 export default function PriceForm({
   data,

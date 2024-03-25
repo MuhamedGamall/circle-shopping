@@ -17,7 +17,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 import { useAppDispatch } from "@/hooks/redux";
 
 export default function BasicForm({

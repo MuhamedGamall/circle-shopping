@@ -13,7 +13,7 @@ import { storeSchema } from "../schema";
 import useStore from "@/hooks/seller/use-store_seller";
 import LoaderLayout from "@/components/loader-layout";
 import { useAppDispatch } from "@/hooks/redux";
-import { UpdateStore_seller } from "@/lib/RTK/slices/seller/store-slice";
+import { UpdateStore_seller } from "@/lib/RTK/slices/seller/store";
 
 export default function FormFields() {
   const dispatch = useAppDispatch();
@@ -99,8 +99,8 @@ export default function FormFields() {
         <Button
           type="submit"
           className="mr-auto  "
-          disabled={isSubmitting || loading }
-          variant={'blue'}
+          disabled={isSubmitting || loading}
+          variant={"blue"}
         >
           SAVE CHANGES
         </Button>

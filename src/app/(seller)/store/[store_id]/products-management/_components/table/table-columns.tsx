@@ -17,7 +17,7 @@ export const columns: ColumnDef<any>[] = [
     accessorKey: "images",
 
     header: ({ column }) => {
-      return <div className="">Image</div>;
+      return <div className="uppercase">Image</div>;
     },
     cell: ({ row }: any) => {
       return row.getValue("images")?.[0] ? (

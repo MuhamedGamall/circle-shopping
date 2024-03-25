@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
-import { getProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { getProduct_seller } from "@/lib/RTK/slices/seller/products";
 import { useParams } from "next/navigation";
 
 export default function useProductSeller() {

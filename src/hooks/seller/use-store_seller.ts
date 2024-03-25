@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux";
-import { getStore_seller } from "@/lib/RTK/slices/seller/store-slice";
+import { getStore_seller } from "@/lib/RTK/slices/seller/store";
 
 export default function useStoreSeller() {
   const dispatch = useAppDispatch();

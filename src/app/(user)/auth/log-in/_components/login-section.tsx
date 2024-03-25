@@ -17,9 +17,12 @@ import { MdErrorOutline } from "react-icons/md";
 import * as z from "zod";
 import { formSchema } from "../../schema";
 import AccountForm from "../../_components/account-form";
+import useAccount from "@/hooks/use-account";
+import toast from "react-hot-toast";
 
 export default function LoginClientComponent() {
   const [isError, setIsError] = useState<boolean>(false);
+  const [isBanned, setIsBnned] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,20 +39,28 @@ export default function LoginClientComponent() {
       redirect: false,
       callbackUrl: "/",
     });
-    await sign_in.then((res) =>
-      res?.status === 401 ? setIsError(true) : setIsError(false)
-    );
+    await sign_in.then((res) => {
+      res?.status === 401
+        ? setIsError(true)
+        : setIsError(false);
+    });
   }
 
   return (
     <AccountForm onSubmit={onSubmit} form={form}>
       <CardFooter className="flex flex-col items-start mt-5  gap-2">
         {isError && (
-          <span className="text-[14px] text-red-400 flex items-center gap-1">
+          <span className="text-[11px] text-red-500 flex items-center gap-1">
             <MdErrorOutline color="red" />
             Wrong email or password
           </span>
         )}
+        {/* {isBanned &&
+          (<span className="text-[11px] text-red-500 flex items-center gap-1">
+            <MdErrorOutline color="red" />
+            Wrong email or password
+          </span>
+          )} */}
         <span className="flex gap-1 items-center text-sm text-slate-700">
           Don&apos;t have an account?
           <Link href={"/auth/create-account"} className="underline font-bold">

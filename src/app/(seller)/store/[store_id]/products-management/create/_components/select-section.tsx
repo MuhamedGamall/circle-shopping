@@ -12,7 +12,7 @@ import useStore from "@/hooks/seller/use-store_seller";
 import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useAppDispatch } from "@/hooks/redux";
-import { createProduct_seller } from "@/lib/RTK/slices/seller/products-slice";
+import { createProduct_seller } from "@/lib/RTK/slices/seller/products";
 const categories: { title: string }[] = [
   {
     title: "Alert Dialog",
@@ -74,7 +74,7 @@ export default function SelectSection() {
           onClick={onSubmit}
           className="mb-5 "
           disabled={!checkData}
-          variant={'blue'}
+          variant={"blue"}
         >
           CREATE
         </Button>
@@ -152,8 +152,8 @@ export default function SelectSection() {
             <Button
               onClick={onSubmit}
               className="my-5 w-full sm:hidden block "
-             
-             variant={'blue'} disabled={!checkData}
+              variant={"blue"}
+              disabled={!checkData}
             >
               CREATE
             </Button>

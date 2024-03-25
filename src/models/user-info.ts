@@ -3,6 +3,10 @@ import { model, models, Schema } from "mongoose";
 const UserInfoSchema = new Schema(
   {
     admin: { type: Boolean, default: false },
+    ban: {
+      is_banned: { type: Boolean, default: false },
+      reason: { type: String },
+    },
     phone: { type: String },
     email: { type: String, required: true },
     street_address: { type: String },

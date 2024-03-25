@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sellerStoreSlice from "./slices/seller/store-slice";
-import sellerProductsSlice from "./slices/seller/products-slice";
+import sellerStoreSlice from "./slices/seller/store";
+import sellerProductsSlice from "./slices/seller/products";
 import productsSlice from "./slices/products-slice";
 import categoriesSlice from "./slices/categories-slice";
 import accountSlice from "./slices/account-slice";
+import usersSlice from './slices/admin/users';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     seller_store: sellerStoreSlice,
     accountData: accountSlice,
     allProducts: productsSlice,
+    users:usersSlice
   },
 });
 

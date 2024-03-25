@@ -37,16 +37,23 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         const { email, password }: any = credentials;
         await mongoConnect();
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email });
         if (!user) {
           throw new Error("Invalid email or password");
         }
-
         const passwordOk = await bcrypt.compare(password, user.password);
         if (!passwordOk) {
           throw new Error("Invalid email or password");
         }
-
+        const userInfo = await UserInfo.findOne({ email });
+        // if (userInfo?.ban?.is_banned) {
+        //   throw new Error(
+        //     JSON.stringify({
+        //       error: userInfo?.ban?.reason,
+        //       status: 403,
+        //     })
+        //   );
+        // }
         return user;
       },
     }),
@@ -57,13 +64,19 @@ export const authOptions: NextAuthOptions = {
       try {
         await mongoConnect();
         const existingUser = await UserInfo.findOne({ email: user?.email });
-        if (!existingUser) await UserInfo.create({ email: user?.email });
+        if (existingUser?.ban?.is_banned) {
+          return false
+        }
+        if (!existingUser) {
+          await UserInfo.create({ email: user?.email });
+          return true;
+        }
         return true;
-      } catch (err) {
-        console.log(`Error with callback: ${err}`);
+      } catch (error) {
         return false;
       }
     },
+
     async jwt({ token }) {
       await mongoConnect();
       const user = await UserInfo.findOne({ email: token?.email });

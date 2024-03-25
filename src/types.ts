@@ -10,6 +10,7 @@ export type Account = {
 };
 export type AccountInfo = {
   admin: string;
+  ban: { is_banned: boolean; message: string };
   phone: number;
   email: string;
   street_address: string;
@@ -20,7 +21,7 @@ export type AccountInfo = {
   updatedAt: any;
   __v: number;
 };
-export type AccountData = {
+export interface AccountData extends AccountInfo {
   _id: string;
   email: string;
   name?: string;
@@ -28,14 +29,8 @@ export type AccountData = {
   password?: string;
   createdAt: any;
   updatedAt: any;
-  admin: boolean;
-  phone: number;
-  street_address: string;
-  postal_code: number;
-  city: string;
-  country: string;
   __v: number;
-};
+}
 
 export type Store = {
   _id: string;

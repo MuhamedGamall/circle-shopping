@@ -12,7 +12,6 @@ import Image from "next/image";
 import { Category } from "@/types";
 import Link from "next/link";
 export default function SubCategoriesMenu({ data }: { data: Category }) {
-  console.log(data?.sub_categories);
 
   return (
     <DropdownMenu>
@@ -40,9 +39,9 @@ export default function SubCategoriesMenu({ data }: { data: Category }) {
                 alt="sub-categories-image"
                 width={660}
                 height={900}
-                className="max-w-[35px] object-contain"
+                className=" object-cover max-w-[60px] min-w-[60px] h-[82px] "
               />
-              <span className="text-sm max-w-[150px] overflow-x-auto">
+              <span className="text-sm  max-w-[150px] overflow-x-auto">
                 {el?.name}
               </span>
             </Link>
