@@ -139,8 +139,8 @@ export default function ImageForm({
       />
       <form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
         <Banner
-          title={"Image Instructions"}
-          instructions={[
+          title={"Image details"}
+          details={[
             "660 x 900 or more recommended",
             "Image height should be greater than 900px",
             "Image width should be greater than 660px",

@@ -17,18 +17,18 @@ export const getUsers: any = createAsyncThunk(
     }
   }
 );
-// export const getAccount: any = createAsyncThunk(
-//   "usersSlice/getAccount",
-//   async (_, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.get("/api/account")).data;
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const getUser: any = createAsyncThunk(
+  "usersSlice/getUser",
+  async (user_email, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const data = (await axios.get("/api/admin/users/" + user_email)).data;
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // export const updateAccount: any = createAsyncThunk(
 //   "usersSlice/updateAccount",
@@ -44,8 +44,6 @@ export const getUsers: any = createAsyncThunk(
 //     }
 //   }
 // );
-
-
 
 type UserState = {
   users: AccountData[];
@@ -66,40 +64,49 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUsers.pending, (state: UserState, action: PayloadAction<any>) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getUsers.fulfilled, (state: UserState, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.users = action.payload;
-      })
-      .addCase(getUsers.rejected, (state: UserState, action: PayloadAction<any>) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
-    // builder
-    //   .addCase(
-    //     getAccount.pending,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     getAccount.fulfilled,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.account = action.payload;
-    //     }
-    //   )
-    //   .addCase(
-    //     getAccount.rejected,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
+      .addCase(
+        getUsers.pending,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getUsers.fulfilled,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.users = action.payload;
+        }
+      )
+      .addCase(
+        getUsers.rejected,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+    builder
+      .addCase(
+        getUser.pending,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getUser.fulfilled,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.user = action.payload;
+        }
+      )
+      .addCase(
+        getUser.rejected,
+        (state: UserState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
     // builder
     //   .addCase(
     //     updateAccount.pending,
@@ -113,7 +120,7 @@ const usersSlice = createSlice({
     //     (state: UserState, action: PayloadAction<any>) => {
     //       state.loading = false;
     //       state.account = { ...state.account, ...action.payload };
-          
+
     //     }
     //   )
     //   .addCase(

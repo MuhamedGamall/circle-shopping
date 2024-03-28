@@ -57,9 +57,12 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <span className=" max-w-[150px] overflow-x-auto text-center  whitespace-nowrap">
+        <Link
+          href={"/admin/users/" + row.getValue("email") + "/details"}
+          className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
+        >
           {row.getValue("email")}
-        </span>
+        </Link>
       );
     },
   },
@@ -80,11 +83,8 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
-      console.log(ban);
-      
-      return (
-        <HandleBanBtn ban={ban} email={row.getValue("email")} />
-      );
+
+      return <HandleBanBtn ban={ban} email={row.getValue("email")} />;
     },
   },
   {
@@ -94,12 +94,9 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }) => {
       return (
-        <Link
-          href={"/admin/users/" + row.getValue("_id") + "/details"}
-          className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
-        >
+        <span className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto ">
           {row.getValue("_id")}
-        </Link>
+        </span>
       );
     },
   },
@@ -159,7 +156,7 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-1">
           <Link
-            href={"/admin/users/" + row.getValue("_id") + "/details"}
+            href={"/admin/users/" + row.getValue("email") + "/details"}
             className={cn(
               buttonVariants({
                 variant: "blue",

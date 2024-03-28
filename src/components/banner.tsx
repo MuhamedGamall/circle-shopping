@@ -20,13 +20,25 @@ const bannerVariants = cva(
   }
 );
 interface BannerProps extends VariantProps<typeof bannerVariants> {
-  instructions: string[];
+  details: string[];
   title: string;
+  className?: string;
+  hiddeButton?: boolean;
 }
-export default function Banner({ instructions, variant, title }: BannerProps) {
+export default function Banner({
+  details,
+  variant,
+  title,
+  className,
+  hiddeButton = false,
+}: BannerProps) {
   const [isClicked, setIsClicked] = useState(false);
   return (
-    <div className={cn(bannerVariants({ variant }), { hidden: isClicked })}>
+    <div
+      className={cn(bannerVariants({ variant, className }), {
+        hidden: isClicked,
+      })}
+    >
       <div>
         <h3 className="mb-2  font-semibold text-black">{title}</h3>
         <ul
@@ -34,17 +46,17 @@ export default function Banner({ instructions, variant, title }: BannerProps) {
             "[&>li]:ml-5 grid grid-cols-1 list-disc gap-y-2 gap-x-5 lg:grid-cols-2 "
           )}
         >
-          {instructions.map((el, i) => (
+          {details.map((el, i) => (
             <li key={i}>{el}</li>
           ))}
         </ul>
       </div>
       <Button
         variant={"ghost"}
-        className=" px-2 rounded-full "
+        className={cn("px-2 rounded-full",{hidden:hiddeButton})}
         onClick={() => setIsClicked(true)}
       >
-        <X className="h-5 w-5 " />
+        <X className="h-5 w-5" />
       </Button>
     </div>
   );

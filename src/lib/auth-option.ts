@@ -45,15 +45,6 @@ export const authOptions: NextAuthOptions = {
         if (!passwordOk) {
           throw new Error("Invalid email or password");
         }
-        const userInfo = await UserInfo.findOne({ email });
-        // if (userInfo?.ban?.is_banned) {
-        //   throw new Error(
-        //     JSON.stringify({
-        //       error: userInfo?.ban?.reason,
-        //       status: 403,
-        //     })
-        //   );
-        // }
         return user;
       },
     }),

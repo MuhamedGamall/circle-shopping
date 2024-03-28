@@ -25,8 +25,8 @@ export default function AccountForm({
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3 relative">
-        <CardContent className="grid gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3 relative ">
+        <CardContent className="grid gap-4 ">
           <div className="w-full">
             <Button
               type="button"

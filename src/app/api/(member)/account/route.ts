@@ -14,8 +14,6 @@ export async function PATCH(req: NextRequest) {
     await mongoConnect();
     const data = await req.json();
     const { email, name, image, ...otherData } = data;
-    console.log(data);
-    
     const session = await getServerSession(authOptions);
     const user = session?.user;
 

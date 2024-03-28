@@ -9,7 +9,7 @@ import {
 export default function LogInPage() {
   return (
     <section className="max-w-[800px] mx-auto my-10 px-5 ">
-      <Card>
+      <Card className="rounded-sm">
         <CardHeader className="space-y-1 ">
           <CardTitle className="text-2xl">Log in </CardTitle>
           <CardDescription>Enter your email below to Sig in</CardDescription>

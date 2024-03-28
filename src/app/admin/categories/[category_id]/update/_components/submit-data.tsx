@@ -71,12 +71,6 @@ export default function SubmitData() {
   );
 
   const onSubmit = async () => {
-    console.log({
-      main_category: trimMainCateVlues,
-      sub_categories: filterSubCate,
-      categoriesIdsForDeleteFromCloudinary,
-    });
-
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."

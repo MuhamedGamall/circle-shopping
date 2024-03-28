@@ -12,8 +12,8 @@ export default function CategoriesPage() {
         <section className="p-5 shadow-section w-full ">
           <SectionTitle title="Create Category" className="mb-5" />
           <Banner
-            title="Image Instructions"
-            instructions={[
+            title="Image details"
+            details={[
               "660 x 900 or more recommended",
               "Image height should be greater than 900px",
               "Image width should be greater than 660px",
