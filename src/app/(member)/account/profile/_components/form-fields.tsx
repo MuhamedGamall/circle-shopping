@@ -21,7 +21,7 @@ export default function FormFields() {
   const { data, loading } = useAccount();
 
   const firstName = data?.name?.split(" ")?.[0] || "";
-  const lastName = data?.name?.split(" ")?.[1] || "";
+  const lastName = data?.name?.split(" ")?.slice(1).join(" ") || "";
   const dispatch = useAppDispatch();
 
   async function onSubmit(value: any) {

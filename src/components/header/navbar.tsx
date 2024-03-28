@@ -9,7 +9,6 @@ export default function Navbar() {
     <header className="bg-white sm:bg-main sm:border-none border-b  ">
       <div className="flex gap-2 justify-between items-center mx-auto w-full max-w-[1890px] p-2.5">
         <Icons.mainLogo />
-
         <NavSearch />
         <NavLinks />
       </div>

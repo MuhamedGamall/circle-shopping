@@ -10,7 +10,7 @@ export type Account = {
 };
 export type AccountInfo = {
   admin: string;
-  ban: { is_banned: boolean; message: string };
+  ban: { is_banned: boolean; reason: string };
   phone: number;
   email: string;
   street_address: string;
