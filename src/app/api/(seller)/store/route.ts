@@ -13,9 +13,12 @@ export async function POST(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
+    const store: any = await Store.findOne({
       personal_email: email,
     }).lean();
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -41,10 +44,13 @@ export async function GET(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
+    const store: any = await Store.findOne({
       personal_email: email,
     }).lean();
 
+    if (store?.ban?.is_banned) {
+      return new NextResponse(store?.ban?.reason, { status: 403 ,statusText:'Forbidden'});
+    }
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

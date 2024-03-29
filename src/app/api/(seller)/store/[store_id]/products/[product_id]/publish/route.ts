@@ -18,7 +18,14 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({ _id: store_id, personal_email: email }).lean()
+    const store: any = await Store.findOne({
+      personal_email: email,
+      _id: store_id,
+    }).lean();
+
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
     const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,

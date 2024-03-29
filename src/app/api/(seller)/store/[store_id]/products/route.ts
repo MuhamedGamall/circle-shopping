@@ -18,10 +18,15 @@ export async function POST(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
+    const store: any = await Store.findOne({
       personal_email: email,
       _id: store_id,
     }).lean();
+
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -55,11 +60,14 @@ export async function GET(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
-      _id: store_id,
+    const store: any = await Store.findOne({
       personal_email: email,
+      _id: store_id,
     }).lean();
 
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -83,22 +91,26 @@ export async function DELETE(
   { params: { store_id } }: { params: { store_id: string } }
 ) {
   try {
+    await mongoConnect();
     const url = new URL(req.url);
     const product_id = url.searchParams.get("product_id");
-    await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
-      _id: store_id,
+    const store: any = await Store.findOne({
       personal_email: email,
+      _id: store_id,
     }).lean();
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
     const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,
       _id: product_id,
-    }).lean()
+    }).lean();
+    
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

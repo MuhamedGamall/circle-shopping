@@ -11,7 +11,7 @@ export const getStore_seller: any = createAsyncThunk(
       const data = (await axios.get("/api/store")).data;
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error); // here error
     }
   }
 );
@@ -23,7 +23,7 @@ export const getStore_seller: any = createAsyncThunk(
 //       const data = (
 //         await axios.post("/api/store/" + store_id + "/products", fullData)
 //       ).data;
-  
+
 //       toast.success("Store created successfully");
 //     } catch (error) {
 //       toast.error("Uh oh! Something went wrong");
@@ -32,14 +32,14 @@ export const getStore_seller: any = createAsyncThunk(
 // );
 export const UpdateStore_seller: any = createAsyncThunk(
   "sellerStoreSlice/updateStore",
-  async (params:any, thunkApi) => {
+  async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       await axios.patch(`/api/store/${params?._id}`, params?.data);
       toast.success("Store updated successfully");
-    } catch (error) {
+    } catch (error: any) {
       toast.error("Uh oh! Something went wrong");
-      return rejectWithValue(error)
+      return rejectWithValue(error.message);
     }
   }
 );

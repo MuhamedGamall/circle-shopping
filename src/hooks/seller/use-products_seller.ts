@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 export default function useProductsSeller() {
   const dispatch = useAppDispatch();
   const { store_id } = useParams();
-  const { products, loading } = useAppSelector(
+  const { products, loading, error } = useAppSelector(
     (state) => state.seller_products
   );
 
@@ -14,5 +14,5 @@ export default function useProductsSeller() {
     dispatch(getProducts_seller(store_id));
   }, [store_id, dispatch]);
 
-  return { loading, data: products };
+  return { loading, data: products, error };
 }

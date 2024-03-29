@@ -29,11 +29,11 @@ const LoadingSkeleton = () => {
   return <Skeleton className="h-[25px] w-[150px] rounded-md bg-slate-400" />;
 };
 export default function AccountMenu() {
-  const { data, loading } = useStore();
+  const { data, loading, error }: any = useStore();
   const { data: account, loading: loadingAccount } = useAccount();
   const userName =
     account?.name?.split(" ")?.[0] || account?.email?.split("@")?.[0] || "";
-    
+
   return (
     <>
       {loadingAccount ? (
@@ -80,29 +80,31 @@ export default function AccountMenu() {
                 </Link>
               </MenubarItem>
               <MenubarItem asChild>
-                {loading ? (
-                  <Loader2 className={"animate-spin w-8 h-8 text-shade "} />
-                ) : !data ? (
-                  <Link
-                    href={"/store/create"}
-                    className="flex items-center text-[18px] gap-3 text-slate-700  "
-                  >
-                    <span className=" text-gray-700">
-                      <MdStorefront className="h-4 w-4" />
-                    </span>
-                    Create store
-                  </Link>
-                ) : (
-                  <Link
-                    href={"/store/" + data?._id + "/dashboard"}
-                    className="flex items-center text-[18px] gap-3 text-slate-700  "
-                  >
-                    <span className=" text-gray-700">
-                      <LayoutList className="h-4 w-4" />
-                    </span>
-                    Store dashboard
-                  </Link>
-                )}
+                {!error && (
+                  loading ? (
+                    <Loader2 className={"animate-spin w-8 h-8 text-shade "} />
+                  ) : !data ? (
+                    <Link
+                      href={"/store/create"}
+                      className="flex items-center text-[18px] gap-3 text-slate-700  "
+                    >
+                      <span className=" text-gray-700">
+                        <MdStorefront className="h-4 w-4" />
+                      </span>
+                      Create store
+                    </Link>
+                  ) : (
+                    <Link
+                      href={"/store/" + data?._id + "/dashboard"}
+                      className="flex items-center text-[18px] gap-3 text-slate-700  "
+                    >
+                      <span className=" text-gray-700">
+                        <LayoutList className="h-4 w-4" />
+                      </span>
+                      Store dashboard
+                    </Link>
+                  )
+                ) }
               </MenubarItem>
               {account?.admin && (
                 <MenubarItem asChild>

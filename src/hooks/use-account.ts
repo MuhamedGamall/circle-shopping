@@ -5,12 +5,12 @@ import { useSession } from "next-auth/react";
 
 export default function useAccount() {
   const dispatch = useAppDispatch();
-  const { account } = useAppSelector((state) => state.accountData);
+  const { account , error } = useAppSelector((state) => state.accountData);
   const { status } = useSession();
   const loading = status === "loading";
   useEffect(() => {
     dispatch(getAccount());
   }, [dispatch]);
 
-  return { loading, data: account };
+  return { loading, data: account, error  };
 }

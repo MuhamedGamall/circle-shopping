@@ -19,38 +19,43 @@ export async function PATCH(
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
-      _id: store_id,
+    const store: any = await Store.findOne({
       personal_email: email,
+      _id: store_id,
     }).lean();
+
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
     if (!email || !store || !product_id)
       return new NextResponse("Unauthorized", { status: 401 });
 
     // Filter images: base64 and already uploaded
-    const filterImagesBase64 = body.filter(
-      (image: string) =>
-        image.startsWith("data:image") && image.includes("base64")
-    );
-    const filterImagesAlreadyUploaded = body.filter(
-      (image: string) => !image.includes("base64")
-    );
+    // const filterImagesBase64 = body.filter(
+    //   (image: string) =>
+    //     image.startsWith("data:image") && image.includes("base64")
+    // );
+    // const filterImagesAlreadyUploaded = body.filter(
+    //   (image: string) => !image.includes("base64")
+    // );
 
     const folderName = `/circle-shopping/products/${email}/${product_id}`;
 
     // Upload base64 images to Cloudinary
-    const uploadBase64 =
-      filterImagesBase64.length > 0
-        ? await uploadImages({
-            images: filterImagesBase64,
-            folderName,
-          })
-        : [];
+    const uploadImage =
+      // filterImagesBase64.length > 0
+      // ?
+      await uploadImages({
+        images: body,
+        folderName,
+      });
+    // : [];
 
-    const images = [...uploadBase64, ...filterImagesAlreadyUploaded];
+    // const images = [...uploadBase64, ...filterImagesAlreadyUploaded];
 
     const updateProduct = await Product.updateOne(
       { store_id, store_personal_email: email, _id: product_id },
-      { images, is_published: false }
+      { images: uploadImage, is_published: false }
     );
 
     return NextResponse.json(updateProduct);
@@ -77,10 +82,14 @@ export async function DELETE(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store = await Store.findOne({
-      _id: store_id,
+    const store: any = await Store.findOne({
       personal_email: email,
+      _id: store_id,
     }).lean();
+
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
