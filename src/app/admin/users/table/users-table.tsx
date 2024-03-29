@@ -32,11 +32,11 @@ import { getUsers } from "@/lib/RTK/slices/admin/users";
 
 export function UsersTable() {
   const dispatch = useAppDispatch();
-  const { users: data, loading } = useAppSelector((state) => state.users);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const { users: data, loading } = useAppSelector((state) => state.users);
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);

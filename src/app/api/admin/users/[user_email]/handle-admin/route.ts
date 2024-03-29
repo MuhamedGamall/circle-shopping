@@ -18,6 +18,10 @@ export async function PATCH(
     const email = user?.email;
     const userInfo = await UserInfo.findOne({ email }).lean();
 
+    if (!user_email) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+    
     if (user_email === process.env.CEO_EMAIL) {
       return new NextResponse("Bad Requisite", { status: 400 });
     }

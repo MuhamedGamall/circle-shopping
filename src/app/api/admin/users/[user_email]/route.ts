@@ -20,6 +20,10 @@ export async function GET(
 
     const userInfoAccount: any = await UserInfo.findOne({ email });
 
+    if (!user_email) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
     if (!userAccount || !userInfoAccount?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
