@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -82,7 +82,7 @@ export async function DELETE(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -91,20 +91,19 @@ export async function DELETE(req: NextRequest) {
       { _id },
       { folder_cloudinary_images_id: 1 }
     );
+
     const folderId = getCloudinaryImagesId?.folder_cloudinary_images_id;
     if (!folderId) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
     const folderName = `circle-shopping/categories/${folderId}`;
-    await Promise.all([
-      removeFolder({ folderId: folderName }),
-    ]);
+    await Promise.all([removeFolder({ folderId: folderName })]);
     const deleteOne = await Category.deleteOne({ _id });
 
     return NextResponse.json(deleteOne);
   } catch (error) {
-    console.log("[ADMIN:DELETE-CATEGORIES]", error);
+    console.log("[ADMIN:DELETE-CATEGORY]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

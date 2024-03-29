@@ -9,13 +9,13 @@ import { formatDate } from "date-fns";
 import Image from "next/image";
 import { useEffect } from "react";
 
-export default function DetialsSection({ userEmail }: { userEmail: string }) {
+export default function DetialsSection({ user_id }: { user_id: string }) {
   const dispatch = useAppDispatch();
   const { user, loading } = useAppSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(getUser(userEmail));
-  }, [dispatch, userEmail]);
+    dispatch(getUser(user_id));
+  }, [dispatch, user_id]);
   const firstName = user?.name?.split(" ")?.[0] || "";
   const lastName = user?.name?.split(" ")?.slice(1).join(" ") || "";
   return (

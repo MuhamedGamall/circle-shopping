@@ -7,10 +7,11 @@ import mongoConnect from "@/actions/mongo-connect";
 import { AccountInfo } from "@/types";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
+import { User } from "@/models/user";
 
 export async function PATCH(
   req: NextRequest,
-  { params: { user_email } }: { params: { user_email: string } }
+  { params: { user_id } }: { params: { user_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -20,15 +21,14 @@ export async function PATCH(
     const user = session?.user;
     const email = user?.email;
     const userInfo: any = await UserInfo.findOne({ email }).lean();
+
+    const getUser: any = await User.findOne({ _id: user_id }).lean();
+
     const store: any = await Store.findOne({
-      personal_email: user_email,
+      personal_email: getUser?.email,
     }).lean();
 
-    if (user_email === process.env.CEO_EMAIL) {
-      return new NextResponse("Bad Requisite", { status: 400 });
-    }
-
-    if (!user_email) {
+    if (!user_id || !getUser) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
@@ -37,28 +37,32 @@ export async function PATCH(
     }
 
     await Product.updateMany(
-      { store_personal_email: user_email, store_id: store?._id },
+      {
+        store_personal_email: store?.personal_email,
+        store_id: store?._id,
+      },
       { is_published: !body?.ban?.is_banned }
     );
 
-    const updateUser = await UserInfo.updateOne({ email: user_email }, body);
+    const updateUser = await UserInfo.updateOne(
+      { email: getUser?.email },
+      body
+    );
     return NextResponse.json(updateUser);
   } catch (error) {
-    console.log("[BAN-USER]", error);
+    console.log("[ADMIN:HANDLE-BAN-USER]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
 export async function GET(
   req: NextRequest,
-  { params: { user_email } }: { params: { user_email: string } }
+  { params: { user_id } }: { params: { user_id: string } }
 ) {
   try {
     await mongoConnect();
-
-    const userInfo: AccountInfo | null = await UserInfo.findOne({
-      email: user_email,
-    }).lean();
+    const email = user_id; // email not id
+    const userInfo: any = await UserInfo.findOne({email, }).lean();
 
     if (!userInfo) {
       return new NextResponse("Not Found", { status: 404 });
@@ -66,7 +70,7 @@ export async function GET(
 
     return NextResponse.json(userInfo?.ban);
   } catch (error) {
-    console.log("[GET-BAN-USER]", error);
+    console.log("[ADMIN:GET-BAN]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

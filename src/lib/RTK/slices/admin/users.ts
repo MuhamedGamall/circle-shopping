@@ -19,10 +19,10 @@ export const getUsers: any = createAsyncThunk(
 );
 export const getUser: any = createAsyncThunk(
   "usersSlice/getUser",
-  async (user_email, thunkApi) => {
+  async (user_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/admin/users/" + user_email)).data;
+      const data = (await axios.get("/api/admin/users/" + user_id)).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

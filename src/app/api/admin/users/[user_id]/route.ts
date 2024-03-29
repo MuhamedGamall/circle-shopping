@@ -10,7 +10,7 @@ import { Account, AccountData, AccountInfo } from "@/types";
 
 export async function GET(
   req: NextRequest,
-  { params: { user_email } }: { params: { user_email: string } }
+  { params: { user_id } }: { params: { user_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -20,7 +20,7 @@ export async function GET(
 
     const userInfoAccount: any = await UserInfo.findOne({ email });
 
-    if (!user_email) {
+    if (!user_id) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
@@ -28,8 +28,8 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const user: any = await User.findOne({ email: user_email }).lean();
-    const userInfo: any = await UserInfo.findOne({ email: user_email }).lean();
+    const user: any = await User.findOne({ _id: user_id }).lean();
+    const userInfo: any = await UserInfo.findOne({ _id: user_id }).lean();
 
     if (!user || !userInfoAccount) {
       return new NextResponse("Not Found", { status: 404 });

@@ -10,10 +10,10 @@ import toast from "react-hot-toast";
 
 export default function HandleAdminBtn({
   admin,
-  email,
+  user_id,
 }: {
   admin: boolean;
-  email: string | string[];
+  user_id: string | string[];
 }) {
   const session = useSession();
   const personalEmail = session?.data?.user?.email;
@@ -39,14 +39,9 @@ export default function HandleAdminBtn({
         "Apologies, but you are not authorized for the requested action."
       );
 
-    if (personalEmail === email)
-      return toast.error(
-        "You can't do that for yourself, because you are the CEO of the company."
-      );
-
     try {
       setIsSubmitting(true);
-      await axios.patch("/api/admin/users/" + email + "/handle-admin", {
+      await axios.patch("/api/admin/users/" + user_id + "/handle-admin", {
         admin: !isAdmin,
       });
       setIsAdmin(!isAdmin);
@@ -57,17 +52,7 @@ export default function HandleAdminBtn({
     }
   }
 
-  return email === CEOEmail ? (
-    <TooltipWrapper label="you cant't access this user">
-      <span
-        className={cn(
-          "bg-black cursor-not-allowed text-white rounded-sm whitespace-nowrap px-3 font-semibold py-1 text-[11px]"
-        )}
-      >
-        CEO
-      </span>
-    </TooltipWrapper>
-  ) : (
+  return  (
     <TooltipWrapper label="Make User an Admin or Remove Access">
       <Button
         onClick={onSubmit}

@@ -14,7 +14,7 @@ import axios from "axios";
 import Banner from "@/components/banner";
 import React from "react";
 
-export default function LoginClientComponent() {
+export default function LoginSection() {
   const [isError, setIsError] = useState<boolean>(false);
   const [banned, setBanned] = useState<null | {
     is_banned: boolean;
@@ -67,12 +67,6 @@ export default function LoginClientComponent() {
               Wrong email or password
             </span>
           )}
-          {/* {isBanned &&
-          (<span className="text-[11px] text-red-500 flex items-center gap-1">
-            <MdErrorOutline color="red" />
-            Wrong email or password
-          </span>
-          )} */}
           <span className="flex gap-1 items-center text-sm text-slate-700">
             Don&apos;t have an account?
             <Link href={"/auth/create-account"} className="underline font-bold">
