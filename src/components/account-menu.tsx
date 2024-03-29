@@ -80,20 +80,21 @@ export default function AccountMenu() {
                 </Link>
               </MenubarItem>
               <MenubarItem asChild>
-                {!error && (
-                  loading ? (
-                    <Loader2 className={"animate-spin w-8 h-8 text-shade "} />
-                  ) : !data ? (
-                    <Link
-                      href={"/store/create"}
-                      className="flex items-center text-[18px] gap-3 text-slate-700  "
-                    >
-                      <span className=" text-gray-700">
-                        <MdStorefront className="h-4 w-4" />
-                      </span>
-                      Create store
-                    </Link>
-                  ) : (
+                {loading ? (
+                  <Loader2 className={"animate-spin w-8 h-8 text-shade "} />
+                ) : error?.response?.status === 404 ? (
+                  <Link
+                    href={"/store/create"}
+                    className="flex items-center text-[18px] gap-3 text-slate-700  "
+                  >
+                    <span className=" text-gray-700">
+                      <MdStorefront className="h-4 w-4" />
+                    </span>
+                    Create store
+                  </Link>
+                ) : (
+                  error?.response?.status !== 403 &&
+                  !(error?.response?.status === 404) && (
                     <Link
                       href={"/store/" + data?._id + "/dashboard"}
                       className="flex items-center text-[18px] gap-3 text-slate-700  "
@@ -104,7 +105,7 @@ export default function AccountMenu() {
                       Store dashboard
                     </Link>
                   )
-                ) }
+                )}
               </MenubarItem>
               {account?.admin && (
                 <MenubarItem asChild>

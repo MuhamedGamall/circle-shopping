@@ -3,8 +3,8 @@ import { model, models, Schema } from "mongoose";
 const StoreSchema = new Schema(
   {
     ban: {
-      is_banned: { type: Boolean, default: false },
-      reason: { type: String },
+      is_banned: { type: Boolean, default: false ,required: true},
+      reason: { type: String,required: true},
     },
     personal_email: { type: String, unique: true, required: true },
     display_name: { type: String, required: true },
