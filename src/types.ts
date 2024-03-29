@@ -34,6 +34,10 @@ export interface AccountData extends AccountInfo {
 
 export type Store = {
   _id: string;
+  ban: {
+    is_banned: boolean;
+    reason: string;
+  };
   personal_email: string;
   display_name: string;
   business_email: string;

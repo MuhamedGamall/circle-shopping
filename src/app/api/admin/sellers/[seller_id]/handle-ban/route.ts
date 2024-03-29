@@ -4,13 +4,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import mongoConnect from "@/actions/mongo-connect";
+
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
-import { User } from "@/models/user";
 
 export async function PATCH(
   req: NextRequest,
-  { params: { user_id } }: { params: { user_id: string } }
+  { params: { seller_id } }: { params: { seller_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -21,13 +21,11 @@ export async function PATCH(
     const email = user?.email;
     const userInfo: any = await UserInfo.findOne({ email }).lean();
 
-    const getUser: any = await User.findOne({ _id: user_id }).lean();
-
     const store: any = await Store.findOne({
-      personal_email: getUser?.email,
+      _id: seller_id,
     }).lean();
 
-    if (!user_id || !getUser || !store) {
+    if (!seller_id || !store) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
@@ -38,38 +36,15 @@ export async function PATCH(
     await Product.updateMany(
       {
         store_personal_email: store?.personal_email,
-        store_id: store?._id,
+        store_id: seller_id,
       },
       { is_published: !body?.ban?.is_banned }
     );
 
-    const updateUser = await UserInfo.updateOne(
-      { email: getUser?.email },
-      body
-    );
-    return NextResponse.json(updateUser);
+    const updateStore = await Store.updateOne({ _id: seller_id }, body);
+    return NextResponse.json(updateStore);
   } catch (error) {
-    console.log("[ADMIN:HANDLE-BAN-USER]", error);
-    return new NextResponse("Internal Error", { status: 500 });
-  }
-}
-
-export async function GET(
-  req: NextRequest,
-  { params: { user_id } }: { params: { user_id: string } }
-) {
-  try {
-    await mongoConnect();
-    const email = user_id; // email not id
-    const userInfo: any = await UserInfo.findOne({ email }).lean();
-
-    if (!userInfo) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
-
-    return NextResponse.json(userInfo?.ban);
-  } catch (error) {
-    console.log("[ADMIN:GET-BAN]", error);
+    console.log("[ADMIN:HANDLE-BAN-SELLER]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

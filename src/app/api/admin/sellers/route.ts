@@ -6,7 +6,7 @@ import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import mongoConnect from "@/actions/mongo-connect";
 
-import { Account, AccountData, AccountInfo } from "@/types";
+import { Store } from "@/models/store";
 
 export async function GET(req: NextRequest) {
   try {
@@ -20,22 +20,13 @@ export async function GET(req: NextRequest) {
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     const CEOEmailForExclusion = process.env.CEO_EMAIL
-    const users: any = await User.find({email:{$ne:CEOEmailForExclusion}}).lean();
-    const usersInfos: any = await UserInfo.find({email:{$ne:CEOEmailForExclusion}}).lean();
+    const stores: any = await Store.find({personal_email:{$ne:CEOEmailForExclusion}}).lean();
 
-    // Merge main user and user info data
-    const mergedArray = users.map(
-      (user: Account): AccountData => ({
-        ...usersInfos.find((info: AccountInfo) => user.email === info.email),
-        ...user,
-      })
-    )
-
-    return NextResponse.json(mergedArray);
+    return NextResponse.json(stores);
   } catch (error) {
-    console.log("[ADMIN:USERS]", error);
+    console.log("[ADMIN:STORES]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

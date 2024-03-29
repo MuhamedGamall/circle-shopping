@@ -2,6 +2,10 @@ import { model, models, Schema } from "mongoose";
 
 const StoreSchema = new Schema(
   {
+    ban: {
+      is_banned: { type: Boolean, default: false },
+      reason: { type: String },
+    },
     personal_email: { type: String, unique: true, required: true },
     display_name: { type: String, required: true },
     business_email: { type: String, required: true },

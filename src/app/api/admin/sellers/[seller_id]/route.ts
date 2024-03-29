@@ -5,37 +5,37 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import mongoConnect from "@/actions/mongo-connect";
-
+import { Store } from "@/models/store";
 
 export async function GET(
   req: NextRequest,
-  { params: { user_id } }: { params: { user_id: string } }
+  { params: { seller_id } }: { params: { seller_id: string } }
 ) {
   try {
     await mongoConnect();
     const session = await getServerSession(authOptions);
-    const userAccount = session?.user;
-    const email = userAccount?.email;
+    const user = session?.user;
+    const email = user?.email;
 
-    const userInfoAccount: any = await UserInfo.findOne({ email });
+    const userInfo: any = await UserInfo.findOne({ email });
 
-    if (!userAccount || !userInfoAccount?.admin) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const user: any = await User.findOne({ _id: user_id }).lean();
-    const userInfo: any = await UserInfo.findOne({ _id: user_id }).lean();
-
-    if (!user || !userInfo || !userInfoAccount || !user_id) {
+    if (!seller_id) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
-    // Merge main user and user info data
-    const merged = { ...userInfo, ...user };
+    if (!user || !userInfo?.admin) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
-    return NextResponse.json(merged);
+    const store: any = await Store.findOne({ _id: seller_id }).lean();
+
+    if (!store || !userInfo) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+
+    return NextResponse.json(store);
   } catch (error) {
-    console.log("[ADMIN:USER]", error);
+    console.log("[ADMIN:STORE]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
