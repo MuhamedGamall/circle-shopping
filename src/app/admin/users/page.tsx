@@ -3,7 +3,7 @@ import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import SectionTitle from "@/components/section-title";
 import Link from "next/link";
 
-import { UsersTable } from "./table/users-table";
+import { UsersTable } from "./_components/table/users-table";
 
 export default function UsersPage() {
   return (

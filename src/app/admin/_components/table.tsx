@@ -1,4 +1,3 @@
-"use client";
 
 import {
   ColumnFiltersState,
@@ -13,7 +12,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -26,20 +25,20 @@ import {
 
 import SearchInputs from "@/components/table/search-inputs";
 import { LoadingSkeleton } from "@/components/table/table-loading";
-import { columns } from "./table-columns";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getUsers } from "@/lib/RTK/slices/admin/users";
 
-export function UsersTable() {
-  const dispatch = useAppDispatch();
+export function DataTable({
+  data,
+  loading,
+  columns,
+}: {
+  data: any[];
+  loading: boolean;
+  columns: any;
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const { users: data, loading } = useAppSelector((state) => state.users);
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
 
   const table = useReactTable({
     data,
