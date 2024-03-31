@@ -32,11 +32,11 @@ export default function Banner({
   className,
   hiddeButton = false,
 }: BannerProps) {
-  const [isClicked, setIsClicked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div
       className={cn(bannerVariants({ variant, className }), {
-        hidden: isClicked,
+        hidden: isOpen,
       })}
     >
       <div>
@@ -53,8 +53,10 @@ export default function Banner({
       </div>
       <Button
         variant={"ghost"}
-        className={cn("px-2 rounded-full",{hidden:hiddeButton})}
-        onClick={() => setIsClicked(true)}
+        className={cn("px-2 rounded-full hover:bg-transparent", {
+          hidden: hiddeButton,
+        })}
+        onClick={() => setIsOpen(true)}
       >
         <X className="h-5 w-5" />
       </Button>

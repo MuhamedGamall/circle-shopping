@@ -1,9 +1,7 @@
-import { signOut } from "next-auth/react";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Store } from "../../../../types";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
 
 export const getStore_seller: any = createAsyncThunk(
   "sellerStoreSlice/getStore",
@@ -13,7 +11,6 @@ export const getStore_seller: any = createAsyncThunk(
       const data = (await axios.get("/api/store")).data;
       return data;
     } catch (error: any) {
-
       return rejectWithValue(error);
     }
   }
@@ -27,8 +24,10 @@ export const createStore_seller: any = createAsyncThunk(
       toast.success("Store created successfully");
       return data;
     } catch (error: any) {
-      toast.error("Uh oh! Something went wrong");
-      return rejectWithValue(error.message);
+      if (error?.response?.status !== 409)
+        toast.error("Uh oh! Something went wrong");
+
+      return rejectWithValue(error);
     }
   }
 );
