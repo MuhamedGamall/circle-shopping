@@ -13,7 +13,7 @@ export default function HandleAdminBtn({
   user_id,
 }: {
   admin: boolean;
-  user_id: string | string[];
+  user_id: string;
 }) {
   const session = useSession();
   const personalEmail = session?.data?.user?.email;
@@ -52,7 +52,7 @@ export default function HandleAdminBtn({
     }
   }
 
-  return  (
+  return (
     <TooltipWrapper label="Make User an Admin or Remove Access">
       <Button
         onClick={onSubmit}

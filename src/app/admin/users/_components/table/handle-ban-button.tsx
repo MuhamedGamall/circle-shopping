@@ -19,11 +19,15 @@ const reasons = [
 ];
 export default function HandleBanBtn({
   ban,
+  user_email,
   user_id,
 }: {
   ban: { is_banned: boolean; message: string };
+  user_email: string;
   user_id: string;
 }) {
+  const session = useSession();
+  const personalEmail = session?.data?.user?.email;
   const [isBanned, setIsBanned] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,6 +36,11 @@ export default function HandleBanBtn({
   }, [ban?.is_banned]);
 
   async function onSubmit(reason: any) {
+    if (user_email === personalEmail)
+      return toast.error(
+        "You are not authorized for the requested action on yourself."
+      );
+
     try {
       setIsSubmitting(true);
       await axios.patch("/api/admin/users/" + user_id + "/handle-ban", {
@@ -56,7 +65,7 @@ export default function HandleBanBtn({
         >
           <Button
             size="sm"
-            disabled={isSubmitting}
+            disabled={isSubmitting || user_email === personalEmail}
             className={`bg-slate-500 rounded-sm whitespace-nowrap px-2 h-[25px] text-[11px]`}
           >
             {isSubmitting ? (
@@ -70,7 +79,7 @@ export default function HandleBanBtn({
         <Button
           onClick={() => onSubmit("")}
           size="sm"
-          disabled={ isSubmitting}
+          disabled={isSubmitting || user_email === personalEmail}
           className={` rounded-sm whitespace-nowrap px-2 h-[25px] text-[11px] bg-red-500`}
         >
           {isSubmitting ? (

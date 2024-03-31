@@ -23,6 +23,7 @@ export async function PATCH(
     if (!user || !userInfo?.admin || email !== process.env.CEO_EMAIL) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
     if (!getUser) {
       return new NextResponse("Not Found", { status: 404 });
     }
@@ -33,7 +34,7 @@ export async function PATCH(
     );
     return NextResponse.json(updateUser);
   } catch (error) {
-    console.log("[UPDATE-USER]", error);
+    console.log("[ADMIN:HANDLE-ADMIN-USER]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

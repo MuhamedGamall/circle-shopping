@@ -80,7 +80,13 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
-      return <HandleBanBtn ban={ban} user_id={row.getValue("_id")} />;
+      return (
+        <HandleBanBtn
+          ban={ban}
+          user_id={row.getValue("_id")}
+          user_email={row.getValue("email")}
+        />
+      );
     },
   },
   {

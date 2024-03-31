@@ -20,14 +20,13 @@ export async function PATCH(
     const user = session?.user;
     const email = user?.email;
     const userInfo: any = await UserInfo.findOne({ email }).lean();
-    
-    if (!user || !userInfo?.admin) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
     const store: any = await Store.findOne({
       _id: seller_id,
     }).lean();
+
+    if (!user || !userInfo?.admin || store?.personal_email === email) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (!store) {
       return new NextResponse("Not Found", { status: 404 });

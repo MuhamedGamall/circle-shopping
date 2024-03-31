@@ -24,8 +24,7 @@ export async function GET(
 
     const user: any = await User.findOne({ _id: user_id }).lean();
     const userInfo: any = await UserInfo.findOne({ email: user?.email }).lean();
-console.log({user,userInfo});
-
+    
     if (!user || !userInfo) {
       return new NextResponse("Not Found", { status: 404 });
     }

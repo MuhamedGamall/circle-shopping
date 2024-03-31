@@ -22,32 +22,34 @@ export async function PATCH(
     const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     const getUser: any = await User.findOne({ _id: user_id }).lean();
+
     const store: any = await Store.findOne({
       personal_email: getUser?.email,
     }).lean();
 
-    if (!user || !userInfo?.admin) {
+    if (!user || !userInfo?.admin || getUser?.email === email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!getUser || !store) {
+    if (!getUser) {
       return new NextResponse("Not Found", { status: 404 });
     }
+    if (store) {
+      await Product.updateMany(
+        {
+          store_personal_email: store?.personal_email,
+          store_id: store?._id,
+        },
+        { is_published: !body?.ban?.is_banned }
+      );
 
-    await Product.updateMany(
-      {
-        store_personal_email: store?.personal_email,
-        store_id: store?._id,
-      },
-      { is_published: !body?.ban?.is_banned }
-    );
+      await Store.updateOne({ _id: store?._id }, body);
+    }
 
     const updateUser = await UserInfo.updateOne(
       { email: getUser?.email },
       body
     );
-
-    await Store.updateOne({ _id: store?._id }, body);
 
     return NextResponse.json(updateUser);
   } catch (error) {
