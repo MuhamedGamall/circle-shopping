@@ -35,13 +35,7 @@ export const unpublishProduct: any = createAsyncThunk(
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.patch(
-        "/api/admin/products/" + params?.product_id + "/unpublish",
-        {
-          store_id: params?.store_id,
-          store_personal_email: params?.store_personal_email,
-        }
-      );
+      await axios.patch(`/api/unpublish-product`, params)
       return params?.product_id;
     } catch (error: any) {
       toast.error("Uh oh! Something went wrong while Unpublishing the product");

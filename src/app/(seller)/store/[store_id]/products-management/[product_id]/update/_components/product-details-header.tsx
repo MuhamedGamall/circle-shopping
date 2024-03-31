@@ -32,11 +32,13 @@ export default function ProductDetailsHeader({
   const togglePublishState = async () => {
     try {
       setIsSubmitting(true);
-      await axios.patch(
-        `/api/store/${store_id}/products/${product_id}/${
-          isPublished ? "unpublish" : "publish"
-        }`
-      );
+      isPublished
+        ? await axios.patch(`/api/unpublish-product`, { store_id, product_id })
+        : await axios.patch(
+            `/api/store/${store_id}/products/${product_id}/${
+              isPublished ? "unpublish" : "publish"
+            }`
+          );
 
       setIsPublished(!isPublished);
       toast.success(

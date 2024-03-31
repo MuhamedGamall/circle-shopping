@@ -5,7 +5,7 @@ import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest,{params:{product_id}}:{params:{product_id:string}}) {
   try {
     await mongoConnect();
     const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const product = await Product.findOne({ is_published: true });
+    const product = await Product.findOne({ _id:product_id });
     if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }

@@ -4,7 +4,8 @@ import sellerProductsSlice from "./slices/seller/products";
 import productsSlice from "./slices/products-slice";
 import categoriesSlice from "./slices/categories-slice";
 import accountSlice from "./slices/account-slice";
-import usersSlice from './slices/admin/users';
+import usersSlice from "./slices/admin/users";
+import adminSellerSlice from "./slices/admin/sellers";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
     seller_store: sellerStoreSlice,
     accountData: accountSlice,
     allProducts: productsSlice,
-    users:usersSlice
+    users: usersSlice,
+    sellers: adminSellerSlice,
   },
 });
 

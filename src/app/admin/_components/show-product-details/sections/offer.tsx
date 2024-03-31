@@ -15,23 +15,23 @@ export default function OfferSection({ data }: { data: Product | null }) {
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
           Discount Percentage
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data?.price?.offer.discount_percentage || "Not Set"}
+            {data?.price?.offer?.discount_percentage || "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
           Start Date
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data
-              ? formatDate(data?.price?.offer?.start_date, "dd/MM/yyyy")
-              : "Not Set"}
+            {data?.price?.offer?.start_date
+              ? formatDate(data.price.offer.start_date, "dd/MM/yyyy")
+              : "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
           End Date
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data
+            {data?.price?.offer?.end_date
               ? formatDate(data?.price?.offer?.end_date, "dd/MM/yyyy")
-              : "Not Set"}
+              : "-- --"}
           </div>
         </Label>
       </div>

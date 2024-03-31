@@ -2,8 +2,9 @@ import React from "react";
 import { Product } from "@/types";
 import { Label } from "@/components/ui/label";
 import SectionTitle from "@/components/section-title";
+import Overview from "./overview";
 
-export default function BasicSection({
+export default function ProductDetailsSection({
   data,
 }: {
   data: Product | null;
@@ -11,50 +12,55 @@ export default function BasicSection({
   return (
     <div className="p-5 border-b">
       <SectionTitle
-        title="Basic."
+        title="product details."
         className="text-[16px]  sm:text-[16px] text-slate-700 my-3"
       />
       <div className="grid grid-cols-1 gap-y-5 gap-x-7 sm:grid-cols-2 mb-5 items-baseline">
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
-          Title
+          Box Details
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data?.title || "No Set"}
+            {data?.box_details || "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
-          Item Pack Quantity
+          Max Purchase Quantity
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data?.item_pack_quantity || "No Set"}
+            {data?.max_purchase_quantity || "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
-          Model Number
+          Model Height
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data?.model_number || "No Set"}
+            {data?.model_height || "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
-          Sizes
+          Model Name
           <div className="p-3 border rounded-sm text-black text-sm font-normal">
-            {data?.sizes.length
-              ? data?.sizes?.map((size, i) => (
-                  <span
-                    key={i}
-                    className="border border-sky-700 bg-sky-700/20 p-1 rounded-sm text-sm text-sky-700 "
-                  >
-                    {size}
-                  </span>
-                ))
-              : "No Set"}
+            {data?.model_name || "-- --"}
           </div>
         </Label>
         <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
-          Description
+          Quantity In Stouk
           <div className="p-3 border rounded-sm text-black text-sm font-normal h-[200px]">
-            {data?.description || "No Set"}
+            {data?.quantity_in_stock || "-- --"}
+          </div>
+        </Label>
+        <Label className="flex flex-col gap-y-2 text-shade text-[12px]">
+          Colour
+          <div className="p-3 border rounded-sm text-black text-sm font-normal ">
+            {data?.colour || "-- --"}
           </div>
         </Label>
       </div>
+      <Overview
+        data={data?.specifications?.slice(0, -1) || []}
+        label={"Specifications"}
+      />
+      <Overview
+        data={data?.highlights?.slice(0, -1) || []}
+        label={"Highlights"}
+      />
     </div>
   );
 }

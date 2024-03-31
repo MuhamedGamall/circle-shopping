@@ -35,7 +35,6 @@ export async function PATCH(
 
     await Product.updateMany(
       {
-        store_personal_email: store?.personal_email,
         store_id: seller_id,
       },
       { is_published: !body?.ban?.is_banned }

@@ -11,9 +11,12 @@ import * as z from "zod";
 
 import { storeSchema } from "../schema";
 import toast from "react-hot-toast";
+import { useAppDispatch } from "@/hooks/redux";
+import { createStore_seller } from "@/lib/RTK/slices/seller/store";
 
 export default function FormFields() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof storeSchema>>({
     resolver: zodResolver(storeSchema),
     defaultValues: {
@@ -26,11 +29,10 @@ export default function FormFields() {
 
   async function onSubmit(values: z.infer<typeof storeSchema>) {
     try {
-      const data = (await axios.post("/api/store", values)).data;
-      toast.success("Store created successfully");
+      const data = await dispatch(createStore_seller(values));
       router.replace(`/store/${data?._id}/dashboard`);
     } catch (error) {
-      toast.error("Uh oh! Something went wrong");
+      console.log(error);
     }
   }
 
@@ -89,7 +91,7 @@ export default function FormFields() {
           type="submit"
           className="w-full "
           disabled={isSubmitting || !isValid}
-          variant={'blue'}
+          variant={"blue"}
         >
           CREATE CIRCLE STORE
         </Button>

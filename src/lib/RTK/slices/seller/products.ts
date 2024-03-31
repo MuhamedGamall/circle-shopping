@@ -121,30 +121,20 @@ export const deleteProductImages_seller: any = createAsyncThunk(
     }
   }
 );
-export const handlePublishedProduct: any = createAsyncThunk(
-  "sellerProductsSlice/handlePublishedProduct",
+export const unpublishProduct: any = createAsyncThunk(
+  "productsSlice/unpublishProduct",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.patch(
-        `/api/store/${params?.store_id}/products/${params?.product_id}/${
-          params?.isPublished ? "unpublish" : "publish"
-        }`
-      );
-
-      toast.success(
-        `Product ${
-          params?.isPublished ? "unpublished" : "published"
-        } successfully`
-      );
+      await axios.patch(`/api/unpublish-product`, params);
+      return params?.product_id;
     } catch (error: any) {
-      if (error?.response?.status === 400)
-        toast.error("Please fill all fields before saving");
-      else toast.error("Uh oh! Something went wrong");
-      return rejectWithValue(error);
+      toast.error("Uh oh! Something went wrong while Unpublishing the product");
+      return rejectWithValue(error.message);
     }
   }
 );
+
 type ProductsState = {
   products: Product[];
   product: Product | null;
@@ -230,6 +220,30 @@ const sellerProductsSlice = createSlice({
       )
       .addCase(
         deleteProduct_seller.rejected,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+    builder
+      .addCase(
+        unpublishProduct.pending,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        unpublishProduct.fulfilled,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.products = state.products.filter(
+            (el) => el._id !== action.payload
+          );
+        }
+      )
+      .addCase(
+        unpublishProduct.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

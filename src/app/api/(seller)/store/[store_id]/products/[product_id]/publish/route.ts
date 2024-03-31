@@ -16,10 +16,8 @@ export async function PATCH(
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
-    const email = session?.user?.email;
 
     const store: any = await Store.findOne({
-      personal_email: email,
       _id: store_id,
     }).lean();
 
@@ -28,7 +26,6 @@ export async function PATCH(
     }
     const product: any = await Product.findOne({
       store_id,
-      store_personal_email: email,
       _id: product_id,
     }).lean();
 
@@ -65,7 +62,6 @@ export async function PATCH(
     const updateProduct = await Product.updateOne(
       {
         store_id,
-        store_personal_email: email,
         _id: product_id,
       },
       { is_published: true }

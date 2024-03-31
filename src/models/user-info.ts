@@ -4,8 +4,8 @@ const UserInfoSchema = new Schema(
   {
     admin: { type: Boolean, default: false },
     ban: {
-      is_banned: { type: Boolean, default: false ,required: true},
-      reason: { type: String ,required: true},
+      is_banned: { type: Boolean, default: false },
+      reason: { type: String },
     },
     phone: { type: String },
     email: { type: String, required: true },

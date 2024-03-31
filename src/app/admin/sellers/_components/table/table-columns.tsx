@@ -1,76 +1,76 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import Icons from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { ArrowUpDown, CircleOff, Eye } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
-import axios from "axios";
-import HandleAdminBtn from "./handle-admin-button";
 import HandleBanBtn from "./handle-ban-button";
 
 export const columns: ColumnDef<any>[] = [
   {
-    accessorKey: "image",
+    accessorKey: "display_name",
     header: ({ column }) => {
-      return <div className="uppercase">Image</div>;
-    },
-    cell: ({ row }: any) => {
-      const image = row.getValue("image");
-      return image ? (
-        <Image
-          src={image}
-          alt="image"
-          width={200}
-          height={200}
-          loading="lazy"
-          className=" mx-auto  w-[60px]  h-[60px] object-contain aspect-square"
-        />
-      ) : (
-        <div className=" mx-auto w-[60px] h-[60px] bg-[#f7f6fb] flex items-center justify-center text-sm">
-          <div className="opacity-[.7]">
-            <Icons.logo h="20" w="20" />
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return <div className="uppercase">Name</div>;
+      return <div className="uppercase">display name</div>;
     },
     cell: ({ row }: any) => {
       return (
         <span className=" max-w-[150px] overflow-x-auto  text-center   whitespace-nowrap">
-          {row.getValue("name") || "--"}
+          {row.getValue("display_name")}
         </span>
       );
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "personal_email",
     header: ({ column }) => {
-      return <div className="uppercase">email</div>;
+      return <div className="uppercase">personal email</div>;
     },
     cell: ({ row }: any) => {
       return (
         <span className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto ">
-          {row.getValue("email")}
+          {row.getValue("personal_email")}
         </span>
       );
     },
   },
   {
-    accessorKey: "admin",
+    accessorKey: "business_email",
     header: ({ column }) => {
-      return <div className="uppercase">admin</div>;
+      return <div className="uppercase">business email</div>;
     },
     cell: ({ row }: any) => {
-      const admin = row.getValue("admin");
-      return <HandleAdminBtn admin={admin} user_id={row.getValue("_id")} />;
+      return (
+        <span className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto ">
+          {row.getValue("business_email")}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "finance_email",
+    header: ({ column }) => {
+      return <div className="uppercase">finance email</div>;
+    },
+    cell: ({ row }: any) => {
+      return (
+        <span className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto ">
+          {row.getValue("finance_email")}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "store_phone_number",
+    header: ({ column }) => {
+      return <div className="uppercase">store phone number</div>;
+    },
+    cell: ({ row }: any) => {
+      return (
+        <span className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto ">
+          {row.getValue("store_phone_number")}
+        </span>
+      );
     },
   },
   {
@@ -80,18 +80,18 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
-      return <HandleBanBtn ban={ban} user_id={row.getValue("_id")} />;
+      return <HandleBanBtn ban={ban} seller_id={row.getValue("_id")} />;
     },
   },
   {
     accessorKey: "_id",
     header: ({ column }) => {
-      return <div className="uppercase">user ID</div>;
+      return <div className="uppercase">store ID</div>;
     },
     cell: ({ row }) => {
       return (
         <Link
-          href={"/admin/users/" + row.getValue("_id") + "/details"}
+          href={"/admin/sellers/" + row.getValue("_id") + "/details"}
           className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
         >
           {row.getValue("_id")}
@@ -153,17 +153,19 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <Link
-          href={"/admin/users/" + row.getValue("_id") + "/details"}
-          className={cn(
-            buttonVariants({
-              variant: "blue",
-              className: "w-fit text-[13px] h-[28px] px-3",
-            })
-          )}
-        >
-          <Eye className="h-4 w-4" />
-        </Link>
+        <div className="flex items-center gap-1">
+          <Link
+            href={"/admin/sellers/" + row.getValue("_id") + "/details"}
+            className={cn(
+              buttonVariants({
+                variant: "blue",
+                className: "w-fit text-[13px] h-[28px] px-4",
+              })
+            )}
+          >
+            More details
+          </Link>
+        </div>
       );
     },
   },

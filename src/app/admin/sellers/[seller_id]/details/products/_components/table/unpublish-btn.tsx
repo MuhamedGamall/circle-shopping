@@ -1,12 +1,12 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { unpublishProduct } from "@/lib/RTK/slices/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 import DeleteReasonsBtn from "@/components/delete-reason-button";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { unpublishProduct } from "@/lib/RTK/slices/admin/sellers";
 const reasons = [
   "Featuring photos of adult nudity or pornography",
   "Promoting hate speech, discrimination, or violence against any individual or group based on race, ethnicity, national origin",

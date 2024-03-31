@@ -2,14 +2,13 @@ import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
+import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(
+export async function GET(
   req: NextRequest,
-  {
-    params: { store_id, product_id },
-  }: { params: { store_id: string; product_id: string } }
+  { params: { seller_id } }: { params: { seller_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -17,33 +16,24 @@ export async function PATCH(
     const user = session?.user;
     const email = session?.user?.email;
 
-    const store: any = await Store.findOne({
-      _id: store_id,
-      personal_email: email,
-    }).lean();
+    const store: any = await Store.findOne({ _id: seller_id }).lean();
 
-    if (store?.ban?.is_banned) {
-      return new NextResponse("Forbidden", { status: 403 });
-    }
-    if (!user) {
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
+
+    if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store || !product_id) {
+    if (!store) {
       return new NextResponse("Not Found", { status: 404 });
     }
+    const products = await Product.find({
+      store_personal_email: store?.personal_email,
+      is_published:true
+    }).lean();
 
-    const updateProduct = await Product.updateOne(
-      {
-        store_id,
-        store_personal_email: email,
-        _id: product_id,
-      },
-      { is_published: false }
-    );
-
-    return NextResponse.json(updateProduct);
+    return NextResponse.json(products);
   } catch (error) {
-    console.log("[SELLER:UNPUBLISH-PRODUCT]", error);
+    console.log("[ADMIN:GET-SELLER-PRODUCTS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

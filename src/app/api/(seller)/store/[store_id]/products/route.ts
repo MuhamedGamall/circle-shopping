@@ -58,10 +58,8 @@ export async function GET(
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
-    const email = session?.user?.email;
 
     const store: any = await Store.findOne({
-      personal_email: email,
       _id: store_id,
     }).lean();
 
@@ -76,9 +74,7 @@ export async function GET(
     }
     const products = await Product.find({
       store_id,
-      store_personal_email: email,
     }).lean();
-
     return NextResponse.json(products);
   } catch (error) {
     console.log("[SELLER:GET-PRODUCTS]", error);
@@ -110,7 +106,7 @@ export async function DELETE(
       store_personal_email: email,
       _id: product_id,
     }).lean();
-    
+
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

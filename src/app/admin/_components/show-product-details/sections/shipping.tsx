@@ -18,10 +18,10 @@ export default function ShippingSection({ data }: { data: Product | null }) {
           </div>
           <div className="flex w-full justify-between border rounded-sm text-black text-sm font-normal">
             <div className=" p-3 ">
-              {data?.shipping?.shipping_length?.size || "No Set"}
+              {data?.shipping?.shipping_length?.size || "-- --"}
             </div>
             <div className="bg-slate-100  border-l w-[20%] sm:w-[10%] flex items-center justify-center">
-              {data?.shipping?.shipping_length?.size_type || "No Set"}
+              {data?.shipping?.shipping_length?.size_type || "-- --"}
             </div>
           </div>
         </Label>
@@ -32,10 +32,10 @@ export default function ShippingSection({ data }: { data: Product | null }) {
           </div>
           <div className="flex w-full justify-between border rounded-sm text-black text-sm font-normal">
             <div className=" p-3 ">
-              {data?.shipping?.shipping_height?.size || "No Set"}
+              {data?.shipping?.shipping_height?.size || "-- --"}
             </div>
             <div className="bg-slate-100  border-l w-[20%] sm:w-[10%] flex items-center justify-center">
-              {data?.shipping?.shipping_height?.size_type || "No Set"}
+              {data?.shipping?.shipping_height?.size_type || "-- --"}
             </div>
           </div>
         </Label>
@@ -46,10 +46,10 @@ export default function ShippingSection({ data }: { data: Product | null }) {
           </div>
           <div className="flex w-full justify-between border rounded-sm text-black text-sm font-normal">
             <div className=" p-3 ">
-              {data?.shipping?.shipping_width_depth?.size || "No Set"}
+              {data?.shipping?.shipping_width_depth?.size || "-- --"}
             </div>
             <div className="bg-slate-100  border-l w-[20%] sm:w-[10%] flex items-center justify-center">
-              {data?.shipping?.shipping_width_depth?.size_type || "No Set"}
+              {data?.shipping?.shipping_width_depth?.size_type || "-- --"}
             </div>
           </div>
         </Label>
@@ -60,10 +60,10 @@ export default function ShippingSection({ data }: { data: Product | null }) {
           </div>
           <div className="flex w-full justify-between border rounded-sm text-black text-sm font-normal">
             <div className=" p-3 ">
-              {data?.shipping?.shipping_weight?.size || "No Set"}
+              {data?.shipping?.shipping_weight?.size || "-- --"}
             </div>
             <div className="bg-slate-100  border-l w-[20%] sm:w-[10%] flex items-center justify-center">
-              {data?.shipping?.shipping_weight?.size_type || "No Set"}
+              {data?.shipping?.shipping_weight?.size_type || "-- --"}
             </div>
           </div>
         </Label>

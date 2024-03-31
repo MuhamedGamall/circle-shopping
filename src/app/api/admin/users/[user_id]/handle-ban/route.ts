@@ -47,6 +47,9 @@ export async function PATCH(
       { email: getUser?.email },
       body
     );
+
+    await Store.updateOne({ _id: store?._id }, body);
+
     return NextResponse.json(updateUser);
   } catch (error) {
     console.log("[ADMIN:HANDLE-BAN-USER]", error);

@@ -1,7 +1,6 @@
 import React from "react";
 import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import SectionTitle from "@/components/section-title";
-import Link from "next/link";
 
 import { UsersTable } from "./_components/table/users-table";
 
