@@ -1,4 +1,3 @@
-import { User } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
 import { getServerSession } from "next-auth";
@@ -19,17 +18,13 @@ export async function GET(
 
     const userInfo: any = await UserInfo.findOne({ email });
 
-    if (!seller_id) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
-
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const store: any = await Store.findOne({ _id: seller_id }).lean();
 
-    if (!store || !userInfo) {
+    if (!store ) {
       return new NextResponse("Not Found", { status: 404 });
     }
 

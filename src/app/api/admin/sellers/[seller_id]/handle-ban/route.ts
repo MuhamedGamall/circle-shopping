@@ -20,17 +20,17 @@ export async function PATCH(
     const user = session?.user;
     const email = user?.email;
     const userInfo: any = await UserInfo.findOne({ email }).lean();
+    
+    if (!user || !userInfo?.admin) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     const store: any = await Store.findOne({
       _id: seller_id,
     }).lean();
 
-    if (!seller_id || !store) {
+    if (!store) {
       return new NextResponse("Not Found", { status: 404 });
-    }
-
-    if (!user || !userInfo?.admin) {
-      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     await Product.updateMany(

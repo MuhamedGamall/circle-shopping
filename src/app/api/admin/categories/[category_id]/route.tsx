@@ -21,15 +21,21 @@ export async function PATCH(
       sub_categories,
       categoriesIdsForDeleteFromCloudinary,
     } = await req.json();
+
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    const category = await Category.findOne({ _id: category_id }).lean();
+    if (!category) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+    
     const getCloudinaryImagesId = await Category.findOne(
       { _id: category_id },
       { folder_cloudinary_images_id: 1 }
@@ -77,12 +83,12 @@ export async function GET(
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const category = await Category.findOne({ _id: category_id }).lean()
+    const category = await Category.findOne({ _id: category_id }).lean();
     if (!category) {
       return new NextResponse("Not Found", { status: 404 });
     }

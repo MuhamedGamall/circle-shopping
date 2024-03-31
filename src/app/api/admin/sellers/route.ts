@@ -10,7 +10,7 @@ import { Store } from "@/models/store";
 
 export async function GET(req: NextRequest) {
   try {
-    await mongoConnect()
+    await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = user?.email;
@@ -21,13 +21,14 @@ export async function GET(req: NextRequest) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const CEOEmailForExclusion = process.env.CEO_EMAIL
-    const stores: any = await Store.find({personal_email:{$ne:CEOEmailForExclusion}}).lean();
+    const CEOEmailForExclusion = process.env.CEO_EMAIL;
+    const sellers: any = await Store.find({
+      personal_email: { $ne: CEOEmailForExclusion },
+    }).lean();
 
-    return NextResponse.json(stores);
+    return NextResponse.json(sellers);
   } catch (error) {
-    console.log("[ADMIN:STORES]", error);
+    console.log("[ADMIN:SELLERS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
-

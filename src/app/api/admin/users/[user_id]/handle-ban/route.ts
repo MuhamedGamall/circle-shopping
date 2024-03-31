@@ -22,17 +22,16 @@ export async function PATCH(
     const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     const getUser: any = await User.findOne({ _id: user_id }).lean();
-
     const store: any = await Store.findOne({
       personal_email: getUser?.email,
     }).lean();
 
-    if (!user_id || !getUser || !store) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
-
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    if (!getUser || !store) {
+      return new NextResponse("Not Found", { status: 404 });
     }
 
     await Product.updateMany(

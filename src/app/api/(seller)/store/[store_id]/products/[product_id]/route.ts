@@ -2,7 +2,6 @@ import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
-import { removeFolder } from "@/utils/cloudinary";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,15 +18,16 @@ export async function GET(
     const email = session?.user?.email;
 
     const store: any = await Store.findOne({
-      personal_email: email,
       _id: store_id,
+      personal_email: email,
     }).lean();
+
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
-    }
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const product = await Product.findOne({
@@ -36,7 +36,7 @@ export async function GET(
       _id: product_id,
     }).lean();
 
-    if (!store || !product) {
+    if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
@@ -61,19 +61,27 @@ export async function PATCH(
     const email = session?.user?.email;
 
     const store: any = await Store.findOne({
-      personal_email: email,
       _id: store_id,
+      personal_email: email,
     }).lean();
 
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    if (!store || !product_id) {
+
+    const product = await Product.findOne({
+      store_id,
+      store_personal_email: email,
+      _id: product_id,
+    }).lean();
+
+    if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }
+
     const updateProduct = await Product.updateOne(
       {
         store_id,

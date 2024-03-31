@@ -19,20 +19,17 @@ export async function POST(
     const email = session?.user?.email;
 
     const store: any = await Store.findOne({
-      personal_email: email,
       _id: store_id,
     }).lean();
+
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    if (!store) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
     const createProduct = await Product.create({
       category: {
         main_category: mainCategory,
@@ -63,14 +60,11 @@ export async function GET(
       _id: store_id,
     }).lean();
 
-    if (store?.ban?.is_banned) {
-      return new NextResponse("Forbidden", { status: 403 });
-    }
-    if (!user) {
+    if (!user || !store) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store) {
-      return new NextResponse("Not Found", { status: 404 });
+    if (store?.ban?.is_banned) {
+      return new NextResponse("Forbidden", { status: 403 });
     }
     const products = await Product.find({
       store_id,
@@ -98,26 +92,30 @@ export async function DELETE(
       personal_email: email,
       _id: store_id,
     }).lean();
+
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
+
     const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,
       _id: product_id,
     }).lean();
 
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    if (!store || !product) {
+    if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }
+
     const deleteProduct = await Product.deleteOne({
       store_id,
-      store_personal_email: email,
       _id: product_id,
     });
+
     const folderId = `circle-shopping/products/${email}/${product_id}`;
     if (product?.images?.length) {
       await removeFolder({ folderId });

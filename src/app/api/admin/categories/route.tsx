@@ -57,11 +57,8 @@ export async function GET(req: NextRequest) {
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
-    const email = session?.user?.email;
 
-    const userInfo: any = await UserInfo.findOne({ email }).lean();
-
-    if (!user || !userInfo?.admin) {
+    if (!user ) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const categories = await Category.find();
@@ -86,6 +83,9 @@ export async function DELETE(req: NextRequest) {
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
+    }
+    if (!_id) {
+      return new NextResponse("Not Found", { status: 404 });
     }
     const getCloudinaryImagesId = await Category.findOne(
       { _id },

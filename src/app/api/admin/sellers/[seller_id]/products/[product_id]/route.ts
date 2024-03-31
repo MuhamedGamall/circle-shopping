@@ -1,6 +1,7 @@
 import mongoConnect from "@/actions/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
+import { Store } from "@/models/store";
 import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,8 +22,13 @@ export async function GET(
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const product = await Product.findOne({store_id:seller_id, _id:product_id });
-    if (!product) {
+    const store = await Store.findOne({ store_id: seller_id });
+    const product = await Product.findOne({
+      store_id: seller_id,
+      _id: product_id,
+      store_personal_email: store?.personal_email,
+    });
+    if (!product || !store) {
       return new NextResponse("Not Found", { status: 404 });
     }
     return NextResponse.json(product);

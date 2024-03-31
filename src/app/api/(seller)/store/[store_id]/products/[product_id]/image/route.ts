@@ -24,37 +24,33 @@ export async function PATCH(
       _id: store_id,
     }).lean();
 
+    if (!email || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+    
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
-    if (!email || !store || !product_id)
-      return new NextResponse("Unauthorized", { status: 401 });
 
-    // Filter images: base64 and already uploaded
-    // const filterImagesBase64 = body.filter(
-    //   (image: string) =>
-    //     image.startsWith("data:image") && image.includes("base64")
-    // );
-    // const filterImagesAlreadyUploaded = body.filter(
-    //   (image: string) => !image.includes("base64")
-    // );
+    const product: any = await Product.findOne({
+      store_id,
+      store_personal_email: email,
+      _id: product_id,
+    }).lean();
+
+    if (!product) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
 
     const folderName = `/circle-shopping/products/${email}/${product_id}`;
 
-    // Upload base64 images to Cloudinary
-    const uploadImage =
-      // filterImagesBase64.length > 0
-      // ?
-      await uploadImages({
-        images: body,
-        folderName,
-      });
-    // : [];
-
-    // const images = [...uploadBase64, ...filterImagesAlreadyUploaded];
+    const uploadImage = await uploadImages({
+      images: body,
+      folderName,
+    });
 
     const updateProduct = await Product.updateOne(
-      { store_id, store_personal_email: email, _id: product_id },
+      { store_id, _id: product_id },
       { images: uploadImage, is_published: false }
     );
 

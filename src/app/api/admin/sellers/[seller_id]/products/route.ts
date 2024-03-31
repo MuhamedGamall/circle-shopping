@@ -28,6 +28,7 @@ export async function GET(
     }
     const products = await Product.find({
       store_personal_email: store?.personal_email,
+      store_id:store?._id,
       is_published:true
     }).lean();
 

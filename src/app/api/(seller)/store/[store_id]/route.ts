@@ -20,23 +20,15 @@ export async function PATCH(
       personal_email: email,
       _id: store_id,
     }).lean();
+    
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    if (!store) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
-    const updateStore = await Store.updateOne(
-      {
-        personal_email: email,
-        _id: store_id,
-      },
-      body
-    );
+    const updateStore = await Store.updateOne({ _id: store_id }, body);
 
     return NextResponse.json(updateStore);
   } catch (error) {

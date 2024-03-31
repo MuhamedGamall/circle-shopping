@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const CEOEmailForExclusion = process.env.CEO_EMAIL
     const users: any = await User.find({email:{$ne:CEOEmailForExclusion}}).lean();
     const usersInfos: any = await UserInfo.find({email:{$ne:CEOEmailForExclusion}}).lean();
-
+    
     // Merge main user and user info data
     const mergedArray = users.map(
       (user: Account): AccountData => ({

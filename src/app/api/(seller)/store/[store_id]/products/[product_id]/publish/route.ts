@@ -16,23 +16,28 @@ export async function PATCH(
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
+    const email = session?.user?.email;
 
     const store: any = await Store.findOne({
       _id: store_id,
+      personal_email: email,
     }).lean();
+
+    if (!user || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
+
     const product: any = await Product.findOne({
       store_id,
+      store_personal_email: email,
       _id: product_id,
     }).lean();
 
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    if (!store || !product) {
+    if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }
 

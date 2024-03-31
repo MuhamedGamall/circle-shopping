@@ -16,12 +16,12 @@ export async function POST(req: NextRequest) {
     const store: any = await Store.findOne({
       personal_email: email,
     }).lean();
+    if (!user) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
     
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
-    }
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
     }
     if (store) {
       return new NextResponse("Conflict", { status: 409 });
@@ -47,17 +47,12 @@ export async function GET(req: NextRequest) {
       personal_email: email,
     }).lean();
 
-    if (store?.ban?.is_banned) {
-      return new NextResponse(store?.ban?.reason, {
-        status: 403,
-        statusText: "Forbidden",
-      });
-    }
-    if (!user) {
+    if (!user || !store) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    if (!store) {
-      return new NextResponse("Not Found", { status: 404 });
+    
+    if (store?.ban?.is_banned) {
+      return new NextResponse(store?.ban?.reason, {status: 403,statusText: "Forbidden",});
     }
     return NextResponse.json(store);
   } catch (error) {
