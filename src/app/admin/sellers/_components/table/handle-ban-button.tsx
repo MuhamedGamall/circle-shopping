@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const reasons = [
   "Violation of usage policies",
   "Breach of local or international laws/regulations",
@@ -15,19 +17,28 @@ const reasons = [
 ];
 export default function HandleBanBtn({
   ban,
+  personal_email,
   seller_id,
 }: {
   ban: { is_banned: boolean; message: string };
+  personal_email: string;
   seller_id: string;
 }) {
   const [isBanned, setIsBanned] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const session = useSession();
+  const personalEmail = session?.data?.user?.email;
 
   useEffect(() => {
     setIsBanned(ban?.is_banned);
   }, [ban?.is_banned]);
 
   async function onSubmit(reason: any) {
+    if (personal_email === personalEmail)
+      return toast.error(
+        "You are not authorized for the requested action on yourself."
+      );
+
     try {
       setIsSubmitting(true);
       await axios.patch("/api/admin/sellers/" + seller_id + "/handle-ban", {
@@ -52,7 +63,7 @@ export default function HandleBanBtn({
         >
           <Button
             size="sm"
-            disabled={isSubmitting}
+            disabled={isSubmitting || personal_email === personalEmail}
             className={`bg-slate-500 rounded-sm whitespace-nowrap px-2 h-[25px] text-[11px]`}
           >
             {isSubmitting ? (
@@ -66,7 +77,7 @@ export default function HandleBanBtn({
         <Button
           onClick={() => onSubmit("")}
           size="sm"
-          disabled={ isSubmitting}
+          disabled={isSubmitting || personal_email === personalEmail}
           className={` rounded-sm whitespace-nowrap px-2 h-[25px] text-[11px] bg-red-500`}
         >
           {isSubmitting ? (

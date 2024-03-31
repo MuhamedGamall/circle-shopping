@@ -22,7 +22,7 @@ export async function GET(
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const store = await Store.findOne({ store_id: seller_id });
+    const store = await Store.findOne({ _id: seller_id });
     const product = await Product.findOne({
       store_id: seller_id,
       _id: product_id,
