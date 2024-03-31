@@ -24,8 +24,6 @@ export default function HandleBanBtn({
   ban: { is_banned: boolean; message: string };
   user_id: string;
 }) {
-  const session = useSession();
-  const personalEmail = session?.data?.user?.email;
   const [isBanned, setIsBanned] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

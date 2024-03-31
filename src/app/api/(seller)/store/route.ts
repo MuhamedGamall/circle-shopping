@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
@@ -50,9 +50,12 @@ export async function GET(req: NextRequest) {
     if (!user || !store) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     if (store?.ban?.is_banned) {
-      return new NextResponse(store?.ban?.reason, {status: 403,statusText: "Forbidden",});
+      return new NextResponse(store?.ban?.reason, {
+        status: 403,
+        statusText: "Forbidden",
+      });
     }
     return NextResponse.json(store);
   } catch (error) {

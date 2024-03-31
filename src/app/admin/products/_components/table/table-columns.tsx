@@ -5,7 +5,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format";
 import { formatDate } from "date-fns";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -186,13 +186,12 @@ export const columns: ColumnDef<any>[] = [
               href={"/admin/products/" + row.getValue("_id") + "/details"}
               className={cn(
                 buttonVariants({
-                  variant: "outline",
-                  size: "sm",
-                  className: " rounded-sm  w-fit text-[13px] h-[28px] px-2 ",
+                  variant: "blue",
+                  className: "w-fit text-[13px] h-[28px] px-3",
                 })
               )}
             >
-              View
+              <Eye className="h-4 w-4" />
             </Link>
             <UnPublishBtn
               store_id={row?.original?.store_id}

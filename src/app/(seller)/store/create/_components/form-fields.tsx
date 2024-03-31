@@ -4,13 +4,11 @@ import CustomField from "@/components/custom-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { storeSchema } from "../schema";
-import toast from "react-hot-toast";
 import { useAppDispatch } from "@/hooks/redux";
 import { createStore_seller } from "@/lib/RTK/slices/seller/store";
 
@@ -30,7 +28,9 @@ export default function FormFields() {
   async function onSubmit(values: z.infer<typeof storeSchema>) {
     try {
       const data = await dispatch(createStore_seller(values));
-      router.replace(`/store/${data?._id}/dashboard`);
+      if (data?.error?.message !== "Rejected") {
+        router.replace(`/store/${data?.payload?._id}/dashboard`);
+      }
     } catch (error) {
       console.log(error);
     }

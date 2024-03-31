@@ -153,19 +153,17 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <div className="flex items-center gap-1">
           <Link
             href={"/admin/sellers/" + row.getValue("_id") + "/details"}
             className={cn(
               buttonVariants({
                 variant: "blue",
-                className: "w-fit text-[13px] h-[28px] px-4",
+                className: "w-fit text-[13px] h-[28px] px-3",
               })
             )}
           >
             More details
           </Link>
-        </div>
       );
     },
   },
