@@ -40,14 +40,14 @@ export default function WarrantyForm({
   });
 
   async function onSubmit(values: z.infer<typeof warrantySchema>) {
-    dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: values,
         store_id,
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

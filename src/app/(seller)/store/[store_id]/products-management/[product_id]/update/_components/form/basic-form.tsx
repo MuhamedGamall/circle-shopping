@@ -61,7 +61,7 @@ export default function BasicForm({
   }, [data?.sizes, setSelectSizes]);
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
-    await dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: {
           ...values,
@@ -71,7 +71,7 @@ export default function BasicForm({
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting } = form.formState;

@@ -41,14 +41,14 @@ export default function ItemConditionForm({
   });
 
   async function onSubmit(values: z.infer<typeof itemConditionSchema>) {
-    dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: values,
         store_id,
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting } = form.formState;

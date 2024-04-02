@@ -79,14 +79,14 @@ export default function OfferForm({
     if (startDate >= endDate)
       return toast.error("Schedule the offer start date before the end date");
 
-    dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: { "price.offer": values.offer },
         store_id,
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

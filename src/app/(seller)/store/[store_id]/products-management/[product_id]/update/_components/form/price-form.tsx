@@ -45,14 +45,14 @@ export default function PriceForm({
   });
 
   async function onSubmit(values: z.infer<typeof priceSchema>) {
-    dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: { "price.base_price": values.price.base_price },
         store_id,
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting, isValid } = form.formState;

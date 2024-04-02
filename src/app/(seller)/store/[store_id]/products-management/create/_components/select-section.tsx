@@ -7,40 +7,25 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { BadgePercent } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
-import useStore from "@/hooks/seller/use-store_seller";
 import { useParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { useAppDispatch } from "@/hooks/redux";
 import { createProduct_seller } from "@/lib/RTK/slices/seller/products";
-const categories: { title: string }[] = [
-  {
-    title: "Alert Dialog",
-  },
-  {
-    title: "Hover Card",
-  },
-  {
-    title: "Progress",
-  },
-  {
-    title: "Scroll-area",
-  },
-  {
-    title: "Tabs",
-  },
-  {
-    title: "Tooltip",
-  },
-];
+import useCategories from "@/hooks/use-categories";
+
 export default function SelectSection() {
   const dispatch = useAppDispatch();
   const { store_id } = useParams();
+  const { data, loading } = useCategories();
   const router = useRouter();
 
   const [mainCategory, setMainCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [productBrand, setProductBrand] = useState("");
+
+  const mainCategories = data.map((el) => el?.main_category?.name);
+  const subCategories = data
+    ?.find((el) => el?.main_category?.name === mainCategory)
+    ?.sub_categories?.map((el) => el?.name);
 
   const checkData =
     productBrand.trim() &&
@@ -62,9 +47,11 @@ export default function SelectSection() {
           store_id,
         })
       );
-      router.replace(
-        `/store/${store_id}/products-management/${product?.payload}/update`
-      );
+
+      if (product?.meta?.requestStatus === "fulfilled")
+        router.replace(
+          `/store/${store_id}/products-management/${product?.payload}/update`
+        );
     }
   };
   return (
@@ -107,13 +94,15 @@ export default function SelectSection() {
         )}
 
         <SelectCategory
-          data={categories}
-          label={"Select category"}
+          loading={loading}
+          data={mainCategories}
+          label={"Select main category"}
           setValue={setMainCategory}
           value={mainCategory}
         />
         <SelectCategory
-          data={categories}
+          loading={loading}
+          data={subCategories}
           label={"Select sub category"}
           setValue={setSubCategory}
           value={subCategory}

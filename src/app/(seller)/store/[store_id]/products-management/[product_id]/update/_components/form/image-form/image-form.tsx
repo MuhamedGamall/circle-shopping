@@ -97,7 +97,7 @@ export default function ImageForm({
     if (isValid) return toast.error("Please enter a valid image url.");
     try {
       setIsSubmitting(true);
-      await dispatch(
+      const update = await dispatch(
         updateProductImages_seller({
           data: imageValue,
           store_id,
@@ -109,8 +109,8 @@ export default function ImageForm({
       const product: Product = (
         await axios.get("/api/store/" + store_id + "/products/" + product_id)
       ).data;
-
-      setIsPublished(false);
+      
+      if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
       setImageValue(product?.images);
 
       if (idsForDeleteFromCloudinary.length) {

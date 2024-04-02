@@ -93,7 +93,7 @@ export default function DetailsForm({
       highlights: [...(new Set(highlights) as any)],
     };
 
-    dispatch(
+    const update = await dispatch(
       updateProduct_seller({
         data: {
           ...values,
@@ -103,7 +103,7 @@ export default function DetailsForm({
         product_id,
       })
     );
-    setIsPublished(false);
+    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
   }
   const { isSubmitting } = form.formState;
   return (

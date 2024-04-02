@@ -45,14 +45,14 @@ export default function CustomSelectField({
         <FormItem className={cn("w-full rounded-sm", className)}>
           <FormLabel className={cn(labelClassName)}>{label}</FormLabel>
           <FormControl>
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select onValueChange={field.onChange} value={field?.value}>
               <SelectTrigger className=" ">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[350px] overflow-y-auto">
                 <SelectGroup>
                   <SelectLabel>{selectLabel}</SelectLabel>
-                  {selectData.map((el, i) => (
+                  {selectData?.map((el, i) => (
                     <SelectItem key={i} value={el}>
                       {el}
                     </SelectItem>

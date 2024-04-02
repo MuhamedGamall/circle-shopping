@@ -172,6 +172,19 @@ export const productDetailsSchema = z.object({
       }
     ),
 });
+export const categoryForm = z.object({
+  category: z.object({
+    main_category: z.string().min(1, { message: "Field is required" }),
+    sub_category: z.string().min(1, { message: "Field is required" }),
+    brand: z
+      .string()
+      .trim()
+      .min(1, { message: "It must contain 1 character." })
+      .max(50, {
+        message: "Should be on a lot of 50 characters.",
+      }),
+  }),
+});
 
 export const itemConditionSchema = z.object({
   item_condition: z

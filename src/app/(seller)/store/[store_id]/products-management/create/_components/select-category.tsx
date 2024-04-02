@@ -1,18 +1,22 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 import { FaCaretRight } from "react-icons/fa";
 
-
-const LoadingSkeleton =()=>{
-
-}
+const LoadingSkeleton = () => {
+  return Array.from({ length: 5 }).map((_, i) => (
+    <Skeleton key={i} className="h-[30px] w-[97%] my-2 mx-auto rounded-sm" />
+  ));
+};
 export default function SelectCategory({
   data,
   label,
+  loading,
   setValue,
   value,
 }: {
   data: any;
+  loading: boolean;
   label: string;
   setValue: Dispatch<SetStateAction<string>>;
   value: string;
@@ -28,21 +32,25 @@ export default function SelectCategory({
         </div>
         <div className=" hide-scroll  max-h-[430px]  overflow-y-auto w-full h-full">
           <div className="  w-full h-full flex flex-col justify-center ">
-            {data.map((el: any, i: any) => (
-              <div
-                onClick={() => setValue(el?.title)}
-                key={i}
-                className={cn(
-                  "cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between",
-                  {
-                    "bg-sky-700/20 text-sky-700 font-bold": el.title === value,
-                  }
-                )}
-              >
-                {el.title}
-                <FaCaretRight />
-              </div>
-            ))}
+            {loading ? (
+            <LoadingSkeleton />
+            ) : (
+              data?.map((el: any, i: any) => (
+                <div
+                  onClick={() => setValue(el)}
+                  key={i}
+                  className={cn(
+                    "cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between",
+                    {
+                      "bg-sky-700/20 text-sky-700 font-bold": el === value,
+                    }
+                  )}
+                >
+                  {el}
+                  <FaCaretRight />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { useEffect, useState } from "react";
 import { resetForm } from "@/lib/RTK/slices/seller/products";
 import useProductSeller from "@/hooks/seller/use-product_seller";
+import CategoryForm from "./category-form";
 
 export default function UpdateForm() {
   const { store_id, product_id } = useParams();
@@ -54,6 +55,13 @@ export default function UpdateForm() {
           setIsPublished={setIsPublished}
         />
         <OfferForm
+          data={data}
+          loading={loading}
+          store_id={store_id}
+          product_id={product_id}
+          setIsPublished={setIsPublished}
+        />
+        <CategoryForm
           data={data}
           loading={loading}
           store_id={store_id}

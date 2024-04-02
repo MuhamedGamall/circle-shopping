@@ -55,7 +55,7 @@ export async function PATCH(
       !(product?.price?.base_price >= 0.01) ||
       !(product?.quantity_in_stock >= 0) ||
       !(product?.max_purchase_quantity >= 1) ||
-      !Object.values(product?.category).some(Boolean) ||
+      !Object.values(product?.category).every(Boolean) ||
       !Object.values(product?.shipping?.shipping_length).some(Boolean) ||
       !Object.values(product?.shipping?.shipping_height).some(Boolean) ||
       !Object.values(product?.shipping?.shipping_width_depth).some(Boolean) ||
