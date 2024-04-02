@@ -12,7 +12,6 @@ import Image from "next/image";
 import { Category } from "@/types";
 import Link from "next/link";
 export default function SubCategoriesMenu({ data }: { data: Category }) {
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,31 +21,32 @@ export default function SubCategoriesMenu({ data }: { data: Category }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
-        className="flex flex-col gap-1 w-[250px] "
+        align="center"
+        className="flex flex-col gap-1 bottom-0"
       >
         <DropdownMenuLabel className="">Sub Categories</DropdownMenuLabel>
         <DropdownMenuSeparator />
-
-        {data?.sub_categories?.map((el, i) => (
-          <DropdownMenuItem key={i} asChild>
-            <Link
-              href={"/admin/categories/" + data?._id + "/update"}
-              className="cursor-pointer flex items-center gap-5"
-            >
-              <Image
-                src={el?.image}
-                alt="sub-categories-image"
-                width={660}
-                height={900}
-                className=" object-cover max-w-[60px] min-w-[60px] h-[82px] "
-              />
-              <span className="text-sm  max-w-[150px] overflow-x-auto">
-                {el?.name}
-              </span>
-            </Link>
-          </DropdownMenuItem>
-        ))}
+        <div className="flex flex-wrap gap-1 max-w-[180px] sm:max-w-[800px] max-h-[350px] overflow-y-auto justify-start">
+          {data?.sub_categories?.map((el, i) => (
+            <DropdownMenuItem key={i} asChild className="hover:bg-slate-100">
+              <Link
+                href={"/admin/categories/" + data?._id + "/update"}
+                className="cursor-pointer sm:flex-col  flex items-center gap-5 "
+              >
+                <Image
+                  src={el?.image}
+                  alt="sub-categories-image"
+                  width={660}
+                  height={900}
+                  className=" object-cover max-w-[60px] min-w-[60px] h-[82px] "
+                />
+                <span className="text-sm  max-w-[150px] overflow-x-auto">
+                  {el?.name}
+                </span>
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

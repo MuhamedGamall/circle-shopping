@@ -27,7 +27,7 @@ export const uploadImages = async ({
             {
               width: 240,
               height: 327,
-              crop: "fit",
+              crop: "fill",
             },
           ],
         });
@@ -65,7 +65,7 @@ export const uploadSubCategoryImages = async ({
             {
               width: 240,
               height: 327,
-              crop: "fit",
+              crop: "fill",
             },
           ],
         });

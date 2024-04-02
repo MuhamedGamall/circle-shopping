@@ -66,7 +66,14 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "admin",
     header: ({ column }) => {
-      return <div className="uppercase">admin</div>;
+      return   <Button
+      className="uppercase"
+      variant="ghost"
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    >
+      admin
+      <ArrowUpDown className="ml-2 h-4 w-4" />
+    </Button>
     },
     cell: ({ row }: any) => {
       const admin = row.getValue("admin");
@@ -76,7 +83,16 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "ban",
     header: ({ column }) => {
-      return <div className="uppercase">ban</div>;
+      return (
+        <Button
+          className="uppercase"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Ban
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;

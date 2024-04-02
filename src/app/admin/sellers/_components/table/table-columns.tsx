@@ -76,11 +76,26 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "ban",
     header: ({ column }) => {
-      return <div className="uppercase">ban</div>;
+      return (
+        <Button
+          className="uppercase"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Ban
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
-      return <HandleBanBtn ban={ban} seller_id={row.getValue("_id")}   personal_email={row.getValue("personal_email")} />;
+      return (
+        <HandleBanBtn
+          ban={ban}
+          seller_id={row.getValue("_id")}
+          personal_email={row.getValue("personal_email")}
+        />
+      );
     },
   },
   {
@@ -153,17 +168,17 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-          <Link
-            href={"/admin/sellers/" + row.getValue("_id") + "/details"}
-            className={cn(
-              buttonVariants({
-                variant: "blue",
-                className: "w-fit text-[13px] h-[28px] px-3",
-              })
-            )}
-          >
-            More details
-          </Link>
+        <Link
+          href={"/admin/sellers/" + row.getValue("_id") + "/details"}
+          className={cn(
+            buttonVariants({
+              variant: "blue",
+              className: "w-fit text-[13px] h-[28px] px-3",
+            })
+          )}
+        >
+          More details
+        </Link>
       );
     },
   },
