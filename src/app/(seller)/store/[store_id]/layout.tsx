@@ -8,7 +8,7 @@ export default function StoreLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex w-full pl-[60px] md:pl-[250px]">
+    <div className="flex w-full pl-[60px] ">
       <Sidebar />
       <div className="m-5 w-full">
         <BreadCrumbs />

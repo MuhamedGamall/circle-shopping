@@ -21,7 +21,7 @@ const bannerVariants = cva(
 );
 interface BannerProps extends VariantProps<typeof bannerVariants> {
   details: string[];
-  title: string;
+  title?: string;
   className?: string;
   hiddeButton?: boolean;
 }
@@ -40,10 +40,10 @@ export default function Banner({
       })}
     >
       <div>
-        <h3 className="mb-2  font-semibold text-black">{title}</h3>
+        <h3 className="mb-2  font-semibold text-black">{title || ""}</h3>
         <ul
           className={cn(
-            "[&>li]:ml-5 grid grid-cols-1 list-disc gap-y-2 gap-x-5 lg:grid-cols-2 "
+            "[&>li]:ml-5 flex flex-wrap list-disc gap-y-2 gap-x-5 "
           )}
         >
           {details.map((el, i) => (

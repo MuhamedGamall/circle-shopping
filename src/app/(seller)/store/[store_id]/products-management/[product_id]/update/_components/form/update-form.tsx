@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { resetForm } from "@/lib/RTK/slices/seller/products";
 import useProductSeller from "@/hooks/seller/use-product_seller";
 import CategoryForm from "./category-form";
+import Banner from "@/components/banner";
 
 export default function UpdateForm() {
   const { store_id, product_id } = useParams();
@@ -36,6 +37,12 @@ export default function UpdateForm() {
         product_id={product_id}
         isPublished={isPublished}
         setIsPublished={setIsPublished}
+      />
+      <Banner
+        title=""
+        details={[
+          "We kindly advise our sellers that a 10% deduction from the profits will be applied for each product sold, in accordance with the company's policy. Please take this into consideration when pricing your products and planning sales strategies.",
+        ]}
       />
       <div className="rounded-sm border ">
         <div className="flex sm:items-center sm:flex-row flex-col items-start gap-2 p-3 border-b">

@@ -1,0 +1,27 @@
+table of users 
+
+admin length 
+
+Delivered orders
+
+Cancelled orders 
+
+Top Selling Products
+
+Top Customer
+
+Total New Customers
+
+Top Selling Categories
+
+Average Daily Sales
+
+Recent Orders
+
+Payment History
+
+Most Sales in Countries
+
+Total Profit
+
+Top Sellers

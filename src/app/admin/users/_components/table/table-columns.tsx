@@ -81,7 +81,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "ban",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
@@ -89,7 +89,7 @@ export const columns: ColumnDef<any>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Ban
+          status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
