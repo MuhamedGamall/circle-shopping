@@ -101,7 +101,7 @@ export default function SelectSection() {
           value={mainCategory}
         />
         <SelectCategory
-          loading={loading}
+          loading={false}
           data={subCategories}
           label={"Select sub category"}
           setValue={setSubCategory}

@@ -57,7 +57,7 @@ export default function CategoryForm({
         "category.sub_category",
         data?.category?.sub_category || ""
       );
-    }, 2000);
+    }, 10);
   }, [data?.category?.sub_category, form]);
 
   const subCategories = categories
