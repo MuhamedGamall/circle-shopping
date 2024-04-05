@@ -1,27 +1,25 @@
-table of users 
+table of users ;
 
-admin length 
+admin length ;
 
-Delivered orders
+Delivered orders ;
 
-Cancelled orders 
+Cancelled orders ;
 
-Top Selling Products
+Top Selling Products ;
 
 Top Customer
 
-Total New Customers
+Total New Customers ;
 
-Top Selling Categories
+Top Selling Categories ;
 
-Average Daily Sales
-
-Recent Orders
+Recent Orders ;
 
 Payment History
 
-Most Sales in Countries
+Most Sales in Countries ;
 
-Total Profit
+Total Profit ;
 
-Top Sellers
+Top Sellers ;
