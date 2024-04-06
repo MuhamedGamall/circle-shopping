@@ -13,6 +13,8 @@ const UserInfoSchema = new Schema(
     postal_code: { type: String },
     city: { type: String },
     country: { type: String },
+    total_purchase: { type: Number, default: 0 },
+    total_paid:{ type: Number, default: 0 },
   },
   { timestamps: true }
 );

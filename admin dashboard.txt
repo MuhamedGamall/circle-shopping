@@ -1,25 +1,27 @@
-table of users ;
+admin length = ok
 
-admin length ;
+users_ length = ok
 
-Delivered orders ;
+Top Selling Products  = ok
 
-Cancelled orders ;
+Top Users  = ok
 
-Top Selling Products ;
+Top Selling Categories   = ok
 
-Top Customer
+total_sales  = ok
 
-Total New Customers ;
+total_parchase  = ok
 
-Top Selling Categories ;
+Top Sellers  = ok
 
-Recent Orders ;
+Most Sales in Countries  = ok
 
-Payment History
+Delivered orders  
 
-Most Sales in Countries ;
+Cancelled orders  
 
-Total Profit ;
+Recent Orders 
 
-Top Sellers ;
+Payment History 
+
+Total Profit 
