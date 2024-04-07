@@ -41,7 +41,14 @@ export async function POST(req: NextRequest) {
       );
     if (existingRecord?.store_phone_number === body.store_phone_number)
       errorsMessages.push(
-        "Your Phone number  is already associated with a store"
+        "Your Phone number is already associated with a store"
+      );
+    if (
+      existingRecord?.display_name === body.display_name &&
+      body?.display_name !== store.display_name
+    )
+      errorsMessages.push(
+        "Your Display name is already associated with a store"
       );
 
     if (errorsMessages?.length) {

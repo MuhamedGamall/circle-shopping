@@ -31,7 +31,7 @@ export const createStore_seller: any = createAsyncThunk(
     }
   }
 );
-export const UpdateStore_seller: any = createAsyncThunk(
+export const updateStore_seller: any = createAsyncThunk(
   "sellerStoreSlice/updateStore",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
@@ -39,8 +39,9 @@ export const UpdateStore_seller: any = createAsyncThunk(
       await axios.patch(`/api/store/${params?._id}`, params?.data);
       toast.success("Store updated successfully");
     } catch (error: any) {
-      toast.error("Uh oh! Something went wrong");
-      return rejectWithValue(error.message);
+      if (error?.response?.status !== 409)
+        toast.error("Uh oh! Something went wrong");
+      return rejectWithValue(error);
     }
   }
 );
