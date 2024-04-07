@@ -55,26 +55,26 @@ export async function GET(req: NextRequest) {
       {
         $group: {
           _id: "$country",
-          total_amount_paid: { $sum: "$total_amount_paid" },
-          products_quantity: { $sum: "$products_quantity" },
+          total_sales: { $sum: "$total_amount_paid" },
+          sales_count: { $sum: "$products_quantity" },
         },
       },
       {
-        $sort: { products_quantity: -1 },
+        $sort: { sales_count: -1 },
       },
     ]);
 
     // get sales count
     const sales_count =
       top_selling_by_country.reduce(
-        (a: number, c: any) => a + c.products_quantity,
+        (a: number, c: any) => a + c.sales_count,
         0
       ) || 0;
 
     // get total sales
     const total_sales =
       top_selling_by_country.reduce(
-        (a: number, c: any) => a + c.total_amount_paid,
+        (a: number, c: any) => a + c.total_sales,
         0
       ) || 0;
 

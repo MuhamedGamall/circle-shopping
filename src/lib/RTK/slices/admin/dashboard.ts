@@ -85,7 +85,8 @@ type DashboardState = {
         brand: string;
         _id: string;
       };
-    };
+      total_sales: number | null;
+    }[];
     total_sales: number | null;
     sales_count: number | null;
     top_sellers: Store[];
@@ -93,7 +94,7 @@ type DashboardState = {
       _id: string;
       total_sales: number | null;
       sales_count: number | null;
-    };
+    }[];
   } | null;
   loading: boolean;
   error: null;
@@ -104,22 +105,27 @@ const initialState: DashboardState = {
     admin_length: 0,
     users_length: 0,
     top_users: [],
-    top_selling_by_categories: {
-      category: {
-        main_category: "",
-        sub_category: "",
-        brand: "",
-        _id: "",
+    top_selling_by_categories: [
+      {
+        category: {
+          main_category: "",
+          sub_category: "",
+          brand: "",
+          _id: "",
+        },
+        total_sales: 0,
       },
-    },
+    ],
     sales_count: 0,
     total_sales: 0,
     top_sellers: [],
-    top_selling_by_country: {
-      _id: "",
-      total_sales: 0,
-      sales_count: 0,
-    },
+    top_selling_by_country: [
+      {
+        _id: "",
+        total_sales: 0,
+        sales_count: 0,
+      },
+    ],
   },
   loading: false,
   error: null,
