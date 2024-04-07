@@ -7,7 +7,7 @@ const PurchaseSchema = new Schema(
     customer_id: { type: String, required: true },
     product_ids: { type: [String] },
     products_quantity: { type: Number, required: true },
-    total_purchase: { type: Number, required: true },
+    total_amount_paid: { type: Number, required: true },
     costumer_details: {
       _id: { type: String, required: true },
       name: { type: String, required: true },

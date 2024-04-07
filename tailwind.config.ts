@@ -19,13 +19,15 @@ const config = {
     },
     extend: {
       boxShadow: {
-        "card": "rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px",
-        "section": "rgba(0, 0, 0, 0.04) 0px 1px 15px, rgba(0, 0, 0, 0.04) 0px 1px 6px",
+        "sub-sections": "0px 3px 4px 0px rgba(0, 0, 0, 0.03)",
+
+        section:
+          "rgba(0, 0, 0, 0.04) 0px 1px 15px, rgba(0, 0, 0, 0.04) 0px 1px 6px",
       },
       colors: {
         main: "#feee00",
         secondMain: "#404553",
-        shade:'#6f727d',
+        shade: "#6f727d",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

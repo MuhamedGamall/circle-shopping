@@ -12,7 +12,8 @@ const StoreSchema = new Schema(
     finance_email: { type: String, required: true },
     store_phone_number: { type: String, required: true },
     likes: { type: Number, default: 0 },
-    total_sales: { type: Number, default: 0 },
+    sales_count: { type: Number, default: 0 },
+    total_sales:{ type: Number, default: 0 },
   },
   { timestamps: true }
 );

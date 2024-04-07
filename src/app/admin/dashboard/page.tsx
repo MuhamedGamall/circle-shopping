@@ -1,8 +1,7 @@
 import React from "react";
 import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import SectionTitle from "@/components/section-title";
-import Users from "./_components/sections/new-users";
-import TopSales from "./_components/sections/top-sales";
+import Sections from "./_components/sections";
 
 
 export default function AdminDashboardPage() {
@@ -11,8 +10,7 @@ export default function AdminDashboardPage() {
       <div className="relative w-full ">
         <section className="p-5 shadow-section w-full ">
           <SectionTitle title="Dashboard" className="mb-5" />
-          <TopSales/>
-          <Users/>
+          <Sections/>
         </section>
       </div>
     </MaxWidthWrapper>

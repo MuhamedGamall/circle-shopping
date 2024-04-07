@@ -48,51 +48,53 @@ export async function GET(req: NextRequest) {
     // get users
     const users = await UserInfo.aggregate(mergeOption)
       .match({ email: { $ne: CEOEmailForExclusion } })
-      .sort({ total_purchase: -1, total_paid: -1 });
-
-    // get top sales
-    const top_sales: any = await Product.find()
-      .sort({ total_sales: -1 })
-      .lean();
+      .sort({ total_products_sold: -1, total_amount_paid: -1 });
 
     // get total sales by country
     const top_selling_by_country: any = await Purchase.aggregate([
       {
         $group: {
           _id: "$country",
-          total_purchase: { $sum: "$total_purchase" },
-          total_sales: { $sum: "$products_quantity" },
+          total_amount_paid: { $sum: "$total_amount_paid" },
+          products_quantity: { $sum: "$products_quantity" },
         },
       },
       {
-        $sort: { total_purchase: -1 },
+        $sort: { products_quantity: -1 },
       },
     ]);
 
-    // get total sales
-    const total_sales = top_selling_by_country.reduce(
-      (a: number, c: any) => a + c.products_quantity,
-      0
-    );
+    // get sales count
+    const sales_count =
+      top_selling_by_country.reduce(
+        (a: number, c: any) => a + c.products_quantity,
+        0
+      ) || 0;
 
-    // get total purchase
-    const total_purchase = top_selling_by_country.reduce(
-      (a: number, c: any) => a + c.total_purchase,
-      0
-    );
+    // get total sales
+    const total_sales =
+      top_selling_by_country.reduce(
+        (a: number, c: any) => a + c.total_amount_paid,
+        0
+      ) || 0;
 
     // get top sellers
     const top_sellers: any = await Store.find()
-      .sort({ total_sales: -1, likes: -1 })
+      .sort({ total_sales: -1, likes: -1, sales_count: -1 })
       .lean();
 
     // get admin length
     const admin_length = users.filter((el) => el?.admin).length;
 
+    // get top sales
+    const top_sales: any = await Product.find()
+      .sort({ sales_count: -1 })
+      .lean();
+
     // get top selling categories
     const top_selling_by_categories = top_sales.map((el: any) => ({
       cateogry: el.category,
-      total_purchase: el.total_purchase,
+      total_sales: el.sales_count,
     }));
 
     return NextResponse.json({
@@ -102,7 +104,7 @@ export async function GET(req: NextRequest) {
       top_users: users,
       top_selling_by_categories,
       total_sales,
-      total_purchase,
+      sales_count,
       top_sellers,
       top_selling_by_country,
     });

@@ -1,3 +1,4 @@
+import { AccountData, Product, Store } from "@/types";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -72,12 +73,54 @@ export const getAdminDashboardAnalytics: any = createAsyncThunk(
 //   }
 // );
 type DashboardState = {
-  analytics: any;
+  analytics: {
+    top_sales: Product[];
+    admin_length: number | null;
+    users_length: number | null;
+    top_users: AccountData[];
+    top_selling_by_categories: {
+      category: {
+        main_category: string;
+        sub_category: string;
+        brand: string;
+        _id: string;
+      };
+    };
+    total_sales: number | null;
+    sales_count: number | null;
+    top_sellers: Store[];
+    top_selling_by_country: {
+      _id: string;
+      total_sales: number | null;
+      sales_count: number | null;
+    };
+  } | null;
   loading: boolean;
   error: null;
 };
 const initialState: DashboardState = {
-  analytics: {} || null,
+  analytics: {
+    top_sales: [],
+    admin_length: 0,
+    users_length: 0,
+    top_users: [],
+    top_selling_by_categories: {
+      category: {
+        main_category: "",
+        sub_category: "",
+        brand: "",
+        _id: "",
+      },
+    },
+    sales_count: 0,
+    total_sales: 0,
+    top_sellers: [],
+    top_selling_by_country: {
+      _id: "",
+      total_sales: 0,
+      sales_count: 0,
+    },
+  },
   loading: false,
   error: null,
 };
