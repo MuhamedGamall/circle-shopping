@@ -14,17 +14,16 @@ export default function Sections() {
   useEffect(() => {
     dispatch(getAdminDashboardAnalytics());
   }, [dispatch]);
-console.log(analytics?.top_selling_by_country );
-
   return (
     <div>
-      <div className="flex lg:flex-row flex-col gap-5 w-full">
-        <div className=" flex-1 grid grid-cols-1 md:grid-cols-2  gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-3">
           <TotalSales data={analytics?.total_sales || 400} />
           <SalesCount data={analytics?.sales_count || 16000} />
           <TotalUsers data={analytics?.users_length || 0} />
           <TotalAdmins data={analytics?.admin_length || 0} />
         </div>
+
         <TopSalesByCountry data={analytics?.top_selling_by_country || []} />
       </div>
     </div>
