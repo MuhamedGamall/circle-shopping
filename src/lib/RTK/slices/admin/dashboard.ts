@@ -79,13 +79,8 @@ type DashboardState = {
     users_length: number | null;
     top_users: AccountData[];
     top_selling_by_categories: {
-      category: {
-        main_category: string;
-        sub_category: string;
-        brand: string;
-        _id: string;
-      };
-      total_sales: number | null;
+      _id: string;
+      sales_count: number | null;
     }[];
     total_sales: number | null;
     sales_count: number | null;
@@ -107,13 +102,8 @@ const initialState: DashboardState = {
     top_users: [],
     top_selling_by_categories: [
       {
-        category: {
-          main_category: "",
-          sub_category: "",
-          brand: "",
-          _id: "",
-        },
-        total_sales: 0,
+        _id: "",
+        sales_count: 0,
       },
     ],
     sales_count: 0,

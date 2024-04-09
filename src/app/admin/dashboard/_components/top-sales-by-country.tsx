@@ -16,12 +16,12 @@ const MyResponsivePie = ({ data }: any) => {
       data={chartData}
       margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
       startAngle={-4}
-      innerRadius={width >= 500 ? 0.45 : 0}
+      innerRadius={0.45}
       padAngle={2}
-      cornerRadius={width >= 500 ? 22 : 0}
-      activeInnerRadiusOffset={25}
-      activeOuterRadiusOffset={9}
-      colors={{ scheme: "orange_red" }}
+      cornerRadius={22}
+      activeInnerRadiusOffset={15}
+      activeOuterRadiusOffset={5}
+      colors={{ scheme: "purple_red" }}
       borderColor={{
         from: "color",
         modifiers: [["darker", 0.2]],
@@ -70,17 +70,20 @@ export default function TopSalesByCountry({ data }: { data: any }) {
   return (
     <div className=" flex-col flex gap-5 bg-white shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className="flex-1">
-        <h2 className="text-[16px] font-semibold mb-2">World top sales</h2>
+        <h2 className="text-[16px] font-semibold ">World top sales</h2>
         <p className="text-shade text-[14px] ">Top sales by countries</p>
       </div>
-
-      <div style={{ height: 400 }} className="flex items-center justify-center">
-        {data?.length ? (
-          <MyResponsivePie data={data} />
-        ) : (
-          <span className="text-slate-300 text-[40px]">No Sales yet</span>
-        )}
-      </div>
+      {data?.length ? (
+        <div className="overflow-auto">
+          <div className="mx-auto w-full h-full min-w-[400px] min-h-[400px] ">
+            <MyResponsivePie data={data} />
+          </div>
+        </div>
+      ) : (
+        <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
+          No Sales yet
+        </span>
+      )}
     </div>
   );
 }

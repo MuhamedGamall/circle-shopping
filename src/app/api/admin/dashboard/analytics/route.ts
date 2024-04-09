@@ -92,10 +92,23 @@ export async function GET(req: NextRequest) {
       .lean();
 
     // get top selling categories
-    const top_selling_by_categories = top_sales.map((el: any) => ({
-      cateogry: el.category,
-      total_sales: el.sales_count,
-    }));
+    const top_selling_by_categories =await Product.aggregate([
+      {
+        $group: {
+          _id: "$category.main_category",
+          sales_count: { $sum: "$sales_count" },
+        },
+      },
+      {
+        $sort: { sales_count: -1 },
+      },
+    ]);
+console.log(top_selling_by_categories);
+
+    // top_sales.map((el: any) => ({
+    //   category: el.category.main_category,
+    //   sales_count: el.sales_count,
+    // }));
 
     return NextResponse.json({
       top_sales,
