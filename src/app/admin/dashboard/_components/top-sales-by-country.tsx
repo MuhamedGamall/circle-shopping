@@ -68,7 +68,7 @@ const MyResponsivePie = ({ data }: any) => {
 };
 export default function TopSalesByCountry({ data }: { data: any }) {
   return (
-    <div className=" flex-col flex gap-5  shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
+    <div className=" flex-col flex gap-5 bg-white shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className="flex-1">
         <h2 className="text-[16px] font-semibold mb-2">World top sales</h2>
         <p className="text-shade text-[14px] ">Top sales by countries</p>

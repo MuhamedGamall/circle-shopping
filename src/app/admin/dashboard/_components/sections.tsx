@@ -17,7 +17,7 @@ export default function Sections() {
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-5">
           <TotalSales data={analytics?.total_sales || 400} />
           <SalesCount data={analytics?.sales_count || 16000} />
           <TotalUsers data={analytics?.users_length || 0} />

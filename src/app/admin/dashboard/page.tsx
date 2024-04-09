@@ -6,7 +6,7 @@ import Sections from "./_components/sections";
 
 export default function AdminDashboardPage() {
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="mx-0">
       <div className="relative w-full ">
         <section className="p-5 shadow-section w-full ">
           <SectionTitle title="Dashboard" className="mb-5" />

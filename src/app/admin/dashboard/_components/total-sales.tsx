@@ -2,7 +2,7 @@ import { formatPrice } from "@/utils/format";
 import { DollarSign } from "lucide-react";
 export default function TotalSales({ data }: { data: number }) {
   return (
-    <div className="flex flex-col  justify-center shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
+    <div className="flex flex-col bg-white  justify-center shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className="mb-5 bg-green-500/20  rounded-sm flex items-center justify-center w-fit px-3 py-4">
         <DollarSign className="  min-h-6 min-w-6 text-green-600  " />
       </div>
