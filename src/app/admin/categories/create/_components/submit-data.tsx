@@ -46,15 +46,10 @@ export default function SubmitData() {
       arr.findIndex((item) => item.name === obj.name) === index
   );
 
-  console.log(filterRepeatedSubCateValues);
-
   const findSameMainCate = data?.find(
     (el) => el?.main_category?.name === mainCateValues.name
   );
   const onSubmit = async () => {
-    if (findSameMainCate)
-      return toast.error("Main category label already exists in the database.");
-
     if (findSameMainCate)
       return toast.error("Main category label already exists in the database.");
 
@@ -76,13 +71,11 @@ export default function SubmitData() {
     const create = await dispatch(
       createCategory({
         main_category: trimMainCateVlues,
-        sub_categories: filterSubCate,
+        sub_categories: filterRepeatedSubCateValues,
       })
     );
-    console.log(create);
-
+    setIsSubmitting(false);
     if (create.meta?.requestStatus === "fulfilled") {
-      setIsSubmitting(false);
       router.replace("/admin/categories");
     }
   };

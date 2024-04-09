@@ -11,10 +11,12 @@ import { useParams, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/redux";
 import { createProduct_seller } from "@/lib/RTK/slices/seller/products";
 import useCategories from "@/hooks/use-categories";
+import LoaderLayout from "@/components/loader-layout";
 
 export default function SelectSection() {
   const dispatch = useAppDispatch();
   const { store_id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { data, loading } = useCategories();
   const router = useRouter();
 
@@ -41,13 +43,14 @@ export default function SelectSection() {
 
   const onSubmit = async () => {
     if (checkData) {
+      setIsSubmitting(true);
       const product = await dispatch(
         createProduct_seller({
           data: fullData,
           store_id,
         })
       );
-
+      setIsSubmitting(false);
       if (product?.meta?.requestStatus === "fulfilled")
         router.replace(
           `/store/${store_id}/products-management/${product?.payload}/update`
@@ -56,6 +59,7 @@ export default function SelectSection() {
   };
   return (
     <div className="max-w-[650px] w-full  mx-auto p-5">
+      <LoaderLayout loadingCondition={isSubmitting} />
       <div className="w-full sm:flex hidden justify-end">
         <Button
           onClick={onSubmit}
@@ -79,15 +83,15 @@ export default function SelectSection() {
           Lets start with categorizing your product
         </h4>
         {checkData && (
-          <div className=" sm:flex hidden mt-5  items-center gap-2 sm:flex-row flex-wrap sm:justify-start justify-center mb-3">
+          <div className=" sm:flex hidden mt-5 items-center gap-2 sm:flex-row flex-wrap sm:justify-start justify-center mb-3">
             <span className="text-[12px] text-[#888888] mb-1 block whitespace-nowrap">
               Categories selected
             </span>
-            <div className="[&>span]:whitespace-nowrap   flex items-center gap-1 [&>span]:text-sky-700 [&>span]:text-sm w-[90%] border-slate-200 border py-1 px-3 rounded-md">
+            <div className="[&>span]:whitespace-nowrap overflow-x-auto    flex items-center gap-1 [&>span]:text-sky-700 [&>span]:text-sm w-[90%] border-slate-200 border py-1 px-3 rounded-md">
               <span>{mainCategory}</span>
-              <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
+              <BsChevronRight className="min-h-3 min-w-3 text-[#888888] mt-1" />
               <span>{subCategory}</span>
-              <BsChevronRight className="h-3 w-3 text-[#888888] mt-1" />
+              <BsChevronRight className="min-h-3 min-w-3 text-[#888888] mt-1" />
               <span>{productBrand}</span>
             </div>
           </div>

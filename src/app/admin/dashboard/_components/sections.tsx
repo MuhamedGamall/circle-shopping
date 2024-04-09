@@ -8,6 +8,7 @@ import TotalAdmins from "./total-admin";
 import SalesCount from "./sales-count";
 import TopSalesByCountry from "./top-sales-by-country";
 import TopSalesByCategory from "./top-sales-by-category";
+import TopSales from "./top-sales";
 
 export default function Sections() {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ export default function Sections() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
         <TopSalesByCategory data={analytics?.top_selling_by_categories}/>
+        <TopSales data={analytics?.top_sales}/>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ const MyResponsivePie = ({ data }: any) => {
         modifiers: [["darker", 0.2]],
       }}
       arcLinkLabelsSkipAngle={16}
-      arcLinkLabelsTextOffset={32}
+      arcLinkLabelsTextOffset={2}
       arcLinkLabelsTextColor="#333333"
       arcLinkLabelsOffset={-2}
       arcLinkLabelsDiagonalLength={9}

@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
     const existingRecord: any = await Store.findOne({
       $or: [
         { personal_email: email },
@@ -29,7 +28,6 @@ export async function POST(req: NextRequest) {
       errorsMessages.push(
         "Your personal email is already associated with a store"
       );
-    console.log(existingRecord?.personal_email, email);
 
     if (existingRecord?.business_email === body.business_email)
       errorsMessages.push(
@@ -43,10 +41,7 @@ export async function POST(req: NextRequest) {
       errorsMessages.push(
         "Your Phone number is already associated with a store"
       );
-    if (
-      existingRecord?.display_name === body.display_name &&
-      body?.display_name !== store.display_name
-    )
+    if (existingRecord?.display_name === body.display_name)
       errorsMessages.push(
         "Your Display name is already associated with a store"
       );

@@ -79,15 +79,15 @@ export default function ProductDetailsHeader({
             )}
             <div className="hidden  sm:flex flex-col gap-2 justify-center">
               <div className="flex gap-2 items-center ">
-                <span className="font-bold text-sm capitalize">
+                <span className="font-bold text-sm capitalize ">
                   {truncateText(data?.category?.brand || "", 20)}
                 </span>
                 <span className="font-bold text-[11px] text-[#65727d] ">
                   {truncateText(data?.title || "", 20) || "--"}
                 </span>
               </div>
-              <div className="sm:flex hidden [&>span]:whitespace-nowrap items-center gap-1 text-[#65727d] [&>span]:text-[11px]">
-                <span>{data?.category?.main_category}</span>
+              <div className="sm:flex hidden items-center gap-1 text-[#65727d] [&>span]:text-[11px]">
+                <span >{data?.category?.main_category}</span>
                 <BsChevronRight className="h-2 w-2 mt-1" />
                 <span>{data?.category?.sub_category}</span>
                 <BsChevronRight className="h-2 w-2 mt-1" />

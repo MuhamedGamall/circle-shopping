@@ -13,7 +13,7 @@ import LoaderLayout from "@/components/loader-layout";
 import { useAppDispatch } from "@/hooks/redux";
 import useCategories from "@/hooks/use-categories";
 import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { categoryForm } from "../../schema";
 
 export default function CategoryForm({
@@ -31,7 +31,7 @@ export default function CategoryForm({
 }) {
   const { data: categories } = useCategories();
   const mainCategories = categories.map((el) => el?.main_category?.name);
-
+  const [subCategory, setSubCategory] = useState<string>("");
   const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof categoryForm>>({
     resolver: zodResolver(categoryForm),
@@ -46,28 +46,27 @@ export default function CategoryForm({
       category: {
         brand: data?.category?.brand || "",
         main_category: data?.category?.main_category || "",
-        sub_category: "",
+        sub_category: subCategory || "",
       },
     },
-  });
 
+  });
+  
   useEffect(() => {
-    setTimeout(() => {
-      form.setValue(
-        "category.sub_category",
-        data?.category?.sub_category || ""
-      );
-    }, 10);
+    setSubCategory(data?.category?.sub_category || "");
   }, [data?.category?.sub_category, form]);
 
-  const subCategories = categories
-    ?.find(
-      (el) =>
-        el?.main_category?.name === form.getValues("category.main_category")
-    )
-    ?.sub_categories?.map((el) => el?.name);
+  const findSubCategories =
+    categories
+      ?.find(
+        (el) =>
+          el?.main_category?.name === form.getValues("category.main_category")
+      )
+      ?.sub_categories?.map((el) => el?.name) || [];
 
   async function onSubmit(values: z.infer<typeof categoryForm>) {
+    console.log(values);
+
     const update = await dispatch(
       updateProduct_seller({
         data: values,
@@ -75,7 +74,7 @@ export default function CategoryForm({
         product_id,
       })
     );
-    if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
+    if (update?.meta?.requestStatus === "fulfilled") setIsPublished(false);
   }
 
   const { isSubmitting } = form.formState;
@@ -101,8 +100,8 @@ export default function CategoryForm({
               labelClassName={"text-shade text-[12px]"}
               label="Sub category *"
               form={form}
-              disabled={!subCategories?.length}
-              selectData={subCategories || []}
+              disabled={!findSubCategories?.length}
+              selectData={findSubCategories || []}
             />
             <CustomField
               label="Brand *"

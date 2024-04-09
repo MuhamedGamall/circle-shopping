@@ -5,13 +5,11 @@ import SectionTitle from "@/components/section-title";
 
 export default function CategoriesPage() {
   return (
-    <div className="shadow-section p-5">
-      <MaxWidthWrapper className="mx-0">
-        <SectionTitle title="Create product" className="mb-5"/>
-        <section>
-          <SelectSection />
-        </section>
-      </MaxWidthWrapper>
-    </div>
-  );
+    <MaxWidthWrapper className="mx-0">
+      <section className="p-5 shadow-section relative w-full">
+        <SectionTitle title="Create product" className="mb-5" />
+        <SelectSection />
+      </section>
+    </MaxWidthWrapper>
+  ) 
 }

@@ -87,12 +87,15 @@ export async function GET(req: NextRequest) {
     const admin_length = users.filter((el) => el?.admin).length;
 
     // get top sales
-    const top_sales: any = await Product.find()
+    const top_sales: any = await Product.find({is_published:true})
       .sort({ sales_count: -1 })
       .lean();
 
     // get top selling categories
-    const top_selling_by_categories =await Product.aggregate([
+    const top_selling_by_categories =await Product.aggregate([ 
+      {
+      $match: { is_published: true } // Adding this $match stage to filter documents with is_published: true
+    },
       {
         $group: {
           _id: "$category.main_category",
@@ -102,13 +105,7 @@ export async function GET(req: NextRequest) {
       {
         $sort: { sales_count: -1 },
       },
-    ]);
-console.log(top_selling_by_categories);
-
-    // top_sales.map((el: any) => ({
-    //   category: el.category.main_category,
-    //   sales_count: el.sales_count,
-    // }));
+    ])
 
     return NextResponse.json({
       top_sales,

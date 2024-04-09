@@ -35,7 +35,7 @@ export async function PATCH(
     if (!category) {
       return new NextResponse("Not Found", { status: 404 });
     }
-    
+
     const getCloudinaryImagesId = await Category.findOne(
       { _id: category_id },
       { folder_cloudinary_images_id: 1 }
@@ -61,11 +61,19 @@ export async function PATCH(
       folderName: subCatesfolderName,
     });
 
-    const updateCategory = await Category.updateOne({
-      main_category: { ...main_category, image: uploadMainCategoryImage?.[0] },
-      sub_categories: uploadSubCategoriesimages,
-      folder_cloudinary_images_id: folderId,
-    });
+    const updateCategory = await Category.updateOne(
+      {
+        _id: category_id,
+      },
+      {
+        main_category: {
+          ...main_category,
+          image: uploadMainCategoryImage?.[0],
+        },
+        sub_categories: uploadSubCategoriesimages,
+        folder_cloudinary_images_id: folderId,
+      }
+    );
 
     return NextResponse.json(updateCategory);
   } catch (error) {

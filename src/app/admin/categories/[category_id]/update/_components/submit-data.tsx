@@ -2,7 +2,7 @@
 import LoaderLayout from "@/components/loader-layout";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import {
+import categoriesSlice, {
   getCategory,
   resetForm,
   updateCategory,
@@ -12,10 +12,12 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import MainCategoryForm from "./sections/main-category-form";
 import SubCategortiesForm from "./sections/sub-categories-form";
+import useCategories from "@/hooks/use-categories";
 export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { category_id } = useParams();
+  const { data: cateogries } = useCategories();
   const { category, loading } = useAppSelector((state) => state.categories);
 
   const [
@@ -70,15 +72,26 @@ export default function SubmitData() {
     (el) => Object.values(el).every(Boolean) && cateIsValid(el?.name)
   );
 
+  const filterRepeatedSubCateValues = filterSubCate.filter(
+    (obj, index, arr) =>
+      arr.findIndex((item) => item.name === obj.name) === index
+  );
+  const findSameMainCate = cateogries?.find(
+    (cate) =>
+      cate?.main_category?.name === mainCateValues?.name &&
+      cate?._id !== category_id
+  );
+
   const onSubmit = async () => {
+    if (findSameMainCate)
+      return toast.error("Main category label already exists in the database.");
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."
       );
-
     if (!cateIsValid(trimMainCateVlues?.name))
       return toast.error(
-        " Main category name must be 2-50 characters long, containing only English letters."
+        "Main category name must be 2-50 characters long, containing only English letters."
       );
 
     if (filterSubCate.length === 0)
@@ -86,27 +99,26 @@ export default function SubmitData() {
         "At least one sub category must be added and completed."
       );
     setIsSubmitting(true);
-    await dispatch(
+    const update = await dispatch(
       updateCategory({
         main_category: trimMainCateVlues,
-        sub_categories: filterSubCate,
+        sub_categories: filterRepeatedSubCateValues,
         categoriesIdsForDeleteFromCloudinary,
         category_id,
       })
     );
+
     setIsSubmitting(false);
-    router.replace("/admin/categories");
+    if (update?.meta?.requestStatus == "fulfilled") {
+      router.replace("/admin/categories");
+    }
   };
 
   return (
     <div className="w-full ">
       <LoaderLayout loadingCondition={isSubmitting || loading} />
       <div className="flex justify-end items-center my-5">
-        <Button
-          disabled={isSubmitting}
-          onClick={onSubmit}
-          variant={"blue"}
-        >
+        <Button disabled={isSubmitting} onClick={onSubmit} variant={"blue"}>
           Update
         </Button>
       </div>
