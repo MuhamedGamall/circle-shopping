@@ -18,8 +18,8 @@ const MyResponsivePie = ({ data }: any) => {
       startAngle={-4}
       innerRadius={0.45}
       padAngle={2}
-      cornerRadius={22}
-      activeInnerRadiusOffset={15}
+      cornerRadius={18}
+      activeInnerRadiusOffset={2}
       activeOuterRadiusOffset={5}
       colors={{ scheme: "purple_red" }}
       borderColor={{
@@ -67,15 +67,17 @@ const MyResponsivePie = ({ data }: any) => {
   );
 };
 export default function TopSalesByCountry({ data }: { data: any }) {
+  const check = data?.some((el: any) => el?.sales_count > 0);
+
   return (
     <div className=" flex-col flex gap-5 bg-white shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className="flex-1">
-        <h2 className="text-[16px] font-semibold ">World top sales</h2>
+        <h2 className="text-[16px] font-semibold ">World Top Sales</h2>
         <p className="text-shade text-[14px] ">Top sales by countries</p>
       </div>
-      {data?.length ? (
+      {check ? (
         <div className="overflow-auto">
-          <div className="mx-auto w-full h-full min-w-[400px] min-h-[400px] ">
+          <div className="mx-auto w-full h-full min-w-[500px] min-h-[500px]">
             <MyResponsivePie data={data} />
           </div>
         </div>

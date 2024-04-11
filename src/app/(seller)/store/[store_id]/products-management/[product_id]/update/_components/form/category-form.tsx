@@ -30,9 +30,15 @@ export default function CategoryForm({
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
   const { data: categories } = useCategories();
-  const mainCategories = categories.map((el) => el?.main_category?.name);
-  const [subCategory, setSubCategory] = useState<string>("");
   const dispatch = useAppDispatch();
+
+  const [subCategory, setSubCategory] = useState<string>("");
+  const [subCategoriesOptions, setSubCategoriesOptions] = useState<string[]>(
+    []
+  );
+
+  const mainCategories = categories.map((el) => el?.main_category?.name);
+
   const form = useForm<z.infer<typeof categoryForm>>({
     resolver: zodResolver(categoryForm),
     defaultValues: {
@@ -49,24 +55,29 @@ export default function CategoryForm({
         sub_category: subCategory || "",
       },
     },
-
   });
-  
+
   useEffect(() => {
-    setSubCategory(data?.category?.sub_category || "");
+    const findSubCategories =
+      categories
+        ?.find(
+          (el) =>
+            el?.main_category?.name === form.getValues("category.main_category")
+        )
+        ?.sub_categories?.map((el) => el?.name) || [];
+    form.setValue("category.sub_category",'');
+    setSubCategoriesOptions(findSubCategories);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories, form.watch("category.main_category")]);
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      setSubCategory(data?.category?.sub_category || "");
+    }, 500);
+    return () => clearTimeout(timeOutId);
   }, [data?.category?.sub_category, form]);
 
-  const findSubCategories =
-    categories
-      ?.find(
-        (el) =>
-          el?.main_category?.name === form.getValues("category.main_category")
-      )
-      ?.sub_categories?.map((el) => el?.name) || [];
-
   async function onSubmit(values: z.infer<typeof categoryForm>) {
-    console.log(values);
-
     const update = await dispatch(
       updateProduct_seller({
         data: values,
@@ -100,8 +111,7 @@ export default function CategoryForm({
               labelClassName={"text-shade text-[12px]"}
               label="Sub category *"
               form={form}
-              disabled={!findSubCategories?.length}
-              selectData={findSubCategories || []}
+              selectData={subCategoriesOptions || []}
             />
             <CustomField
               label="Brand *"

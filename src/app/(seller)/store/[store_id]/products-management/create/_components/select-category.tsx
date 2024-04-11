@@ -14,12 +14,14 @@ export default function SelectCategory({
   loading,
   setValue,
   value,
+  setSubCategory,
 }: {
   data: any;
   loading: boolean;
   label: string;
   setValue: Dispatch<SetStateAction<string>>;
   value: string;
+  setSubCategory?: Dispatch<SetStateAction<string>>;
 }) {
   return (
     <div className=" flex flex-col justify-center mb-[50px]">
@@ -33,11 +35,14 @@ export default function SelectCategory({
         <div className=" hide-scroll  max-h-[430px]  overflow-y-auto w-full h-full">
           <div className="  w-full h-full flex flex-col justify-center ">
             {loading ? (
-            <LoadingSkeleton />
+              <LoadingSkeleton />
             ) : (
               data?.map((el: any, i: any) => (
                 <div
-                  onClick={() => setValue(el)}
+                  onClick={() => {
+                    setValue(el);
+                    setSubCategory ? setSubCategory("") : null;
+                  }}
                   key={i}
                   className={cn(
                     "cursor-pointer  border-b p-3 text-slate-600 text-sm flex items-center justify-between",

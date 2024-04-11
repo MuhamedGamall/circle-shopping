@@ -1,7 +1,10 @@
+import useCountdown from "@/hooks/use-countdown";
 import { formatNumber } from "@/utils/format";
 import { TbShoppingCartCheck } from "react-icons/tb";
 
 export default function SalesCount({ data }: { data: number }) {
+  const { timer } = useCountdown(data);
+  
   return (
     <div className="flex flex-col bg-white justify-center shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className=" mb-5 bg-yellow-300/40 rounded-sm flex items-center justify-center w-fit px-3 py-4">
@@ -12,7 +15,7 @@ export default function SalesCount({ data }: { data: number }) {
           Sales Count
         </p>
         <h2 className="text-2xl md:text-3xl font-semibold text-shade ">
-          {formatNumber(data)}
+          {formatNumber(timer)}
         </h2>
       </div>
     </div>

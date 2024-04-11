@@ -102,6 +102,7 @@ export default function SelectSection() {
           data={mainCategories}
           label={"Select main category"}
           setValue={setMainCategory}
+          setSubCategory={setSubCategory}
           value={mainCategory}
         />
         <SelectCategory

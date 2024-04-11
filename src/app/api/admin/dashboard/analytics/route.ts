@@ -7,6 +7,7 @@ import mongoConnect from "@/actions/mongo-connect";
 import { Product } from "@/models/product";
 import { Purchase } from "@/models/purchase";
 import { Store } from "@/models/store";
+import { User } from "@/models/user";
 
 export async function GET(req: NextRequest) {
   try {
@@ -45,10 +46,13 @@ export async function GET(req: NextRequest) {
       },
     ];
 
-    // get users
-    const users = await UserInfo.aggregate(mergeOption)
+    // get users 
+    const users= await UserInfo.find()
+
+    // get top users
+    const top_users = await UserInfo.aggregate(mergeOption)
       .match({ email: { $ne: CEOEmailForExclusion } })
-      .sort({ total_products_sold: -1, total_amount_paid: -1 });
+      .sort({ total_amount_paid: -1 }).limit(5);
 
     // get total sales by country
     const top_selling_by_country: any = await Purchase.aggregate([
@@ -62,7 +66,7 @@ export async function GET(req: NextRequest) {
       {
         $sort: { sales_count: -1 },
       },
-    ]);
+    ]).limit(50);
 
     // get sales count
     const sales_count =
@@ -80,22 +84,24 @@ export async function GET(req: NextRequest) {
 
     // get top sellers
     const top_sellers: any = await Store.find()
-      .sort({ total_sales: -1, likes: -1, sales_count: -1 })
-      .lean();
+      .sort({ total_sales: -1 })
+      .lean()
+      .limit(5);
 
     // get admin length
     const admin_length = users.filter((el) => el?.admin).length;
 
     // get top sales
-    const top_sales: any = await Product.find({is_published:true})
+    const top_sales: any = await Product.find({ is_published: true })
       .sort({ sales_count: -1 })
+      .limit(5)
       .lean();
 
     // get top selling categories
-    const top_selling_by_categories =await Product.aggregate([ 
+    const top_selling_by_categories = await Product.aggregate([
       {
-      $match: { is_published: true } // Adding this $match stage to filter documents with is_published: true
-    },
+        $match: { is_published: true }, // Adding this $match stage to filter documents with is_published: true
+      },
       {
         $group: {
           _id: "$category.main_category",
@@ -105,13 +111,13 @@ export async function GET(req: NextRequest) {
       {
         $sort: { sales_count: -1 },
       },
-    ])
+    ]);
 
     return NextResponse.json({
       top_sales,
       admin_length,
-      users_length: users.length,
-      top_users: users,
+      users_length:users.length,
+      top_users,
       top_selling_by_categories,
       total_sales,
       sales_count,

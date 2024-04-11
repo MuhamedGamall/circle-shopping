@@ -19,7 +19,7 @@ const MyResponsivePie = ({ data }: any) => {
       cornerRadius={18}
       activeInnerRadiusOffset={2}
       activeOuterRadiusOffset={5}
-      colors={{ scheme: "set2" }}
+      colors={{ scheme: "blue_purple" }}
       borderColor={{
         from: "color",
         modifiers: [["darker", 0.2]],
@@ -37,20 +37,46 @@ const MyResponsivePie = ({ data }: any) => {
         from: "color",
         modifiers: [["darker", 2]],
       }}
+      legends={[
+        {
+          anchor: "bottom",
+          direction: "row",
+          justify: false,
+          translateX: 0,
+          translateY: 59,
+          itemWidth: 100,
+          itemHeight: 20,
+          itemsSpacing: 0,
+          symbolSize: 20,
+          itemDirection: "left-to-right",
+        },
+      ]}
+      tooltip={(point: any) => {
+        return (
+          <div className="flex text-center flex-col gap-2 p-4 rounded-lg shadow-lg bg-white justify-center text-shade">
+            <div className="text-black font-semibold">{point?.datum?.id}</div>
+            <div className="border-t pt-2">
+              Sales Count: {formatNumber(point?.datum?.value)}
+            </div>
+          </div>
+        );
+      }}
       motionConfig="wobbly"
     />
   );
 };
 export default function TopSalesByCategory({ data }: any) {
+  const check = data?.some((el: any) => el?.sales_count > 0);
+
   return (
-    <div className=" flex-col flex gap-5 bg-white shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
-      <div className="flex-1">
+    <div className="flex flex-col gap-5 bg-white shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
+      <div>
         <h2 className="text-[16px] font-semibold">Top Selling Categories</h2>
         <p className="text-shade text-[14px] ">Top sales by category</p>
       </div>
-      {data?.length ? (
-        <div className="overflow-auto">
-          <div className="mx-auto w-full h-full min-w-[366px] min-h-[366px] ">
+      {check ? (
+        <div className="overflow-auto h-full  w-full ">
+          <div className="mx-auto w-full h-full min-w-[500px] min-h-[500px] ">
             <MyResponsivePie data={data} />
           </div>
         </div>

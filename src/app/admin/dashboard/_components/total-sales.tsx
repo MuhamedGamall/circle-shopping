@@ -1,6 +1,9 @@
+import useCountdown from "@/hooks/use-countdown";
 import { formatPrice } from "@/utils/format";
 import { DollarSign } from "lucide-react";
 export default function TotalSales({ data }: { data: number }) {
+  const { timer } = useCountdown(data);
+
   return (
     <div className="flex flex-col bg-white  justify-center shadow-sub-sections border border-slate-100 rounded-sm p-5 ">
       <div className="mb-5 bg-green-500/20  rounded-sm flex items-center justify-center w-fit px-3 py-4">
@@ -11,7 +14,7 @@ export default function TotalSales({ data }: { data: number }) {
           Total Sales
         </p>
         <h2 className="text-2xl md:text-3xl font-semibold text-shade ">
-          {formatPrice(data)}
+          {formatPrice(timer)}
         </h2>
       </div>
     </div>

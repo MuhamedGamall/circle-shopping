@@ -17,8 +17,8 @@ export type AccountInfo = {
   postal_code: number;
   city: string;
   country: string;
-  total_purchase: number;
-  total_paid: number;
+  total_products_sold: number;
+  total_amount_paid: number;
   createdAt: any;
   updatedAt: any;
   __v: number;
@@ -46,6 +46,7 @@ export type Store = {
   finance_email: string;
   store_phone_number: string;
   likes: number;
+  sales_count: number;
   total_sales: number;
   createdAt: any;
   updatedAt: any;
@@ -63,7 +64,7 @@ export type Product = {
   store_personal_email: string;
   title: string;
   images: string[];
-  total_purchase: number;
+  sales_count: number;
   description: string;
   model_number: string;
   model_name: string;

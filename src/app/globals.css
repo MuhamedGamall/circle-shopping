@@ -21,7 +21,6 @@
   background: #88888870; /* Thumb color */
   border-radius: 6px; /* Rounded corners */
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #55555598; /* Thumb color on hover */
 }

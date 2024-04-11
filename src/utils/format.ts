@@ -15,6 +15,7 @@ export function formatPrice(price: number) {
 export function formatNumber(number: number) {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "decimal",
+    maximumFractionDigits:2
   });
 
   if (number >= 1e9) return formatter.format(number / 1e9) + "b";
