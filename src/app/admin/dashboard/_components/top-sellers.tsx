@@ -64,22 +64,28 @@ export default function TopSellers({ data }: Store[] | any) {
                   <TooltipWrapper
                     label={formatNumber(el?.sales_count || 0) + ""}
                   >
-                    <span className="flex flex-col items-end">
-                      <span className="text-[11px]">Sales count</span>
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Sales count
+                      </span>
                       {truncateText(formatNumber(el?.sales_count || 0), 15)}
                     </span>
                   </TooltipWrapper>
                   <TooltipWrapper
                     label={formatPrice(el?.total_sales || 0) + ""}
                   >
-                    <span className="flex flex-col items-end">
-                      <span className="text-[11px]">Total sales</span>
-                      {truncateText(formatPrice(el?.total_sales || 0), 15)}
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Total sales
+                      </span>
+                      {truncateText(formatNumber(el?.total_sales || 0), 15)}
                     </span>
                   </TooltipWrapper>
                   <TooltipWrapper label={formatPrice(el?.likes || 0) + ""}>
-                    <span className="flex flex-col items-end">
-                      <span className="text-[11px]">Likes</span>
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Likes
+                      </span>
                       {truncateText(formatNumber(el?.likes || 0), 15)}
                     </span>
                   </TooltipWrapper>

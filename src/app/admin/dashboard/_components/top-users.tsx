@@ -81,8 +81,10 @@ export default function TopUsers({ data }: AccountData[] | any) {
                   <TooltipWrapper
                     label={formatNumber(el?.total_products_sold || 0) + ""}
                   >
-                    <span className="flex flex-col items-end">
-                      <span className="text-[11px]">Products sold</span>
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Products slod
+                      </span>
                       {truncateText(
                         formatNumber(el?.total_products_sold || 0),
                         15
@@ -92,10 +94,12 @@ export default function TopUsers({ data }: AccountData[] | any) {
                   <TooltipWrapper
                     label={formatPrice(el?.total_amount_paid || 0) + ""}
                   >
-                    <span className="flex flex-col items-end">
-                      <span className="text-[11px]">Amount paid</span>
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Amount paid
+                      </span>
                       {truncateText(
-                        formatPrice(el?.total_amount_paid || 0),
+                        formatNumber(el?.total_products_sold || 0),
                         15
                       )}
                     </span>

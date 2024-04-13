@@ -15,16 +15,18 @@ import LoaderLayout from "@/components/loader-layout";
 
 export default function Sections() {
   const dispatch = useAppDispatch();
-  const { analytics ,loading} = useAppSelector((state) => state.admin_dashboard);
+  const { analytics, loading } = useAppSelector(
+    (state) => state.admin_dashboard
+  );
   useEffect(() => {
     dispatch(getAdminDashboardAnalytics());
   }, [dispatch]);
   return (
     <div className="flex flex-col gap-5">
-      <LoaderLayout loadingCondition={loading}/>
+      <LoaderLayout loadingCondition={loading} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <TotalSales data={analytics?.total_sales || 400} />
-        <SalesCount data={analytics?.sales_count || 16000} />
+        <TotalSales data={analytics?.total_sales || 0} />
+        <SalesCount data={analytics?.sales_count || 0} />
         <TotalUsers data={analytics?.users_length || 0} />
         <TotalAdmins data={analytics?.admin_length || 0} />
       </div>
