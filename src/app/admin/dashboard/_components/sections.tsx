@@ -19,7 +19,7 @@ export default function Sections() {
     (state) => state.admin_dashboard
   );
   useEffect(() => {
-    dispatch(getAdminDashboardAnalytics());
+    dispatch(getAdminDashboardAnalytics(null));
   }, [dispatch]);
   return (
     <div className="flex flex-col gap-5">

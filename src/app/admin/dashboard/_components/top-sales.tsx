@@ -62,7 +62,9 @@ export default function TopSales({ data }: any) {
                 </div>
                 <TooltipWrapper label={formatNumber(el?.sales_count || 0) + ""}>
                   <span className="flex flex-col items-end text-[13px]">
-                    <span className="text-[11px] text-slate-500">Sales count</span>
+                    <span className="text-[11px] text-slate-500">
+                      Sales count
+                    </span>
                     {truncateText(formatNumber(el?.sales_count || 0), 15)}
                   </span>
                 </TooltipWrapper>
@@ -72,7 +74,7 @@ export default function TopSales({ data }: any) {
         </ul>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
-          No sales yet
+          No sales
         </span>
       )}
     </div>

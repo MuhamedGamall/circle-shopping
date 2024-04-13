@@ -83,9 +83,7 @@ export default function TopSellers({ data }: Store[] | any) {
                   </TooltipWrapper>
                   <TooltipWrapper label={formatPrice(el?.likes || 0) + ""}>
                     <span className="flex flex-col items-end text-[13px]">
-                      <span className="text-[11px] text-slate-500">
-                        Likes
-                      </span>
+                      <span className="text-[11px] text-slate-500">Likes</span>
                       {truncateText(formatNumber(el?.likes || 0), 15)}
                     </span>
                   </TooltipWrapper>
@@ -96,7 +94,7 @@ export default function TopSellers({ data }: Store[] | any) {
         </ul>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
-          No sales yet
+          No sales
         </span>
       )}
     </div>

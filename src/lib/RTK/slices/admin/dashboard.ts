@@ -1,13 +1,21 @@
 import { AccountData, Product, Store } from "@/types";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { DateRange } from "react-day-picker";
 
 export const getAdminDashboardAnalytics: any = createAsyncThunk(
   "adminDashboardSlice/getAnalytics",
-  async (_, thunkApi) => {
+  async (date: DateRange | null, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/admin/dashboard/analytics")).data;
+      
+      let check = "";
+      if (date && date.from && date.to) {
+        check = `?date_filter=${ date.from },${date.to}`;
+      }
+      
+      const data = (await axios.get("/api/admin/dashboard/analytics" + check))
+        .data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

@@ -111,7 +111,7 @@ export default function TopUsers({ data }: AccountData[] | any) {
         </ul>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
-          No sales yet
+          No sales
         </span>
       )}
     </div>

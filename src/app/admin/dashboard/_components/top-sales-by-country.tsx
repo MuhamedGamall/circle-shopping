@@ -1,8 +1,6 @@
 import { formatNumber, formatPrice } from "@/utils/format";
 import { ResponsivePie } from "@nivo/pie";
-import { useWindowSize } from "react-use";
 const MyResponsivePie = ({ data }: any) => {
-  const { width } = useWindowSize();
   const chartData = data?.map((el: any) => ({
     id: el?._id,
     label: el?._id,
@@ -11,7 +9,7 @@ const MyResponsivePie = ({ data }: any) => {
   }));
   return (
     <ResponsivePie
-      value={"sales_count"}
+      value={"total_sales"}
       valueFormat={formatNumber}
       data={chartData}
       margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
@@ -42,9 +40,9 @@ const MyResponsivePie = ({ data }: any) => {
           <div className="flex text-center flex-col gap-2 p-4 rounded-lg shadow-lg bg-white justify-center text-shade">
             <div className="text-black font-semibold">{point?.datum?.id}</div>
             <div className="border-t pt-2">
-              Total Sales: {formatNumber(point?.datum?.value)}
+              Total Sales: {formatPrice(point?.datum?.value)}
             </div>
-            Sales Count: {formatPrice(point?.datum?.data?.sales_count)}
+            Sales Count: {formatNumber(point?.datum?.data?.sales_count)}
           </div>
         );
       }}
@@ -83,7 +81,7 @@ export default function TopSalesByCountry({ data }: { data: any }) {
         </div>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
-          No Sales yet
+          No sales
         </span>
       )}
     </div>

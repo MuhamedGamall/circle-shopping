@@ -15,6 +15,8 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = user?.email;
+    const url = new URL(req.url);
+    const dateFilter = url.searchParams.get("date_filter");
 
     const userInfo: any = await UserInfo.findOne({ email });
 
@@ -23,8 +25,18 @@ export async function GET(req: NextRequest) {
     }
 
     const CEOEmailForExclusion = process.env.CEO_EMAIL;
-
+    const matchStage: any = {};
+    if (dateFilter) {
+      let [startDate, endDate] = dateFilter.split(",");
+      matchStage.createdAt = {
+        $gte: startDate,
+        $lt: endDate,
+      };
+    }
     const mergeOption = [
+      {
+        $match: matchStage,
+      },
       {
         $lookup: {
           from: "users",
@@ -44,18 +56,24 @@ export async function GET(req: NextRequest) {
       {
         $project: { users: 0 },
       },
+      {
+        $match: { email: { $ne: CEOEmailForExclusion } },
+      },
     ];
 
-    // get users 
-    const users= await UserInfo.find()
+    // get users
+    const users = await UserInfo.find(matchStage);
 
     // get top users
     const top_users = await UserInfo.aggregate(mergeOption)
-      .match({ email: { $ne: CEOEmailForExclusion } })
-      .sort({ total_amount_paid: -1 }).limit(5);
+      .sort({ total_amount_paid: -1 })
+      .limit(5);
 
     // get total sales by country
     const top_selling_by_country: any = await Purchase.aggregate([
+      {
+        $match: matchStage,
+      },
       {
         $group: {
           _id: "$country",
@@ -83,7 +101,7 @@ export async function GET(req: NextRequest) {
       ) || 0;
 
     // get top sellers
-    const top_sellers: any = await Store.find()
+    const top_sellers: any = await Store.find(matchStage)
       .sort({ total_sales: -1 })
       .lean()
       .limit(5);
@@ -92,7 +110,10 @@ export async function GET(req: NextRequest) {
     const admin_length = users.filter((el) => el?.admin).length;
 
     // get top sales
-    const top_sales: any = await Product.find({ is_published: true })
+    const top_sales: any = await Product.find({
+      is_published: true,
+      ...matchStage,
+    })
       .sort({ sales_count: -1 })
       .limit(5)
       .lean();
@@ -100,7 +121,10 @@ export async function GET(req: NextRequest) {
     // get top selling categories
     const top_selling_by_categories = await Product.aggregate([
       {
-        $match: { is_published: true }, // Adding this $match stage to filter documents with is_published: true
+        $match: matchStage,
+      },
+      {
+        $match: { is_published: true },
       },
       {
         $group: {
@@ -116,7 +140,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       top_sales,
       admin_length,
-      users_length:users.length,
+      users_length: users.length,
       top_users,
       top_selling_by_categories,
       total_sales,

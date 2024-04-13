@@ -82,7 +82,7 @@ export default function TopSalesByCategory({ data }: any) {
         </div>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
-          No Sales yet
+          No sales
         </span>
       )}
     </div>
