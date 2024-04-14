@@ -1,4 +1,3 @@
-
 import {
   ColumnFiltersState,
   SortingState,
@@ -12,7 +11,7 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 
 import {
   Table,
@@ -25,15 +24,20 @@ import {
 
 import SearchInputs from "@/components/table/search-inputs";
 import { LoadingSkeleton } from "@/components/table/table-loading";
+import { Input } from "@/components/ui/input";
 
 export function DataTable({
   data,
   loading,
   columns,
-}: {
+}: // setSearchQuery,
+// searchQuery,
+{
   data: any[];
   loading: boolean;
   columns: any;
+  // setSearchQuery: Dispatch<SetStateAction<string>>;
+  // searchQuery: string;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -61,7 +65,14 @@ export function DataTable({
   return (
     <div className="w-full ">
       <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
-        <SearchInputs dataLength={data?.length} table={table} />
+        <Input
+          placeholder={`Search`}
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          type="text"
+          disabled={loading}
+          className="border rounded-sm "
+        />
       </div>
       <Table>
         <TableHeader>

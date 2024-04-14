@@ -48,13 +48,13 @@ details for build crm project
 │   └── Admin
 │       ├── Admin Dashboard
 │       │   ├── User Monitoring
-│       │   │   ├── User List
-│       │   │   ├── Edit User Information
-│       │   │   └── Delete User Accounts
+│       │   │   ├── User List = ok
+│       │   │   ├── Edit User Information = ok
+│       │   │   └── Delete User Accounts = ok
 │       │   ├── Data Management
 │       │   │   ├── Product List   = ok
 │       │   │   ├── Order List
-│       │   │   └── Seller List
+│       │   │   └── Seller List = ok
 │       │   ├── System Settings
 │       │   │   ├── Email Settings
 │       │   │   ├── Currency Settings
@@ -63,12 +63,12 @@ details for build crm project
 │       │   └── Reports and Analytics
 │       │       ├── Sales Report
 │       │       ├── Customer Report
-│       │       └── Site Analytics
+│       │       └── Site Analytics = ok
 │       │
 │       └── Seller Management Page
-│           ├── Seller List
-│           ├── Edit Seller Information
-│           └── Ban/Unban Seller Accounts
+│           ├── Seller List = ok
+│           ├── Edit Seller Information = ok
+│           └── Ban/Unban Seller Accounts = ok
 │
 └── Database
 

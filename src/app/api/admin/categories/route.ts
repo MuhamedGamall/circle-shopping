@@ -58,11 +58,11 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions);
     const user = session?.user;
 
-    if (!user ) {
+    if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const categories = await Category.find();
-
+    
     return NextResponse.json(categories);
   } catch (error) {
     console.log("[ADMIN:GET-CATEGORIES]", error);
