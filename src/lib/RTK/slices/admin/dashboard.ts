@@ -8,12 +8,11 @@ export const getAdminDashboardAnalytics: any = createAsyncThunk(
   async (date: DateRange | null, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      
       let check = "";
       if (date && date.from && date.to) {
-        check = `?date_filter=${ date.from },${date.to}`;
+        check = `?date_filter=${date.from},${date.to}`;
       }
-      
+
       const data = (await axios.get("/api/admin/dashboard/analytics" + check))
         .data;
       return data;
@@ -23,63 +22,6 @@ export const getAdminDashboardAnalytics: any = createAsyncThunk(
   }
 );
 
-// export const getUsers_admin: any = createAsyncThunk(
-//   "adminDashboardSlice/getUsers",
-//   async (_, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.get("/api/admin/dashboard/users")).data;
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
-// export const getProductsSeller_admin: any = createAsyncThunk(
-//   "adminDashboardSlice/getProductsSeller",
-//   async (id, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.get("/api/admin/sellers/" + id + "/products"))
-//         .data;
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
-// export const getProductSeller_admin: any = createAsyncThunk(
-//   "adminDashboardSlice/getProductSeller",
-//   async (params: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (
-//         await axios.get(
-//           "/api/admin/sellers/" +
-//             params?.seller_id +
-//             "/products/" +
-//             params?.product_id
-//         )
-//       ).data;
-//       return data;
-//     } catch (error: any) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
-// export const unpublishProduct: any = createAsyncThunk(
-//   "productsSlice/unpublishProduct",
-//   async (params: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       await axios.patch(`/api/unpublish-product`, params);
-//       return params?.product_id;
-//     } catch (error: any) {
-//       toast.error("Uh oh! Something went wrong while Unpublishing the product");
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 type DashboardState = {
   analytics: {
     top_sales: Product[];
@@ -107,6 +49,8 @@ const initialState: DashboardState = {
     top_sales: [],
     admin_length: 0,
     users_length: 0,
+    sales_count: 0,
+    total_sales: 0,
     top_users: [],
     top_selling_by_categories: [
       {
@@ -114,8 +58,6 @@ const initialState: DashboardState = {
         sales_count: 0,
       },
     ],
-    sales_count: 0,
-    total_sales: 0,
     top_sellers: [],
     top_selling_by_country: [
       {
@@ -156,74 +98,6 @@ const adminDashboardSlice = createSlice({
           state.error = action.payload;
         }
       );
-    // builder
-    //   .addCase(
-    //     getProductsSeller_admin.pending,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductsSeller_admin.fulfilled,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.products = action.payload;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductsSeller_admin.rejected,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
-    // builder
-    //   .addCase(
-    //     getProductSeller_admin.pending,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductSeller_admin.fulfilled,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.product = action.payload;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductSeller_admin.rejected,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
-    // builder
-    //   .addCase(
-    //     unpublishProduct.pending,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     unpublishProduct.fulfilled,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.products = state.products.filter(
-    //         (el) => el._id !== action.payload
-    //       );
-    //     }
-    //   )
-    //   .addCase(
-    //     unpublishProduct.rejected,
-    //     (state: DashboardState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
   },
 });
 export default adminDashboardSlice.reducer;

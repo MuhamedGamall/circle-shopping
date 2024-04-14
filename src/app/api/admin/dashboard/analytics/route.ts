@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
       .sort({ total_amount_paid: -1 })
       .limit(5);
 
-    // get total sales by country
+    // get top sales by country
     const top_selling_by_country: any = await Purchase.aggregate([
       {
         $match: matchStage,
@@ -86,19 +86,18 @@ export async function GET(req: NextRequest) {
       },
     ]).limit(50);
 
-    // get sales count
-    const sales_count =
-      top_selling_by_country.reduce(
-        (a: number, c: any) => a + c.sales_count,
-        0
-      ) || 0;
-
-    // get total sales
-    const total_sales =
-      top_selling_by_country.reduce(
-        (a: number, c: any) => a + c.total_sales,
-        0
-      ) || 0;
+    const sales_analysis: any = await Purchase.aggregate([
+      {
+        $match: matchStage,
+      },
+      {
+        $group: {
+          _id: "$item",
+          total_sales: { $sum: "$total_amount_paid" },
+          sales_count: { $sum: "$products_quantity" },
+        },
+      },
+    ]);
 
     // get top sellers
     const top_sellers: any = await Store.find(matchStage)
@@ -143,8 +142,8 @@ export async function GET(req: NextRequest) {
       users_length: users.length,
       top_users,
       top_selling_by_categories,
-      total_sales,
-      sales_count,
+      total_sales: sales_analysis?.[0]?.total_sales,
+      sales_count: sales_analysis?.[0]?.sales_count,
       top_sellers,
       top_selling_by_country,
     });

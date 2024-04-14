@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function useCountdown( number : number ) {
+export default function useCountdown(number: number) {
   const [timer, setTimer] = useState(0);
+  const [prevNumber, setPrevNumber] = useState(0);
 
   useEffect(() => {
+    setPrevNumber(number);
+    if (prevNumber !== number) setTimer(0);
+
     const intervalId = setInterval(() => {
       if (timer < number) {
         const increment = Math.ceil((number - timer) / 100);
@@ -14,6 +18,6 @@ export default function useCountdown( number : number ) {
     }, 5);
 
     return () => clearInterval(intervalId);
-  }, [number, timer]);
-  return {timer}
+  }, [number, prevNumber, timer]);
+  return { timer };
 }
