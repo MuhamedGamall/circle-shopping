@@ -22,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import SearchInputs from "@/components/table/search-inputs";
 import { LoadingSkeleton } from "@/components/table/table-loading";
 import { Input } from "@/components/ui/input";
 
@@ -30,14 +29,14 @@ export function DataTable({
   data,
   loading,
   columns,
-}: // setSearchQuery,
-// searchQuery,
-{
+  setSearchQuery,
+  searchQuery,
+}: {
   data: any[];
   loading: boolean;
   columns: any;
-  // setSearchQuery: Dispatch<SetStateAction<string>>;
-  // searchQuery: string;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  searchQuery: string;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

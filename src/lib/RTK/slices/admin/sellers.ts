@@ -5,10 +5,11 @@ import toast from "react-hot-toast";
 
 export const getSellers_admin: any = createAsyncThunk(
   "adminSellerSlice/getSellers",
-  async (_, thunkApi) => {
+  async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/admin/sellers")).data;
+      const query = searchQuery ? `?q=${searchQuery}` : "";
+      const data = (await axios.get("/api/admin/sellers" + query)).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error);
@@ -30,11 +31,14 @@ export const getSeller_admin: any = createAsyncThunk(
 );
 export const getProductsSeller_admin: any = createAsyncThunk(
   "adminSellerSlice/getProductsSeller",
-  async (id, thunkApi) => {
+  async ({ seller_id, searchQuery }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/admin/sellers/" + id + "/products"))
-        .data;
+      const query = searchQuery ? `?q=${searchQuery}` : "";
+
+      const data = (
+        await axios.get("/api/admin/sellers/" + seller_id + "/products" + query)
+      ).data;
       return data;
     } catch (error: any) {
       return rejectWithValue(error);

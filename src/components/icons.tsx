@@ -37,17 +37,25 @@ const Icons = {
       </span>
     </Link>
   ),
-  storeLogo: () => (
-    <div className="flex items-center">
-      <Link
-        href={"/"}
-        className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap"
-      >
-        circle
-      </Link>
-      <span className="font-[200] text-secondMain text-[38px]">Store</span>
-    </div>
-  ),
+  storeLogo: ({ store_id }: { store_id: string | string[] }) => {
+    const sellerLink = "/seller/store/" + store_id;
+    return (
+      <div className="flex items-center">
+        <Link
+          href={"/"}
+          className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap"
+        >
+          circle
+        </Link>
+        <Link
+          href={store_id ? sellerLink : "/"}
+          className="font-[200] text-secondMain text-[38px]"
+        >
+          Store
+        </Link>
+      </div>
+    );
+  },
   adminLogo: () => (
     <div className="flex items-center">
       <Link
@@ -56,15 +64,20 @@ const Icons = {
       >
         circle
       </Link>
-      <span className="font-[200] text-secondMain text-[38px]">Admin</span>
+      <Link
+        href={"/admin/dashboard"}
+        className="font-[200] text-secondMain text-[38px]"
+      >
+        Admin
+      </Link>
     </div>
   ),
-  logo: ({h,w}:{h?:string,w?:string}) => (
-    <div >
+  logo: ({ h, w }: { h?: string; w?: string }) => (
+    <div>
       <svg
         id="logo-83"
-        width={w||"40"}
-        height={h||"45"}
+        width={w || "40"}
+        height={h || "45"}
         viewBox="0 0 40 35"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

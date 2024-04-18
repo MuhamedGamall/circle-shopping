@@ -14,7 +14,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import {
   Table,
@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/table";
 
 import { Product } from "@/types";
-import SearchInputs from "./search-inputs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,15 +34,20 @@ import {
 } from "../ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { LoadingSkeleton } from "./table-loading";
+import { Input } from "../ui/input";
 
 export function ProductsTable({
   data,
   loading,
   columns,
+  setSearchQuery,
+  searchQuery,
 }: {
   data: Product[];
   loading: boolean;
   columns: any[];
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  searchQuery: string;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -71,7 +75,16 @@ export function ProductsTable({
   return (
     <div className="w-full ">
       <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
-        <SearchInputs dataLength={data?.length} table={table} />
+        <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
+          <Input
+            placeholder={`Search`}
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            type="text"
+            disabled={loading}
+            className="border rounded-sm "
+          />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild className="mx-2">
             <Button

@@ -17,7 +17,7 @@ export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { category_id } = useParams();
-  const { data: cateogries } = useCategories();
+  const { data: categories } = useCategories();
   const { category, loading } = useAppSelector((state) => state.categories);
 
   const [
@@ -76,15 +76,18 @@ export default function SubmitData() {
     (obj, index, arr) =>
       arr.findIndex((item) => item.name === obj.name) === index
   );
-  const findSameMainCate = cateogries?.find(
+
+  const findSameMainCate = categories?.find(
     (cate) =>
       cate?.main_category?.name === mainCateValues?.name &&
       cate?._id !== category_id
   );
 
   const onSubmit = async () => {
+
     if (findSameMainCate)
       return toast.error("Main category label already exists in the database.");
+    
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."

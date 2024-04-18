@@ -15,6 +15,5 @@ const CategorySchema = new Schema(
   },
   { timestamps: true }
 );
-
 export const Category =
   models?.Category || model<any>("Category", CategorySchema);

@@ -51,8 +51,8 @@ export default function SubmitData() {
   );
   const onSubmit = async () => {
     if (findSameMainCate)
-      return toast.error("Main category label already exists in the database.");
-
+      return toast.error("This category already exists.");
+ 
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."

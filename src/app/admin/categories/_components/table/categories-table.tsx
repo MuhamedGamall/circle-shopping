@@ -6,15 +6,16 @@ import { DataTable } from "@/app/admin/_components/table";
 import { useState } from "react";
 
 export function CategoriesTable() {
-  // const [searchQuery, setSearchQuery] = useState<string>("");
-  const { data, loading } = useCategories( );
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { data, loading } = useCategories(searchQuery);
   return (
+
     <DataTable
       data={data}
       loading={loading}
       columns={columns}
-      // searchQuery={searchQuery}
-      // setSearchQuery={setSearchQuery}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
     />
   );
 }

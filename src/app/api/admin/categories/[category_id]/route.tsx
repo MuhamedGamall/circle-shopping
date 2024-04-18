@@ -31,7 +31,20 @@ export async function PATCH(
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    const categories: any = await Category.find().lean();
     const category = await Category.findOne({ _id: category_id }).lean();
+
+    
+    const findSameMainCate = categories?.find(
+      (cate: any) =>
+        cate?.main_category?.name === main_category?.name &&
+        cate?._id + "" !== category_id
+    );
+
+    if (findSameMainCate) {
+      return new NextResponse("Conflict", { status: 409 });
+    }
+
     if (!category) {
       return new NextResponse("Not Found", { status: 404 });
     }

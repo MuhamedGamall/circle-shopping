@@ -5,10 +5,11 @@ import toast from "react-hot-toast";
 
 export const getAllProducts: any = createAsyncThunk(
   "productsSlice/getAllProducts",
-  async (_, thunkApi) => {
+  async (searchQuery:string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const products = (await axios.get("/api/admin/products")).data;
+      const query = searchQuery ? `?q=${searchQuery}` : "";
+      const products = (await axios.get("/api/admin/products"+query)).data;
       return products;
     } catch (error: any) {
       console.log(error);

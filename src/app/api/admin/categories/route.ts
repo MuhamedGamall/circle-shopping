@@ -10,6 +10,8 @@ import {
   uploadSubCategoryImages,
 } from "@/utils/cloudinary";
 import { randomBytes } from "crypto";
+import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,13 +26,19 @@ export async function POST(req: NextRequest) {
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    const findSameMainCate = await Category.findOne({
+      "main_category.name": main_category.name,
+    }).lean();
+    if (findSameMainCate) {
+      return new NextResponse("Conflict", { status: 409 });
+    }
     const idForCloudonaryImages = randomBytes(12).toString("hex");
 
     const mainCatefolderName = `circle-shopping/categories/${idForCloudonaryImages}/main-categories`;
     const subCatesfolderName = `circle-shopping/categories/${idForCloudonaryImages}/sub-categories`;
 
     // Upload base64 images to Cloudinary
-
     const uploadMainCategoryImage = await uploadImages({
       images: [main_category?.image],
       folderName: mainCatefolderName,
@@ -52,17 +60,32 @@ export async function POST(req: NextRequest) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
 export async function GET(req: NextRequest) {
   try {
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
-
+    const query = req.nextUrl.searchParams.get("q") || "";
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const categories = await Category.find();
-    
+
+    let filter = {};
+
+    if (query) {
+      const regex = new RegExp(query, "i");
+      if (mongoose.isValidObjectId(query)) {
+        filter = { _id: query };
+      } else {
+        filter = {$or:[{ "main_category.name": { $regex: regex } }]}
+      }
+    }
+
+    const categories = await Category.find(filter).sort(
+      query ? { "main_category.name": 1 } : {}
+    );
+
     return NextResponse.json(categories);
   } catch (error) {
     console.log("[ADMIN:GET-CATEGORIES]", error);

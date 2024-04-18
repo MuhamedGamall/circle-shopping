@@ -23,11 +23,12 @@ export async function POST(req: NextRequest) {
         { store_phone_number: body.store_phone_number },
       ],
     }).lean();
+
     const errorsMessages = [];
-    if (existingRecord?.personal_email === email)
-      errorsMessages.push(
-        "Your personal email is already associated with a store"
-      );
+
+    if (existingRecord?.personal_email === email) {
+      return new NextResponse("You have already store", { status: 409 });
+    }
 
     if (existingRecord?.business_email === body.business_email)
       errorsMessages.push(

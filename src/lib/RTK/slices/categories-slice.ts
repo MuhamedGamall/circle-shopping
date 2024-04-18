@@ -5,10 +5,10 @@ import toast from "react-hot-toast";
 
 export const getCategories: any = createAsyncThunk(
   "categoriesSlice/getCategories",
-  async (searchQuery:string, thunkApi) => {
+  async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const query = searchQuery ? `?q=${encodeURIComponent(searchQuery)}` : "";
+      const query = searchQuery ? `?q=${searchQuery}` : "";
       const data = (await axios.get(`/api/admin/categories${query}`)).data;
       return data;
     } catch (error: any) {
@@ -41,7 +41,9 @@ export const createCategory: any = createAsyncThunk(
       toast.success("Category created successfully.");
       return data;
     } catch (error: any) {
-      toast.error("Uh oh! Something went wrong with your request.");
+      if (error?.response?.status === 409)
+        toast.error("This category already exists.");
+      else toast.error("Uh oh! Something went wrong");
       return rejectWithValue(error.message);
     }
   }
@@ -69,7 +71,9 @@ export const updateCategory: any = createAsyncThunk(
       toast.success("Category updated successfully");
       return params;
     } catch (error: any) {
-      toast.error("Uh oh! Something wnt worng with your request");
+      if (error?.response?.status === 409)
+        toast.error("This category already exists.");
+      else toast.error("Uh oh! Something went wrong");
       return rejectWithValue(error.message);
     }
   }
