@@ -81,14 +81,16 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "status",
+    accessorKey: "ban.is_banned",
     header: ({ column }) => {
+      console.log(column);
+      
       return (
         <Button
-          className="uppercase"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        className="uppercase "
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
           status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -96,6 +98,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
+      
       return (
         <HandleBanBtn
           ban={ban}

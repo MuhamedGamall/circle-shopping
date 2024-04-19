@@ -97,7 +97,18 @@ const initialState: SellerState = {
 const adminSellerSlice = createSlice({
   name: "adminSellerSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    handleSellerBan: (state: SellerState, action: PayloadAction<any>) => {
+      state.sellers = state.sellers?.map((seller) =>
+        seller?._id === action.payload?._id
+          ? {
+              ...seller,
+              ban: { is_banned: action.payload?.isBanned, reason: "" },
+            }
+          : seller
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -214,3 +225,4 @@ const adminSellerSlice = createSlice({
   },
 });
 export default adminSellerSlice.reducer;
+export const { handleSellerBan } =adminSellerSlice.actions;

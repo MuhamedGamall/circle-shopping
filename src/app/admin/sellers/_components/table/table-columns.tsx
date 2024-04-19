@@ -74,7 +74,7 @@ export const columns: ColumnDef<any>[] = [
     },
   },
   {
-    accessorKey: "ban",
+    accessorKey: "ban.is_banned",
     header: ({ column }) => {
       return (
         <Button

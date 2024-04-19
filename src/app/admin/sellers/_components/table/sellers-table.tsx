@@ -9,10 +9,10 @@ import { useDebounce } from "react-use";
 
 export function SellersTable() {
   const dispatch = useAppDispatch();
+  
+  const { sellers, loading } = useAppSelector((state) => state.sellers);
   const [debouncedValue, setDebouncedValue] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  const { sellers, loading } = useAppSelector((state) => state.sellers);
   const query = searchQuery ? searchQuery : "";
   useDebounce(
     () => {

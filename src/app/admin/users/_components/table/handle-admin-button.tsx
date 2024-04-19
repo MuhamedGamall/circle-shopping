@@ -1,6 +1,8 @@
 import getCEOEmail from "@/actions/get-ceo-email";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
+import { useAppDispatch } from "@/hooks/redux";
+import { handleUserAdmin } from "@/lib/RTK/slices/admin/users";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -19,6 +21,7 @@ export default function HandleAdminBtn({
   const personalEmail = session?.data?.user?.email;
   const [isAdmin, setIsAdmin] = useState(false);
   const [CEOEmail, setCEOEmail] = useState<string | undefined>("");
+  const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isCEO = personalEmail === CEOEmail;
   useEffect(() => {
@@ -41,9 +44,17 @@ export default function HandleAdminBtn({
 
     try {
       setIsSubmitting(true);
-      await axios.patch("/api/admin/users/" + user_id + "/handle-admin", {
-        admin: !isAdmin,
-      });
+      const update = await axios.patch(
+        "/api/admin/users/" + user_id + "/handle-admin",
+        {
+          admin: !isAdmin,
+        }
+      );
+      if (update?.status === 200) {
+        dispatch(handleUserAdmin({ _id: user_id, isAdmin: !isAdmin }));
+        setIsAdmin(!isAdmin);
+      }
+      
       setIsAdmin(!isAdmin);
     } catch (error) {
       console.log("error updating admin", error);

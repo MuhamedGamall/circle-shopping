@@ -1,6 +1,8 @@
 import DeleteReasonsBtn from "@/components/delete-reason-button";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
+import { useAppDispatch } from "@/hooks/redux";
+import { handleSellerBan } from "@/lib/RTK/slices/admin/sellers";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -28,6 +30,7 @@ export default function HandleBanBtn({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const session = useSession();
   const personalEmail = session?.data?.user?.email;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsBanned(ban?.is_banned);
@@ -41,10 +44,13 @@ export default function HandleBanBtn({
 
     try {
       setIsSubmitting(true);
-      await axios.patch("/api/admin/sellers/" + seller_id + "/handle-ban", {
+    const update =  await axios.patch("/api/admin/sellers/" + seller_id + "/handle-ban", {
         ban: { is_banned: !isBanned, reason },
       });
-      setIsBanned(!isBanned);
+      if (update?.status === 200) {
+        dispatch(handleSellerBan({ _id: seller_id, isBanned: !isBanned }));
+        setIsBanned(!isBanned);
+      }
     } catch (error) {
       console.log("error updating ban", error);
     } finally {

@@ -5,10 +5,12 @@ import toast from "react-hot-toast";
 
 export const getUsers: any = createAsyncThunk(
   "usersSlice/getUsers",
-  async (_, thunkApi) => {
+  async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/admin/users")).data;
+      const query = searchQuery ? `?q=${searchQuery}` : "";
+
+      const data = (await axios.get("/api/admin/users" + query)).data;
       return data || [];
     } catch (error: any) {
       console.log(error);
@@ -61,7 +63,30 @@ const initialState: UserState = {
 const usersSlice = createSlice({
   name: "usersSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    handleUserAdmin: (state: UserState, action: PayloadAction<any>) => {
+      state.users = state.users?.map((user) =>
+        user?._id === action.payload?._id
+          ? {
+              ...user,
+              admin: action.payload?.isAdmin,
+            }
+          : user
+      );
+      console.log(state.users);
+
+    },
+    handleUserBan: (state: UserState, action: PayloadAction<any>) => {
+      state.users = state.users?.map((user) =>
+        user?._id === action.payload?._id
+          ? {
+              ...user,
+              ban: { is_banned: action.payload?.isBanned, reason: "" },
+            }
+          : user
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(
@@ -107,29 +132,8 @@ const usersSlice = createSlice({
           state.error = action.payload;
         }
       );
-    // builder
-    //   .addCase(
-    //     updateAccount.pending,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     updateAccount.fulfilled,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.account = { ...state.account, ...action.payload };
 
-    //     }
-    //   )
-    //   .addCase(
-    //     updateAccount.rejected,
-    //     (state: UserState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
   },
 });
 export default usersSlice.reducer;
+export const { handleUserBan, handleUserAdmin } = usersSlice.actions;

@@ -2,6 +2,8 @@ import getCEOEmail from "@/actions/get-ceo-email";
 import DeleteReasonsBtn from "@/components/delete-reason-button";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
+import { useAppDispatch } from "@/hooks/redux";
+import { handleUserBan } from "@/lib/RTK/slices/admin/users";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -30,7 +32,7 @@ export default function HandleBanBtn({
   const personalEmail = session?.data?.user?.email;
   const [isBanned, setIsBanned] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setIsBanned(ban?.is_banned);
   }, [ban?.is_banned]);
@@ -43,10 +45,16 @@ export default function HandleBanBtn({
 
     try {
       setIsSubmitting(true);
-      await axios.patch("/api/admin/users/" + user_id + "/handle-ban", {
-        ban: { is_banned: !isBanned, reason },
-      });
-      setIsBanned(!isBanned);
+      const update = await axios.patch(
+        "/api/admin/users/" + user_id + "/handle-ban",
+        {
+          ban: { is_banned: !isBanned, reason },
+        }
+      );
+      if (update?.status === 200) {
+        dispatch(handleUserBan({ _id: user_id, isBanned: !isBanned }));
+        setIsBanned(!isBanned);
+      }
     } catch (error) {
       console.log("error updating ban", error);
     } finally {
