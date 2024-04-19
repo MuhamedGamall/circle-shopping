@@ -24,11 +24,14 @@ export const createProduct_seller: any = createAsyncThunk(
 );
 export const getProducts_seller: any = createAsyncThunk(
   "sellerProductsSlice/getProducts",
-  async (store_id, thunkApi) => {
+  async ({ store_id, searchQuery }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const products = (await axios.get("/api/store/" + store_id + "/products"))
-        .data;
+      const query = searchQuery ? `?q=${searchQuery}` : "";
+
+      const products = (
+        await axios.get("/api/store/" + store_id + "/products" + query)
+      ).data;
       return products;
     } catch (error: any) {
       console.log(error);

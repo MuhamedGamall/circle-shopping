@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
 import { removeFolder } from "@/utils/cloudinary";
+import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -55,6 +56,7 @@ export async function GET(
     await mongoConnect();
     const session = await getServerSession(authOptions);
     const user = session?.user;
+    const query: string | null = req.nextUrl.searchParams.get("q") || "";
 
     const store: any = await Store.findOne({
       _id: store_id,
@@ -66,9 +68,25 @@ export async function GET(
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }
-    const products = await Product.find({
-      store_id,
-    }).lean();
+    let filter = {};
+
+    if (query) {
+      const regex = new RegExp(query, "i");
+      if (mongoose.isValidObjectId(query)) {
+        filter = { _id: new mongoose.Types.ObjectId(query) };
+      } else {
+        filter = {
+          $or: [
+            { title: { $regex: regex } },
+            { "price.base_price": +query },
+            { "category.main_category": { $regex: regex } },
+          ],
+        };
+      }
+    }
+
+    const products = await Product.aggregate([{ $match: filter }]);
+
     return NextResponse.json(products);
   } catch (error) {
     console.log("[SELLER:GET-PRODUCTS]", error);

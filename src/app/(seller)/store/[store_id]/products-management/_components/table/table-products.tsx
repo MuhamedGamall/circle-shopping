@@ -8,10 +8,13 @@ import { useParams } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { columns } from "./table-columns";
 import { ProductsTable } from "@/components/table/table";
+import { useState } from "react";
 
 export function DataTable() {
   const { store_id } = useParams();
-  const { data, loading } = useProductsSeller();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { data, loading } = useProductsSeller(searchQuery);
+  
   return (
     <div>
       <Link
@@ -25,7 +28,8 @@ export function DataTable() {
       >
         <FaPlus /> Add New
       </Link>
-      <ProductsTable data={data} loading={loading} columns={columns} />
+      <ProductsTable  searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery} data={data} loading={loading} columns={columns} />
     </div>
   );
 }
