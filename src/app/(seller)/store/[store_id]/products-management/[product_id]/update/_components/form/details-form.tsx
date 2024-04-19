@@ -19,7 +19,24 @@ import { productDetailsSchema } from "../../schema";
 import AddDetails from "./add-details";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
-
+const coloursOptions = [
+  "Beige",
+  "Black",
+  "Blue",
+  "Brown",
+  "Clear",
+  "Gold",
+  "Green",
+  "Grey",
+  "Multicolour",
+  "Orange",
+  "Pink",
+  "Purple",
+  "Red",
+  "Silver",
+  "White",
+  "Yellow",
+];
 export default function DetailsForm({
   data,
   loading,
@@ -171,24 +188,7 @@ export default function DetailsForm({
               labelClassName={"text-shade text-[12px]"}
               label="Colour *"
               form={form}
-              selectData={[
-                "Beige",
-                "Black",
-                "Blue",
-                "Brown",
-                "Clear",
-                "Gold",
-                "Green",
-                "Grey",
-                "Multicolour",
-                "Orange",
-                "Pink",
-                "Purple",
-                "Red",
-                "Silver",
-                "White",
-                "Yellow",
-              ]}
+              selectData={coloursOptions}
             />
           </div>
           <AddDetails

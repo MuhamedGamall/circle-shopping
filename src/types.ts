@@ -72,6 +72,7 @@ export type Product = {
   warranty: string;
   item_condition: string;
   colour: string;
+  colours: string[]
   box_details: string;
   model_height: string;
   sizes: string[];

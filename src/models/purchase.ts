@@ -5,7 +5,7 @@ const PurchaseSchema = new Schema(
     order_id: { type: String, unique: true, required: true },
     store_id: { type: String, unique: true, required: true },
     customer_id: { type: String, required: true },
-    product_ids: { type: [String] },
+    product_ids: [{ type: String }],
     products_quantity: { type: Number, required: true },
     total_amount_paid: { type: Number, required: true },
     costumer_details: {

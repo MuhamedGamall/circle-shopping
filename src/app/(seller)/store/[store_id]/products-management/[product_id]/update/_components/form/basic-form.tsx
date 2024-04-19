@@ -10,16 +10,41 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { productBasicSchema } from "../../schema";
 import CustomTextarea from "@/components/custom-textarea";
-import { SizesDropdownMenu } from "./select-sizes";
-import axios from "axios";
-import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 import { useAppDispatch } from "@/hooks/redux";
-
+import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { productBasicSchema } from "../../schema";
+import { DropdownMenuSelection } from "./select-values";
+const sizesOptions = [
+  "Small",
+  "Medium",
+  "Large",
+  "Extra Large",
+  "XXL",
+  "XXXL",
+  "XXXXL",
+  "XXXXXL",
+];
+const coloursOptions = [
+  "Beige",
+  "Black",
+  "Blue",
+  "Brown",
+  "Clear",
+  "Gold",
+  "Green",
+  "Grey",
+  "Multicolour",
+  "Orange",
+  "Pink",
+  "Purple",
+  "Red",
+  "Silver",
+  "White",
+  "Yellow",
+];
 export default function BasicForm({
   data,
   loading,
@@ -35,6 +60,7 @@ export default function BasicForm({
 }) {
   const dispatch = useAppDispatch();
   const [selectSizes, setSelectSizes] = useState<string[]>([]);
+  const [selectColours, setSelectColours] = useState<string[]>([]);
   const form = useForm<z.infer<typeof productBasicSchema>>({
     resolver: zodResolver(productBasicSchema),
     defaultValues: {
@@ -43,6 +69,7 @@ export default function BasicForm({
       item_pack_quantity: 1,
       model_number: "",
       sizes: [],
+      colours: [],
     },
     values: {
       title: data?.title || "",
@@ -50,15 +77,17 @@ export default function BasicForm({
       item_pack_quantity: data?.item_pack_quantity || 1,
       model_number: data?.model_number || "",
       sizes: [],
+      colours: [],
     },
   });
+
   useEffect(() => {
+    const colours = data?.colours || [];
     const sizes = data?.sizes || [];
-    setSelectSizes((prevSizes) => {
-      const uniqueSizes: any = new Set([...prevSizes, ...sizes]);
-      return [...uniqueSizes];
-    });
-  }, [data?.sizes, setSelectSizes]);
+    setSelectColours(colours);
+    setSelectSizes(sizes);
+  }, [data?.colours, data?.sizes]);
+
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
     const update = await dispatch(
@@ -66,6 +95,7 @@ export default function BasicForm({
         data: {
           ...values,
           sizes: selectSizes,
+          colours: selectColours,
         },
         store_id,
         product_id,
@@ -116,12 +146,23 @@ export default function BasicForm({
               placeholder="Model Number"
             />
 
-            <SizesDropdownMenu
-              selectSizes={selectSizes}
-              setSelectSizes={setSelectSizes}
+            <DropdownMenuSelection
+              valuesSelected={selectSizes}
+              setValuesSelected={setSelectSizes}
               disabled={isSubmitting || loading}
+              label={"Sizes"}
+              options={sizesOptions}
             />
           </div>
+
+          <DropdownMenuSelection
+            valuesSelected={selectColours}
+            setValuesSelected={setSelectColours}
+            disabled={isSubmitting || loading}
+            label={"Colorus"}
+            options={coloursOptions}
+            className="mt-5"
+            />
           <CustomTextarea
             label="Long Description"
             labelClassName={"text-shade text-[12px] "}
@@ -130,7 +171,7 @@ export default function BasicForm({
             name="description"
             className={"w-full h-[200px] resize-none"}
             placeholder="Long Description"
-          />
+            />
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
             disabled={loading || isSubmitting}

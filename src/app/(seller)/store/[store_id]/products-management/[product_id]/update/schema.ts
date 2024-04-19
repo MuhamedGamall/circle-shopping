@@ -83,6 +83,7 @@ export const productBasicSchema = z.object({
     .number()
     .refine((value) => value >= 0, "Field is required"),
   sizes: z.array(z.string()),
+  colours: z.array(z.string()),
 });
 
 export const productDetailsSchema = z.object({

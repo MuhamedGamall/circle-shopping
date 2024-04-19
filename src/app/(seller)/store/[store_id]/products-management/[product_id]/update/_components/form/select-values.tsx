@@ -11,38 +11,43 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 
-export function SizesDropdownMenu({
+export function DropdownMenuSelection({
   disabled,
-  setSelectSizes,
-  selectSizes,
+  setValuesSelected,
+  valuesSelected,
+  label,
+  className,
+  options,
 }: {
   disabled: boolean;
-  setSelectSizes: Dispatch<SetStateAction<string[]>>;
-  selectSizes: string[];
+  setValuesSelected: Dispatch<SetStateAction<string[]>>;
+  valuesSelected: string[];
+  label: string;
+  options: string[];
+  className?: string;
 }) {
-  
   const handleCheckedChange = (value: string, checked: boolean) => {
     if (checked) {
-      setSelectSizes((curr) => [...curr, value]);
+      setValuesSelected((curr) => [...curr, value]);
     } else {
-      setSelectSizes((prevCheckedValues) =>
+      setValuesSelected((prevCheckedValues) =>
         prevCheckedValues.filter((val) => val !== value)
       );
     }
   };
-  
+
   return (
     <DropdownMenu>
-      <div className="flex flex-col">
-        <Label className="text-shade text-[12px] mb-2">Sizes</Label>
+      <div className={cn("flex flex-col", className)}>
+        <Label className="text-shade text-[12px] mb-2">{label}</Label>
         <DropdownMenuTrigger asChild disabled={disabled}>
           <Button
             variant="outline"
             className="rounded-sm justify-start w-full flex items-center gap-3 overflow-x-auto overflow-y-hidden py-5"
           >
-            {selectSizes?.length === 0
-              ? "Select Sizes"
-              : selectSizes?.map((el) => {
+            {valuesSelected?.length === 0
+              ? "Select " + label
+              : valuesSelected?.map((el) => {
                   return (
                     <span
                       key={el}
@@ -55,27 +60,23 @@ export function SizesDropdownMenu({
           </Button>
         </DropdownMenuTrigger>
       </div>
-      <DropdownMenuContent className={cn("w-56 ")}>
-        <DropdownMenuLabel>Sizes</DropdownMenuLabel>
+      <DropdownMenuContent align="start" className={"w-56"}>
+        <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {[
-          "Small",
-          "Medium",
-          "Large",
-          "Extra Large",
-          "XXL",
-          "XXXL",
-          "XXXXL",
-          "XXXXXL",
-        ].map((size) => (
-          <DropdownMenuCheckboxItem
-            key={size}
-            checked={selectSizes?.includes(size)}
-            onCheckedChange={(checked) => handleCheckedChange(size, checked)}
-          >
-            {size}
-          </DropdownMenuCheckboxItem>
-        ))}
+
+        <div className={"max-h-[350px] overflow-y-auto"}>
+          {options.map((option) => (
+            <DropdownMenuCheckboxItem
+              key={option}
+              checked={valuesSelected?.includes(option)}
+              onCheckedChange={(checked) =>
+                handleCheckedChange(option, checked)
+              }
+            >
+              {option}
+            </DropdownMenuCheckboxItem>
+          ))}
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
