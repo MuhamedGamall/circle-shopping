@@ -44,17 +44,10 @@ export default function HandleAdminBtn({
 
     try {
       setIsSubmitting(true);
-      const update = await axios.patch(
-        "/api/admin/users/" + user_id + "/handle-admin",
-        {
-          admin: !isAdmin,
-        }
-      );
-      if (update?.status === 200) {
-        dispatch(handleUserAdmin({ _id: user_id, isAdmin: !isAdmin }));
-        setIsAdmin(!isAdmin);
-      }
-      
+      await axios.patch("/api/admin/users/" + user_id + "/handle-admin", {
+        admin: !isAdmin,
+      });
+      dispatch(handleUserAdmin({ _id: user_id, isAdmin: !isAdmin }));
       setIsAdmin(!isAdmin);
     } catch (error) {
       console.log("error updating admin", error);

@@ -13,8 +13,8 @@ const DeleteBtn = ({
   product_id: string | string[];
 }) => {
   const dispatch = useAppDispatch();
-  const onDelete = () => {
-    dispatch(deleteProduct_seller({ store_id, product_id }));
+  const onDelete = async() => {
+  await  dispatch(deleteProduct_seller({ store_id, product_id }));
   };
 
   return (

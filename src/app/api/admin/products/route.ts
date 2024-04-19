@@ -28,12 +28,20 @@ export async function GET(req: NextRequest) {
             { "price.base_price": +query },
             { "category.main_category": { $regex: regex } },
           ],
-
         };
       }
     }
+    const CEOEmailForExclusion = process.env.CEO_EMAIL;
 
-    const products = await Product.aggregate([{ $match: {...filter,is_published:true} }]);
+    const products = await Product.aggregate([
+      {
+        $match: {
+          ...filter,
+          is_published: true,
+          store_personal_email: { $ne: CEOEmailForExclusion },
+        },
+      },
+    ]);
 
     return NextResponse.json(products);
   } catch (error) {

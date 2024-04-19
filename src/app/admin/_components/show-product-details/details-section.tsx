@@ -20,12 +20,6 @@ export default function ShowProductDetails({
   product: Product | null;
   loading: boolean;
 }) {
-  // const dispatch = useAppDispatch();
-  // const { product_id } = useParams();
-  // const { product, loading } = useAppSelector((state) => state.allProducts);
-  // useEffect(() => {
-  //   dispatch(getProduct(product_id));
-  // }, [dispatch, product_id]);
 
   return (
     <div className="rounded-sm border">

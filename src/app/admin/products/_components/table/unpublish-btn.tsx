@@ -35,18 +35,19 @@ const UnpublishBtn = ({
   const onSubmit = async (reasonSelectedValue: string) => {
     if (!reasonSelectedValue) return toast.error("Please select a reason");
     try {
-      await dispatch(
+      const update = await dispatch(
         unpublishProduct({
-          store_id,
+          store_id:store_id,
           product_id,
         })
       );
-      await axios.post("/api/admin/notifications", {
-        store_id,
-        product_id,
-        personal_email: store_personal_email,
-        message: reasonSelectedValue,
-      });
+      if (update?.meta?.requestStatus == "fulfilled")
+        await axios.post("/api/admin/notifications", {
+          store_id,
+          product_id,
+          personal_email: store_personal_email,
+          message: reasonSelectedValue,
+        });
     } catch (err) {
       console.log("error when delete product", err);
     }

@@ -46,15 +46,13 @@ export function ChangePassword() {
     setPassIsMatch(true);
 
     try {
-      const req = await axios.put("/api/account", {
+      await axios.put("/api/account", {
         confirmPassword: values.confirm_password,
         currPass: values.current_password,
       });
-      if (req.status === 200) {
         setPassIsCorrect(true);
         toast.success("Password updated successfully!");
         setOpen(false);
-      }
     } catch (error: any) {
       if (error?.response?.status !== 406) {
         toast.error("Something went wrong try again");

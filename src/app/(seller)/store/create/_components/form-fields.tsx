@@ -32,12 +32,11 @@ export default function FormFields() {
     try {
       setCreateStoreError("");
       const data = await dispatch(createStore_seller(values));
-      if (data?.payload?.response?.status === 409) {
+      if (data?.payload?.response?.status === 409)
         setCreateStoreError(data?.payload?.response?.data);
-      }
-      if (data?.error?.message !== "Rejected") {
+
+      if (data?.meta?.requestStatus === "fulfilled")
         router.replace(`/store/${data?.payload?._id}/dashboard`);
-      }
     } catch (error) {
       console.log(error);
     }

@@ -75,9 +75,9 @@ export default function SubmitData() {
       })
     );
     setIsSubmitting(false);
-    if (create.meta?.requestStatus === "fulfilled") {
+    if (create.meta?.requestStatus === "fulfilled") 
       router.replace("/admin/categories");
-    }
+    
   };
 
   return (

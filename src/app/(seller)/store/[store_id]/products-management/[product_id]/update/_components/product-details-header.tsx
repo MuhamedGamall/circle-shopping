@@ -44,7 +44,6 @@ export default function ProductDetailsHeader({
       toast.success(
         `Product ${isPublished ? "unpublished" : "published"} successfully`
       );
-      setIsSubmitting(false);
     } catch (error: any) {
       if (error?.response?.status === 400)
         toast.error("Please fill all fields before saving");
@@ -87,7 +86,7 @@ export default function ProductDetailsHeader({
                 </span>
               </div>
               <div className="sm:flex hidden items-center gap-1 text-[#65727d] [&>span]:text-[11px]">
-                <span >{data?.category?.main_category}</span>
+                <span>{data?.category?.main_category}</span>
                 <BsChevronRight className="h-2 w-2 mt-1" />
                 <span>{data?.category?.sub_category}</span>
                 <BsChevronRight className="h-2 w-2 mt-1" />

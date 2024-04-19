@@ -45,16 +45,12 @@ export default function HandleBanBtn({
 
     try {
       setIsSubmitting(true);
-      const update = await axios.patch(
-        "/api/admin/users/" + user_id + "/handle-ban",
-        {
-          ban: { is_banned: !isBanned, reason },
-        }
-      );
-      if (update?.status === 200) {
-        dispatch(handleUserBan({ _id: user_id, isBanned: !isBanned }));
-        setIsBanned(!isBanned);
-      }
+      await axios.patch("/api/admin/users/" + user_id + "/handle-ban", {
+        ban: { is_banned: !isBanned, reason },
+      });
+
+      dispatch(handleUserBan({ _id: user_id, isBanned: !isBanned }));
+      setIsBanned(!isBanned);
     } catch (error) {
       console.log("error updating ban", error);
     } finally {

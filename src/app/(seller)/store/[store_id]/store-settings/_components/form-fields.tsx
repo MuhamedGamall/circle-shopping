@@ -45,9 +45,9 @@ export default function FormFields() {
           _id: data?._id,
         })
       );
-      if (req?.payload?.response?.status === 409) {
+      if (req?.payload?.response?.status === 409) 
         setCreateStoreError(req?.payload?.response?.data);
-      }
+      
     } catch (error) {
       console.log(error);
     }

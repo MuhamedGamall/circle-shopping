@@ -38,8 +38,8 @@ export function CheckPassword({
     if (checkPass) {
       try {
         setPassIsCorrect(true);
-        dispatch(deleteAccount(data?.email));
-        setOpen(false);
+        const deleteAcc = await dispatch(deleteAccount(data?.email));
+        if (deleteAcc?.meta?.requestStatus == "fulfilled") setOpen(false);
         setTimeout(() => {
           signOut({ callbackUrl: "/" });
         }, 2000);

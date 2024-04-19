@@ -105,28 +105,31 @@ export default function ImageForm({
         })
       );
 
+      if (update?.meta?.requestStatus !== "fulfilled") return;
+      setIsPublished(false);
+      
       // get the image list urls again after submitting
       const product: Product = (
         await axios.get("/api/store/" + store_id + "/products/" + product_id)
       ).data;
-      
-      if (update?.meta?.requestStatus == "fulfilled") setIsPublished(false);
+
       setImageValue(product?.images);
 
       if (idsForDeleteFromCloudinary.length) {
-        await dispatch(
+        const update = await dispatch(
           deleteProductImages_seller({
             store_id,
             product_id,
             idsForDeleteFromCloudinary,
           })
         );
-        setIdsForDeleteFromCloudinary([]);
+        if (update?.meta?.requestStatus == "fulfilled")
+          setIdsForDeleteFromCloudinary([]);
       }
-
-      setIsSubmitting(false);
     } catch (error) {
       toast.error("Uh oh! Something went wrong with updating the product.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
