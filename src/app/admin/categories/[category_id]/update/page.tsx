@@ -14,9 +14,9 @@ export default function CategoriesPage() {
           <Banner
             title="Image Instructions"
             details={[
-              "660 x 900 or more recommended",
-              "Image height should be greater than 900px",
-              "Image width should be greater than 660px",
+              "Image dimensions should be 660 x 900 or more recommended",
+              "Image dimensions should be height should be greater than 900px",
+              "Image dimensions should be width should be greater than 660px",
               "File size should be less than 10MB",
               "Non-backward images are recommended for the product to appear clearly",
             ]}

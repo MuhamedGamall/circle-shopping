@@ -24,24 +24,24 @@ export default function ImageForm({
     if (image?.size > 10 * 1024 * 1024)
       return toast.error("This file is larger than 10MB");
 
-    const checkImageDimensions = async (image: File): Promise<boolean> => {
-      return new Promise((resolve) => {
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(image);
-        img.onload = () => {
-          resolve(img.width >= 660 && img.height >= 900);
-        };
-      });
-    };
+    // const checkImageDimensions = async (image: File): Promise<boolean> => {
+    //   return new Promise((resolve) => {
+    //     const img = document.createElement("img");
+    //     img.src = URL.createObjectURL(image);
+    //     img.onload = () => {
+    //       resolve(img.width >= 660 && img.height >= 900);
+    //     };
+    //   });
+    // };
 
-    const isValidImage = await checkImageDimensions(image);
-    if (isValidImage) {
+    // const isValidImage = await checkImageDimensions(image);
+    // if (isValidImage) {
       readerImage(image, id);
-    } else {
-      toast.error(
-        "Image dimensions should be at least 660px width and 900px height."
-      );
-    }
+    // } else {
+    //   toast.error(
+    //     "Image dimensions should be at least 660px width and 900px height."
+    //   );
+    // }
   };
 
   return (
@@ -51,40 +51,50 @@ export default function ImageForm({
           <span className="text-[10px] text-shade mb-2 block whitespace-nowrap">
             Upload image *
           </span>
+
+          <div
+            className={cn(
+              "relative  min-w-[62px] max-w-[62px] h-[62px] bg-[#eff3fd]",
+              {
+                hidden: !imageValue,
+              }
+            )}
+          >
+            <label
+              htmlFor={"upload-" + id}
+              className={cn("cursor-pointer absolute -top-3 -right-5  ")}
+            >
+              <TbReplace className=" h-6 w-6 text-slate-100 bg-slate-600 p-1 rounded-full" />
+            </label>
+            <Image
+              src={imageValue || "/"}
+              alt="image"
+              height={900}
+              width={660}
+              className={cn("w-full h-full object-cover shadow-md")}
+            />
+          </div>
+
           <label
             htmlFor={"upload-" + id}
             className={cn(
-              "flex items-center justify-center cursor-pointer min-w-[62px] max-w-[62px] h-[92px]  bg-[#eff3fd]"
+              "flex items-center justify-center cursor-pointer min-w-[62px] max-w-[62px] h-[62px] bg-[#eff3fd]",
+              {
+                hidden: imageValue,
+              }
             )}
           >
+            <Input
+              onChange={onChange}
+              type="file"
+              id={"upload-" + id}
+              className="hidden"
+              accept=".png,.jpg,.jpeg"
+            />
             <FaCirclePlus
               className={cn("text-slate-500 h-4 w-4", { hidden: imageValue })}
             />
-            <div
-              className={cn("relative  w-full h-full", {
-                hidden: !imageValue,
-              })}
-            >
-              <Image
-                src={imageValue || "/"}
-                alt="image"
-                height={900}
-                objectFit="cover"
-                width={660}
-                className={cn("w-full h-full object-cover shadow-md", {
-                  hidden: !imageValue,
-                })}
-              />
-              <TbReplace className="  absolute top-2 right-2  opacity-[.6] w-6 h-6 text-slate-100 " />
-            </div>
           </label>
-          <Input
-            onChange={onChange}
-            type="file"
-            id={"upload-" + id}
-            className="hidden"
-            accept=".png,.jpg,.jpeg"
-          />
         </div>
       </form>
     </div>

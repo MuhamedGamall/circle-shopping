@@ -24,22 +24,14 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const image = row.getValue("main_category")?.image;
-      return image ? (
-        <Image
-          src={image}
-          alt="image"
-          width={600}
-          height={819}
-          loading="lazy"
-          className=" mx-auto uppercase  max-w-[60px] min-w-[60px] h-[82px] object-cover"
-        />
-      ) : (
-        <div className=" mx-auto w-[60px] h-[82px] bg-[#f7f6fb] flex items-center justify-center text-sm">
-          <div className="opacity-[.7]">
-            <Icons.logo h="20" w="20" />
-          </div>
-        </div>
-      );
+      return <Image
+        src={image}
+        alt="image"
+        width={600}
+        height={819}
+        loading="lazy"
+        className=" mx-auto uppercase  max-w-[62px] min-w-[62px] h-[62px] object-cover"
+      />;
     },
   },
   {

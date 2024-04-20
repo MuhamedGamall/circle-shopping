@@ -23,13 +23,6 @@ export const uploadImages = async ({
       if (image?.startsWith("data:image") && image?.includes("base64")) {
         const result = await cloudinaryV2.uploader.upload(image, {
           ...uploadOptions,
-          transformation: [
-            {
-              width: 240,
-              height: 327,
-              crop: "fill",
-            },
-          ],
         });
         uploadResults.push(result.secure_url);
       } else uploadResults.push(image);
@@ -61,13 +54,6 @@ export const uploadSubCategoryImages = async ({
       ) {
         const result = await cloudinaryV2.uploader.upload(el?.image, {
           ...uploadOptions,
-          transformation: [
-            {
-              width: 240,
-              height: 327,
-              crop: "fill",
-            },
-          ],
         });
         uploadResults.push({ ...el, image: result.secure_url });
       } else uploadResults.push({ ...el, image: el?.image });

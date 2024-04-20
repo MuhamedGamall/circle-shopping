@@ -107,7 +107,7 @@ export default function ImageForm({
 
       if (update?.meta?.requestStatus !== "fulfilled") return;
       setIsPublished(false);
-      
+
       // get the image list urls again after submitting
       const product: Product = (
         await axios.get("/api/store/" + store_id + "/products/" + product_id)
@@ -144,9 +144,9 @@ export default function ImageForm({
         <Banner
           title={"Image Instructions"}
           details={[
-            "660 x 900 or more recommended",
-            "Image height should be greater than 900px",
-            "Image width should be greater than 660px",
+            "Image dimensions should be 660 x 900 or more recommended",
+            "Image dimensions should be height should be greater than 900px",
+            "Image dimensions should be width should be greater than 660px",
             "File size should be less than 10MB",
             "Non-backward images are recommended for the product to appear clearly",
           ]}

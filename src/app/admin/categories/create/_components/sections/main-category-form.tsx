@@ -72,6 +72,7 @@ export default function MainCategoryForm({
         id={"main-category"}
         readerImage={readerImage}
         imageValue={mainCateValues.image}
+        imageClassName={'h-[62px]'}
       />
       <Form {...form}>
         <form

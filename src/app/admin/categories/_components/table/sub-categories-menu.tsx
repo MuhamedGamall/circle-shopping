@@ -26,7 +26,7 @@ export default function SubCategoriesMenu({ data }: { data: Category }) {
       >
         <DropdownMenuLabel className="">Sub Categories</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="flex flex-wrap gap-1 max-w-[180px] sm:max-w-[800px] max-h-[350px] overflow-y-auto justify-start">
+        <div className="flex flex-wrap gap-1 max-w-[180px] sm:max-w-[700px] max-h-[350px] overflow-y-auto justify-start">
           {data?.sub_categories?.map((el, i) => (
             <DropdownMenuItem key={i} asChild className="hover:bg-slate-100">
               <Link
@@ -38,9 +38,10 @@ export default function SubCategoriesMenu({ data }: { data: Category }) {
                   alt="sub-categories-image"
                   width={660}
                   height={900}
-                  className=" object-cover max-w-[60px] min-w-[60px] h-[82px] "
+                  loading="lazy"
+                  className=" object-cover max-w-[62px] min-w-[62px] h-[62px] "
                 />
-                <span className="text-sm  max-w-[150px] overflow-x-auto">
+                <span className="text-sm text-center  max-w-[150px] overflow-x-auto">
                   {el?.name}
                 </span>
               </Link>
