@@ -52,11 +52,21 @@ export default function ImageForm({
           <span className="text-[10px] text-shade mb-2 block whitespace-nowrap">
             Upload image *
           </span>
-          <label
-            htmlFor={"upload-" + id}
+
+          <div
             className={cn(
-              "flex items-center justify-center cursor-pointer min-w-[62px] max-w-[62px] h-[92px]  bg-[#eff3fd]"
+              "relative  min-w-[62px] max-w-[62px] h-[62px] bg-[#eff3fd]",
+              {
+                hidden: !imageValue,
+              }
             )}
+          >
+            <label
+              htmlFor={"upload-" + id}
+              className={cn(
+                "cursor-pointer absolute -top-3 -right-5  ",
+                imageClassName
+              )}
           >
             <FaCirclePlus
               className={cn("text-slate-500 h-4 w-4", { hidden: imageValue })}
