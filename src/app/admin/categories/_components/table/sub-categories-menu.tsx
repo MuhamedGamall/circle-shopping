@@ -26,7 +26,7 @@ export default function SubCategoriesMenu({ data }: { data: Category }) {
       >
         <DropdownMenuLabel className="">Sub Categories</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <div className="flex flex-wrap gap-1 max-w-[180px] sm:max-w-[700px] max-h-[350px] overflow-y-auto justify-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 max-h-[350px] overflow-y-auto justify-start">
           {data?.sub_categories?.map((el, i) => (
             <DropdownMenuItem key={i} asChild className="hover:bg-slate-100">
               <Link
