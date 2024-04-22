@@ -88,7 +88,6 @@ export default function BasicForm({
     setSelectSizes(sizes);
   }, [data?.colours, data?.sizes]);
 
-
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
     const update = await dispatch(
       updateProduct_seller({
@@ -159,10 +158,10 @@ export default function BasicForm({
             valuesSelected={selectColours}
             setValuesSelected={setSelectColours}
             disabled={isSubmitting || loading}
-            label={"Colorus"}
+            label={"Colours"}
             options={coloursOptions}
             className="mt-5"
-            />
+          />
           <CustomTextarea
             label="Long Description"
             labelClassName={"text-shade text-[12px] "}
@@ -171,7 +170,7 @@ export default function BasicForm({
             name="description"
             className={"w-full h-[200px] resize-none"}
             placeholder="Long Description"
-            />
+          />
           <Button
             className="text-[11px] my-3 h-[30px] rounded-sm  "
             disabled={loading || isSubmitting}
