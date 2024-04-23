@@ -2,9 +2,12 @@
 import Link from "next/link";
 import CategoryItem from "./category-item";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import { MenubarSeparator } from "@radix-ui/react-menubar";
+import { MenubarSeparator, Separator } from "@radix-ui/react-menubar";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import useCategories from "@/hooks/use-categories";
+import { SliderWrapper } from "../wrappers/slider-wrapper";
+import { CarouselItem } from "../ui/carousel";
 
 const categories: { title: string; href: string; description: string }[] = [
   {
@@ -44,21 +47,20 @@ const categories: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export default function CategoriesContainer() {
-
+export default function CategoriesNavigation() {
+  const { data } = useCategories();
   return (
-    <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto py-1")}>
-      <Menubar className="rounded-none bg-transparent mx-auto border-0  min-w-fit w-full xl:max-w-[1890px]  px-2.5">
-        <MenubarMenu>
-          <MenubarTrigger>
+    <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto ")}>
+      <Menubar className="rounded-none bg-transparent mx-auto border-0 w-full max-w-[1890px]  px-2.5">
+        <MenubarMenu >
+          <MenubarTrigger className=" border-r rounded-none p-2.5">
             <Link href={"/bestsellers"} className="">
               BESTSELLERS
             </Link>
           </MenubarTrigger>
         </MenubarMenu>
-        <MenubarSeparator className="h-full w-[2px] bg-slate-200" />
-        {categories.map((el) => (
-          <CategoryItem key={el.title} {...el} />
+        {data?.map((el, i) => (
+          <CategoryItem key={i} {...el} />
         ))}
       </Menubar>
     </nav>

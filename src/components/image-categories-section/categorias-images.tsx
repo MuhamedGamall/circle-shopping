@@ -1,17 +1,15 @@
 "use client";
 
-import SlideItem from "./categories-img";
+import CategoryImg from "./categories-img";
 import { SliderWrapper } from "../wrappers/slider-wrapper";
-export default function CategoriesImages({
-  images,
-}: {
-  images: { image: string; href: string }[];
-}) {
+import useCategories from "@/hooks/use-categories";
+export default function CategoriesImages() {
+const{data} =useCategories()
   return (
-    <div className="bg-[#feeaea] py-4 px-2">
+    <div className="bg-white py-4 px-2">
       <SliderWrapper>
-        {images.map((el) => (
-          <SlideItem key={el.image} {...el} height={100} width={100} />
+        {data?.map((el,i) => (
+          <CategoryImg key={i} {...el}  />
         ))}
       </SliderWrapper>
     </div>

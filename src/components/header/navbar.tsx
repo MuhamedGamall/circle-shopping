@@ -2,7 +2,7 @@ import React from "react";
 import Icons from "../icons";
 import NavLinks from "./nav-links";
 import NavSearch from "./nav-search";
-import CategoriesContainer from "../middle-header/categories-container";
+import CategoriesNavigation from "../middle-header/categories-navigation";
 
 export default function Navbar() {
   return (
@@ -12,7 +12,7 @@ export default function Navbar() {
         <NavSearch />
         <NavLinks />
       </div>
-      <CategoriesContainer />
+      <CategoriesNavigation />
     </header>
   );
 }

@@ -4,55 +4,22 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Category } from "@/types";
 import Link from "next/link";
 
-const categories: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
-export default function CategoryItem({ title, description }: any) {
+export default function CategoryItem({
+  main_category,
+  sub_categories,
+}: Category) {
   return (
     <MenubarMenu>
-      <MenubarTrigger className="whitespace-nowrap uppercase font-bold">
-        {title}
+      <MenubarTrigger className="whitespace-nowrap rounded-none hover:bg-white uppercase font-bold  py-2.5 px-2 hover:shadow-[rgba(0,_0,_0,_0.18)_0px_5px_4px_0px] ">
+        <Link href={""}>{main_category?.name}</Link>
       </MenubarTrigger>
       <MenubarContent className="rounded-none">
-        {categories.map((el) => (
-          <MenubarItem key={el.title} asChild>
-            <Link href={el.href}>{el.title}</Link>
+        {sub_categories?.map((el: any, i: number) => (
+          <MenubarItem key={i} asChild>
+            <Link href={""}>{el.name}</Link>
           </MenubarItem>
         ))}
       </MenubarContent>

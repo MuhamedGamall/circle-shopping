@@ -2,30 +2,19 @@ import { CarouselItem } from "../ui/carousel";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Category } from "@/types";
 
-export default function SlideItem({
-  image,
-  href,
-  width,
-  height,
-  className,
-}: {
-  image: string;
-  href: string;
-  width: number;
-  height: number;
-  className?: string;
-}) {
+export default function CategoryImg({ main_category }: Category) {
   return (
     <CarouselItem className={cn("w-full h-full basis-1/5 sm:basis-1/12")}>
-      <Link href={href}>
+      <Link href={"href"} className="">
         <Image
-          width={width}
-          height={height}
+          width={100}
+          height={100}
           objectFit="cover"
-          src={image}
+          src={main_category?.image}
           alt=""
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-full border-[#d6d6d6] block border"
         />
       </Link>
     </CarouselItem>
