@@ -14,7 +14,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import {
   Table,
@@ -35,6 +35,8 @@ import {
 import { ChevronDown } from "lucide-react";
 import { LoadingSkeleton } from "./table-loading";
 import { Input } from "../ui/input";
+import useCategories from "@/hooks/use-categories";
+import { CategoriesFilter } from "./categories-filter";
 
 export function ProductsTable({
   data,
@@ -53,9 +55,27 @@ export function ProductsTable({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [categorySelected, setCategorySelected] = useState("");
+  const [dataFilterd, setDataFilterd] = useState<Product[]>([]);
+  const { data: categories, loading: cateLoading } = useCategories("");
+  
+  const sortingCategories = [...categories].sort((a, b) => {
+    const nameA = a?.main_category?.name || "";
+    const nameB = b?.main_category?.name || "";
+    return nameA.localeCompare(nameB);
+  });
+  
+  useEffect(() => {
+    const filterData = categorySelected
+      ? data.filter(
+          (product) => product?.category?.main_category === categorySelected
+        )
+      : data;
 
+    setDataFilterd(filterData);
+  }, [categorySelected, data]);
   const table = useReactTable({
-    data,
+    data: dataFilterd,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -85,36 +105,12 @@ export function ProductsTable({
             className="border rounded-sm "
           />
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="mx-2">
-            <Button
-              type="button"
-              variant="outline"
-              className=" px-3 py-2 rounded-sm"
-              size={"sm"}
-            >
-              Categories
-              <ChevronDown className="ml-2 h-4 w-4  " />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="center" className="rounded-none">
-            <DropdownMenuItem className="capitalize">
-              All categories
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 1
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 2
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 3
-            </DropdownMenuItem>
-            <DropdownMenuItem className="capitalize">
-              category 4
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <CategoriesFilter
+          loading={cateLoading}
+          categories={sortingCategories}
+          value={categorySelected}
+          setValue={setCategorySelected}
+        />
       </div>
       <Table>
         <TableHeader>

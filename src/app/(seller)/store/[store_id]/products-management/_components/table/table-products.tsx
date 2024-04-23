@@ -14,7 +14,7 @@ export function DataTable() {
   const { store_id } = useParams();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { data, loading } = useProductsSeller(searchQuery);
-  
+
   return (
     <div>
       <Link
@@ -28,8 +28,13 @@ export function DataTable() {
       >
         <FaPlus /> Add New
       </Link>
-      <ProductsTable  searchQuery={searchQuery}
-      setSearchQuery={setSearchQuery} data={data} loading={loading} columns={columns} />
+      <ProductsTable
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        data={data}
+        loading={loading}
+        columns={columns}
+      />
     </div>
   );
 }

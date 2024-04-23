@@ -12,6 +12,7 @@ import OfferSection from "./sections/offer";
 import ImagesSection from "./sections/images";
 import LoaderLayout from "@/components/loader-layout";
 import { Product } from "@/types";
+import CategorySection from "./sections/category";
 
 export default function ShowProductDetails({
   product,
@@ -43,6 +44,7 @@ export default function ShowProductDetails({
         </Label>
       </div>
       <OfferSection data={product} />
+      <CategorySection data={product?.category}/>
       <ImagesSection images={product?.images || []} />
       <BasicSection data={product} />
       <ProductDetailsSection data={product} />

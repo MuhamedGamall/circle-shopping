@@ -93,16 +93,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "price",
     header: ({ column }) => {
-      return (
-        <Button
-          className="uppercase"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          price
-          <ArrowUpDown className="ml-2 h-4 w-4 " />
-        </Button>
-      );
+      return <div className=" uppercase">price</div>;
     },
     cell: ({ row }: any) => {
       return (
@@ -115,16 +106,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "quantity_in_stock",
     header: ({ column }) => {
-      return (
-        <Button
-          className="uppercase"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Quantity In Stock
-          <ArrowUpDown className="ml-2 h-4 w-4 " />
-        </Button>
-      );
+      return <div className=" uppercase"> Quantity In Stock</div>;
     },
     cell: ({ row }: any) => {
       return (

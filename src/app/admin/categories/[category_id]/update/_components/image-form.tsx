@@ -24,24 +24,24 @@ export default function ImageForm({
     if (image?.size > 10 * 1024 * 1024)
       return toast.error("This file is larger than 10MB");
 
-    // const checkImageDimensions = async (image: File): Promise<boolean> => {
-    //   return new Promise((resolve) => {
-    //     const img = document.createElement("img");
-    //     img.src = URL.createObjectURL(image);
-    //     img.onload = () => {
-    //       resolve(img.width >= 660 && img.height >= 900);
-    //     };
-    //   });
-    // };
+    const checkImageDimensions = async (image: File): Promise<boolean> => {
+      return new Promise((resolve) => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(image);
+        img.onload = () => {
+          resolve(img.width >= 660 && img.height >= 900);
+        };
+      });
+    };
 
-    // const isValidImage = await checkImageDimensions(image);
-    // if (isValidImage) {
+    const isValidImage = await checkImageDimensions(image);
+    if (isValidImage) {
       readerImage(image, id);
-    // } else {
-    //   toast.error(
-    //     "Image dimensions should be at least 660px width and 900px height."
-    //   );
-    // }
+    } else {
+      toast.error(
+        "Image dimensions should be at least 660px width and 900px height."
+      );
+    }
   };
 
   return (
