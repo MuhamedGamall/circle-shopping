@@ -9,18 +9,14 @@ import { cn } from "@/lib/utils";
 const LoadingSkeleton = () => {
   const loadingArray = Array.from({ length: 22 });
 
-  return (
-
-        loadingArray.map((_, i) => (
-        <CarouselItem
-          key={i}
-          className={cn("w-full mr-3 h-full basis-1/5 sm:basis-1/12")}
-        >
-          <Skeleton className="h-[80px] w-[80px] rounded-full " />
-        </CarouselItem>
-      ))
-
-  );
+  return loadingArray.map((_, i) => (
+    <CarouselItem
+      key={i}
+      className={cn("w-full mr-3 h-full basis-1/5 sm:basis-1/12")}
+    >
+      <Skeleton className="h-[80px] w-[80px] rounded-full " />
+    </CarouselItem>
+  ));
 };
 export default function CategoriesImages() {
   const { data, loading } = useCategories();

@@ -34,19 +34,7 @@ export default function Home() {
             className="w-full h-full sm:h-[200px] object-cover sm:aspect-auto aspect-[12/4]"
           />
           <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
-          <ShowCategories />
+
         </section>
       </MaxWidthWrapper>
       <Footer />

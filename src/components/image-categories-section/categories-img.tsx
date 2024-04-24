@@ -5,9 +5,10 @@ import { cn } from "@/lib/utils";
 import { Category } from "@/types";
 
 export default function CategoryImg({ main_category }: Category) {
+
   return (
     <CarouselItem className={cn("w-full h-full basis-1/5 lg:basis-1/12 sm:basis-[15%] md:basis-[12%]")}>
-      <Link href={"href"} className="flex flex-col items-center  gap-2">
+      <Link href={"/"+main_category?.name?.replaceAll(' ','-')} className="flex flex-col items-center  gap-2">
         <Image
           width={100}
           height={100}
@@ -16,7 +17,7 @@ export default function CategoryImg({ main_category }: Category) {
           alt=""
           className="w-full h-full object-cover rounded-full border-[#d6d6d6] block border"
         />
-        <p className=" text-center font-bold leading-4 lg:leading-5 capitalize text-slate-600 lg:text-[16px] sm:text-[12px] md:text-sm ">{main_category?.name}</p>
+        <p  className="  break-keep text-center font-bold leading-4 lg:leading-5 capitalize text-slate-600 lg:text-[16px] text-[12px] md:text-sm ">{main_category?.name}</p>
       </Link>
     </CarouselItem>
   );
