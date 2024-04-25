@@ -47,7 +47,7 @@ export default function ShowCategories() {
             className=" pb-6 pt-2"
           />
           <Link
-            href={"/" + category?.main_category?.name?.replaceAll(" ", "-")}
+            href={"/products/" + category?.main_category?.name?.replaceAll(" ", "-")}
             className={cn(
               buttonVariants({
                 variant: "outline",

@@ -5,11 +5,31 @@ import toast from "react-hot-toast";
 
 export const getAllProducts: any = createAsyncThunk(
   "productsSlice/getAllProducts",
-  async (searchQuery:string, thunkApi) => {
+  async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const query = searchQuery ? `?q=${searchQuery}` : "";
-      const products = (await axios.get("/api/admin/products"+query)).data;
+      const products = (await axios.get("/api/admin/products" + query)).data;
+      return products;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const getProductsByCategory: any = createAsyncThunk(
+  "productsSlice/getProductsByCategory",
+  async (category: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const products = (
+        await axios.get(
+          "/api/products/" +
+            category?.main_category?.replaceAll("-", "%20") +
+            "/" +
+            category?.sub_category?.replaceAll("-", "%20")
+        )
+      ).data;
       return products;
     } catch (error: any) {
       console.log(error);
@@ -36,7 +56,7 @@ export const unpublishProduct: any = createAsyncThunk(
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.patch(`/api/unpublish-product`, params)
+      await axios.patch(`/api/unpublish-product`, params);
       return params?.product_id;
     } catch (error: any) {
       toast.error("Uh oh! Something went wrong while Unpublishing the product");
@@ -44,29 +64,6 @@ export const unpublishProduct: any = createAsyncThunk(
     }
   }
 );
-
-// export const updateProduct: any = createAsyncThunk(
-//   "productsSlice/updateProduct",
-//   async (product: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const updatedProduct = (
-//         await axios.patch(
-//           "/api/store/" +
-//             product?.store_id +
-//             "/products/" +
-//             product?.product_id +
-//             "/publish"
-//         )
-//       ).data;
-
-//       return updatedProduct;
-//     } catch (error: any) {
-//       toast.error("Uh oh! Something went wrong");
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 type ProductsState = {
   products: Product[];
@@ -112,6 +109,7 @@ const productsSlice = createSlice({
           state.error = action.payload;
         }
       );
+
     builder
       .addCase(
         getProduct.pending,
@@ -159,32 +157,28 @@ const productsSlice = createSlice({
         }
       );
 
-    // builder
-    //   .addCase(
-    //     updateProduct.pending,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     updateProduct.fulfilled,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-
-    //       state.products = state.products.map((el) =>
-    //         el?._id === action.payload._id ? action.payload : el
-    //       );
-    //       console.log(state.products);
-    //     }
-    //   )
-    //   .addCase(
-    //     updateProduct.rejected,
-    //     (state: ProductsState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
+    builder
+      .addCase(
+        getProductsByCategory.pending,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getProductsByCategory.fulfilled,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.products = action.payload;
+        }
+      )
+      .addCase(
+        getProductsByCategory.rejected,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
   },
 });
 export default productsSlice.reducer;

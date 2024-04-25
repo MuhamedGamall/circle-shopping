@@ -8,7 +8,7 @@ export default function CategoryImg({ main_category }: Category) {
 
   return (
     <CarouselItem className={cn("w-full h-full basis-1/5 lg:basis-1/12 sm:basis-[15%] md:basis-[12%]")}>
-      <Link href={"/"+main_category?.name?.replaceAll(' ','-')} className="flex flex-col items-center  gap-2">
+      <Link href={"/products/"+main_category?.name?.replaceAll(' ','-')} className="flex flex-col items-center  gap-2">
         <Image
           width={100}
           height={100}
