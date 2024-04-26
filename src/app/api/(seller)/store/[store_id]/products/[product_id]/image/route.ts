@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
@@ -27,7 +27,7 @@ export async function PATCH(
     if (!email || !store) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     if (store?.ban?.is_banned) {
       return new NextResponse("Forbidden", { status: 403 });
     }

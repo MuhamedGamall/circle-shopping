@@ -1,4 +1,4 @@
-import getCEOEmail from "@/actions/get-ceo-email";
+import getCEOEmail from "@/utils/get-ceo-email";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import { useAppDispatch } from "@/hooks/redux";

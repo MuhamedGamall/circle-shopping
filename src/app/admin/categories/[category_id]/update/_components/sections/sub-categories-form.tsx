@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import { useAppDispatch } from "@/hooks/redux";
 import { cn } from "@/lib/utils";
-import { getPublicId } from "@/utils/format";
+import { getPublicId } from "@/utils/get-image-id";
 import { Info, Trash2 } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import ImageForm from "../image-form";

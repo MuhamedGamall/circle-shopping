@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { UserInfo } from "@/models/user-info";
 
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 export async function POST(req: NextRequest) {
   try {
     await mongoConnect();

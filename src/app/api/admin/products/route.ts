@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Product } from "@/models/product";
 import mongoose from "mongoose";

@@ -6,7 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "@/lib/mongoConnect";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { Adapter } from "next-auth/adapters";
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { User } from "@/models/user";
 import { UserInfo } from "@/models/user-info";
 export const authOptions: NextAuthOptions = {
@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
         await mongoConnect();
         const existingUser = await UserInfo.findOne({ email: user?.email });
         if (existingUser?.ban?.is_banned) {
-          return false
+          return false;
         }
         if (!existingUser) {
           await UserInfo.create({ email: user?.email });

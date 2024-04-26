@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
@@ -34,7 +34,6 @@ export async function PATCH(
     const categories: any = await Category.find().lean();
     const category = await Category.findOne({ _id: category_id }).lean();
 
-    
     const findSameMainCate = categories?.find(
       (cate: any) =>
         cate?.main_category?.name === main_category?.name &&

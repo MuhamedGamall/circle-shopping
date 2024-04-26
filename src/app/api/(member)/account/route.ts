@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 
 import bcrypt from "bcrypt";
 import { Account } from "@/types";
@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest) {
     ).lean();
     const fullData = { ...userData, ...userInfo };
 
-    if (!user || !userInfo ) {
+    if (!user || !userInfo) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
     if (!Object.values(data).every(Boolean)) {

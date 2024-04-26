@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { getPublicId } from "@/utils/format";
+import { getPublicId } from "@/utils/get-image-id";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import ImageForm from "../image-form";
 

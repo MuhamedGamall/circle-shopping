@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Store } from "@/models/store";
 import { getServerSession } from "next-auth";

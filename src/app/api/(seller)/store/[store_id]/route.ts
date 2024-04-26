@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { Store } from "@/models/store";
 import { getServerSession } from "next-auth";
@@ -54,14 +54,14 @@ export async function PATCH(
       );
     if (
       existingRecord?.store_phone_number === body.store_phone_number &&
-      body?.store_phone_number!== store.store_phone_number
+      body?.store_phone_number !== store.store_phone_number
     )
       errorsMessages.push(
         "Your Phone number is already associated with a store"
       );
     if (
       existingRecord?.display_name === body.display_name &&
-      body?.display_name!== store.display_name
+      body?.display_name !== store.display_name
     )
       errorsMessages.push(
         "Your Display name is already associated with a store"

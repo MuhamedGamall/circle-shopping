@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { getPublicId } from "@/utils/format";
+import { getPublicId } from "@/utils/get-image-id";
 import { X } from "lucide-react";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";

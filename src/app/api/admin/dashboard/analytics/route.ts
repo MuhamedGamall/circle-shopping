@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { Product } from "@/models/product";
 import { Purchase } from "@/models/purchase";
 import { Store } from "@/models/store";

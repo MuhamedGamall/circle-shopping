@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const user = session?.user;
     const email = session?.user?.email;
 
-    const userInfo:any = await UserInfo.findOne({ email }).lean()
+    const userInfo: any = await UserInfo.findOne({ email }).lean();
 
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });

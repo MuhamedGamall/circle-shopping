@@ -9,7 +9,7 @@ import * as z from "zod";
 import { checkPassword } from "../schema";
 import { useAppDispatch } from "@/hooks/redux";
 import useAccount from "@/hooks/use-account";
-import bcryptDecode from "@/actions/bcrypt-decode";
+import bcryptDecode from "@/utils/bcrypt-decode";
 import { signOut } from "next-auth/react";
 import LoaderLayout from "@/components/loader-layout";
 import { deleteAccount } from "@/lib/RTK/slices/account-slice";

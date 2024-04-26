@@ -1,4 +1,4 @@
-import getCEOEmail from "@/actions/get-ceo-email";
+import getCEOEmail from "@/utils/get-ceo-email";
 import DeleteReasonsBtn from "@/components/delete-reason-button";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";

@@ -1,7 +1,7 @@
 import { User } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";

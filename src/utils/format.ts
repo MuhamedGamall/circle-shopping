@@ -23,8 +23,3 @@ export function formatNumber(number: number) {
   if (number >= 1e3) return formatter.format(number / 1e3) + "k";
   return formatter.format(number);
 }
-export function getPublicId(image: string) {
-  const startIndex = image.indexOf("circle-shopping/");
-  const endIndex = image.lastIndexOf(".");
-  return image.slice(startIndex, endIndex);
-}

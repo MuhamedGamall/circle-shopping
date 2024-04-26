@@ -1,4 +1,4 @@
-import mongoConnect from "@/actions/mongo-connect";
+import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
 import { UserInfo } from "@/models/user-info";
 import { getServerSession } from "next-auth";
@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
       if (mongoose.isValidObjectId(query)) {
         filter = { _id: query };
       } else {
-        filter = {$or:[{ "main_category.name": { $regex: regex } }]}
+        filter = { $or: [{ "main_category.name": { $regex: regex } }] };
       }
     }
 
