@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { formatNumber } from "@/utils/format";
 import { SliderBalls } from "./handle-balls";
+import Link from "next/link";
 
 export function ImagesSlieder({
   images,
@@ -44,18 +45,23 @@ export function ImagesSlieder({
   };
   return (
     <>
-      <div className="h-[208px] lg:h-[284px] bg-slate-100 relative">
-        <Image
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          width={400}
-          height={400}
-          src={images?.[imageIndex]}
-          alt="product image"
-          loading="lazy"
-          className=" w-full h-full object-cover "
-        />
-        <Button className="h-7 w-7  bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-4 right-4 text-secondMain p-1">
+      <div className=" bg-slate-100 relative border">
+        <Link href={""} >
+          <Image
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            width={400}
+            height={400}
+            src={images?.[imageIndex]}
+            alt="product image"
+            loading="lazy"
+            className=" h-[208px] lg:h-[284px] object-cover "
+          />
+        </Link>
+        <Button
+          onClick={() => console.log(150)}
+          className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-4 right-4 text-secondMain p-1"
+        >
           <BiCartAdd className=" h-7 w-7" />
         </Button>
         <Button className="h-7 w-7  bg-white hover:bg-slate-100  rounded-md  shadow-md absolute top-4 right-4 text-secondMain p-1">

@@ -113,4 +113,11 @@
   object-fit: cover;
 }
 
-
+.products-container {
+  display: grid;
+  /* grid-template-columns: repeat(5, minmax(184px, 206px)); */
+  grid-template-columns: repeat(auto-fill, minmax(184px, 206px));
+  gap: 20px 5px;
+  justify-content: center;
+  margin-inline: auto;
+}
