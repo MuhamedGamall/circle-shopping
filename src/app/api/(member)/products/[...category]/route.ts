@@ -30,7 +30,7 @@ export async function GET(
       ? category
       : [category];
 
-    const filter = {
+    const filterCategories = {
       "main_category.name": main_category,
 
       ...(sub_category?.trim() && {
@@ -39,16 +39,21 @@ export async function GET(
             name: sub_category?.trim(),
           },
         },
+
       }),
+   
     };
-    const findCategory = await Category.findOne(filter);
+    const findCategory = await Category.findOne(filterCategories);
     if (!findCategory) {
       return new NextResponse("Not Found", { status: 404 });
     }
-    const products = await Product.find({
-      "category.main_category": main_category,
-      "category.sub_category": sub_category,
-    });
+    const products = await Product.find(
+      {
+      // "category.main_category": main_category,
+      // "category.sub_category": sub_category,
+      is_published:true
+    }
+  );
 
     return NextResponse.json(products);
   } catch (error) {

@@ -12,7 +12,7 @@ import SliderItem from "./slider-ads-item";
 
 
 export default function SliderAds({ className,images }: { className?: string,images:{image:string,href:string}[] }) {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false,play:()=>true }));
   return (
     <Carousel
       plugins={[plugin.current]}

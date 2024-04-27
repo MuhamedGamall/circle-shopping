@@ -58,6 +58,7 @@ export type Shipping = {
 };
 export type Product = {
   _id: string;
+  is_bestseller: boolean;
   is_published: boolean;
   store_id: string;
   likes: number;
@@ -72,7 +73,7 @@ export type Product = {
   warranty: string;
   item_condition: string;
   colour: string;
-  colours: string[]
+  colours: string[];
   box_details: string;
   model_height: string;
   sizes: string[];

@@ -65,7 +65,7 @@ export default function ImageForm({
 
     for (const image of filteredImages) {
       const isValidImage = await checkImageDimensions(image);
-      if (isValidImage) {
+      if (true) {
         readerImage(image);
       } else {
         toast.error(

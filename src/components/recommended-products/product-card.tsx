@@ -2,11 +2,12 @@ import { CarouselItem } from "../ui/carousel";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import {formatPrice} from "@/utils/format";
+import { formatPrice } from "@/utils/format";
 import { truncateText } from "@/utils/truncate-text";
 import { BiCartAdd } from "react-icons/bi";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
+import { AiOutlineLike } from "react-icons/ai";
 import { HiStar } from "react-icons/hi2";
 export default function ProductCard({
   image,

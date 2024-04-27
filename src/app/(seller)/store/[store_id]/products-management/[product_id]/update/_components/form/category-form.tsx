@@ -65,17 +65,20 @@ export default function CategoryForm({
             el?.main_category?.name === form.getValues("category.main_category")
         )
         ?.sub_categories?.map((el) => el?.name) || [];
-    form.setValue("category.sub_category",'');
+
     setSubCategoriesOptions(findSubCategories);
+    form.setValue("category.sub_category", "");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories, form.watch("category.main_category")]);
+  }, [ form.watch("category.main_category")]);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
       setSubCategory(data?.category?.sub_category || "");
     }, 500);
+
     return () => clearTimeout(timeOutId);
-  }, [data?.category?.sub_category, form]);
+  }, [data?.category?.sub_category]);
 
   async function onSubmit(values: z.infer<typeof categoryForm>) {
     const update = await dispatch(
