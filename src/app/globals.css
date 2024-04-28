@@ -121,3 +121,8 @@
   justify-content: center;
   margin-inline: auto;
 }
+.products-slider-container{
+  display: grid;
+  grid-template-columns: repeat(20, minmax(194px, 216px));
+  gap: 20px ;
+}

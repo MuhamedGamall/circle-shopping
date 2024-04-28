@@ -19,9 +19,10 @@ export default function CategoriesImagesWrapper({
 }) {
   return (
     <div className={cn("bg-white py-4 px-2 relative",className)}>
-      <div className={cn({ "h-[62px]": loading })}>
+      <div className={cn({ "h-[100px] my-5": loading })}>
         <LoaderLayout loadingCondition={loading} />
       </div>
+      
       <SliderWrapper className=" ">{children}</SliderWrapper>
     </div>
   );

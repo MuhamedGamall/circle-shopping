@@ -7,31 +7,30 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useEffect } from "react";
 import {
   cleanUp,
+  getProductsBestSellers,
   getSubCategories,
 } from "@/lib/RTK/slices/search-by-category-slice";
 import SectionTitle from "@/components/section-title";
-import { cn } from "@/lib/utils";
+import { SliderWrapper } from "@/components/wrappers/slider-wrapper";
+import ProductCard from "@/components/products-slider/product-card";
+import ProductsSlider from "@/components/products-slider/products-container";
 
-export default function SubCategoriesSlider({
+export default function ProductsBestSellers({
   main_category_id,
 }: {
   main_category_id: string;
 }) {
   const dispatch = useAppDispatch();
-  const { subCategories, loading } = useAppSelector(
+  const { bestSellers, loading } = useAppSelector(
     (state) => state.searchByCategory
   );
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getSubCategories(main_category_id));
+    dispatch(getProductsBestSellers(main_category_id));
   }, [main_category_id, dispatch]);
 
   return (
-    <CategoriesImagesWrapper loading={loading} className="p-0">
-      {subCategories?.sub_categories?.map((el: any, i: number) => (
-        <CategoryImg key={i} {...el} main_category_id={main_category_id} />
-      ))}
-    </CategoriesImagesWrapper>
+    <ProductsSlider data={bestSellers} loading={loading} title="Bestsellers" />
   );
 }

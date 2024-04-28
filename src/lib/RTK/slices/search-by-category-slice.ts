@@ -22,6 +22,26 @@ export const getSubCategories: any = createAsyncThunk(
     }
   }
 );
+export const getProductsBestSellers: any = createAsyncThunk(
+  "searchByCategory/getProductsBestSellers",
+  async (main_category_id: string, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const categories = (
+        await axios.get(
+          "/api/category/" +
+            main_category_id?.replaceAll("-", "%20") +
+            "/" +
+            "best-sellers"
+        )
+      ).data;
+      return categories;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 type SearchByCategoryState = {
   bestSellers: Product[];
@@ -42,6 +62,7 @@ const searchByCategory = createSlice({
   reducers: {
     cleanUp: (state) => {
       state.subCategories = null;
+      state.bestSellers = [];
     },
   },
   extraReducers: (builder) => {
@@ -62,6 +83,28 @@ const searchByCategory = createSlice({
       )
       .addCase(
         getSubCategories.rejected,
+        (state: SearchByCategoryState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+      builder
+      .addCase(
+        getProductsBestSellers.pending,
+        (state: SearchByCategoryState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getProductsBestSellers.fulfilled,
+        (state: SearchByCategoryState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.bestSellers = action.payload;
+        }
+      )
+      .addCase(
+        getProductsBestSellers.rejected,
         (state: SearchByCategoryState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
