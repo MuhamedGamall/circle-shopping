@@ -7,6 +7,7 @@ import accountSlice from "./slices/account-slice";
 import usersSlice from "./slices/admin/users";
 import adminSellerSlice from "./slices/admin/sellers";
 import adminDashboardSlice from './slices/admin/dashboard';
+import searchByCategorySlice from "./slices/search-by-category-slice";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     allProducts: productsSlice,
     users: usersSlice,
     sellers: adminSellerSlice,
-    admin_dashboard:adminDashboardSlice
+    admin_dashboard:adminDashboardSlice,
+    searchByCategory:searchByCategorySlice
   },
 });
 

@@ -15,7 +15,7 @@ export default function CategoryCard({ sub_categories, main_category }: any) {
     >
       <Link
         href={
-          "/products/" +
+          "/category/" +
           main_category?.name?.replaceAll(" ", "-") +
           "/" +
           el?.name?.replaceAll(" ", "-")

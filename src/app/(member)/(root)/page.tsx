@@ -7,6 +7,7 @@ import ShowCategories from "@/components/show-categories/categories-container";
 import Navbar from "@/components/header/navbar";
 import Footer from "@/components/footer";
 import MoblieBar from "@/components/mobile-bar";
+import CategoriesNavigation from "@/components/navigation-menu/categories-navigation";
 const images = [
   {
     image: "/ads-photos/ELECTRONICS.avif",
@@ -24,7 +25,7 @@ const images = [
 export default function Home() {
   return (
     <main>
-      <Navbar />
+            <CategoriesNavigation />
       <MaxWidthWrapper>
         <HeroSection />
         <section>
@@ -34,7 +35,6 @@ export default function Home() {
             className="w-full h-full sm:h-[200px] object-cover sm:aspect-auto aspect-[12/4]"
           />
           <ShowCategories />
-
         </section>
       </MaxWidthWrapper>
       <Footer />

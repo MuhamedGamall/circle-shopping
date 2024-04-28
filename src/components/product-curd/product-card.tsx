@@ -1,28 +1,13 @@
 import { Product } from "@/types";
 import { formatPrice } from "@/utils/format";
 import { truncateText } from "@/utils/truncate-text";
-import { Heart } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { BiCartAdd } from "react-icons/bi";
-import { Button } from "../ui/button";
 
 import { FaTruckMoving } from "react-icons/fa";
-import { CarouselItem } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { AiOutlineLike } from "react-icons/ai";
-import { formatNumber } from "../../utils/format";
-import { ImagesSlieder } from "./images-slider";
 import { HandleDeals } from "./handle-deals";
+import { ImagesSlieder } from "./images-slider";
 
-export default function ProductCard({
-  images,
-  title,
-  price,
-}: // likes,
-// is_best_seller,
-Product) {
+export default function ProductCard({ images, title, price ,is_bestseller,likes}: Product) {
   const discount_percentage = price?.offer?.discount_percentage;
 
   const offerCalc = (discount_percentage / 100) * price?.base_price;
@@ -36,11 +21,7 @@ Product) {
 
     <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px] overflow-hidden  h-full border flex flex-col gap-1">
       <div>
-        <ImagesSlieder
-          images={images}
-          likes={332222434}
-          is_best_seller={true}
-        />
+        <ImagesSlieder images={images} likes={likes} is_bestseller={is_bestseller} />
         <HandleDeals discount_percentage={discount_percentage} />
       </div>
 

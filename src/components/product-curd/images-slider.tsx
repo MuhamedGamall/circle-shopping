@@ -11,15 +11,16 @@ import Link from "next/link";
 export function ImagesSlieder({
   images,
   likes,
-  is_best_seller,
+  is_bestseller,
 }: {
   images: string[];
   likes: number;
-  is_best_seller: boolean;
+  is_bestseller: boolean;
 }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const imagesLength = images?.length;
+  
   useEffect(() => {
     let interval: any;
     if (hovered)
@@ -67,7 +68,7 @@ export function ImagesSlieder({
         <Button className="h-7 w-7  bg-white hover:bg-slate-100  rounded-md  shadow-md absolute top-4 right-4 text-secondMain p-1">
           <Heart className=" h-7 w-7" />
         </Button>
-        {is_best_seller && (
+        {is_bestseller && (
           <span className=" bg-slate-700  rounded-[30px] absolute top-4 left-2 text-white pt-0 px-3">
             Best Seller
           </span>

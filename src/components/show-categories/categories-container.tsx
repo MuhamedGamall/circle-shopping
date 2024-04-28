@@ -25,7 +25,7 @@ export default function ShowCategories() {
             />
             <Link
               href={
-                "/products/" +
+                "/category/" +
                 category?.main_category?.name?.replaceAll(" ", "-")
               }
               className={cn(

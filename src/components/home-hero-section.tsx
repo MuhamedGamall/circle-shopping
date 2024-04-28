@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
 import SliderAds from "./ads-slider/slider-ads";
 import Link from "next/link";
 import Image from "next/image";
-import CategoriesImages from "./image-categories-section/categorias-images";
+import CategoriesImages from "./wrappers/categorias-images-wrapper";
+import useCategories from "@/hooks/use-categories";
+import CategoryImg from "./home-main-categories-img";
 const images = [
   {
     image: "/ads-photos/beauty.avif",
@@ -17,89 +19,9 @@ const images = [
     href: "/",
   },
 ];
-const categorisImages = [
-  {
-    image: "/categories-photos/22e24d67-5157-4b67-8218-4b47a1dfa0cd.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/5a8b0ed2-d8cb-404a-96aa-c2256220d241.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/6453083a-d341-4f0f-bda7-a303ea9f29da.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/b0e5fe61-56a2-49c4-8c6a-22017264c810.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/22e24d67-5157-4b67-8218-4b47a1dfa0cd.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/5a8b0ed2-d8cb-404a-96aa-c2256220d241.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/6453083a-d341-4f0f-bda7-a303ea9f29da.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/b0e5fe61-56a2-49c4-8c6a-22017264c810.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/22e24d67-5157-4b67-8218-4b47a1dfa0cd.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/5a8b0ed2-d8cb-404a-96aa-c2256220d241.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/6453083a-d341-4f0f-bda7-a303ea9f29da.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/b0e5fe61-56a2-49c4-8c6a-22017264c810.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/22e24d67-5157-4b67-8218-4b47a1dfa0cd.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/5a8b0ed2-d8cb-404a-96aa-c2256220d241.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/6453083a-d341-4f0f-bda7-a303ea9f29da.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/b0e5fe61-56a2-49c4-8c6a-22017264c810.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/22e24d67-5157-4b67-8218-4b47a1dfa0cd.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/5a8b0ed2-d8cb-404a-96aa-c2256220d241.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/6453083a-d341-4f0f-bda7-a303ea9f29da.avif",
-    href: "/",
-  },
-  {
-    image: "/categories-photos/b0e5fe61-56a2-49c4-8c6a-22017264c810.avif",
-    href: "/",
-  },
-];
+
 export default function HeroSection() {
+  const { data, loading } = useCategories();
   return (
     <div>
       <div className="flex items-center gap-[1px] h-full">
@@ -132,7 +54,11 @@ export default function HeroSection() {
           </Link>
         </div>
       </div>
-      <CategoriesImages images={categorisImages} />
+      <CategoriesImages loading={loading}>
+        {data?.map((el, i) => (
+          <CategoryImg key={i} {...el} />
+        ))}
+      </CategoriesImages>
     </div>
   );
 }
