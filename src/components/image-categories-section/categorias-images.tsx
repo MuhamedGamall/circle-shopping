@@ -6,6 +6,7 @@ import useCategories from "@/hooks/use-categories";
 import { Skeleton } from "../ui/skeleton";
 import { CarouselItem } from "../ui/carousel";
 import { cn } from "@/lib/utils";
+import LoaderLayout from "../loader-layout";
 const LoadingSkeleton = () => {
   const loadingArray = Array.from({ length: 22 });
 
@@ -21,13 +22,14 @@ const LoadingSkeleton = () => {
 export default function CategoriesImages() {
   const { data, loading } = useCategories();
   return (
-    <div className="bg-white py-4 px-2">
+    <div className="bg-white py-4 px-2 relative">
+      <div className={cn({ "h-[50px]": loading })}>
+        <LoaderLayout loadingCondition={loading} />
+      </div>
       <SliderWrapper className=" ">
-        {loading ? (
-          <LoadingSkeleton />
-        ) : (
-          data?.map((el, i) => <CategoryImg key={i} {...el} />)
-        )}
+        {data?.map((el, i) => (
+          <CategoryImg key={i} {...el} />
+        ))}
       </SliderWrapper>
     </div>
   );
