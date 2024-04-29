@@ -1,19 +1,16 @@
-import { User } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
-import { authOptions } from "@/lib/auth-option";
 import { Category } from "@/models/category";
 
-import mongoConnect from "@/utils/mongo-connect";
-import { getServerSession } from "next-auth";
 import { Product } from "@/models/product";
+import mongoConnect from "@/utils/mongo-connect";
 
 export async function GET(
   req: NextRequest,
   {
-    params: { main_category_id },
+    params: { category_id },
   }: {
-    params: { main_category_id: string };
+    params: { category_id: string };
   }
 ) {
   try {
@@ -22,7 +19,7 @@ export async function GET(
     const bestSellerThreshold = 100;
 
     const filterCategories = {
-      "main_category.name": main_category_id,
+      "main_category.name": category_id,
     };
 
     const findCategory = await Category.findOne(filterCategories);
@@ -31,13 +28,29 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
     const filterProducts = {
-      // "category.main_category": main_category_id,
+      "category.main_category": category_id,
       sales_count: { $gte: bestSellerThreshold },
       is_published: true,
     };
 
-    let products = await Product.find(filterProducts).limit(20).lean()
-    products = products.map((el, i) => ({ ...el, is_bestseller: true }));
+    let products = await Product.find(filterProducts).limit(20).lean();
+
+    const alternativeData = await Product.find({
+      "category.main_category": category_id,
+      is_published: true,
+    })
+      .limit(20)
+      .lean();
+
+    const updateData = products.map((el, i) => ({
+      ...el,
+      is_bestseller: true,
+    }));
+
+    products = products.length
+      ? updateData
+      : alternativeData.map((el, i) => ({ ...el, is_bestseller: true }));
+
     return NextResponse.json(products);
   } catch (error) {
     console.log("[MEMBER:CATEGORY>BESTSELLERS]", error);

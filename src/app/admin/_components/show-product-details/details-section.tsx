@@ -1,18 +1,14 @@
 "use client";
+import LoaderLayout from "@/components/loader-layout";
 import SectionTitle from "@/components/section-title";
 import { Label } from "@/components/ui/label";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProduct } from "@/lib/RTK/slices/products-slice";
-import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
-import ProductDetailsSection from "./sections/product-details";
-import BasicSection from "./sections/basic";
-import ShippingSection from "./sections/shipping";
-import OfferSection from "./sections/offer";
-import ImagesSection from "./sections/images";
-import LoaderLayout from "@/components/loader-layout";
 import { Product } from "@/types";
+import BasicSection from "./sections/basic";
 import CategorySection from "./sections/category";
+import ImagesSection from "./sections/images";
+import OfferSection from "./sections/offer";
+import ProductDetailsSection from "./sections/product-details";
+import ShippingSection from "./sections/shipping";
 
 export default function ShowProductDetails({
   product,
@@ -21,7 +17,6 @@ export default function ShowProductDetails({
   product: Product | null;
   loading: boolean;
 }) {
-
   return (
     <div className="rounded-sm border">
       <LoaderLayout loadingCondition={loading} />
@@ -44,7 +39,7 @@ export default function ShowProductDetails({
         </Label>
       </div>
       <OfferSection data={product} />
-      <CategorySection data={product?.category}/>
+      <CategorySection data={product?.category} />
       <ImagesSection images={product?.images || []} />
       <BasicSection data={product} />
       <ProductDetailsSection data={product} />

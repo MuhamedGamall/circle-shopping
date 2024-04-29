@@ -1,23 +1,23 @@
 "use client";
-import { TbBuildingWarehouse } from "react-icons/tb";
-import { BsChevronRight } from "react-icons/bs";
-import SelectCategory from "./select-category";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { BadgePercent } from "lucide-react";
+import LoaderLayout from "@/components/loader-layout";
 import { Button } from "@/components/ui/button";
-import { useParams, useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import useMemberCategories from "@/hooks/member/use-member-categories";
 import { useAppDispatch } from "@/hooks/redux";
 import { createProduct_seller } from "@/lib/RTK/slices/seller/products";
-import useCategories from "@/hooks/use-categories";
-import LoaderLayout from "@/components/loader-layout";
+import { BadgePercent } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { BsChevronRight } from "react-icons/bs";
+import { TbBuildingWarehouse } from "react-icons/tb";
+import SelectCategory from "./select-category";
 
 export default function SelectSection() {
   const dispatch = useAppDispatch();
   const { store_id } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { data, loading } = useCategories();
+  const { data, loading } = useMemberCategories();
   const router = useRouter();
 
   const [mainCategory, setMainCategory] = useState("");

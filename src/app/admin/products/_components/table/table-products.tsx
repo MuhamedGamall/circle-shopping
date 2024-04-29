@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { columns } from "./table-columns";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getAllProducts } from "@/lib/RTK/slices/products-slice";
 import { ProductsTable } from "@/components/table/table";
-import useProducts from "@/hooks/use-products";
+import useAdminProducts from "@/hooks/admin/use-admin-products";
+import { columns } from "./table-columns";
 
 export function DataTable() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const { data, loading } = useProducts(searchQuery);
+  const { data, loading } = useAdminProducts(searchQuery);
 
   return (
     <ProductsTable

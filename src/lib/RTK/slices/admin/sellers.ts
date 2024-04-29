@@ -4,7 +4,7 @@ import { Product, Store } from "../../../../types";
 import toast from "react-hot-toast";
 
 export const getSellers_admin: any = createAsyncThunk(
-  "adminSellerSlice/getSellers",
+  "adminSellersSlice/getSellers",
   async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -18,7 +18,7 @@ export const getSellers_admin: any = createAsyncThunk(
 );
 
 export const getSeller_admin: any = createAsyncThunk(
-  "adminSellerSlice/getSeller",
+  "adminSellersSlice/getSeller",
   async (id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -30,7 +30,7 @@ export const getSeller_admin: any = createAsyncThunk(
   }
 );
 export const getProductsSeller_admin: any = createAsyncThunk(
-  "adminSellerSlice/getProductsSeller",
+  "adminSellersSlice/getProductsSeller",
   async ({ seller_id, searchQuery }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -46,7 +46,7 @@ export const getProductsSeller_admin: any = createAsyncThunk(
   }
 );
 export const getProductSeller_admin: any = createAsyncThunk(
-  "adminSellerSlice/getProductSeller",
+  "adminSellersSlice/getProductSeller",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -94,8 +94,8 @@ const initialState: SellerState = {
   error: null,
 };
 
-const adminSellerSlice = createSlice({
-  name: "adminSellerSlice",
+const adminSellersSlice = createSlice({
+  name: "adminSellersSlice",
   initialState,
   reducers: {
     handleSellerBan: (state: SellerState, action: PayloadAction<any>) => {
@@ -224,5 +224,5 @@ const adminSellerSlice = createSlice({
       );
   },
 });
-export default adminSellerSlice.reducer;
-export const { handleSellerBan } =adminSellerSlice.actions;
+export default adminSellersSlice.reducer;
+export const { handleSellerBan } =adminSellersSlice.actions;

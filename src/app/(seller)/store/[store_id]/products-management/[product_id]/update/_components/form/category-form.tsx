@@ -10,8 +10,8 @@ import * as z from "zod";
 import CustomField from "@/components/custom-field";
 import CustomSelectField from "@/components/custom-select-field";
 import LoaderLayout from "@/components/loader-layout";
+import useMemberCategories from "@/hooks/member/use-member-categories";
 import { useAppDispatch } from "@/hooks/redux";
-import useCategories from "@/hooks/use-categories";
 import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { categoryForm } from "../../schema";
@@ -29,7 +29,7 @@ export default function CategoryForm({
   product_id: string | string[];
   setIsPublished: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { data: categories } = useCategories();
+  const { data: categories } = useMemberCategories();
   const dispatch = useAppDispatch();
 
   const [subCategory, setSubCategory] = useState<string>("");
@@ -70,7 +70,7 @@ export default function CategoryForm({
     form.setValue("category.sub_category", "");
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ form.watch("category.main_category")]);
+  }, [form.watch("category.main_category")]);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {

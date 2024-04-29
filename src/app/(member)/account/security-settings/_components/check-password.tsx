@@ -12,7 +12,7 @@ import useAccount from "@/hooks/use-account";
 import bcryptDecode from "@/utils/bcrypt-decode";
 import { signOut } from "next-auth/react";
 import LoaderLayout from "@/components/loader-layout";
-import { deleteAccount } from "@/lib/RTK/slices/account-slice";
+import { deleteAccount } from "@/lib/RTK/slices/member/account-slice";
 
 export function CheckPassword({
   setOpen,

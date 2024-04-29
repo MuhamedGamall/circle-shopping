@@ -1,16 +1,15 @@
 "use client";
+import useMemberCategories from "@/hooks/member/use-member-categories";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
+import LoaderLayout from "../loader-layout";
 import SectionTitle from "../section-title";
+import { buttonVariants } from "../ui/button";
 import { SliderWrapper } from "../wrappers/slider-wrapper";
 import CategoryCard from "./category-card";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
-import useCategories from "@/hooks/use-categories";
-import { Skeleton } from "../ui/skeleton";
-import LoaderLayout from "../loader-layout";
 
 export default function ShowCategories() {
-  const { data, loading } = useCategories();
+  const { data, loading } = useMemberCategories();
   return (
     <div className={"relative"}>
       <div className={cn({ "h-[100px]": loading })}>
@@ -25,7 +24,7 @@ export default function ShowCategories() {
             />
             <Link
               href={
-                "/category/" +
+                "/categories/" +
                 category?.main_category?.name?.replaceAll(" ", "-")
               }
               className={cn(

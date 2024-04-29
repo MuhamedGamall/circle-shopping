@@ -8,7 +8,6 @@ import { formatDate } from "date-fns";
 import { ArrowUpDown, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import UnPublishBtn from "./unpublish-btn";
 
 export const columns: ColumnDef<any>[] = [

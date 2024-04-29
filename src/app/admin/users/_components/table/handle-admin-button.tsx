@@ -1,9 +1,9 @@
-import getCEOEmail from "@/utils/get-ceo-email";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import { useAppDispatch } from "@/hooks/redux";
 import { handleUserAdmin } from "@/lib/RTK/slices/admin/users";
 import { cn } from "@/lib/utils";
+import getCEOEmail from "@/utils/get-ceo-email";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";

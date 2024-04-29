@@ -1,25 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sellerStoreSlice from "./slices/seller/store";
 import sellerProductsSlice from "./slices/seller/products";
-import productsSlice from "./slices/products-slice";
-import categoriesSlice from "./slices/categories-slice";
-import accountSlice from "./slices/account-slice";
-import usersSlice from "./slices/admin/users";
+import productsSlice from "./slices/admin/products-slice";
+import adminCategoriesSlice from "./slices/admin/categories-slice";
+import memberAccountSlice from "./slices/member/account-slice";
+import adminUsersSlice from "./slices/admin/users";
 import adminSellerSlice from "./slices/admin/sellers";
-import adminDashboardSlice from './slices/admin/dashboard';
-import searchByCategorySlice from "./slices/search-by-category-slice";
+import adminDashboardSlice from "./slices/admin/dashboard";
+import memberCategoriesSlice from './slices/member/categories-slice';
 
 const store = configureStore({
   reducer: {
-    categories: categoriesSlice,
     seller_products: sellerProductsSlice,
     seller_store: sellerStoreSlice,
-    accountData: accountSlice,
-    allProducts: productsSlice,
-    users: usersSlice,
-    sellers: adminSellerSlice,
-    admin_dashboard:adminDashboardSlice,
-    searchByCategory:searchByCategorySlice
+    admin_categories: adminCategoriesSlice,
+    admin_products: productsSlice,
+    admin_users: adminUsersSlice,
+    admin_sellers: adminSellerSlice,
+    admin_dashboard: adminDashboardSlice,
+    member_accountData: memberAccountSlice,
+    member_categories: memberCategoriesSlice,
   },
 });
 

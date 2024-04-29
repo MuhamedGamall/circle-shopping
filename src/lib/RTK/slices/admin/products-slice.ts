@@ -3,8 +3,8 @@ import axios from "axios";
 import { Product } from "@/types";
 import toast from "react-hot-toast";
 
-export const getAllProducts: any = createAsyncThunk(
-  "productsSlice/getAllProducts",
+export const getProducts_admin: any = createAsyncThunk(
+  "adminProductsSlice/getProducts_admin",
   async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -17,28 +17,9 @@ export const getAllProducts: any = createAsyncThunk(
     }
   }
 );
-export const getProductsByCategory: any = createAsyncThunk(
-  "productsSlice/getProductsByCategory",
-  async (category: any, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
-    try {
-      const products = (
-        await axios.get(
-          "/api/products/" +
-            category?.main_category?.replaceAll("-", "%20") +
-            "/" +
-            category?.sub_category?.replaceAll("-", "%20")
-        )
-      ).data;
-      return products;
-    } catch (error: any) {
-      console.log(error);
-      return rejectWithValue(error.message);
-    }
-  }
-);
-export const getProduct: any = createAsyncThunk(
-  "productsSlice/getProduct",
+
+export const getProduct_admin: any = createAsyncThunk(
+  "adminProductsSlice/getProduct_admin",
   async (product_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -51,8 +32,8 @@ export const getProduct: any = createAsyncThunk(
     }
   }
 );
-export const unpublishProduct: any = createAsyncThunk(
-  "productsSlice/unpublishProduct",
+export const unpublishProduct_admin: any = createAsyncThunk(
+  "adminProductsSlice/unpublishProduct_admin",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -78,8 +59,8 @@ const initialState: ProductsState = {
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: "productsSlice",
+const adminProductsSlice = createSlice({
+  name: "adminProductsSlice",
   initialState,
   reducers: {
     resetForm: (state) => {
@@ -89,21 +70,21 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        getAllProducts.pending,
+        getProducts_admin.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getAllProducts.fulfilled,
+        getProducts_admin.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.products = action.payload;
         }
       )
       .addCase(
-        getAllProducts.rejected,
+        getProducts_admin.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -112,21 +93,21 @@ const productsSlice = createSlice({
 
     builder
       .addCase(
-        getProduct.pending,
+        getProduct_admin.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getProduct.fulfilled,
+        getProduct_admin.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.product = action.payload;
         }
       )
       .addCase(
-        getProduct.rejected,
+        getProduct_admin.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -134,14 +115,14 @@ const productsSlice = createSlice({
       );
     builder
       .addCase(
-        unpublishProduct.pending,
+        unpublishProduct_admin.pending,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        unpublishProduct.fulfilled,
+        unpublishProduct_admin.fulfilled,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.products = state.products.filter(
@@ -150,30 +131,7 @@ const productsSlice = createSlice({
         }
       )
       .addCase(
-        unpublishProduct.rejected,
-        (state: ProductsState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      );
-
-    builder
-      .addCase(
-        getProductsByCategory.pending,
-        (state: ProductsState, action: PayloadAction<any>) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-      .addCase(
-        getProductsByCategory.fulfilled,
-        (state: ProductsState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.products = action.payload;
-        }
-      )
-      .addCase(
-        getProductsByCategory.rejected,
+        unpublishProduct_admin.rejected,
         (state: ProductsState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -181,6 +139,6 @@ const productsSlice = createSlice({
       );
   },
 });
-export default productsSlice.reducer;
+export default adminProductsSlice.reducer;
 
-export const { resetForm } = productsSlice.actions;
+export const { resetForm } = adminProductsSlice.actions;

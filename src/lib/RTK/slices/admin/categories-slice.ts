@@ -3,8 +3,8 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export const getCategories: any = createAsyncThunk(
-  "categoriesSlice/getCategories",
+export const getCategories_admin: any = createAsyncThunk(
+  "categoriesSlice/getCategories_admin",
   async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -18,8 +18,8 @@ export const getCategories: any = createAsyncThunk(
   }
 );
 
-export const getCategory: any = createAsyncThunk(
-  "categoriesSlice/getCategory",
+export const getCategory_admin: any = createAsyncThunk(
+  "categoriesSlice/getCategory_admin",
   async (_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -102,21 +102,21 @@ const categoriesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        getCategories.pending,
+        getCategories_admin.pending,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getCategories.fulfilled,
+        getCategories_admin.fulfilled,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = false;
           state.categories = action.payload;
         }
       )
       .addCase(
-        getCategories.rejected,
+        getCategories_admin.rejected,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -124,21 +124,21 @@ const categoriesSlice = createSlice({
       );
     builder
       .addCase(
-        getCategory.pending,
+        getCategory_admin.pending,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getCategory.fulfilled,
+        getCategory_admin.fulfilled,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = false;
           state.category = action.payload;
         }
       )
       .addCase(
-        getCategory.rejected,
+        getCategory_admin.rejected,
         (state: CategoryState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

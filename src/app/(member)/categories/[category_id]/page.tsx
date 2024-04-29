@@ -6,9 +6,9 @@ import CategoriesNavigation from "@/components/navigation-menu/categories-naviga
 import ProductsBestSellers from "./_components/products-best-sellers";
 
 export default function CategoryPage({
-  params: { main_category_id },
+  params: { category_id },
 }: {
-  params: { main_category_id: string };
+  params: { category_id: string };
 }) {
   return (
     <>
@@ -17,10 +17,10 @@ export default function CategoryPage({
         <MaxWidthWrapper>
           <div>
             <SectionTitle className="my-2" title="Shop by category" />
-            <SubCategoriesSlider main_category_id={main_category_id} />
+            <SubCategoriesSlider category_id={category_id} />
           </div>
           <div>
-            <ProductsBestSellers main_category_id={main_category_id} />
+            <ProductsBestSellers category_id={category_id} />
           </div>
         </MaxWidthWrapper>
       </div>

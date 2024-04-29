@@ -1,7 +1,7 @@
 import { DeleteConfirm } from "@/components/delete-confirm";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { deleteCategory } from "@/lib/RTK/slices/categories-slice";
+import { deleteCategory } from "@/lib/RTK/slices/admin/categories-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 

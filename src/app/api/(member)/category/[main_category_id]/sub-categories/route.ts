@@ -17,13 +17,7 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
-    const session = await getServerSession(authOptions);
-    const email = session?.user?.email;
-    const user = await User.findOne({ email }).lean();
 
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
 
     // ...(sub_category?.trim() && {
     //   sub_categories: {

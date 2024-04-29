@@ -7,21 +7,25 @@ import { FaTruckMoving } from "react-icons/fa";
 import { HandleDeals } from "./handle-deals";
 import { ImagesSlieder } from "./images-slider";
 
-export default function ProductCard({ images, title, price ,is_bestseller,likes}: Product) {
+export default function ProductCard({
+  images,
+  title,
+  price,
+  is_bestseller,
+  likes,
+}: Product) {
   const discount_percentage = price?.offer?.discount_percentage;
 
   const offerCalc = (discount_percentage / 100) * price?.base_price;
   const finalPrice = price?.base_price - offerCalc;
   return (
-    // <CarouselItem
-    //   className={cn(
-    //     "min-w-[195px] lg:min-w-[251px] max-w-[230px] h-full basis-1/5"
-    //   )}
-    // >
-
     <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px] overflow-hidden  h-full border flex flex-col gap-1">
       <div>
-        <ImagesSlieder images={images} likes={likes} is_bestseller={is_bestseller} />
+        <ImagesSlieder
+          images={images}
+          likes={likes}
+          is_bestseller={is_bestseller}
+        />
         <HandleDeals discount_percentage={discount_percentage} />
       </div>
 

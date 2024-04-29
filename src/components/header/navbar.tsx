@@ -1,8 +1,6 @@
-import React from "react";
 import Icons from "../icons";
 import NavLinks from "./nav-links";
 import NavSearch from "./nav-search";
-import CategoriesNavigation from "../navigation-menu/categories-navigation";
 
 export default function Navbar() {
   return (

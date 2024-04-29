@@ -4,17 +4,17 @@ import Icons from "@/components/icons";
 import LoaderLayout from "@/components/loader-layout";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getUser } from "@/lib/RTK/slices/admin/users";
+import { getUser_admin } from "@/lib/RTK/slices/admin/users";
 import { formatDate } from "date-fns";
 import Image from "next/image";
 import { useEffect } from "react";
 
 export default function DetialsSection({ user_id }: { user_id: string }) {
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.users);
+  const { user, loading } = useAppSelector((state) => state.admin_users);
 
   useEffect(() => {
-    dispatch(getUser(user_id));
+    dispatch(getUser_admin(user_id));
   }, [dispatch, user_id]);
   const firstName = user?.name?.split(" ")?.[0] || "";
   const lastName = user?.name?.split(" ")?.slice(1).join(" ") || "";

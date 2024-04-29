@@ -1,9 +1,7 @@
-import React from "react";
-import { CarouselItem } from "../ui/carousel";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Category } from "@/types";
+import { CarouselItem } from "../ui/carousel";
 
 export default function CategoryCard({ sub_categories, main_category }: any) {
   return sub_categories?.map((el: any, i: number) => (
@@ -15,7 +13,7 @@ export default function CategoryCard({ sub_categories, main_category }: any) {
     >
       <Link
         href={
-          "/category/" +
+          "/categories/" +
           main_category?.name?.replaceAll(" ", "-") +
           "/" +
           el?.name?.replaceAll(" ", "-")

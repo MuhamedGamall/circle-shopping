@@ -8,7 +8,7 @@ export default function DetailsProductPage() {
     <MaxWidthWrapper>
       <div className="relative w-full ">
         <section className="p-5 shadow-section w-full  ">
-          <SectionTitle title="product details" className="mb-5" />
+          <SectionTitle title="Product Details" className="mb-5" />
           <ViewDetailsSection />
         </section>
       </div>

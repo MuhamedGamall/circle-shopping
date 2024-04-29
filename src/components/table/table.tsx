@@ -25,18 +25,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import useMemberCategories from "@/hooks/member/use-member-categories";
 import { Product } from "@/types";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
-import { LoadingSkeleton } from "./table-loading";
 import { Input } from "../ui/input";
-import useCategories from "@/hooks/use-categories";
 import { CategoriesFilter } from "./categories-filter";
+import { LoadingSkeleton } from "./table-loading";
 
 export function ProductsTable({
   data,
@@ -57,14 +50,14 @@ export function ProductsTable({
   const [rowSelection, setRowSelection] = useState({});
   const [categorySelected, setCategorySelected] = useState("");
   const [dataFilterd, setDataFilterd] = useState<Product[]>([]);
-  const { data: categories, loading: cateLoading } = useCategories("");
-  
+  const { data: categories, loading: cateLoading } = useMemberCategories();
+
   const sortingCategories = [...categories].sort((a, b) => {
     const nameA = a?.main_category?.name || "";
     const nameB = b?.main_category?.name || "";
     return nameA.localeCompare(nameB);
   });
-  
+
   useEffect(() => {
     const filterData = categorySelected
       ? data.filter(

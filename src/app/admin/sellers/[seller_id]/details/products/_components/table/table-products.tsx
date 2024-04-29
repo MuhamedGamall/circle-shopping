@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 
-import { columns } from "./table-columns";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { ProductsTable } from "@/components/table/table";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getProductsSeller_admin } from "@/lib/RTK/slices/admin/sellers";
 import { useDebounce } from "react-use";
+import { columns } from "./table-columns";
 
 export function DataTable({ seller_id }: { seller_id: string }) {
   const dispatch = useAppDispatch();
   const [debouncedValue, setDebouncedValue] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { products, loading } = useAppSelector((state) => state.sellers);
+  const { products, loading } = useAppSelector((state) => state.admin_sellers);
   const query = searchQuery ? searchQuery : "";
   useDebounce(
     () => {

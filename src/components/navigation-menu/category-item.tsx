@@ -19,7 +19,7 @@ export default function CategoryItem({
       <MenubarContent className="rounded-none ">
         <MenubarItem asChild>
           <Link
-            href={"/category/" + main_category?.name?.replaceAll(" ", "-")}
+            href={"/categories/" + main_category?.name?.replaceAll(" ", "-")}
             className="bg-slate-100 rounded-none capitalize cursor-pointer text-[#3866df]"
           >
             {main_category?.name}
@@ -29,7 +29,7 @@ export default function CategoryItem({
           <MenubarItem key={i} asChild>
             <Link
               href={
-                "/category/" +
+                "/categories/" +
                 main_category?.name?.replaceAll(" ", "-") +
                 "/" +
                 el?.name?.replaceAll(" ", "-")

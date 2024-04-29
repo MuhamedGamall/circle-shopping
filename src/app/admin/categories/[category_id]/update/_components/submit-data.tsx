@@ -1,24 +1,26 @@
 "use client";
 import LoaderLayout from "@/components/loader-layout";
 import { Button } from "@/components/ui/button";
+import useAdminCategories from "@/hooks/admin/use-admin-categories";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import categoriesSlice, {
-  getCategory,
+import {
+  getCategory_admin,
   resetForm,
   updateCategory,
-} from "@/lib/RTK/slices/categories-slice";
+} from "@/lib/RTK/slices/admin/categories-slice";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import MainCategoryForm from "./sections/main-category-form";
 import SubCategortiesForm from "./sections/sub-categories-form";
-import useCategories from "@/hooks/use-categories";
 export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { category_id } = useParams();
-  const { data: categories } = useCategories();
-  const { category, loading } = useAppSelector((state) => state.categories);
+  const { data: categories } = useAdminCategories();
+  const { category, loading } = useAppSelector(
+    (state) => state.admin_categories
+  );
 
   const [
     categoriesIdsForDeleteFromCloudinary,
@@ -42,7 +44,7 @@ export default function SubmitData() {
   }));
 
   useEffect(() => {
-    dispatch(getCategory(category_id));
+    dispatch(getCategory_admin(category_id));
   }, [category_id, dispatch]);
 
   useEffect(() => {
@@ -84,10 +86,9 @@ export default function SubmitData() {
   );
 
   const onSubmit = async () => {
-
     if (findSameMainCate)
       return toast.error("Main category label already exists in the database.");
-    
+
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."

@@ -1,17 +1,16 @@
-import Link from "next/link";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { Category } from "@/types";
 import { CarouselItem } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function CategoryImg({
   name,
   image,
-  main_category_id,
+  category_id,
 }: {
   image: string;
   name: string;
-  main_category_id: string;
+  category_id: string;
 }) {
   return (
     <CarouselItem
@@ -20,7 +19,7 @@ export default function CategoryImg({
       )}
     >
       <Link
-        href={"/category/" + main_category_id + "/" + name?.replaceAll(" ", "-")}
+        href={"/category/" + category_id + "/" + name?.replaceAll(" ", "-")}
         className="flex flex-col items-center  gap-2"
       >
         <Image

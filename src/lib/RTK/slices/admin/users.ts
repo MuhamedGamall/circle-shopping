@@ -3,8 +3,8 @@ import axios from "axios";
 import { AccountData } from "@/types";
 import toast from "react-hot-toast";
 
-export const getUsers: any = createAsyncThunk(
-  "usersSlice/getUsers",
+export const getUsers_admin: any = createAsyncThunk(
+  "adminUsersSlice/getUsers_admin",
   async (searchQuery: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -19,8 +19,8 @@ export const getUsers: any = createAsyncThunk(
     }
   }
 );
-export const getUser: any = createAsyncThunk(
-  "usersSlice/getUser",
+export const getUser_admin: any = createAsyncThunk(
+  "adminUsersSlice/getUser_admin",
   async (user_id, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -32,20 +32,6 @@ export const getUser: any = createAsyncThunk(
   }
 );
 
-// export const updateAccount: any = createAsyncThunk(
-//   "usersSlice/updateAccount",
-//   async (values: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       (await axios.patch("/api/account", values)).data;
-//       toast.success("Account updated successfully");
-//       return values;
-//     } catch (error: any) {
-//       toast.error("Something went wrong updating account");
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 type UserState = {
   users: AccountData[];
@@ -60,8 +46,8 @@ const initialState: UserState = {
   error: null,
 };
 
-const usersSlice = createSlice({
-  name: "usersSlice",
+const adminUsersSlice = createSlice({
+  name: "adminUsersSlice",
   initialState,
   reducers: {
     handleUserAdmin: (state: UserState, action: PayloadAction<any>) => {
@@ -73,7 +59,6 @@ const usersSlice = createSlice({
             }
           : user
       );
-      console.log(state.users);
 
     },
     handleUserBan: (state: UserState, action: PayloadAction<any>) => {
@@ -90,21 +75,21 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        getUsers.pending,
+        getUsers_admin.pending,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getUsers.fulfilled,
+        getUsers_admin.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.users = action.payload;
         }
       )
       .addCase(
-        getUsers.rejected,
+        getUsers_admin.rejected,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -112,21 +97,21 @@ const usersSlice = createSlice({
       );
     builder
       .addCase(
-        getUser.pending,
+        getUser_admin.pending,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getUser.fulfilled,
+        getUser_admin.fulfilled,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.user = action.payload;
         }
       )
       .addCase(
-        getUser.rejected,
+        getUser_admin.rejected,
         (state: UserState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
@@ -135,5 +120,5 @@ const usersSlice = createSlice({
 
   },
 });
-export default usersSlice.reducer;
-export const { handleUserBan, handleUserAdmin } = usersSlice.actions;
+export default adminUsersSlice.reducer;
+export const { handleUserBan, handleUserAdmin } = adminUsersSlice.actions;

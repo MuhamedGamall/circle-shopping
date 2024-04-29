@@ -4,10 +4,9 @@ import Icons from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatDate } from "date-fns";
-import { ArrowUpDown, CircleOff, Eye } from "lucide-react";
+import { ArrowUpDown, Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 import HandleAdminBtn from "./handle-admin-button";
 import HandleBanBtn from "./handle-ban-button";
 
@@ -83,7 +82,6 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "ban.is_banned",
     header: ({ column }) => {
-      console.log(column);
       
       return (
         <Button

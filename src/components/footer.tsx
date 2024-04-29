@@ -1,7 +1,6 @@
-import React from "react";
+import { Mail } from "lucide-react";
 import Link from "next/link";
-import { FaLinkedin, FaGithubSquare } from "react-icons/fa";
-import { Mail, MessageSquarePlusIcon } from "lucide-react";
+import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import MaxWidthWrapper from "./wrappers/max-width-wrapper";
 export default function Footer() {
   return (

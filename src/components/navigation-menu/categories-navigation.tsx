@@ -1,11 +1,10 @@
 "use client";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import useCategories from "@/hooks/use-categories";
+import useMemberCategories from "@/hooks/member/use-member-categories";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import CategoryItem from "./category-item";
 import { Skeleton } from "../ui/skeleton";
-import { SliderWrapper } from "../wrappers/slider-wrapper";
+import CategoryItem from "./category-item";
 
 const LoadingSkeleton = () => {
   const loadingArray = Array.from({ length: 22 });
@@ -19,7 +18,7 @@ const LoadingSkeleton = () => {
   );
 };
 export default function CategoriesNavigation() {
-  const { data, loading } = useCategories();
+  const { data, loading } = useMemberCategories();
   return (
     <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto ")}>
       <Menubar className="rounded-none bg-transparent mx-auto border-0 w-full max-w-[1890px]  px-2.5">

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "./redux";
+import { useAppDispatch, useAppSelector } from "../redux";
 import { useDebounce } from "react-use";
+import { getProducts_admin } from "@/lib/RTK/slices/admin/products-slice";
 
-import { getAllProducts } from "@/lib/RTK/slices/products-slice";
 
-export default function useProducts(query: string) {
+export default function useAdminProducts(query: string) {
   const dispatch = useAppDispatch();
   const { products, loading, error } = useAppSelector(
-    (state) => state.allProducts
+    (state) => state.admin_products
   );
   const [debouncedValue, setDebouncedValue] = useState("");
   useDebounce(
@@ -18,7 +18,7 @@ export default function useProducts(query: string) {
     [query.trim()]
   );
   useEffect(() => {
-    dispatch(getAllProducts(debouncedValue));
+    dispatch(getProducts_admin(debouncedValue));
   }, [debouncedValue, dispatch]);
 
   return { loading, data: products, error };

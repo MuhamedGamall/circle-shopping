@@ -1,10 +1,10 @@
 "use client";
-import SliderAds from "./ads-slider/slider-ads";
-import Link from "next/link";
+import useMemberCategories from "@/hooks/member/use-member-categories";
 import Image from "next/image";
+import Link from "next/link";
+import SliderAds from "./ads-slider/slider-ads";
+import CategoryImg from "./home-categories-slider-img";
 import CategoriesImages from "./wrappers/categorias-images-wrapper";
-import useCategories from "@/hooks/use-categories";
-import CategoryImg from "./home-main-categories-img";
 const images = [
   {
     image: "/ads-photos/beauty.avif",
@@ -21,7 +21,7 @@ const images = [
 ];
 
 export default function HeroSection() {
-  const { data, loading } = useCategories();
+  const { data, loading } = useMemberCategories();
   return (
     <div>
       <div className="flex items-center gap-[1px] h-full">

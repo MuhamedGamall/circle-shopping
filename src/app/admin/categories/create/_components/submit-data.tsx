@@ -1,19 +1,19 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import MainCategoryForm from "./sections/main-category-form";
-import SubCategortiesForm from "./sections/sub-categories-form";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import MainCategoryForm from "./sections/main-category-form";
+import SubCategortiesForm from "./sections/sub-categories-form";
 
 import LoaderLayout from "@/components/loader-layout";
-import { createCategory } from "@/lib/RTK/slices/categories-slice";
+import useAdminCategories from "@/hooks/admin/use-admin-categories";
 import { useAppDispatch } from "@/hooks/redux";
-import useCategories from "@/hooks/use-categories";
+import { createCategory } from "@/lib/RTK/slices/admin/categories-slice";
 export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data } = useCategories();
+  const { data } = useAdminCategories();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [subCateValues, setSubCateValues] = useState<
@@ -50,9 +50,8 @@ export default function SubmitData() {
     (el) => el?.main_category?.name === mainCateValues.name
   );
   const onSubmit = async () => {
-    if (findSameMainCate)
-      return toast.error("This category already exists.");
- 
+    if (findSameMainCate) return toast.error("This category already exists.");
+
     if (!Object.values(trimMainCateVlues).every(Boolean))
       return toast.error(
         "Please complete the incomplete fields in main category section."
@@ -75,9 +74,8 @@ export default function SubmitData() {
       })
     );
     setIsSubmitting(false);
-    if (create.meta?.requestStatus === "fulfilled") 
+    if (create.meta?.requestStatus === "fulfilled")
       router.replace("/admin/categories");
-    
   };
 
   return (

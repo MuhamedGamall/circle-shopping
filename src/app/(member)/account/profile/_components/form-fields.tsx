@@ -12,7 +12,7 @@ import useAccount from "@/hooks/use-account";
 import { accountSchema } from "../schema";
 import SelectCountry from "./select-country";
 import { useAppDispatch } from "@/hooks/redux";
-import { updateAccount } from "@/lib/RTK/slices/account-slice";
+import { updateAccount } from "@/lib/RTK/slices/member/account-slice";
 import LoaderLayout from "@/components/loader-layout";
 import { Label } from "@/components/ui/label";
 

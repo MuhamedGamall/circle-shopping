@@ -60,7 +60,6 @@ export function ImagesSlieder({
           />
         </Link>
         <Button
-          onClick={() => console.log(150)}
           className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-4 right-4 text-secondMain p-1"
         >
           <BiCartAdd className=" h-7 w-7" />

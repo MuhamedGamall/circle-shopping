@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 export default function DetialsSection({ seller_id }: { seller_id: string }) {
   const dispatch = useAppDispatch();
-  const { seller, loading } = useAppSelector((state) => state.sellers);
+  const { seller, loading } = useAppSelector((state) => state.admin_sellers);
 
   useEffect(() => {
     dispatch(getSeller_admin(seller_id));

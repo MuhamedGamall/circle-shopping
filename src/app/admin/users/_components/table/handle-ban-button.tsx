@@ -1,10 +1,8 @@
-import getCEOEmail from "@/utils/get-ceo-email";
 import DeleteReasonsBtn from "@/components/delete-reason-button";
 import { Button } from "@/components/ui/button";
 import { TooltipWrapper } from "@/components/wrappers/tooltip-wrapper";
 import { useAppDispatch } from "@/hooks/redux";
 import { handleUserBan } from "@/lib/RTK/slices/admin/users";
-import { cn } from "@/lib/utils";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";

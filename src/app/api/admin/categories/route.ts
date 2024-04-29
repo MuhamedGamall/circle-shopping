@@ -1,17 +1,16 @@
-import mongoConnect from "@/utils/mongo-connect";
 import { authOptions } from "@/lib/auth-option";
-import { UserInfo } from "@/models/user-info";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
 import { Category } from "@/models/category";
+import { UserInfo } from "@/models/user-info";
 import {
   removeFolder,
   uploadImages,
   uploadSubCategoryImages,
 } from "@/utils/cloudinary";
+import mongoConnect from "@/utils/mongo-connect";
 import { randomBytes } from "crypto";
 import mongoose from "mongoose";
-import { ObjectId } from "mongodb";
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {

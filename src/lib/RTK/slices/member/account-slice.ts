@@ -1,24 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { AccountData } from "../../../types";
+import { AccountData } from "../../../../types";
 import toast from "react-hot-toast";
 
-// export const getAccounts: any = createAsyncThunk(
-//   "accountSlice/getAccounts",
-//   async (_, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (await axios.get("/api/admin/users")).data;
-//       return data || [];
-//     } catch (error: any) {
-//       console.log(error);
-
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const getAccount: any = createAsyncThunk(
-  "accountSlice/getAccount",
+  "memberAccountSlice/getAccount",
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -31,7 +17,7 @@ export const getAccount: any = createAsyncThunk(
 );
 
 export const updateAccount: any = createAsyncThunk(
-  "accountSlice/updateAccount",
+  "memberAccountSlice/updateAccount",
   async (values: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -45,9 +31,8 @@ export const updateAccount: any = createAsyncThunk(
   }
 );
 
-
 export const deleteAccount: any = createAsyncThunk(
-  "accountSlice/deleteAccount",
+  "memberAccountSlice/deleteAccount",
   async (email: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -72,8 +57,8 @@ const initialState: AccountState = {
   error: null,
 };
 
-const accountSlice = createSlice({
-  name: "accountSlice",
+const memberAccountSlice = createSlice({
+  name: "memberAccountSlice",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -125,7 +110,6 @@ const accountSlice = createSlice({
         (state: AccountState, action: PayloadAction<any>) => {
           state.loading = false;
           state.account = { ...state.account, ...action.payload };
-          
         }
       )
       .addCase(
@@ -137,4 +121,4 @@ const accountSlice = createSlice({
       );
   },
 });
-export default accountSlice.reducer;
+export default memberAccountSlice.reducer;

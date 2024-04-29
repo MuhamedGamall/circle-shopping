@@ -9,7 +9,7 @@ import { getProductSeller_admin } from "@/lib/RTK/slices/admin/sellers";
 export default function ViewDetailsSection() {
   const dispatch = useAppDispatch();
   const { product_id, seller_id } = useParams();
-  const { product, loading } = useAppSelector((state) => state.sellers);
+  const { product, loading } = useAppSelector((state) => state.admin_sellers);
   useEffect(() => {
     dispatch(getProductSeller_admin({ product_id, seller_id }));
   }, [dispatch, product_id, seller_id]);

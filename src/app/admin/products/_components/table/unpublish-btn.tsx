@@ -1,7 +1,7 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
-import { unpublishProduct } from "@/lib/RTK/slices/products-slice";
+import { unpublishProduct_admin } from "@/lib/RTK/slices/admin/products-slice";
 import { cn } from "@/lib/utils";
 import { Trash } from "lucide-react";
 import DeleteReasonsBtn from "@/components/delete-reason-button";
@@ -36,8 +36,8 @@ const UnpublishBtn = ({
     if (!reasonSelectedValue) return toast.error("Please select a reason");
     try {
       const update = await dispatch(
-        unpublishProduct({
-          store_id:store_id,
+        unpublishProduct_admin({
+          store_id: store_id,
           product_id,
         })
       );

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "./redux";
-import { getCategories } from "@/lib/RTK/slices/categories-slice";
+import { useAppDispatch, useAppSelector } from "../redux";
+import { getCategories_admin } from "@/lib/RTK/slices/admin/categories-slice";
 import { useDebounce } from "react-use";
 
-export default function useCategories(searchQuery?: string) {
+export default function useAdminCategories(searchQuery?: string) {
   const dispatch = useAppDispatch();
   const [debouncedValue, setDebouncedValue] = useState("");
   const { categories, loading, error } = useAppSelector(
-    (state) => state.categories
+    (state) => state.admin_categories
   );
   const query = searchQuery ? searchQuery : "";
   useDebounce(
@@ -19,7 +19,7 @@ export default function useCategories(searchQuery?: string) {
   );
 
   useEffect(() => {
-    dispatch(getCategories(debouncedValue.trim()));
+    dispatch(getCategories_admin(debouncedValue.trim()));
   }, [debouncedValue, dispatch]);
 
   return { loading, data: categories, error };

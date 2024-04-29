@@ -1,20 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 
-import Icons from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/utils/format";
 import { formatDate } from "date-fns";
-import { ArrowUpDown, Trash, Trash2 } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import SubCategoriesMenu from "./sub-categories-menu";
-import { DeleteConfirm } from "@/components/delete-confirm";
-import { useAppDispatch } from "@/hooks/redux";
-import { deleteCategory } from "@/lib/RTK/slices/categories-slice";
 import DeleteBtn from "./delete-btn";
+import SubCategoriesMenu from "./sub-categories-menu";
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -24,14 +17,16 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const image = row.getValue("main_category")?.image;
-      return <Image
-        src={image}
-        alt="image"
-        width={600}
-        height={819}
-        loading="lazy"
-        className=" mx-auto uppercase  max-w-[62px] min-w-[62px] h-[62px] object-cover"
-      />;
+      return (
+        <Image
+          src={image}
+          alt="image"
+          width={600}
+          height={819}
+          loading="lazy"
+          className=" mx-auto uppercase  max-w-[62px] min-w-[62px] h-[62px] object-cover"
+        />
+      );
     },
   },
   {
