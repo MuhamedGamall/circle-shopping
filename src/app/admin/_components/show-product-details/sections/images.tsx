@@ -23,7 +23,6 @@ export default function ImagesSection({ images }: { images: string[] }) {
                     width={480}
                     height={300}
                     loading="lazy"
-                    objectFit="contain"
                     className="w-full max-w-[140px] h-[230px] object-cover rounded-sm shadow-md"
                   />
                 ))

@@ -18,7 +18,6 @@ export default function CategoryImg({ main_category }: Category) {
         <Image
           width={100}
           height={100}
-          objectFit="cover"
           src={main_category?.image}
           alt=""
           className="w-full h-full object-cover rounded-full border-[#d6d6d6] block border"

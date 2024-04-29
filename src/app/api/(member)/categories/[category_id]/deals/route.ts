@@ -15,8 +15,7 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
-
-    const bestSellerThreshold = 100;
+    const limit = parseInt(req.nextUrl.searchParams.get("limit") || "0");
 
     const filterCategories = {
       "main_category.name": category_id,
@@ -27,19 +26,21 @@ export async function GET(
     if (!findCategory) {
       return new NextResponse("Not Found", { status: 404 });
     }
+
     const filterProducts = {
       "category.main_category": category_id,
-      sales_count: { $gte: bestSellerThreshold },
       is_published: true,
     };
 
-    let products = await Product.find(filterProducts).limit(20).lean();
-
-    const alternativeData = await Product.find({
-      "category.main_category": category_id,
-      is_published: true,
+    let products = await Product.find({
+      ...filterProducts,
+      "price.offer.discount_percentage": { $gte: 1 },
     })
-      .limit(20)
+      .limit(limit)
+      .lean();
+
+    const alternativeData = await Product.find(filterProducts)
+      .limit(limit)
       .lean();
 
     const updateData = products.map((el, i) => ({
@@ -53,7 +54,7 @@ export async function GET(
 
     return NextResponse.json(products);
   } catch (error) {
-    console.log("[MEMBER:CATEGORY>BESTSELLERS]", error);
+    console.log("[MEMBER:CATEGORY>DEALS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

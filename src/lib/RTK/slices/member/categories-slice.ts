@@ -34,8 +34,8 @@ export const getCategory_member: any = createAsyncThunk(
   }
 );
 
-export const getProductsBestSellers: any = createAsyncThunk(
-  "memberCategoriesSlice/getProductsBestSellers",
+export const getProductsBestSellers_member: any = createAsyncThunk(
+  "memberCategoriesSlice/getProductsBestSellers_member",
   async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -55,9 +55,32 @@ export const getProductsBestSellers: any = createAsyncThunk(
     }
   }
 );
+export const getProductsDeals_member: any = createAsyncThunk(
+  "memberCategoriesSlice/getProductsDeals_member",
+  async ({ category_id, params }: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const categories = (
+        await axios.get(
+          "/api/categories/" +
+            category_id?.replaceAll("-", "%20") +
+            "/" +
+            "deals",
+          { params }
+        )
+      ).data;
+      return categories;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 type categoriesState = {
   bestSellers: Product[];
+  deals: Product[];
+
   categories: Category[];
   category: Category | null;
   loading: boolean;
@@ -65,6 +88,7 @@ type categoriesState = {
 };
 const initialState: categoriesState = {
   bestSellers: [],
+  deals: [],
   categories: [],
   category: null,
   loading: false,
@@ -78,6 +102,7 @@ const memberCategoriesSlice = createSlice({
     cleanUp: (state) => {
       state.category = null;
       state.bestSellers = [];
+      state.deals = [];
     },
   },
   extraReducers: (builder) => {
@@ -127,21 +152,43 @@ const memberCategoriesSlice = createSlice({
       );
     builder
       .addCase(
-        getProductsBestSellers.pending,
+        getProductsBestSellers_member.pending,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
       .addCase(
-        getProductsBestSellers.fulfilled,
+        getProductsBestSellers_member.fulfilled,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
           state.bestSellers = action.payload;
         }
       )
       .addCase(
-        getProductsBestSellers.rejected,
+        getProductsBestSellers_member.rejected,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+    builder
+      .addCase(
+        getProductsDeals_member.pending,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getProductsDeals_member.fulfilled,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.deals = action.payload;
+        }
+      )
+      .addCase(
+        getProductsDeals_member.rejected,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

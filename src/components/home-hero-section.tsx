@@ -36,7 +36,6 @@ export default function HeroSection() {
             <Image
               width={200}
               height={200}
-              objectFit="cover"
               src={"/ads-photos/9fa77bc4-04be-47ec-a433-42126343092c.avif"}
               alt="ads image"
               className="w-full h-full object-cover"
@@ -46,7 +45,6 @@ export default function HeroSection() {
             <Image
               width={200}
               height={200}
-              objectFit="cover"
               src={"/ads-photos/aeca53b5-4d64-4733-a911-0143b32ce237.avif"}
               alt=""
               className="w-full h-full object-cover"

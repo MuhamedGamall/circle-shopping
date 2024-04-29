@@ -5,10 +5,11 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
   getProductsBestSellers_member,
+  getProductsDeals_member,
 } from "@/lib/RTK/slices/member/categories-slice";
 import { useEffect } from "react";
 
-export default function ProductsBestSellers({
+export default function ProductsDeal({
   category_id,
   params,
 }: {
@@ -16,16 +17,16 @@ export default function ProductsBestSellers({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { bestSellers, loading } = useAppSelector(
+  const { deals, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getProductsBestSellers_member({ category_id, params }));
+    dispatch(getProductsDeals_member({ category_id, params }));
   }, [category_id, dispatch, params]);
 
   return (
-    <ProductsSlider data={bestSellers} loading={loading} title="Bestsellers" />
+    <ProductsSlider data={deals} loading={loading} title="Top deals" />
   );
 }
