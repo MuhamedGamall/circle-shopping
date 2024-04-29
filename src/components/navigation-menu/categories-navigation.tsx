@@ -3,8 +3,8 @@ import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import useCategories from "@/hooks/use-categories";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import CategoryItem from "./category-item";
 import { Skeleton } from "../ui/skeleton";
+import CategoryItem from "./category-item";
 
 const LoadingSkeleton = () => {
   const loadingArray = Array.from({ length: 22 });
@@ -32,6 +32,7 @@ export default function CategoriesNavigation() {
         {loading ? (
           <LoadingSkeleton />
         ) : (
+        
           data?.map((el, i) => <CategoryItem key={i} {...el} />)
         )}
       </Menubar>

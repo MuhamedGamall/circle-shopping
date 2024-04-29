@@ -1,15 +1,11 @@
 import {
-  Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarTrigger,
+  MenubarTrigger
 } from "@/components/ui/menubar";
-import { cn } from "@/lib/utils";
 import { Category } from "@/types";
 import Link from "next/link";
-import { useState } from "react";
-import { HiStar } from "react-icons/hi2";
 
 export default function CategoryItem({
   main_category,
