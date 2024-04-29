@@ -18,7 +18,6 @@ export default function SliderItem({
         <Image
           width={200}
           height={200}
-          objectFit="cover"
           src={image}
           alt=""
           className={className}

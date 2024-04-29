@@ -20,7 +20,10 @@ export default function CategoryPage({
             <SubCategoriesSlider category_id={category_id} />
           </div>
           <div>
-            <ProductsBestSellers category_id={category_id} />
+            <ProductsBestSellers
+              category_id={category_id}
+              params={{ limit: "20" }}
+            />
           </div>
         </MaxWidthWrapper>
       </div>

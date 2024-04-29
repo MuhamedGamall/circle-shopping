@@ -10,8 +10,10 @@ import { useEffect } from "react";
 
 export default function ProductsBestSellers({
   category_id,
+  params,
 }: {
   category_id: string;
+  params?: any
 }) {
   const dispatch = useAppDispatch();
   const { bestSellers, loading } = useAppSelector(
@@ -20,8 +22,8 @@ export default function ProductsBestSellers({
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getProductsBestSellers(category_id));
-  }, [category_id, dispatch]);
+    dispatch(getProductsBestSellers({ category_id, params }));
+  }, [category_id, dispatch, params]);
 
   return (
     <ProductsSlider data={bestSellers} loading={loading} title="Bestsellers" />

@@ -29,7 +29,7 @@ export default function Home() {
       <MaxWidthWrapper>
         <HeroSection />
         <section>
-          <ProductsContainer />
+          {/* <ProductsContainer /> */}
           <SliderAds
             images={images}
             className="w-full h-full sm:h-[200px] object-cover sm:aspect-auto aspect-[12/4]"

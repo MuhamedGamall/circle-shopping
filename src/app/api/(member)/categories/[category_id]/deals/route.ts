@@ -15,7 +15,6 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
-    const limit = parseInt(req.nextUrl.searchParams.get("limit") || "0");
 
     const bestSellerThreshold = 100;
 
@@ -34,13 +33,13 @@ export async function GET(
       is_published: true,
     };
 
-    let products = await Product.find(filterProducts).limit(limit).lean();
+    let products = await Product.find(filterProducts).limit(20).lean();
 
     const alternativeData = await Product.find({
       "category.main_category": category_id,
       is_published: true,
     })
-      .limit(limit)
+      .limit(20)
       .lean();
 
     const updateData = products.map((el, i) => ({

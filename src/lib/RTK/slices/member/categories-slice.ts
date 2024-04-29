@@ -19,14 +19,14 @@ export const getCategory_member: any = createAsyncThunk(
   "memberCategoriesSlice/getCategory_member",
   async (category_id: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
-    
+
     try {
-      const category= (
+      const category = (
         await axios.get(
           "/api/categories/" + category_id?.replaceAll("-", "%20")
         )
       ).data;
-      return category
+      return category;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -36,7 +36,7 @@ export const getCategory_member: any = createAsyncThunk(
 
 export const getProductsBestSellers: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsBestSellers",
-  async (category_id: string, thunkApi) => {
+  async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const categories = (
@@ -44,7 +44,8 @@ export const getProductsBestSellers: any = createAsyncThunk(
           "/api/categories/" +
             category_id?.replaceAll("-", "%20") +
             "/" +
-            "best-sellers"
+            "best-sellers",
+          { params }
         )
       ).data;
       return categories;
@@ -102,7 +103,7 @@ const memberCategoriesSlice = createSlice({
           state.error = action.payload;
         }
       );
-      builder
+    builder
       .addCase(
         getCategory_member.pending,
         (state: categoriesState, action: PayloadAction<any>) => {
