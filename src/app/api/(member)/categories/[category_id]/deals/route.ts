@@ -22,7 +22,7 @@ export async function GET(
     };
 
     const findCategory = await Category.findOne(filterCategories);
-
+    const bestSellerThreshold = 100;
     if (!findCategory) {
       return new NextResponse("Not Found", { status: 404 });
     }
@@ -45,12 +45,15 @@ export async function GET(
 
     const updateData = products.map((el, i) => ({
       ...el,
-      is_bestseller: true,
+      is_bestseller: el?.sales_count >= bestSellerThreshold,
     }));
 
     products = products.length
       ? updateData
-      : alternativeData.map((el, i) => ({ ...el, is_bestseller: true }));
+      : alternativeData.map((el, i) => ({
+          ...el,
+          is_bestseller:el?.sales_count >= bestSellerThreshold,
+        }));
 
     return NextResponse.json(products);
   } catch (error) {

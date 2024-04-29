@@ -21,7 +21,7 @@ export async function GET(
 
     return NextResponse.json(findCategory);
   } catch (error) {
-    console.log("[MEMBER:CATEGORY]", error);
+    console.log("[MEMBER:CATEGORIES]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

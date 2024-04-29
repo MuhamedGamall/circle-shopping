@@ -1,10 +1,11 @@
 import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 
-import SubCategoriesSlider from "./_components/sub-categories-slider";
-import SectionTitle from "@/components/section-title";
 import CategoriesNavigation from "@/components/navigation-menu/categories-navigation";
+import SectionTitle from "@/components/section-title";
 import ProductsBestSellers from "./_components/products-best-sellers";
+import ProductsByCategory from "./_components/products-by-category";
 import ProductsDeal from "./_components/products-deals";
+import SubCategoriesSlider from "./_components/sub-categories-slider";
 
 export default function CategoryPage({
   params: { category_id },
@@ -27,10 +28,10 @@ export default function CategoryPage({
             />
           </div>
           <div>
-            <ProductsDeal
-              category_id={category_id}
-              params={{ limit: 50 }}
-            />
+            <ProductsDeal category_id={category_id} params={{ limit: 50 }} />
+          </div>
+          <div>
+            <ProductsByCategory category_id={category_id} />
           </div>
         </MaxWidthWrapper>
       </div>

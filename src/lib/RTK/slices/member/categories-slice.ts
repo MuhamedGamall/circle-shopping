@@ -39,7 +39,7 @@ export const getProductsBestSellers_member: any = createAsyncThunk(
   async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const categories = (
+      const products = (
         await axios.get(
           "/api/categories/" +
             category_id?.replaceAll("-", "%20") +
@@ -48,7 +48,7 @@ export const getProductsBestSellers_member: any = createAsyncThunk(
           { params }
         )
       ).data;
-      return categories;
+      return products;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -60,7 +60,7 @@ export const getProductsDeals_member: any = createAsyncThunk(
   async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const categories = (
+      const products = (
         await axios.get(
           "/api/categories/" +
             category_id?.replaceAll("-", "%20") +
@@ -69,6 +69,27 @@ export const getProductsDeals_member: any = createAsyncThunk(
           { params }
         )
       ).data;
+      return products;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const getProductsByCategory_member: any = createAsyncThunk(
+  "memberCategoriesSlice/getProductsByCategory_member",
+  async (category_id: any, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const categories = (
+        await axios.get(
+          "/api/categories/" +
+            category_id?.replaceAll("-", "%20") +
+            "/" +
+            "products-by-category"
+        )
+      ).data;
+      
       return categories;
     } catch (error: any) {
       console.log(error);
@@ -76,13 +97,16 @@ export const getProductsDeals_member: any = createAsyncThunk(
     }
   }
 );
-
 type categoriesState = {
   bestSellers: Product[];
   deals: Product[];
 
   categories: Category[];
   category: Category | null;
+  productsByCategory: {
+    _id: { main_category: string; sub_category: string };
+    products: Product[];
+  }[];
   loading: boolean;
   error: null;
 };
@@ -90,6 +114,7 @@ const initialState: categoriesState = {
   bestSellers: [],
   deals: [],
   categories: [],
+  productsByCategory: [],
   category: null,
   loading: false,
   error: null,
@@ -189,6 +214,28 @@ const memberCategoriesSlice = createSlice({
       )
       .addCase(
         getProductsDeals_member.rejected,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
+    builder
+      .addCase(
+        getProductsByCategory_member.pending,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(
+        getProductsByCategory_member.fulfilled,
+        (state: categoriesState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.productsByCategory = action.payload;
+        }
+      )
+      .addCase(
+        getProductsByCategory_member.rejected,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;

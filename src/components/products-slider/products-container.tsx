@@ -17,7 +17,7 @@ export default function ProductsSlider({
 }) {
   return (
     <div className="relative mt-12">
-      <div className={cn({ "h-[450px] my-2": loading })}>
+      <div className={cn({ "h-[300px] my-2": loading })}>
         <LoaderLayout loadingCondition={loading} />
       </div>
       <SectionTitle title={title} className=" pb-6 " />
