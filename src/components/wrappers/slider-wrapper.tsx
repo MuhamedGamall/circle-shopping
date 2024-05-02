@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
 export function SliderWrapper({
@@ -23,7 +24,7 @@ export function SliderWrapper({
     >
       <div className="relative">
         <CarouselPrevious className="absolute left-2 z-40 bg-white/80" />
-        <CarouselContent className={className}>{children}</CarouselContent>
+        <CarouselContent className={cn(className)}>{children}</CarouselContent>
         <CarouselNext className="absolute right-2 z-40 bg-white/80" />
       </div>
     </Carousel>

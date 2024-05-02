@@ -37,7 +37,6 @@ export default function Home() {
           <ShowCategories />
         </section>
       </MaxWidthWrapper>
-      <Footer />
       <MoblieBar />
     </main>
   );
