@@ -17,13 +17,13 @@ export const getCategories_member: any = createAsyncThunk(
 );
 export const getCategory_member: any = createAsyncThunk(
   "memberCategoriesSlice/getCategory_member",
-  async ( category-id: string, thunkApi) => {
+  async (category_id: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
 
     try {
       const category = (
         await axios.get(
-          "/api/categories/" +  category-id?.replaceAll("-", "%20")
+          "/api/categories/" + category_id?.replaceAll("-", "%20")
         )
       ).data;
       return category;
@@ -36,13 +36,13 @@ export const getCategory_member: any = createAsyncThunk(
 
 export const getProductsBestSellers_member: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsBestSellers_member",
-  async ({  category-id, params }: any, thunkApi) => {
+  async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const products = (
         await axios.get(
           "/api/categories/" +
-             category-id?.replaceAll("-", "%20") +
+            category_id?.replaceAll("-", "%20") +
             "/" +
             "best-sellers",
           { params }
@@ -57,13 +57,13 @@ export const getProductsBestSellers_member: any = createAsyncThunk(
 );
 export const getProductsDeals_member: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsDeals_member",
-  async ({  category-id, params }: any, thunkApi) => {
+  async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const products = (
         await axios.get(
           "/api/categories/" +
-             category-id?.replaceAll("-", "%20") +
+            category_id?.replaceAll("-", "%20") +
             "/" +
             "deals",
           { params }
@@ -78,18 +78,18 @@ export const getProductsDeals_member: any = createAsyncThunk(
 );
 export const getProductsByCategory_member: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsByCategory_member",
-  async ( category-id: any, thunkApi) => {
+  async (category_id: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const categories = (
         await axios.get(
           "/api/categories/" +
-             category-id?.replaceAll("-", "%20") +
+            category_id?.replaceAll("-", "%20") +
             "/" +
             "products-by-category"
         )
       ).data;
-      
+
       return categories;
     } catch (error: any) {
       console.log(error);

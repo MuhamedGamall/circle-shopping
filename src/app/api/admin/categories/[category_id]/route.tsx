@@ -12,7 +12,7 @@ import {
 
 export async function PATCH(
   req: NextRequest,
-  { params: {  category-id } }: { params: {  category-id: string } }
+  { params: { category_id } }: { params: { category_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -32,12 +32,12 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
     const categories: any = await Category.find().lean();
-    const category = await Category.findOne({ _id:  category-id }).lean();
+    const category = await Category.findOne({ _id: category_id }).lean();
 
     const findSameMainCate = categories?.find(
       (cate: any) =>
         cate?.main_category?.name === main_category?.name &&
-        cate?._id + "" !==  category-id
+        cate?._id + "" !== category_id
     );
 
     if (findSameMainCate) {
@@ -49,7 +49,7 @@ export async function PATCH(
     }
 
     const getCloudinaryImagesId = await Category.findOne(
-      { _id:  category-id },
+      { _id: category_id },
       { folder_cloudinary_images_id: 1 }
     );
 
@@ -75,7 +75,7 @@ export async function PATCH(
 
     const updateCategory = await Category.updateOne(
       {
-        _id:  category-id,
+        _id: category_id,
       },
       {
         main_category: {
@@ -96,7 +96,7 @@ export async function PATCH(
 
 export async function GET(
   req: NextRequest,
-  { params: {  category-id } }: { params: {  category-id: string } }
+  { params: { category_id } }: { params: { category_id: string } }
 ) {
   try {
     await mongoConnect();
@@ -108,7 +108,7 @@ export async function GET(
     if (!user || !userInfo?.admin) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const category = await Category.findOne({ _id:  category-id }).lean();
+    const category = await Category.findOne({ _id: category_id }).lean();
     if (!category) {
       return new NextResponse("Not Found", { status: 404 });
     }

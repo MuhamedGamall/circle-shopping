@@ -14,9 +14,9 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export default function SubCategoriesSlider({
-   category-id,
+  category_id,
 }: {
-   category-id: string;
+  category_id: string;
 }) {
   const dispatch = useAppDispatch();
   const { category, loading } = useAppSelector(
@@ -25,8 +25,8 @@ export default function SubCategoriesSlider({
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getCategory_member( category-id));
-  }, [ category-id, dispatch]);
+    dispatch(getCategory_member(category_id));
+  }, [category_id, dispatch]);
 
   return (
     <CategoriesImagesWrapper loading={loading} className="p-0">
@@ -37,7 +37,7 @@ export default function SubCategoriesSlider({
         )}
       >
         <Link
-          href={"/category/" +  category-id + "/deals"}
+          href={"/category/" + category_id + "/deals"}
           className="flex flex-col items-center  gap-2"
         >
           <Image
@@ -59,7 +59,7 @@ export default function SubCategoriesSlider({
         )}
       >
         <Link
-          href={"/category/" +  category-id + "/deals"}
+          href={"/category/" + category_id + "/deals"}
           className="flex flex-col items-center  gap-2"
         >
           <Image
@@ -75,7 +75,7 @@ export default function SubCategoriesSlider({
         </Link>
       </CarouselItem>
       {category?.sub_categories?.map((el: any, i: number) => (
-        <CategoryImg key={i} {...el}  category-id={ category-id} />
+        <CategoryImg key={i} {...el} category_id={category_id} />
       ))}
     </CategoriesImagesWrapper>
   );

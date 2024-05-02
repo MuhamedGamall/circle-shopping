@@ -8,16 +8,16 @@ import mongoConnect from "@/utils/mongo-connect";
 export async function GET(
   req: NextRequest,
   {
-    params: {  category-id },
+    params: { category_id },
   }: {
-    params: {  category-id: string };
+    params: { category_id: string };
   }
 ) {
   try {
     await mongoConnect();
 
     const filterCategories = {
-      "main_category.name":  category-id,
+      "main_category.name": category_id,
     };
 
     const findCategory = await Category.findOne(filterCategories);
@@ -38,7 +38,7 @@ export async function GET(
       },
       {
         $match: {
-          "categoryInfo.main_category.name":  category-id,
+          "categoryInfo.main_category.name": category_id,
         },
       },
 
@@ -69,17 +69,21 @@ export async function GET(
               in: {
                 $mergeObjects: [
                   "$$product",
-                  { is_bestseller: { $gte: ["$$product.sales_count", bestSellerThreshold] } }
-                ]
-              }
-            }
+                  {
+                    is_bestseller: {
+                      $gte: ["$$product.sales_count", bestSellerThreshold],
+                    },
+                  },
+                ],
+              },
+            },
           },
         },
       },
-    ])
+    ]);
     // const products = data.products
     // const bestSellerThreshold = 100;
-    
+
     // const updateData = products.map((el:any) => ({
     //   ...el,
     //   is_bestseller: el?.sales_count >=bestSellerThreshold,

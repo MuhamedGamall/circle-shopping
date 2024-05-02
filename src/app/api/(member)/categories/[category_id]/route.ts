@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params: {  category-id } }: { params: {  category-id: string } }
+  { params: { category_id } }: { params: { category_id: string } }
 ) {
   try {
     await mongoConnect();
 
     const filterCategories = {
-      "main_category.name":  category-id,
+      "main_category.name": category_id,
     };
 
     const findCategory = await Category.findOne(filterCategories);
