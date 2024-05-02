@@ -6,11 +6,11 @@ import Link from "next/link";
 export default function CategoryImg({
   name,
   image,
-  category_id,
+   category-id,
 }: {
   image: string;
   name: string;
-  category_id: string;
+   category-id: string;
 }) {
   return (
     <CarouselItem
@@ -19,7 +19,7 @@ export default function CategoryImg({
       )}
     >
       <Link
-        href={"/category/" + category_id + "/" + name?.replaceAll(" ", "-")}
+        href={"/category/" +  category-id + "/" + name?.replaceAll(" ", "-")}
         className="flex flex-col items-center  gap-2"
       >
         <Image

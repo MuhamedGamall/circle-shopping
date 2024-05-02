@@ -9,17 +9,17 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export default function ProductsByCategory({
-  category_id,
+   category-id,
 }: {
-  category_id: string;
+   category-id: string;
 }) {
   const dispatch = useAppDispatch();
   const { productsByCategory, loading } = useAppSelector(
     (state) => state.member_categories
   );
   useEffect(() => {
-    dispatch(getProductsByCategory_member(category_id));
-  }, [category_id, dispatch]);
+    dispatch(getProductsByCategory_member( category-id));
+  }, [ category-id, dispatch]);
 
   return productsByCategory?.map((category, i) => (
     <ProductsSlider
@@ -29,7 +29,7 @@ export default function ProductsByCategory({
       loading={loading}
       viewAllLink={
         "/categories/" +
-        category_id?.replaceAll(" ", "-") +
+         category-id?.replaceAll(" ", "-") +
         "/" +
         category?._id?.sub_category?.replaceAll(" ", "-")
       }

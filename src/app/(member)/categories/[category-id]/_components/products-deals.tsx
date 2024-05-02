@@ -6,25 +6,25 @@ import { getProductsDeals_member } from "@/lib/RTK/slices/member/categories-slic
 import { useEffect } from "react";
 
 export default function ProductsDeal({
-  category_id,
+   category-id,
   params,
 }: {
-  category_id: string;
+   category-id: string;
   params?: any;
 }) {
   const dispatch = useAppDispatch();
   const { deals, loading } = useAppSelector((state) => state.member_categories);
 
   useEffect(() => {
-    dispatch(getProductsDeals_member({ category_id, params }));
-  }, [category_id, dispatch, params]);
+    dispatch(getProductsDeals_member({  category-id, params }));
+  }, [ category-id, dispatch, params]);
 
   return (
     <ProductsSlider
       data={deals}
       loading={loading}
-      title={category_id.replaceAll('-',' ')+" top deals"}
-      viewAllLink={"/categories/" + category_id + "/deals"}
+      title={ category-id.replaceAll('-',' ')+" top deals"}
+      viewAllLink={"/categories/" +  category-id + "/deals"}
     />
   );
 }

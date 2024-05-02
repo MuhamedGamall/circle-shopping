@@ -67,7 +67,10 @@ export const updateCategory: any = createAsyncThunk(
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      await axios.patch("/api/admin/categories/" + params?.category_id, params);
+      await axios.patch(
+        "/api/admin/categories/" + params?.category - id,
+        params
+      );
       toast.success("Category updated successfully");
       return params;
     } catch (error: any) {

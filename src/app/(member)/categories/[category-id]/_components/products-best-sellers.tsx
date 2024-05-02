@@ -9,10 +9,10 @@ import {
 import { useEffect } from "react";
 
 export default function ProductsBestSellers({
-  category_id,
+   category-id,
   params,
 }: {
-  category_id: string;
+   category-id: string;
   params?: any;
 }) {
   const dispatch = useAppDispatch();
@@ -22,17 +22,17 @@ export default function ProductsBestSellers({
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getProductsBestSellers_member({ category_id, params }));
-  }, [category_id, dispatch, params]);
+    dispatch(getProductsBestSellers_member({  category-id, params }));
+  }, [ category-id, dispatch, params]);
 
   return (
     <ProductsSlider
       data={bestSellers}
       loading={loading}
-      title={category_id.replaceAll('-',' ')+" bestsellers"}
+      title={ category-id.replaceAll('-',' ')+" bestsellers"}
       viewAllLink={
         "/categories/" +
-        category_id +
+         category-id +
         "/bestsellers" 
       }
     />

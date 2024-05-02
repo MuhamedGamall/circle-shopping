@@ -16,7 +16,7 @@ import SubCategortiesForm from "./sections/sub-categories-form";
 export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { category_id } = useParams();
+  const {  category-id } = useParams();
   const { data: categories } = useAdminCategories();
   const { category, loading } = useAppSelector(
     (state) => state.admin_categories
@@ -44,8 +44,8 @@ export default function SubmitData() {
   }));
 
   useEffect(() => {
-    dispatch(getCategory_admin(category_id));
-  }, [category_id, dispatch]);
+    dispatch(getCategory_admin( category-id));
+  }, [ category-id, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -82,7 +82,7 @@ export default function SubmitData() {
   const findSameMainCate = categories?.find(
     (cate) =>
       cate?.main_category?.name === mainCateValues?.name &&
-      cate?._id !== category_id
+      cate?._id !==  category-id
   );
 
   const onSubmit = async () => {
@@ -108,7 +108,7 @@ export default function SubmitData() {
         main_category: trimMainCateVlues,
         sub_categories: filterRepeatedSubCateValues,
         categoriesIdsForDeleteFromCloudinary,
-        category_id,
+         category-id,
       })
     );
 

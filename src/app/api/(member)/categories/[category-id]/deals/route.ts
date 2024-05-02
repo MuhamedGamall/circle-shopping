@@ -8,9 +8,9 @@ import mongoConnect from "@/utils/mongo-connect";
 export async function GET(
   req: NextRequest,
   {
-    params: { category_id },
+    params: {  category-id },
   }: {
-    params: { category_id: string };
+    params: {  category-id: string };
   }
 ) {
   try {
@@ -18,7 +18,7 @@ export async function GET(
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "0");
 
     const filterCategories = {
-      "main_category.name": category_id,
+      "main_category.name":  category-id,
     };
 
     const findCategory = await Category.findOne(filterCategories);
@@ -28,7 +28,7 @@ export async function GET(
     }
 
     const filterProducts = {
-      "category.main_category": category_id,
+      "category.main_category":  category-id,
       is_published: true,
     };
 

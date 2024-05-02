@@ -8,9 +8,9 @@ import ProductsDeal from "./_components/products-deals";
 import SubCategoriesSlider from "./_components/sub-categories-slider";
 
 export default function CategoryPage({
-  params: { category_id },
+  params: {  category-id },
 }: {
-  params: { category_id: string };
+  params: {  category-id: string };
 }) {
   return (
     <>
@@ -19,19 +19,19 @@ export default function CategoryPage({
         <MaxWidthWrapper>
           <div>
             <SectionTitle className="my-2" title="Shop by category" />
-            <SubCategoriesSlider category_id={category_id} />
+            <SubCategoriesSlider  category-id={ category-id} />
           </div>
           <div>
             <ProductsBestSellers
-              category_id={category_id}
+               category-id={ category-id}
               params={{ limit: 50 }}
             />
           </div>
           <div>
-            <ProductsDeal category_id={category_id} params={{ limit: 50 }} />
+            <ProductsDeal  category-id={ category-id} params={{ limit: 50 }} />
           </div>
           <div>
-            <ProductsByCategory category_id={category_id} />
+            <ProductsByCategory  category-id={ category-id} />
           </div>
         </MaxWidthWrapper>
       </div>
