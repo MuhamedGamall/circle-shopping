@@ -19,7 +19,7 @@ export default function CategoryImg({
       )}
     >
       <Link
-        href={"/category/" + category_id + "/" + name?.replaceAll(" ", "-")}
+        href={"/categories/" + category_id + "/" + name?.replaceAll(" ", "-")}
         className="flex flex-col items-center  gap-2"
       >
         <Image

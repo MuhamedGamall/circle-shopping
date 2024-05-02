@@ -22,17 +22,19 @@ export default function CategoriesNavigation() {
   return (
     <nav className={cn("hidden sm:block bg-[#fcfbf4] overflow-x-auto ")}>
       <Menubar className="rounded-none bg-transparent mx-auto border-0 w-full max-w-[1890px]  px-2.5">
-        <MenubarMenu>
-          <MenubarTrigger className=" border-r rounded-none p-2.5">
-            <Link href={"/bestsellers"} className="">
-              BESTSELLERS
-            </Link>
-          </MenubarTrigger>
-        </MenubarMenu>
         {loading ? (
           <LoadingSkeleton />
         ) : (
-          data?.map((el, i) => <CategoryItem key={i} {...el} />)
+          <>
+            <MenubarMenu>
+              <MenubarTrigger className=" border-r rounded-none p-2.5">
+                <Link href={"/bestsellers"} className="">
+                  BESTSELLERS
+                </Link>
+              </MenubarTrigger>
+            </MenubarMenu>
+            { data?.map((el, i) => <CategoryItem key={i} {...el} />) }
+          </>
         )}
       </Menubar>
     </nav>

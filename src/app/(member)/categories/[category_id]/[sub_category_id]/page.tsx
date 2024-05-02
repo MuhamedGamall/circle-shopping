@@ -10,11 +10,7 @@ export default function CategoryPage({
   return (
     <>
       <CategoriesNavigation />
-      <div className="bg-[#f7f7fa] p-4">
-        {/* <MaxWidthWrapper>
-          <CategoriesProducts category={category} />
-        </MaxWidthWrapper> */}
-      </div>
+
     </>
   );
 }
