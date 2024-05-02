@@ -26,6 +26,15 @@ export default function ProductsBestSellers({
   }, [category_id, dispatch, params]);
 
   return (
-    <ProductsSlider data={bestSellers} loading={loading} title="Bestsellers" />
+    <ProductsSlider
+      data={bestSellers}
+      loading={loading}
+      title={category_id.replaceAll('-',' ')+" bestsellers"}
+      viewAllLink={
+        "/categories/" +
+        category_id +
+        "/bestsellers" 
+      }
+    />
   );
 }
