@@ -27,7 +27,7 @@ export default function ProductsBestSellers({
 
   return (
     <ProductsSlider
-      data={bestSellers}
+      data={bestSellers?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " bestsellers"}
       viewAllLink={"/categories/" + category_id + "/bestsellers"}

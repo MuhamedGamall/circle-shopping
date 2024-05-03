@@ -1,6 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Category, Product } from "@/types";
+import { GroupFilters } from "../../../../types";
 
 export const getCategories_member: any = createAsyncThunk(
   "memberCategoriesSlice/getCategories_member",
@@ -39,7 +40,7 @@ export const getProductsBestSellers_member: any = createAsyncThunk(
   async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const products = (
+      const data = (
         await axios.get(
           "/api/categories/" +
             category_id?.replaceAll("-", "%20") +
@@ -48,7 +49,7 @@ export const getProductsBestSellers_member: any = createAsyncThunk(
           { params }
         )
       ).data;
-      return products;
+      return data;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -98,8 +99,8 @@ export const getProductsByCategory_member: any = createAsyncThunk(
   }
 );
 type categoriesState = {
-  bestSellers: Product[];
-  deals: Product[];
+  bestSellers: { products: Product[]; groupFilters: GroupFilters | null };
+  deals: { products: Product[]; groupFilters: GroupFilters | null };
 
   categories: Category[];
   category: Category | null;
@@ -111,8 +112,8 @@ type categoriesState = {
   error: null;
 };
 const initialState: categoriesState = {
-  bestSellers: [],
-  deals: [],
+  bestSellers: { products: [], groupFilters: null },
+  deals: { products: [], groupFilters: null },
   categories: [],
   productsByCategory: [],
   category: null,
@@ -126,8 +127,8 @@ const memberCategoriesSlice = createSlice({
   reducers: {
     cleanUp: (state) => {
       state.category = null;
-      state.bestSellers = [];
-      state.deals = [];
+      state.bestSellers.products = [];
+      state.deals.products = [];
     },
   },
   extraReducers: (builder) => {

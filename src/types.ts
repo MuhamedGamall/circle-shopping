@@ -114,3 +114,20 @@ export type Category = {
   updatedAt: any;
   __v: number;
 };
+
+
+
+type FilterItem = {
+  _id: string;
+  count: number;
+};
+export type GroupFilters = {
+  filterByCondition: FilterItem[];
+  filterBySellers: FilterItem[];
+  filterByBrands: FilterItem[];
+  filterByColour: FilterItem[];
+  filterByDeals: FilterItem[];
+  maximumLikes: number;
+  maximumPrice: number;
+  minimumPrice: number;
+};

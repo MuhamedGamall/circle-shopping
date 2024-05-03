@@ -59,7 +59,7 @@ export default function SubCategoriesSlider({
         )}
       >
         <Link
-          href={"/categories/" + category_id + "/deals"}
+          href={"/categories/" + category_id + "/bestsellers"}
           className="flex flex-col items-center  gap-2"
         >
           <Image

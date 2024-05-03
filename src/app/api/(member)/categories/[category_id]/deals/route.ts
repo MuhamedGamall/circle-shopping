@@ -4,6 +4,7 @@ import { Category } from "@/models/category";
 
 import { Product } from "@/models/product";
 import mongoConnect from "@/utils/mongo-connect";
+import { groupFilters } from "@/utils/group-filters";
 
 export async function GET(
   req: NextRequest,
@@ -55,7 +56,9 @@ export async function GET(
           is_bestseller: el?.sales_count >= bestSellerThreshold,
         }));
 
-    return NextResponse.json(products);
+    const groupFiltersData = await groupFilters({ filter: filterProducts });
+
+    return NextResponse.json({ products, groupFilters: groupFiltersData });
   } catch (error) {
     console.log("[MEMBER:CATEGORY>DEALS]", error);
     return new NextResponse("Internal Error", { status: 500 });

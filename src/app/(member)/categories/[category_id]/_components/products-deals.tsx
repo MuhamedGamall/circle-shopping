@@ -21,7 +21,7 @@ export default function ProductsDeal({
 
   return (
     <ProductsSlider
-      data={deals}
+      data={deals?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " top deals"}
       viewAllLink={"/categories/" + category_id + "/deals"}
