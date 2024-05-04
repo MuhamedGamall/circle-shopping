@@ -122,6 +122,7 @@ type FilterItem = {
   count: number;
 };
 export type GroupFilters = {
+  category:Category |null;
   filterByCondition: FilterItem[];
   filterBySellers: FilterItem[];
   filterByBrands: FilterItem[];

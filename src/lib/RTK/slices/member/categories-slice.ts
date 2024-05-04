@@ -127,8 +127,8 @@ const memberCategoriesSlice = createSlice({
   reducers: {
     cleanUp: (state) => {
       state.category = null;
-      state.bestSellers.products = [];
-      state.deals.products = [];
+      state.bestSellers = { products: [], groupFilters: null };
+      state.deals = { products: [], groupFilters: null };
     },
   },
   extraReducers: (builder) => {
