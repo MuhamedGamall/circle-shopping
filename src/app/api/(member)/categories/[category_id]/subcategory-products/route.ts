@@ -41,7 +41,6 @@ export async function GET(
           "categoryInfo.main_category.name": category_id,
         },
       },
-
       {
         $group: {
           _id: {
@@ -60,34 +59,11 @@ export async function GET(
         },
       },
       {
-        $project: {
-          _id: 1,
-          products: {
-            $map: {
-              input: "$products",
-              as: "product",
-              in: {
-                $mergeObjects: [
-                  "$$product",
-                  {
-                    is_bestseller: {
-                      $gte: ["$$product.sales_count", bestSellerThreshold],
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        },
-      },
+        $addFields: {
+          "products.is_bestseller": { $gte: ["$products.sales_count", bestSellerThreshold] }
+        }
+      }
     ]);
-    // const products = data.products
-    // const bestSellerThreshold = 100;
-
-    // const updateData = products.map((el:any) => ({
-    //   ...el,
-    //   is_bestseller: el?.sales_count >=bestSellerThreshold,
-    // }));
 
     return NextResponse.json(data);
   } catch (error) {

@@ -4,7 +4,6 @@ import { Category } from "@/models/category";
 
 import { Product } from "@/models/product";
 import mongoConnect from "@/utils/mongo-connect";
-import { Store } from "@/models/store";
 import { groupFilters } from "@/utils/group-filters";
 
 export async function GET(
@@ -17,18 +16,17 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
-    const bestSellerThreshold = 100;
-
-    const filterProducts = {
+    let filter: any = {
       "category.main_category": category_id,
-      sales_count: { $gte: bestSellerThreshold },
       is_published: true,
     };
-    const groupFiltersData = await groupFilters({ filter: filterProducts });
+    const groupFiltersData = await groupFilters({ filter: filter });
+
     const queryParams = Object.fromEntries(req.nextUrl.searchParams.entries());
-    const defaultValues = 1e6;
+    const defaultValues = 9e10;
     const {
-      limit = 0,
+      limit = defaultValues,
+      role = "all_products_of_category",
       brand = "",
       price = {
         from: groupFiltersData?.minimumPrice || 0,
@@ -50,28 +48,26 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
 
-    let products = await Product.find(filterProducts).limit(+limit).lean();
+    const bestSellerThreshold = 100;
 
-    const alternativeData = await Product.find({
-      "category.main_category": category_id,
-      is_published: true,
-    })
-      .limit(0)
-      .lean();
+    if (role === "bestsellers")
+      filter.sales_count = { $gte: bestSellerThreshold };
+    else if (role === "deals")
+      filter["price.offer.discount_percentag"] = { $gte: 0.01 };
 
-    const updateData = products.map((el, i) => ({
-      ...el,
-      is_bestseller: true,
-    }));
-
-    products = products.length
-      ? updateData
-      : alternativeData.map((el, i) => ({ ...el, is_bestseller: true }));
-
+    let products = await Product.aggregate([
+      { $match: filter },
+      { $limit: +limit },
+      {
+        $addFields: {
+          is_bestseller: { $gte: ["$sales_count", bestSellerThreshold] },
+        },
+      },
+    ]);
 
     return NextResponse.json({ products, groupFilters: groupFiltersData });
   } catch (error) {
-    console.log("[MEMBER:CATEGORY>BESTSELLERS]", error);
+    console.log("[MEMBER:CATEGORY>PRODUCTS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

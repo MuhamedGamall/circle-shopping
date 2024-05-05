@@ -63,8 +63,8 @@ export async function GET(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   try {
     await mongoConnect();
-    const url = new URL(req.url);
-    const email = url.searchParams.get("email");
+    const searchParams = req.nextUrl.searchParams
+    const email = searchParams.get("email");
     const user = await User.findOne({ email }).lean();
 
     if (!user) {

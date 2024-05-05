@@ -15,8 +15,9 @@ export async function GET(req: NextRequest) {
     const user = session?.user;
     const email = user?.email;
 
-    const url = new URL(req.url);
-    const query = url.searchParams.get("query");
+    const searchParams = req.nextUrl.searchParams
+
+    const query = searchParams.get("query");
 
     const userInfo: any = await UserInfo.findOne({ email });
 

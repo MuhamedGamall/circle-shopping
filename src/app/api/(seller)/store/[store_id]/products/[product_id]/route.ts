@@ -72,7 +72,7 @@ export async function PATCH(
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    const product = await Product.findOne({
+    const product: any = await Product.findOne({
       store_id,
       store_personal_email: email,
       _id: product_id,
@@ -81,14 +81,24 @@ export async function PATCH(
     if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }
-
+    let deal_type;
+    const discount_percentage = product?.price?.offer?.discount_percentage;
+    if (!discount_percentage || discount_percentage <= 5) {
+      deal_type = null;
+    } else if (discount_percentage <= 20 && discount_percentage >= 5) {
+      deal_type = "deal";
+    } else if (discount_percentage <= 50 && discount_percentage >= 20) {
+      deal_type = "beg deal sale";
+    } else if (discount_percentage >= 50) {
+      deal_type = "mega deal";
+    }
     const updateProduct = await Product.updateOne(
       {
         store_id,
         store_personal_email: email,
         _id: product_id,
       },
-      { ...body, is_published: false }
+      { ...body, 'price.offer.deal_type':deal_type, is_published: false }
     );
 
     return NextResponse.json(updateProduct);

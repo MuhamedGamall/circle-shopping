@@ -8,11 +8,7 @@ import {
 } from "@/lib/RTK/slices/member/categories-slice";
 import { useEffect } from "react";
 
-export default function BestSellersContent({
-  category_id,
-}: {
-  category_id: string;
-}) {
+export default function DealsContent({ category_id }: { category_id: string }) {
   const dispatch = useAppDispatch();
   const { productsByMainCategory, loading } = useAppSelector(
     (state) => state.member_categories
@@ -23,7 +19,8 @@ export default function BestSellersContent({
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
-        // params: { limit: 'all' },
+
+        params: { limit: "all" },
       })
     );
   }, [category_id, dispatch]);

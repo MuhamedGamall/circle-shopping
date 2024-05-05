@@ -1,3 +1,4 @@
+import { Category } from "@/models/category";
 import { Product } from "@/models/product";
 import { Store } from "@/models/store";
 import { GroupFilters } from "@/types";
@@ -8,6 +9,11 @@ export async function groupFilters({
 }: any): Promise<GroupFilters | undefined> {
   try {
     await mongoConnect();
+    const filterCategories = {
+      "main_category.name": filter?.["category.main_category"]
+    };
+
+    const category = await Category.findOne(filterCategories);
 
     const filterByCondition = await Product.aggregate([
       { $match: filter },
@@ -70,35 +76,7 @@ export async function groupFilters({
       { $match: filter },
       {
         $group: {
-          _id: {
-            $switch: {
-              branches: [
-                {
-                  case: {
-                    $and: [
-                      { $gte: ["$price.offer.discount_percentage", 5] },
-                      { $lte: ["$price.offer.discount_percentage", 20] },
-                    ],
-                  },
-                  then: "deal",
-                },
-                {
-                  case: {
-                    $and: [
-                      { $gte: ["$price.offer.discount_percentage", 20] },
-                      { $lte: ["$price.offer.discount_percentage", 50] },
-                    ],
-                  },
-                  then: "beg deal sale",
-                },
-                {
-                  case: { $gte: ["$price.offer.discount_percentage", 50] },
-                  then: "mega deal",
-                },
-              ],
-              default: "not a deal",
-            },
-          },
+          _id:'$price.offer.deal_type',
           count: { $sum: 1 },
         },
       },
@@ -108,6 +86,7 @@ export async function groupFilters({
         },
       },
     ]);
+
     const mostLikes = await Product.findOne(filter)
       .sort({ likes: -1 })
       .select("likes");
@@ -124,6 +103,7 @@ export async function groupFilters({
 
     const groupFilters = {
       maximumLikes: mostLikes.likes,
+      category,
       maximumPrice: filterByPrice[0].maxPrice,
       minimumPrice: filterByPrice[0].minPrice,
       filterByBrands,

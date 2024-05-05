@@ -100,8 +100,8 @@ export async function DELETE(
 ) {
   try {
     await mongoConnect();
-    const url = new URL(req.url);
-    const product_id = url.searchParams.get("product_id");
+    const searchParams = req.nextUrl.searchParams
+    const product_id = searchParams.get("product_id");
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = session?.user?.email;

@@ -1,11 +1,7 @@
 "use client";
-import LoaderLayout from "@/components/loader-layout";
 import ProductsSlider from "@/components/products-slider/products-container";
-import { buttonVariants } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProductsByCategory_member } from "@/lib/RTK/slices/member/categories-slice";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { getSubcategoryProducts_member } from '@/lib/RTK/slices/member/categories-slice';
 import { useEffect } from "react";
 
 export default function ProductsByCategory({
@@ -14,14 +10,14 @@ export default function ProductsByCategory({
   category_id: string;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByCategory, loading } = useAppSelector(
+  const { subcategoryProducts, loading } = useAppSelector(
     (state) => state.member_categories
   );
   useEffect(() => {
-    dispatch(getProductsByCategory_member(category_id));
+    dispatch(getSubcategoryProducts_member(category_id?.replaceAll("-", "%20")));
   }, [category_id, dispatch]);
 
-  return productsByCategory?.map((category, i) => (
+  return subcategoryProducts?.map((category, i) => (
     <ProductsSlider
       key={i}
       data={category?.products}

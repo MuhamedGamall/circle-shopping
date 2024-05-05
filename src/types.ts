@@ -96,6 +96,7 @@ export type Product = {
     offer: {
       start_date: Date | string;
       end_date: Date | string;
+      deal_type: string;
       discount_percentage: number;
     };
   };
@@ -115,14 +116,12 @@ export type Category = {
   __v: number;
 };
 
-
-
 type FilterItem = {
   _id: string;
   count: number;
 };
 export type GroupFilters = {
-  category:Category |null;
+  category: Category | null;
   filterByCondition: FilterItem[];
   filterBySellers: FilterItem[];
   filterByBrands: FilterItem[];

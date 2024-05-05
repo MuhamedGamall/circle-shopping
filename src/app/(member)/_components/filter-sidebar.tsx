@@ -7,7 +7,6 @@ export default function FilterSidebar({
   loading,
 }: {
   loading: boolean;
-
   groupFilters: null | GroupFilters | any;
 }) {
   return (

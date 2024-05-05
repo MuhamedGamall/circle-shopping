@@ -15,8 +15,9 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions);
     const user = session?.user;
     const email = user?.email;
-    const url = new URL(req.url);
-    const dateFilter = url.searchParams.get("date_filter");
+    const searchParams = req.nextUrl.searchParams;
+
+    const dateFilter = searchParams.get("date_filter");
 
     const userInfo: any = await UserInfo.findOne({ email });
 

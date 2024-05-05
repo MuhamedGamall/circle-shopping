@@ -44,6 +44,7 @@ const ProductSchema = new Schema(
       offer: {
         start_date: { type: Date },
         end_date: { type: Date },
+        deal_type: { type: String },
         discount_percentage: { type: Number },
       },
     },

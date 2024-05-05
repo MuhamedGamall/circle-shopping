@@ -1,14 +1,14 @@
 "use client";
 
-import { Product } from "@/types";
-import SectionTitle from "../section-title";
-import { SliderWrapper } from "../wrappers/slider-wrapper";
-import ProductCard from "./product-card";
-import LoaderLayout from "../loader-layout";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { Product } from "@/types";
 import Link from "next/link";
+import LoaderLayout from "../loader-layout";
+import SectionTitle from "../section-title";
 import { buttonVariants } from "../ui/button";
+import { SliderWrapper } from "../wrappers/slider-wrapper";
+import ProductCard from "../product-curd/product-card";
+import { CarouselItem } from "../ui/carousel";
 export default function ProductsSlider({
   title,
   data,
@@ -49,7 +49,12 @@ export default function ProductsSlider({
       </div>
       <SliderWrapper className="products-slider-container ">
         {data?.map((el, i) => (
-          <ProductCard key={i} {...el} />
+          <CarouselItem
+            key={i}
+            className={cn("w-full h-full min-w-[184px] max-w-[206px]")}
+          >
+            <ProductCard {...el} />
+          </CarouselItem>
         ))}
       </SliderWrapper>
     </div>

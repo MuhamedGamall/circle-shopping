@@ -4,7 +4,7 @@ import ProductsSlider from "@/components/products-slider/products-container";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
-  getProductsBestSellers_member,
+  getProductsByMainCategory_member,
 } from "@/lib/RTK/slices/member/categories-slice";
 import { useEffect } from "react";
 
@@ -16,18 +16,23 @@ export default function ProductsBestSellers({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { bestSellers, loading } = useAppSelector(
+  const { productsByMainCategory, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getProductsBestSellers_member({ category_id, params }));
-  }, [category_id, dispatch, params]);
+    dispatch(
+      getProductsByMainCategory_member({
+        category_id: category_id?.replaceAll("-", "%20"),
+        params,
+      })
+    );
+  }, [category_id, dispatch,params]);
 
   return (
     <ProductsSlider
-      data={bestSellers?.products}
+      data={productsByMainCategory?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " bestsellers"}
       viewAllLink={"/categories/" + category_id + "/bestsellers"}

@@ -71,8 +71,9 @@ export async function DELETE(
   try {
     await mongoConnect();
 
-    const url = new URL(req.url);
-    const ids: any = url.searchParams.get("ids");
+    const searchParams = req.nextUrl.searchParams
+
+    const ids: any = searchParams.get("ids");
 
     const session = await getServerSession(authOptions);
     const user = session?.user;
