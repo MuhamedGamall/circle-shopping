@@ -30,14 +30,14 @@ export default function BreadCrumbs() {
                 className={cn(
                   "capitalize  font-semibold sm:text-sm text-[12px] text-slate-600 hover:underline",
                   {
-                    " text-[#3866df]": i === crumbs.length - 1,
+                    " text-blue": i === crumbs.length - 1,
                   }
                 )}
               >
                 {crumb === "dashboard" ? (
                   <LucideLayoutDashboard
                     className={cn(" h-4 w-4 text-slate-600", {
-                      hidden:  crumbs.length  === 1,
+                      hidden: crumbs.length === 1,
                     })}
                   />
                 ) : (

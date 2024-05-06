@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import CustomField from "@/components/custom-field";
-import CustomSelectField from "@/components/custom-select-field";
+import CustomSelectField from "@/components/custom-select-menu";
 import LoaderLayout from "@/components/loader-layout";
 import useMemberCategories from "@/hooks/member/use-member-categories";
 import { useAppDispatch } from "@/hooks/redux";

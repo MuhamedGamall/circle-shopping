@@ -79,7 +79,7 @@ export const columns: ColumnDef<any>[] = [
               row.getValue("_id") +
               "/details"
             }
-            className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
+            className="block whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-blue"
           >
             {row.getValue("_id")}
           </Link>

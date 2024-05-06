@@ -116,12 +116,12 @@ export type Category = {
   __v: number;
 };
 
-type FilterItem = {
+export type FilterItem = {
   _id: string;
   count: number;
 };
 export type GroupFilters = {
-  category: Category | null;
+  category: Category | Category[] | null;
   filterByCondition: FilterItem[];
   filterBySellers: FilterItem[];
   filterByBrands: FilterItem[];

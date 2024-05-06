@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export default function DealsContent({ category_id }: { category_id: string }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategory, loading } = useAppSelector(
+  const { productsByMainCategoryForDeals, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
@@ -19,7 +19,6 @@ export default function DealsContent({ category_id }: { category_id: string }) {
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
-
         params: { role:'deals' },
 
       })
@@ -29,7 +28,7 @@ export default function DealsContent({ category_id }: { category_id: string }) {
   return (
     <div className="flex gap-5 bg-[#f7f7fa] h-screen">
       <FilterSidebar
-        groupFilters={{ ...productsByMainCategory?.groupFilters }}
+        groupFilters={productsByMainCategoryForDeals?.groupFilters }
         loading={loading}
       />
       <div>content</div>

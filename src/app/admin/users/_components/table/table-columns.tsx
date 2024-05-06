@@ -65,14 +65,16 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "admin",
     header: ({ column }) => {
-      return   <Button
-      className="uppercase"
-      variant="ghost"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    >
-      admin
-      <ArrowUpDown className="ml-2 h-4 w-4" />
-    </Button>
+      return (
+        <Button
+          className="uppercase"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          admin
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
     cell: ({ row }: any) => {
       const admin = row.getValue("admin");
@@ -82,13 +84,12 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "ban.is_banned",
     header: ({ column }) => {
-      
       return (
         <Button
-        className="uppercase "
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+          className="uppercase "
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -96,7 +97,7 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       const ban = row?.original?.ban;
-      
+
       return (
         <HandleBanBtn
           ban={ban}
@@ -115,7 +116,7 @@ export const columns: ColumnDef<any>[] = [
       return (
         <Link
           href={"/admin/users/" + row.getValue("_id") + "/details"}
-          className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
+          className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-blue"
         >
           {row.getValue("_id")}
         </Link>

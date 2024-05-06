@@ -35,7 +35,7 @@ export default function BreadCrumbs() {
                 className={cn(
                   "capitalize font-semibold sm:text-sm text-[12px] text-slate-600 hover:underline",
                   {
-                    "text-[#3866df]": i === crumbs.length - 1,
+                    "text-blue": i === crumbs.length - 1,
                   }
                 )}
               >

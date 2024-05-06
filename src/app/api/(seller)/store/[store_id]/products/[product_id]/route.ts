@@ -83,9 +83,7 @@ export async function PATCH(
     }
     let deal_type;
     const discount_percentage = product?.price?.offer?.discount_percentage;
-    if (!discount_percentage || discount_percentage <= 5) {
-      deal_type = null;
-    } else if (discount_percentage <= 20 && discount_percentage >= 5) {
+    if (discount_percentage >= 20 && discount_percentage <= 1) {
       deal_type = "deal";
     } else if (discount_percentage <= 50 && discount_percentage >= 20) {
       deal_type = "beg deal sale";
@@ -98,7 +96,11 @@ export async function PATCH(
         store_personal_email: email,
         _id: product_id,
       },
-      { ...body, 'price.offer.deal_type':deal_type, is_published: false }
+      {
+        ...body,
+        ...(discount_percentage && { "price.offer.deal_type": deal_type }),
+        is_published: false,
+      }
     );
 
     return NextResponse.json(updateProduct);

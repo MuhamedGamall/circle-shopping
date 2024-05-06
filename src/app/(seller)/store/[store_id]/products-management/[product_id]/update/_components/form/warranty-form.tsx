@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import CustomSelectField from "@/components/custom-select-field";
+import CustomSelectField from "@/components/custom-select-menu";
 import LoaderLayout from "@/components/loader-layout";
 import axios from "axios";
 import toast from "react-hot-toast";

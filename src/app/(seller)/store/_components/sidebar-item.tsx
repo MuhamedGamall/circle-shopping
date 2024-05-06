@@ -25,11 +25,11 @@ export default function SidebarItem({
         className={cn(
           "flex items-center whitespace-nowrap  group-hover:gap-2 gap-5 hover:bg-[#fafafa] transition-[.2s] py-4 px-5",
           {
-            "bg-[#fafafa] border-slate-400 border-r [&>span]:text-[#3866df] [&>svg]:text-[#3866df]":
+            "bg-[#fafafa] border-slate-400 border-r [&>span]:text-blue [&>svg]:text-blue":
               pathname.includes(href),
           }
         )}
-        href={storeLink+href}
+        href={storeLink + href}
       >
         <Icon className={"min-h-5 max-h-5 max-w-5 min-w-5  text-slate-700"} />
         <span className={" text-slate-900"}>{label}</span>

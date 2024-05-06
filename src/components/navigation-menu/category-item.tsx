@@ -23,9 +23,9 @@ export default function CategoryItem({
     <MenubarMenu>
       <MenubarTrigger
         className={cn(
-          "hover:text-[#3866df] whitespace-nowrap border-none rounded-none hover:bg-white uppercase font-bold  py-2.5 px-2 hover:shadow-[rgba(0,_0,_0,_0.18)_0px_5px_4px_0px] ",
+          "hover:text-blue whitespace-nowrap border-none rounded-none hover:bg-white uppercase font-bold  py-2.5 px-2 hover:shadow-[rgba(0,_0,_0,_0.18)_0px_5px_4px_0px] ",
           {
-            "text-[#3866df] bg-white shadow-[rgba(0,_0,_0,_0.18)_0px_5px_4px_0px]":
+            "text-blue bg-white shadow-[rgba(0,_0,_0,_0.18)_0px_5px_4px_0px]":
               activeMainLink,
           }
         )}
@@ -48,7 +48,7 @@ export default function CategoryItem({
             key={i}
             asChild
             className={
-              "hover:text-[#3866df]  rounded-none capitalize cursor-pointer "
+              "hover:text-blue  rounded-none capitalize cursor-pointer "
             }
           >
             <Link

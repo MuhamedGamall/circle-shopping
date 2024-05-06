@@ -1,5 +1,5 @@
 import CustomField from "@/components/custom-field";
-import CustomSelectField from "@/components/custom-select-field";
+import CustomSelectField from "@/components/custom-select-menu";
 import LoaderLayout from "@/components/loader-layout";
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";

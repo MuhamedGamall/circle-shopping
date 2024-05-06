@@ -22,7 +22,7 @@ export default function SidebarItem({
         className={cn(
           "flex items-center  group-hover:gap-2 gap-5 hover:bg-[#fafafa] transition-[.2s] py-4 px-5",
           {
-            "bg-[#fafafa] border-slate-400 border-r [&>span]:text-[#3866df] [&>svg]:text-[#3866df]":
+            "bg-[#fafafa] border-slate-400 border-r [&>span]:text-blue [&>svg]:text-blue":
               pathname.includes(href),
           }
         )}

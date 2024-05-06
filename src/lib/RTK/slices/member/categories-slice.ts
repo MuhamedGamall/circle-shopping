@@ -41,6 +41,7 @@ export const getProductsByMainCategory_member: any = createAsyncThunk(
           params,
         })
       ).data;
+
       return { data, role: params?.role };
     } catch (error: any) {
       console.log(error);
@@ -197,12 +198,9 @@ const memberCategoriesSlice = createSlice({
           action.payload?.role == "deals"
             ? (state.productsByMainCategoryForDeals = action.payload?.data)
             : action.payload?.role == "bestsellers"
-            ? (state.productsByMainCategoryForBestsellers = action.payload?.data)
+            ? (state.productsByMainCategoryForBestsellers =
+                action.payload?.data)
             : (state.productsByMainCategory = action.payload?.data);
-            console.log(
-              state.productsByMainCategoryForBestsellers,state.productsByMainCategoryForDeals 
-            );
-            
         }
       )
       .addCase(

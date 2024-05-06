@@ -14,7 +14,7 @@ export default function BestSellersContent({
   category_id: string;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategory, loading } = useAppSelector(
+  const { productsByMainCategoryForBestsellers, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
@@ -27,11 +27,10 @@ export default function BestSellersContent({
       })
     );
   }, [category_id, dispatch]);
-
   return (
-    <div className="flex gap-5 bg-[#f7f7fa] h-screen">
+    <div className="flex gap-5 bg-[#f7f7fa] ">
       <FilterSidebar
-        groupFilters={{ ...productsByMainCategory?.groupFilters }}
+        groupFilters={productsByMainCategoryForBestsellers?.groupFilters }
         loading={loading}
       />
       <div>content</div>

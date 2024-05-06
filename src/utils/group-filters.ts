@@ -10,7 +10,7 @@ export async function groupFilters({
   try {
     await mongoConnect();
     const filterCategories = {
-      "main_category.name": filter?.["category.main_category"]
+      "main_category.name": filter?.["category.main_category"],
     };
 
     const category = await Category.findOne(filterCategories);
@@ -25,6 +25,7 @@ export async function groupFilters({
           },
         },
       },
+      { $sort: { count: -1 } },
     ]);
 
     let filterBySellers = await Product.aggregate([
@@ -37,6 +38,7 @@ export async function groupFilters({
           },
         },
       },
+      { $sort: { count: -1 } },
     ]);
 
     filterBySellers = await Promise.all(
@@ -59,6 +61,7 @@ export async function groupFilters({
           },
         },
       },
+      { $sort: { count: -1 } },
     ]);
     const filterByColour = await Product.aggregate([
       { $match: filter },
@@ -70,21 +73,24 @@ export async function groupFilters({
           },
         },
       },
+      { $sort: { count: -1 } },
     ]);
 
     const filterByDeals = await Product.aggregate([
       { $match: filter },
       {
         $group: {
-          _id:'$price.offer.deal_type',
+          _id: "$price.offer.deal_type",
           count: { $sum: 1 },
         },
       },
       {
         $match: {
-          _id: { $ne: "not a deal" },
+          _id: { $ne: null },
         },
       },
+
+      { $sort: { count: -1 } },
     ]);
 
     const mostLikes = await Product.findOne(filter)
@@ -103,7 +109,7 @@ export async function groupFilters({
     const defaultValues = 9e10;
 
     const groupFilters = {
-      maximumLikes: mostLikes?.likes||defaultValues,
+      maximumLikes: mostLikes?.likes || defaultValues,
       category,
       maximumPrice: filterByPrice[0]?.maxPrice || defaultValues,
       minimumPrice: filterByPrice[0]?.minPrice || 0,

@@ -11,7 +11,7 @@ import { itemConditionSchema } from "../../schema";
 import axios from "axios";
 import toast from "react-hot-toast";
 import LoaderLayout from "@/components/loader-layout";
-import CustomSelectField from "@/components/custom-select-field";
+import CustomSelectField from "@/components/custom-select-menu";
 import { Dispatch, SetStateAction } from "react";
 import { useAppDispatch } from "@/hooks/redux";
 import { updateProduct_seller } from "@/lib/RTK/slices/seller/products";

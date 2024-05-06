@@ -159,14 +159,14 @@ export default function ImageForm({
             <label
               htmlFor="upload"
               className={cn(
-                "flex items-center justify-center gap-3 flex-col text-[9px] cursor-pointer min-w-[140px] w-[140px] h-[230px] border-[#3866df] border rounded-md bg-[#eff3fd]",
+                "flex items-center justify-center gap-3 flex-col text-[9px] cursor-pointer min-w-[140px] w-[140px] h-[230px] border-blue border rounded-md bg-[#eff3fd]",
                 {
                   "opacity-[.5] cursor-not-allowed":
                     imageValue?.length === 10 || isSubmitting || loading,
                 }
               )}
             >
-              <FaCirclePlus className="text-[#3866df] h-5 w-5" />
+              <FaCirclePlus className="text-blue h-5 w-5" />
               Add image/s
             </label>
             {imageValue?.map((el, i) => (

@@ -107,7 +107,7 @@ export const columns: ColumnDef<any>[] = [
       return (
         <Link
           href={"/admin/sellers/" + row.getValue("_id") + "/details"}
-          className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-[#3866df]"
+          className=" whitespace-nowrap  text-center  max-w-[150px] overflow-x-auto font-semibold text-blue"
         >
           {row.getValue("_id")}
         </Link>
