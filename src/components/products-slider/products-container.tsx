@@ -23,40 +23,45 @@ export default function ProductsSlider({
   titleStyle?: string;
 }) {
   return (
-    <div className="relative mt-12 ">
+    <div className="relative">
       <div className={cn({ "h-[300px] my-2": loading })}>
         <LoaderLayout loadingCondition={loading} />
       </div>
-      <div className="flex justify-between items-center mt-2">
-        <SectionTitle
-          title={title}
-          className={cn("text-[18px] sm:text-[20px] pb-4 pt-3", titleStyle)}
-        />
-        {viewAllLink && (
-          <Link
-            href={viewAllLink}
-            className={cn(
-              buttonVariants({
-                variant: "outline",
-                className:
-                  " text-[11px] sm:text-sm rounded-none sm:px-4 px-1.5 sm:h-[40px]  h-[30px] border-slate-700",
-              })
+
+      {data?.length > 0 && (
+        <div className="mt-12 ">
+          <div className="flex justify-between items-center mt-2">
+            <SectionTitle
+              title={title}
+              className={cn("text-[18px] sm:text-[20px] pb-4 pt-3", titleStyle)}
+            />
+            {viewAllLink && (
+              <Link
+                href={viewAllLink}
+                className={cn(
+                  buttonVariants({
+                    variant: "outline",
+                    className:
+                      " text-[11px] sm:text-sm rounded-none sm:px-4 px-1.5 sm:h-[40px]  h-[30px] border-slate-700",
+                  })
+                )}
+              >
+                VIEW ALL
+              </Link>
             )}
-          >
-            VIEW ALL
-          </Link>
-        )}
-      </div>
-      <SliderWrapper className="products-slider-container ">
-        {data?.map((el, i) => (
-          <CarouselItem
-            key={i}
-            className={cn("w-full h-full min-w-[184px] max-w-[206px]")}
-          >
-            <ProductCard {...el} />
-          </CarouselItem>
-        ))}
-      </SliderWrapper>
+          </div>
+          <SliderWrapper className="products-slider-container ">
+            {data?.map((el, i) => (
+              <CarouselItem
+                key={i}
+                className={cn("w-full h-full min-w-[184px] max-w-[206px]")}
+              >
+                <ProductCard {...el} />
+              </CarouselItem>
+            ))}
+          </SliderWrapper>
+        </div>
+      )}
     </div>
   );
 }

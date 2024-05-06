@@ -23,7 +23,7 @@ export default function BestSellersContent({
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
-        // params: { limit: 'all' },
+        params: { role:'bestsellers' },
       })
     );
   }, [category_id, dispatch]);

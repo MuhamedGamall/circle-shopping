@@ -16,12 +16,11 @@ export default function ProductsDeal({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategory, loading } = useAppSelector(
+  const { productsByMainCategoryForDeals, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
   useEffect(() => {
-    dispatch(cleanUp());
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
@@ -32,7 +31,7 @@ export default function ProductsDeal({
 
   return (
     <ProductsSlider
-      data={productsByMainCategory?.products}
+      data={productsByMainCategoryForDeals?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " top deals"}
       viewAllLink={"/categories/" + category_id + "/deals"}

@@ -44,7 +44,7 @@ export async function groupFilters({
         const store: any = await Store.findById(el._id).lean();
         return {
           ...el,
-          _id: store ? store.display_name : null,
+          _id: store ? store?.display_name : null,
         };
       })
     );
@@ -100,12 +100,13 @@ export async function groupFilters({
         },
       },
     ]);
+    const defaultValues = 9e10;
 
     const groupFilters = {
-      maximumLikes: mostLikes.likes,
+      maximumLikes: mostLikes?.likes||defaultValues,
       category,
-      maximumPrice: filterByPrice[0].maxPrice,
-      minimumPrice: filterByPrice[0].minPrice,
+      maximumPrice: filterByPrice[0]?.maxPrice || defaultValues,
+      minimumPrice: filterByPrice[0]?.minPrice || 0,
       filterByBrands,
       filterByDeals,
       filterBySellers,

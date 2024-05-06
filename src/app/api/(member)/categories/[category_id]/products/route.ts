@@ -16,14 +16,28 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
+
     let filter: any = {
       "category.main_category": category_id,
       is_published: true,
     };
+
+
+    const bestSellerThreshold = 100;
+    const dealThreshold = 1;
+    const getRole = req.nextUrl.searchParams.get("role");
+
+
+    if (getRole === "bestsellers")
+      filter.sales_count = { $gte: bestSellerThreshold };
+    else if (getRole === "deals")
+      filter["price.offer.discount_percentage"] = { $gte: dealThreshold };
+
     const groupFiltersData = await groupFilters({ filter: filter });
 
     const queryParams = Object.fromEntries(req.nextUrl.searchParams.entries());
-    const defaultValues = 9e10;
+    const defaultValues = 10e10;
+
     const {
       limit = defaultValues,
       role = "all_products_of_category",
@@ -47,13 +61,6 @@ export async function GET(
     if (!findCategory) {
       return new NextResponse("Not Found", { status: 404 });
     }
-
-    const bestSellerThreshold = 100;
-
-    if (role === "bestsellers")
-      filter.sales_count = { $gte: bestSellerThreshold };
-    else if (role === "deals")
-      filter["price.offer.discount_percentag"] = { $gte: 0.01 };
 
     let products = await Product.aggregate([
       { $match: filter },

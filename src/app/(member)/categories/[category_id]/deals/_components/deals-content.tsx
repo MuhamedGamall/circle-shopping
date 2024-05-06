@@ -20,7 +20,8 @@ export default function DealsContent({ category_id }: { category_id: string }) {
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
 
-        params: { limit: "all" },
+        params: { role:'deals' },
+
       })
     );
   }, [category_id, dispatch]);

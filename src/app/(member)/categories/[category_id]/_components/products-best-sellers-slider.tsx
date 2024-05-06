@@ -16,12 +16,11 @@ export default function ProductsBestSellers({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategory, loading } = useAppSelector(
+  const { productsByMainCategoryForBestsellers, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
   useEffect(() => {
-    dispatch(cleanUp());
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", "%20"),
@@ -32,7 +31,7 @@ export default function ProductsBestSellers({
 
   return (
     <ProductsSlider
-      data={productsByMainCategory?.products}
+      data={productsByMainCategoryForBestsellers?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " bestsellers"}
       viewAllLink={"/categories/" + category_id + "/bestsellers"}

@@ -33,7 +33,7 @@ export const getCategory_member: any = createAsyncThunk(
 
 export const getProductsByMainCategory_member: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsByMainCategory_member",
-  async ({ category_id, params}: any, thunkApi) => {
+  async ({ category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const data = (
@@ -41,26 +41,27 @@ export const getProductsByMainCategory_member: any = createAsyncThunk(
           params,
         })
       ).data;
-      return data;
+      return { data, role: params?.role };
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
     }
   }
 );
+
 export const getProductsBySubCategory_member: any = createAsyncThunk(
   "memberCategoriesSlice/getProductsBySubCategory_member",
   async ({ category_id, sub_category_id, params }: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const products = (
+      const data = (
         await axios.get(
           "/api/categories/" + sub_category_id + "/" + sub_category_id,
 
           { params }
         )
       ).data;
-      return products;
+      return { data, role: params?.role };
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -96,7 +97,14 @@ type categoriesState = {
     products: Product[];
     groupFilters: GroupFilters | null;
   };
-
+  productsByMainCategoryForDeals: {
+    products: Product[];
+    groupFilters: GroupFilters | null;
+  };
+  productsByMainCategoryForBestsellers: {
+    products: Product[];
+    groupFilters: GroupFilters | null;
+  };
   categories: Category[];
   category: Category | null;
   subcategoryProducts: {
@@ -109,6 +117,8 @@ type categoriesState = {
 const initialState: categoriesState = {
   productsBySubCategory: { products: [], groupFilters: null },
   productsByMainCategory: { products: [], groupFilters: null },
+  productsByMainCategoryForDeals: { products: [], groupFilters: null },
+  productsByMainCategoryForBestsellers: { products: [], groupFilters: null },
   categories: [],
   subcategoryProducts: [],
   category: null,
@@ -183,7 +193,16 @@ const memberCategoriesSlice = createSlice({
         getProductsByMainCategory_member.fulfilled,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
-          state.productsByMainCategory = action.payload;
+
+          action.payload?.role == "deals"
+            ? (state.productsByMainCategoryForDeals = action.payload?.data)
+            : action.payload?.role == "bestsellers"
+            ? (state.productsByMainCategoryForBestsellers = action.payload?.data)
+            : (state.productsByMainCategory = action.payload?.data);
+            console.log(
+              state.productsByMainCategoryForBestsellers,state.productsByMainCategoryForDeals 
+            );
+            
         }
       )
       .addCase(
