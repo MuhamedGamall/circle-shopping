@@ -7,7 +7,9 @@ import {
 } from "@/components/ui/accordion";
 import { GroupFilters } from "@/types";
 import SelectCategory from "./select-category";
-import { SelectForm } from "./select-brand";
+import { SelectForm } from "./select-form";
+import { SelectPrice } from "./select-price";
+import { SelectColour } from "./select-color";
 export default function FilterSidebar({
   groupFilters,
   loading,
@@ -17,7 +19,6 @@ export default function FilterSidebar({
 }) {
   const arrayOfFilter = [
     { data: groupFilters?.filterByBrands, label: "brand" },
-    { data: groupFilters?.filterByColour, label: "colour" },
     { data: groupFilters?.filterByCondition, label: "condition" },
     { data: groupFilters?.filterByDeals, label: "deal" },
     { data: groupFilters?.filterBySellers, label: "seller" },
@@ -25,22 +26,51 @@ export default function FilterSidebar({
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
       <LoaderLayout loadingCondition={loading} />
-      <Accordion
+      <Accordion 
         type="multiple"
-        defaultValue={["category", "brand","colour","condition","deal","seller"]}
+        defaultValue={[
+          "category",
+          "brand",
+          "colour",
+          "condition",
+          "deal",
+          "seller",
+          "price"
+        ]}
         className="w-full"
       >
-        <AccordionItem  value="category">
-          <AccordionTrigger className="font-bold text-[16px] hover:no-underline">
+        <AccordionItem value="category">
+          <AccordionTrigger className="font-bold text-[15px]  hover:no-underline">
             Category
           </AccordionTrigger>
           <AccordionContent>
             <SelectCategory category={groupFilters?.category || []} />
           </AccordionContent>
         </AccordionItem>
+        <AccordionItem value={"price"}>
+          <AccordionTrigger className="font-bold text-[15px] hover:no-underline">
+            Price
+          </AccordionTrigger>
+          <AccordionContent>
+            <SelectPrice
+              data={{
+                maxPrice: groupFilters?.maximumPrice || 0,
+                minPrice: groupFilters?.minimumPrice || 0,
+              }}
+            />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value={"colour"}>
+          <AccordionTrigger className="font-bold text-[15px] hover:no-underline">
+            Colour
+          </AccordionTrigger>
+          <AccordionContent>
+            <SelectColour data={groupFilters?.filterByColour || []} />
+          </AccordionContent>
+        </AccordionItem>
         {arrayOfFilter?.map((el, i) => (
           <AccordionItem key={i} value={el?.label}>
-            <AccordionTrigger className="font-bold text-[16px] hover:no-underline">
+            <AccordionTrigger className="font-bold  text-[15px] hover:no-underline">
               {el?.label}
             </AccordionTrigger>
             <AccordionContent>

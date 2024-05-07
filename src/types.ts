@@ -127,7 +127,7 @@ export type GroupFilters = {
   filterByBrands: FilterItem[];
   filterByColour: FilterItem[];
   filterByDeals: FilterItem[];
-  maximumLikes: number;
+  // maximumLikes: number;
   maximumPrice: number;
   minimumPrice: number;
 };

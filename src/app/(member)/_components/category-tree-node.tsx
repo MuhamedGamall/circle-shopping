@@ -8,6 +8,8 @@ import { useState } from "react";
 export const TreeNode = ({ node }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectValue, setSelectValue] = useState<string>("");
+  const [showAll, setShowAll] = useState(false);
+ 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -16,6 +18,10 @@ export const TreeNode = ({ node }: any) => {
     setSelectValue((prevValue) => (prevValue === value ? "" : value));
   };
 
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
   const { category_id, sub_category_id } = useParams();
   const mainIsActive = category_id === node?.name?.replaceAll(" ", "-");
 
@@ -27,9 +33,9 @@ export const TreeNode = ({ node }: any) => {
           className="w-4 h-4 p-0 bg-white  hover:bg-transparent"
         >
           {isOpen ? (
-            <MinusSquare className="h-4 w-4  text-shade" />
+            <MinusSquare className="h-4 w-4  text-slate-400" />
           ) : (
-            <PlusSquare className="h-4 w-4 text-shade" />
+            <PlusSquare className="h-4 w-4 text-slate-400" />
           )}
         </Button>
         <Link
@@ -41,9 +47,9 @@ export const TreeNode = ({ node }: any) => {
       </div>
 
       {isOpen && node?.children && (
-        <ul className="mt-2">
+        <>
           <ul className="ml-10  my-2">
-            {node?.children?.map((childNode: any, i: number) => (
+            {node?.children?.slice(0, showAll ? node?.children?.length : 9)?.map((childNode: any, i: number) => (
               <li
                 key={i}
                 className="last:m-0 mb-2"
@@ -52,7 +58,6 @@ export const TreeNode = ({ node }: any) => {
                 <Link
                   href={""}
                   className={cn({
-                    // "text-black font-semibold": subIsActive(childNode?.name),
                     "text-black font-bold": selectValue === childNode?.name,
                   })}
                 >
@@ -61,7 +66,16 @@ export const TreeNode = ({ node }: any) => {
               </li>
             ))}
           </ul>
-        </ul>
+
+          <button
+            className={cn(" w-fit text-sm text-blue underline cursor-pointer", {
+              hidden: node?.children < 10,
+            })}
+            onClick={toggleShowAll}
+          >
+            {showAll ? "See less" : "See all"}
+          </button>
+        </>
       )}
     </div>
   );
