@@ -5,11 +5,27 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { GroupFilters } from "@/types";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import qs from "query-string";
+import { useState } from "react";
 import SelectCategory from "./select-category";
+import { SelectColour } from "./select-color";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
-import { SelectColour } from "./select-color";
+
+export type FilterDataState = {
+  category: string;
+  sortBy: string[];
+  colour: string[];
+  brand: string[];
+  condition: string[];
+  seller: string[];
+  deal: string[];
+  minPrice: number | null;
+  maxPrice: number | null;
+};
 export default function FilterSidebar({
   groupFilters,
   loading,
@@ -17,6 +33,37 @@ export default function FilterSidebar({
   loading: boolean;
   groupFilters: null | GroupFilters;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { category_id, sub_category_id } = useParams();
+  const [filterData, setFilterData] = useState<FilterDataState>({
+    category: "",
+    sortBy: [],
+    colour: [],
+    brand: [],
+    condition: [],
+    seller: [],
+    deal: [],
+    minPrice: null,
+    maxPrice: null,
+  });
+  const { category, ...queryData } = filterData;
+  console.log(queryData);
+  const url = qs.stringifyUrl(
+    {
+      url: pathname,
+      query: queryData || null,
+    },
+    { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
+  );
+
+  const applyButton = async () => {
+    const refactorUrl = url.replace(
+      String(category_id + "/" + (sub_category_id || "")),
+      category + "/"
+    );
+    router.push(refactorUrl);
+  };
   const arrayOfFilter = [
     { data: groupFilters?.filterByBrands, label: "brand" },
     { data: groupFilters?.filterByCondition, label: "condition" },
@@ -26,7 +73,7 @@ export default function FilterSidebar({
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
       <LoaderLayout loadingCondition={loading} />
-      <Accordion 
+      <Accordion
         type="multiple"
         defaultValue={[
           "category",
@@ -35,50 +82,73 @@ export default function FilterSidebar({
           "condition",
           "deal",
           "seller",
-          "price"
+          "price",
         ]}
         className="w-full"
       >
-        <AccordionItem value="category">
+        <AccordionItem value="category" className=" border-0">
           <AccordionTrigger className="font-bold text-[15px]  hover:no-underline">
             Category
           </AccordionTrigger>
           <AccordionContent>
-            <SelectCategory category={groupFilters?.category || []} />
+            <SelectCategory
+              category={groupFilters?.category || []}
+              setFilterData={setFilterData}
+              filterData={filterData}
+            />
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value={"price"}>
+        <AccordionItem value={"price"} className=" border-0">
           <AccordionTrigger className="font-bold text-[15px] hover:no-underline">
             Price
           </AccordionTrigger>
           <AccordionContent>
             <SelectPrice
               data={{
-                maxPrice: groupFilters?.maximumPrice || 0,
-                minPrice: groupFilters?.minimumPrice || 0,
+                max: groupFilters?.maxPrice || 0,
+                min: groupFilters?.minPrice || 0,
               }}
+              setFilterData={setFilterData}
+              filterData={filterData}
             />
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value={"colour"}>
+        <AccordionItem value={"colour"} className=" border-0">
           <AccordionTrigger className="font-bold text-[15px] hover:no-underline">
             Colour
           </AccordionTrigger>
           <AccordionContent>
-            <SelectColour data={groupFilters?.filterByColour || []} />
+            <SelectColour
+              data={groupFilters?.filterByColour || []}
+              setFilterData={setFilterData}
+              filterData={filterData}
+            />
           </AccordionContent>
         </AccordionItem>
         {arrayOfFilter?.map((el, i) => (
-          <AccordionItem key={i} value={el?.label}>
+          <AccordionItem key={i} value={el?.label} className=" border-0">
             <AccordionTrigger className="font-bold  text-[15px] hover:no-underline">
               {el?.label}
             </AccordionTrigger>
             <AccordionContent>
-              <SelectForm data={el?.data || []} />
+              <SelectForm
+                data={el?.data || []}
+                setFilterData={setFilterData}
+                filterData={filterData}
+                formName={el?.label}
+              />
             </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
+      <Button
+        type="button"
+        onClick={applyButton}
+        variant={"blue"}
+        className="my-5 w-full px-2 py-0"
+      >
+        Apply
+      </Button>
     </div>
   );
 }

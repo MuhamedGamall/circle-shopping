@@ -3,13 +3,22 @@ import { cn } from "@/lib/utils";
 import { MinusSquare, PlusSquare } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FilterDataState } from "./filter-sidebar";
 
-export const TreeNode = ({ node }: any) => {
+export const TreeNode = ({
+  node,
+  setFilterData,
+  filterData,
+}: {
+  node: any;
+  setFilterData: Dispatch<SetStateAction<FilterDataState>>;
+  filterData: FilterDataState;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectValue, setSelectValue] = useState<string>("");
   const [showAll, setShowAll] = useState(false);
- 
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -17,7 +26,13 @@ export const TreeNode = ({ node }: any) => {
   const handleSelect = (value: string) => {
     setSelectValue((prevValue) => (prevValue === value ? "" : value));
   };
-
+  const category = (node?.name + "/" + selectValue).replaceAll(" ", "-");
+  useEffect(() => {
+    setFilterData((curr) => ({
+      ...curr,
+      category,
+    }));
+  }, [category, selectValue, setFilterData]);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
@@ -49,22 +64,24 @@ export const TreeNode = ({ node }: any) => {
       {isOpen && node?.children && (
         <>
           <ul className="ml-10  my-2">
-            {node?.children?.slice(0, showAll ? node?.children?.length : 9)?.map((childNode: any, i: number) => (
-              <li
-                key={i}
-                className="last:m-0 mb-2"
-                onClick={() => handleSelect(childNode?.name)}
-              >
-                <Link
-                  href={""}
-                  className={cn({
-                    "text-black font-bold": selectValue === childNode?.name,
-                  })}
+            {node?.children
+              ?.slice(0, showAll ? node?.children?.length : 9)
+              ?.map((childNode: any, i: number) => (
+                <li
+                  key={i}
+                  className="last:m-0 mb-2"
+                  onClick={() => handleSelect(childNode?.name)}
                 >
-                  {childNode?.name}
-                </Link>
-              </li>
-            ))}
+                  <Link
+                    href={""}
+                    className={cn({
+                      "text-black font-bold": selectValue === childNode?.name,
+                    })}
+                  >
+                    {childNode?.name}
+                  </Link>
+                </li>
+              ))}
           </ul>
 
           <button

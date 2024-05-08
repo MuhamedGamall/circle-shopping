@@ -1,10 +1,21 @@
-import { FilterItem } from "@/types";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import { FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FilterDataState } from "./filter-sidebar";
 
-export const SelectForm = ({ data }: { data: FilterItem[] }) => {
+export const SelectForm = ({
+  data,
+  setFilterData,
+  filterData,
+  formName,
+}: {
+  data: FilterItem[];
+  setFilterData: Dispatch<SetStateAction<FilterDataState>>;
+  filterData: FilterDataState;
+  formName: string;
+}) => {
   const [values, setValues] = useState<string[]>([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -15,6 +26,12 @@ export const SelectForm = ({ data }: { data: FilterItem[] }) => {
       setValues((prevValues) => prevValues.filter((value) => value !== _id));
     }
   };
+  useEffect(() => {
+    setFilterData((curr) => ({
+      ...curr,
+      [formName]: values,
+    }));
+  }, [formName, setFilterData, values]);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);

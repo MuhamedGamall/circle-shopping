@@ -128,6 +128,6 @@ export type GroupFilters = {
   filterByColour: FilterItem[];
   filterByDeals: FilterItem[];
   // maximumLikes: number;
-  maximumPrice: number;
-  minimumPrice: number;
+  maxPrice: number;
+  minPrice: number;
 };

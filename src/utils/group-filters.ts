@@ -111,8 +111,8 @@ export async function groupFilters({
     const groupFilters = {
       // maximumLikes: mostLikes?.likes || defaultValues,
       category,
-      maximumPrice: filterByPrice[0]?.maxPrice || defaultValues,
-      minimumPrice: filterByPrice[0]?.minPrice || 0,
+      maxPrice: filterByPrice[0]?.maxPrice || defaultValues,
+      minPrice: filterByPrice[0]?.minPrice || 0,
       filterByBrands,
       filterByDeals,
       filterBySellers,

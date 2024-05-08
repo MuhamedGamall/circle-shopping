@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils";
 import { FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
 import Image from "next/image";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FilterDataState } from "./filter-sidebar";
 
 const colourMap: Record<string, string> = {
   blue: "/colours-imgs/blue.png",
@@ -23,7 +24,15 @@ const colourMap: Record<string, string> = {
   clear: "/colours-imgs/clear.png",
 };
 
-export const SelectColour = ({ data }: { data: FilterItem[] }) => {
+export const SelectColour = ({
+  data,
+  setFilterData,
+  filterData,
+}: {
+  data: FilterItem[];
+  setFilterData: Dispatch<SetStateAction<FilterDataState>>;
+  filterData: FilterDataState;
+}) => {
   const [values, setValues] = useState<string[]>([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -32,6 +41,13 @@ export const SelectColour = ({ data }: { data: FilterItem[] }) => {
       setValues((prevValues) => prevValues.filter((value) => value !== _id));
     } else setValues((prevValues) => [...prevValues, _id]);
   };
+  useEffect(() => {
+    setFilterData((curr) => ({
+      ...curr,
+      colour: values,
+    }));
+  }, [setFilterData, values]);
+
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
@@ -44,7 +60,7 @@ export const SelectColour = ({ data }: { data: FilterItem[] }) => {
         clear
       </button>
       <div className="grid grid-cols-2 gap-y-1 gap-x-0.5 ">
-      {data?.slice(0, showAll ? data?.length : 9)?.map((el, i) => (
+        {data?.slice(0, showAll ? data?.length : 9)?.map((el, i) => (
           <div
             key={i}
             className={"flex gap-2  items-center p-1.5 bg-white "}

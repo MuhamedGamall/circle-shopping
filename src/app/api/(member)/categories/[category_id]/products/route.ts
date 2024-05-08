@@ -43,11 +43,11 @@ export async function GET(
       role = "all_products_of_category",
       brand = "",
       price = {
-        from: groupFiltersData?.minimumPrice || 0,
-        to: groupFiltersData?.maximumPrice || defaultValues,
+        from: groupFiltersData?.minPrice || 0,
+        to: groupFiltersData?.maxPrice || defaultValues,
       },
       deals = "",
-      maximum_likes = groupFiltersData?.maximumLikes || defaultValues,
+      // maximum_likes = groupFiltersData?.maximumLikes || defaultValues,
       item_condition = "",
       colour = "",
     } = queryParams;
