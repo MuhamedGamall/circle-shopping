@@ -33,8 +33,12 @@ export const SelectColour = ({
   setFilterData: Dispatch<SetStateAction<FilterDataState>>;
   filterData: FilterDataState;
 }) => {
-  const [values, setValues] = useState<string[]>([]);
   const [showAll, setShowAll] = useState(false);
+  const formatValues: any = Array.isArray(filterData?.colour)
+    ? filterData?.colour
+    : [filterData?.colour];
+
+  const [values, setValues] = useState<string[]>(filterData?.colour || []);
 
   const handleSelect = (_id: string) => {
     if (values?.includes(_id)) {
@@ -63,7 +67,9 @@ export const SelectColour = ({
         {data?.slice(0, showAll ? data?.length : 9)?.map((el, i) => (
           <div
             key={i}
-            className={"flex gap-2  items-center p-1.5 bg-white "}
+            className={
+              "flex gap-2  cursor-pointer  items-center p-1.5 bg-white "
+            }
             onClick={() => handleSelect(el?._id)}
           >
             <Image

@@ -26,6 +26,7 @@ export const TreeNode = ({
   const handleSelect = (value: string) => {
     setSelectValue((prevValue) => (prevValue === value ? "" : value));
   };
+
   const category = (node?.name + "/" + selectValue).replaceAll(" ", "-");
   useEffect(() => {
     setFilterData((curr) => ({
@@ -37,8 +38,10 @@ export const TreeNode = ({
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+
   const { category_id, sub_category_id } = useParams();
   const mainIsActive = category_id === node?.name?.replaceAll(" ", "-");
+  const subIsActive = category === category_id + "/" + sub_category_id;
 
   return (
     <div className="text-sm text-slate-900 capitalize">
@@ -75,7 +78,8 @@ export const TreeNode = ({
                   <Link
                     href={""}
                     className={cn({
-                      "text-black font-bold": selectValue === childNode?.name,
+                      "text-black font-bold":
+                        selectValue === childNode?.name || subIsActive,
                     })}
                   >
                     {childNode?.name}

@@ -14,16 +14,20 @@ export const SelectForm = ({
   data: FilterItem[];
   setFilterData: Dispatch<SetStateAction<FilterDataState>>;
   filterData: FilterDataState;
-  formName: string;
+  formName: "brand" | "condition" | "seller" | "deal";
 }) => {
-  const [values, setValues] = useState<string[]>([]);
+  const formatValues: any = Array.isArray(filterData?.[formName])
+    ? filterData?.[formName]
+    : [filterData?.[formName]];
+
+  const [values, setValues] = useState<string[]>(formatValues);
   const [showAll, setShowAll] = useState(false);
 
   const handleCheckboxChange = (checked: boolean, _id: string) => {
     if (checked) {
       setValues((prevValues) => [...prevValues, _id]);
     } else {
-      setValues((prevValues) => prevValues.filter((value) => value !== _id));
+      setValues((prevValues) => prevValues?.filter((value) => value !== _id));
     }
   };
   useEffect(() => {
@@ -47,7 +51,7 @@ export const SelectForm = ({
       {data?.slice(0, showAll ? data?.length : 9)?.map((el, i) => (
         <Label
           key={i}
-          className="group flex items-center  justify-between text-slate-400"
+          className="group cursor-pointer flex items-center  justify-between text-slate-400"
         >
           <div className="flex items-center gap-1 font-normal text-[12px]  group-hover:text-blue capitalize">
             <Checkbox

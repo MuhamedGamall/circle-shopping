@@ -7,24 +7,28 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { GroupFilters } from "@/types";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter
+} from "next/navigation";
 import qs from "query-string";
 import { useState } from "react";
 import SelectCategory from "./select-category";
-import { SelectColour } from "./select-color";
+import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
 
 export type FilterDataState = {
   category: string;
-  sortBy: string[];
+  sortBy: string;
   colour: string[];
   brand: string[];
   condition: string[];
   seller: string[];
   deal: string[];
-  minPrice: number | null;
-  maxPrice: number | null;
+  minPrice: number;
+  maxPrice: number;
 };
 export default function FilterSidebar({
   groupFilters,
@@ -36,19 +40,29 @@ export default function FilterSidebar({
   const router = useRouter();
   const pathname = usePathname();
   const { category_id, sub_category_id } = useParams();
+
+  let params: any;
+  if (typeof window !== "undefined") {
+    const queryParams = qs.parse(window.location.search, {
+      arrayFormat: "comma",
+      parseNumbers: true,
+    });
+    params = { ...queryParams, role: "bestsellers" };
+  }
+
   const [filterData, setFilterData] = useState<FilterDataState>({
-    category: "",
-    sortBy: [],
-    colour: [],
-    brand: [],
-    condition: [],
-    seller: [],
-    deal: [],
-    minPrice: null,
-    maxPrice: null,
+    category: category_id + "/" + (sub_category_id || ""),
+    sortBy: params?.sortBy || "",
+    colour: params?.colour || [],
+    brand: params?.brand || [],
+    condition: params?.condition || [],
+    seller: params?.seller || [],
+    deal: params?.deal || [],
+    minPrice: params?.minPrice || groupFilters?.minPrice || 0,
+    maxPrice: params?.maxPrice || groupFilters?.maxPrice || 0,
   });
+
   const { category, ...queryData } = filterData;
-  console.log(queryData);
   const url = qs.stringifyUrl(
     {
       url: pathname,
@@ -64,12 +78,14 @@ export default function FilterSidebar({
     );
     router.push(refactorUrl);
   };
+
   const arrayOfFilter = [
     { data: groupFilters?.filterByBrands, label: "brand" },
     { data: groupFilters?.filterByCondition, label: "condition" },
     { data: groupFilters?.filterByDeals, label: "deal" },
     { data: groupFilters?.filterBySellers, label: "seller" },
-  ];
+  ] as any[];
+  
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
       <LoaderLayout loadingCondition={loading} />
@@ -127,7 +143,7 @@ export default function FilterSidebar({
         </AccordionItem>
         {arrayOfFilter?.map((el, i) => (
           <AccordionItem key={i} value={el?.label} className=" border-0">
-            <AccordionTrigger className="font-bold  text-[15px] hover:no-underline">
+            <AccordionTrigger className="font-bold capitalize  text-[15px] hover:no-underline">
               {el?.label}
             </AccordionTrigger>
             <AccordionContent>

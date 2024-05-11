@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FilterDataState } from "./filter-sidebar";
+import { useSearchParams } from "next/navigation";
 
 export const SelectPrice = ({
   data,
@@ -14,7 +15,7 @@ export const SelectPrice = ({
   const [values, setValues] = useState<{
     maxPrice: number;
     minPrice: number;
-  } | null>(null);
+  } | null>({ maxPrice: filterData?.maxPrice, minPrice: filterData?.minPrice });
 
   useEffect(() => {
     setFilterData((curr) => ({
@@ -33,6 +34,7 @@ export const SelectPrice = ({
           }))
         }
         defaultValue={data?.min}
+        value={values?.minPrice}
         className="rounded-none border w-full  p-1 h-9 placeholder:text-[12px]"
         placeholder="Min price"
         type="number"
@@ -41,6 +43,7 @@ export const SelectPrice = ({
       <span className="text-slate-400 ">TO</span>
       <Input
         defaultValue={data?.max}
+        value={values?.maxPrice}
         className="rounded-none border w-full p-1 h-9 placeholder:text-[12px]"
         placeholder="Max price"
         type="number"

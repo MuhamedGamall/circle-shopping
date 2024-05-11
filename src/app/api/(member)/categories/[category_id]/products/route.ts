@@ -5,6 +5,7 @@ import { Category } from "@/models/category";
 import { Product } from "@/models/product";
 import mongoConnect from "@/utils/mongo-connect";
 import { groupFilters } from "@/utils/group-filters";
+import qs from "query-string";
 
 export async function GET(
   req: NextRequest,
@@ -22,11 +23,9 @@ export async function GET(
       is_published: true,
     };
 
-
     const bestSellerThreshold = 100;
     const dealThreshold = 1;
     const getRole = req.nextUrl.searchParams.get("role");
-
 
     if (getRole === "bestsellers")
       filter.sales_count = { $gte: bestSellerThreshold };
@@ -35,19 +34,18 @@ export async function GET(
 
     const groupFiltersData = await groupFilters({ filter: filter });
 
-    const queryParams = Object.fromEntries(req.nextUrl.searchParams.entries());
+    const queryParams = qs.parse(req.nextUrl.search, {
+      arrayFormat: "bracket",
+    });
     const defaultValues = 10e10;
 
     const {
-      limit = defaultValues,
-      role = "all_products_of_category",
-      brand = "",
-      price = {
-        from: groupFiltersData?.minPrice || 0,
-        to: groupFiltersData?.maxPrice || defaultValues,
-      },
+      limit,
+      role = "",
+      brand = [],
+      minPrice = groupFiltersData?.minPrice || 0,
+      maxPrice = groupFiltersData?.maxPrice || defaultValues,
       deals = "",
-      // maximum_likes = groupFiltersData?.maximumLikes || defaultValues,
       item_condition = "",
       colour = "",
     } = queryParams;
@@ -63,8 +61,8 @@ export async function GET(
     }
 
     let products = await Product.aggregate([
-      { $match: filter },
-      { $limit: +limit },
+      { $match: {...filter} },
+      { $limit: +(limit || defaultValues) },
       {
         $addFields: {
           is_bestseller: { $gte: ["$sales_count", bestSellerThreshold] },
