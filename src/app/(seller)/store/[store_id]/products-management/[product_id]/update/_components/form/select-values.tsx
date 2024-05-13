@@ -66,7 +66,7 @@ export function DropdownMenuSelection({
 
         <div className={"max-h-[350px] overflow-y-auto"}>
           {options.map((option) => (
-            <DropdownMenuCheckboxItem
+            <DropdownMenuCheckboxItem className="capitalize"
               key={option}
               checked={valuesSelected?.includes(option)}
               onCheckedChange={(checked) =>

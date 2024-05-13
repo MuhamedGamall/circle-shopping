@@ -46,14 +46,14 @@ export default function CustomSelectField({
           <FormLabel className={cn(labelClassName)}>{label}</FormLabel>
           <FormControl>
             <Select onValueChange={field.onChange} value={field?.value}>
-              <SelectTrigger className=" ">
-                <SelectValue />
+              <SelectTrigger className=" capitalize">
+                <SelectValue  />
               </SelectTrigger>
               <SelectContent className="max-h-[350px] overflow-y-auto">
                 <SelectGroup>
                   <SelectLabel>{selectLabel}</SelectLabel>
                   {selectData?.map((el, i) => (
-                    <SelectItem key={i} value={el}>
+                    <SelectItem key={i} value={el} className="capitalize">
                       {el}
                     </SelectItem>
                   ))}

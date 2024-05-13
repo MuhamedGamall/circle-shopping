@@ -23,6 +23,7 @@ export const SelectPrice = ({
       ...values,
     }));
   }, [setFilterData, values]);
+console.log(values);
 
   return (
     <div className="flex gap-1 justify-center items-center">

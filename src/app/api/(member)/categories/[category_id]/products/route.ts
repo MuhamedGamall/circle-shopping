@@ -37,18 +37,21 @@ export async function GET(
     const queryParams = qs.parse(req.nextUrl.search, {
       arrayFormat: "bracket",
     });
-    const defaultValues = 10e10;
+    console.log(queryParams);
 
+    const defaultValues = 10e10;
+    const handleArray = (value: string | string[]) => {
+      return Array.isArray(value) ? value : [value];
+    };
     const {
       limit,
-      role = "",
       brand = [],
       minPrice = groupFiltersData?.minPrice || 0,
       maxPrice = groupFiltersData?.maxPrice || defaultValues,
-      deals = "",
-      item_condition = "",
-      colour = "",
-    } = queryParams;
+      deal = [],
+      condition = [],
+      colour = [],
+    } = queryParams as any;
 
     const filterCategories = {
       "main_category.name": category_id,
@@ -60,8 +63,32 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
 
+
+    const additionalFilters: any = {};
+    if (brand.length) {
+      additionalFilters['category.brand'] = { $in: handleArray(brand) };
+    }
+    if (deal.length) {
+      additionalFilters['price.offer.deal_type'] = { $in: handleArray(deal) };
+    }
+    if (colour.length) {
+      additionalFilters.colour = { $in: handleArray(colour) };
+    }
+    if (condition.length) {
+      additionalFilters.item_condition = { $in: handleArray(condition) };
+    }
+    if (minPrice || maxPrice) {
+      additionalFilters["price.base_price"] = {
+        $gte: +minPrice,
+        $lte: +maxPrice,
+      };
+    }
+    
+    const finalFilter = { ...filter, ...additionalFilters };
+console.log(finalFilter);
+
     let products = await Product.aggregate([
-      { $match: {...filter} },
+      { $match: finalFilter },
       { $limit: +(limit || defaultValues) },
       {
         $addFields: {

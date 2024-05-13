@@ -18,6 +18,8 @@ import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
 
 export type FilterDataState = {
   category: string;
@@ -39,7 +41,7 @@ export default function FilterSidebar({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { category_id, sub_category_id } = useParams();
+  const { category_id, sub_category_id } = useParams() as any
 
   let params: any;
   if (typeof window !== "undefined") {
@@ -62,7 +64,7 @@ export default function FilterSidebar({
     maxPrice: params?.maxPrice || groupFilters?.maxPrice || 0,
   });
 
-  const { category, ...queryData } = filterData;
+  const { category, ...queryData } = filterData
   const url = qs.stringifyUrl(
     {
       url: pathname,
@@ -70,6 +72,7 @@ export default function FilterSidebar({
     },
     { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
   );
+  const dispatch = useAppDispatch();
 
   const applyButton = async () => {
     const refactorUrl = url.replace(
@@ -77,6 +80,12 @@ export default function FilterSidebar({
       category + "/"
     );
     router.push(refactorUrl);
+    dispatch(
+      getProductsByMainCategory_member({
+        category_id: category_id?.replaceAll("-", "%20"),
+        params: params,
+      })
+    );
   };
 
   const arrayOfFilter = [

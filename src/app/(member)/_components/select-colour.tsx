@@ -38,7 +38,7 @@ export const SelectColour = ({
     ? filterData?.colour
     : [filterData?.colour];
 
-  const [values, setValues] = useState<string[]>(filterData?.colour || []);
+  const [values, setValues] = useState<string[]>(formatValues || []);
 
   const handleSelect = (_id: string) => {
     if (values?.includes(_id)) {
@@ -73,7 +73,7 @@ export const SelectColour = ({
             onClick={() => handleSelect(el?._id)}
           >
             <Image
-              src={colourMap?.[el?._id?.toLowerCase()]}
+              src={colourMap?.[el?._id]}
               alt={`${el._id} image`}
               width={50}
               height={50}

@@ -7,7 +7,7 @@ import {
   getProductsByMainCategory_member,
 } from "@/lib/RTK/slices/member/categories-slice";
 import qs from "query-string";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function BestSellersContent({
   category_id,
@@ -19,11 +19,10 @@ export default function BestSellersContent({
     (state) => state.member_categories
   );
 
-
   let params: any;
   if (typeof window !== "undefined") {
     const queryParams = qs.parse(window.location.search, {
-      arrayFormat: "comma",
+      arrayFormat: "bracket",
     });
     params = { ...queryParams, role: "bestsellers" };
   }
@@ -36,7 +35,7 @@ export default function BestSellersContent({
         params: params,
       })
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category_id, dispatch]);
   return (
     <div className="flex gap-5 bg-[#f7f7fa] ">
