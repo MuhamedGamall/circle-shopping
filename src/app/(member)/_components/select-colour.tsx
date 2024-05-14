@@ -39,7 +39,12 @@ export const SelectColour = ({
     : [filterData?.colour];
 
   const [values, setValues] = useState<string[]>(formatValues || []);
-
+  // useEffect(() => {
+  //   const formatValues: any = Array.isArray(filterData?.colour)
+  //     ? filterData?.colour
+  //     : [filterData?.colour]
+  //   setValues(formatValues);
+  // }, [filterData?.colour]);
   const handleSelect = (_id: string) => {
     if (values?.includes(_id)) {
       setValues((prevValues) => prevValues.filter((value) => value !== _id));

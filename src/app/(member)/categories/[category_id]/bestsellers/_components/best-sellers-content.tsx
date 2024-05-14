@@ -7,7 +7,7 @@ import {
   getProductsByMainCategory_member,
 } from "@/lib/RTK/slices/member/categories-slice";
 import qs from "query-string";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function BestSellersContent({
   category_id,
@@ -22,7 +22,8 @@ export default function BestSellersContent({
   let params: any;
   if (typeof window !== "undefined") {
     const queryParams = qs.parse(window.location.search, {
-      arrayFormat: "bracket",
+      arrayFormat: "comma",
+      parseNumbers:true
     });
     params = { ...queryParams, role: "bestsellers" };
   }
@@ -42,6 +43,7 @@ export default function BestSellersContent({
       <FilterSidebar
         groupFilters={productsByMainCategoryForBestsellers?.groupFilters}
         loading={loading}
+        // searchParams={searchParams}
       />
       <div>content</div>
     </div>

@@ -16,6 +16,9 @@ export const SelectPrice = ({
     maxPrice: number;
     minPrice: number;
   } | null>({ maxPrice: filterData?.maxPrice, minPrice: filterData?.minPrice });
+  // useEffect(() => {
+  //   setValues({ maxPrice: filterData?.maxPrice, minPrice: filterData?.minPrice })
+  // }, []);
 
   useEffect(() => {
     setFilterData((curr) => ({
@@ -23,7 +26,6 @@ export const SelectPrice = ({
       ...values,
     }));
   }, [setFilterData, values]);
-console.log(values);
 
   return (
     <div className="flex gap-1 justify-center items-center">

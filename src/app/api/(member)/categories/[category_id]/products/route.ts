@@ -36,8 +36,8 @@ export async function GET(
 
     const queryParams = qs.parse(req.nextUrl.search, {
       arrayFormat: "bracket",
+      parseNumbers: true,
     });
-    console.log(queryParams);
 
     const defaultValues = 10e10;
     const handleArray = (value: string | string[]) => {
@@ -63,13 +63,12 @@ export async function GET(
       return new NextResponse("Not Found", { status: 404 });
     }
 
-
     const additionalFilters: any = {};
     if (brand.length) {
-      additionalFilters['category.brand'] = { $in: handleArray(brand) };
+      additionalFilters["category.brand"] = { $in: handleArray(brand) };
     }
     if (deal.length) {
-      additionalFilters['price.offer.deal_type'] = { $in: handleArray(deal) };
+      additionalFilters["price.offer.deal_type"] = { $in: handleArray(deal) };
     }
     if (colour.length) {
       additionalFilters.colour = { $in: handleArray(colour) };
@@ -79,13 +78,12 @@ export async function GET(
     }
     if (minPrice || maxPrice) {
       additionalFilters["price.base_price"] = {
-        $gte: +minPrice,
-        $lte: +maxPrice,
+        $gte: minPrice,
+        $lte: maxPrice,
       };
     }
-    
+
     const finalFilter = { ...filter, ...additionalFilters };
-console.log(finalFilter);
 
     let products = await Product.aggregate([
       { $match: finalFilter },
