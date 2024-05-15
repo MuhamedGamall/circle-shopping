@@ -23,11 +23,11 @@ export default function ProductsBestSellers({
   useEffect(() => {
     dispatch(
       getProductsByMainCategory_member({
-        category_id: category_id?.replaceAll("-", "%20"),
+        category_id: category_id?.replaceAll("-", " "),
         params,
       })
     );
-  }, [category_id, dispatch,params]);
+  }, [category_id, dispatch, params]);
 
   return (
     <ProductsSlider

@@ -23,7 +23,7 @@ export default function ProductsDeal({
   useEffect(() => {
     dispatch(
       getProductsByMainCategory_member({
-        category_id: category_id?.replaceAll("-", "%20"),
+        category_id: category_id?.replaceAll("-", " "),
         params,
       })
     );

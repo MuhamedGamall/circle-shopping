@@ -25,7 +25,7 @@ export default function SubCategoriesSlider({
 
   useEffect(() => {
     dispatch(cleanUp());
-    dispatch(getCategory_member(category_id?.replaceAll("-", "%20")));
+    dispatch(getCategory_member(category_id?.replaceAll("-", " ")));
   }, [category_id, dispatch]);
 
   return (

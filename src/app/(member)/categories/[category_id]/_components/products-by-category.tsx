@@ -1,7 +1,7 @@
 "use client";
 import ProductsSlider from "@/components/products-slider/products-container";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getSubcategoryProducts_member } from '@/lib/RTK/slices/member/categories-slice';
+import { getSubcategoryProducts_member } from "@/lib/RTK/slices/member/categories-slice";
 import { useEffect } from "react";
 
 export default function ProductsByCategory({
@@ -14,7 +14,7 @@ export default function ProductsByCategory({
     (state) => state.member_categories
   );
   useEffect(() => {
-    dispatch(getSubcategoryProducts_member(category_id?.replaceAll("-", "%20")));
+    dispatch(getSubcategoryProducts_member(category_id?.replaceAll("-", " ")));
   }, [category_id, dispatch]);
 
   return subcategoryProducts?.map((category, i) => (

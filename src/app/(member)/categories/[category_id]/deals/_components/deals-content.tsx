@@ -18,9 +18,8 @@ export default function DealsContent({ category_id }: { category_id: string }) {
     dispatch(cleanUp());
     dispatch(
       getProductsByMainCategory_member({
-        category_id: category_id?.replaceAll("-", "%20"),
-        params: { role:'deals' },
-
+        category_id: category_id?.replaceAll("-", " "),
+        params: { role: "deals" },
       })
     );
   }, [category_id, dispatch]);
@@ -28,7 +27,7 @@ export default function DealsContent({ category_id }: { category_id: string }) {
   return (
     <div className="flex gap-5 bg-[#f7f7fa] h-screen">
       <FilterSidebar
-        groupFilters={productsByMainCategoryForDeals?.groupFilters }
+        groupFilters={productsByMainCategoryForDeals?.groupFilters}
         loading={loading}
       />
       <div>content</div>

@@ -39,6 +39,7 @@ export default function FilterSidebar({
   const router = useRouter();
   const pathname = usePathname();
   const { category_id, sub_category_id } = useParams<any>();
+  const dispatch = useAppDispatch();
 
   let searchParams: any;
   if (typeof window !== "undefined") {
@@ -65,37 +66,35 @@ export default function FilterSidebar({
   const url = qs.stringifyUrl(
     {
       url: pathname,
-      query: queryData || null,
-    },
-    { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
-  );
-
-  const dispatch = useAppDispatch();
-
-  const applyButton = async () => {
-    const refactorUrl = url.replace(
-      String(category_id + "/" + (sub_category_id || "")),
-      category + "/"
-    );
-
-    const params = qs.parseUrl(url, {
-      arrayFormat: "comma",
-      parseNumbers: true,
-    })?.query;
-
-    router.push(refactorUrl);
-
-    dispatch(
-      getProductsByMainCategory_member({
-        category_id: category_id?.replaceAll("-", "%20"),
-        params: {
-          ...params,
+      query:
+        {
+          ...queryData,
           role: pathname?.includes("bestsellers")
             ? "bestsellers"
             : pathname?.includes("deals")
             ? "deals"
             : "",
-        },
+        } || null,
+    },
+    { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
+  );
+
+  const applyButton = async () => {
+    const refactorUrl = url.replace(
+      category_id + "/" + (sub_category_id || ""),
+      category + "/"
+    );
+
+    const params = qs.parseUrl(refactorUrl, {
+      arrayFormat: "comma",
+      parseNumbers: true,
+    })?.query;
+    router.push(refactorUrl);
+
+    dispatch(
+      getProductsByMainCategory_member({
+        category_id: category_id?.replaceAll("-", " "),
+        params,
       })
     );
   };
