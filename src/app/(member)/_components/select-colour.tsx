@@ -2,7 +2,13 @@ import { cn } from "@/lib/utils";
 import { FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { FilterDataState } from "./filter-sidebar";
 
 const colourMap: Record<string, string> = {
@@ -34,18 +40,25 @@ export const SelectColour = ({
   filterData: FilterDataState;
 }) => {
   const [showAll, setShowAll] = useState(false);
-  const formatValues: any = Array.isArray(filterData?.colour)
-    ? filterData?.colour
-    : [filterData?.colour];
 
-  const [values, setValues] = useState<string[]>(formatValues || []);
+  const [values, setValues] = useState<string[]>([]);
+
+  const formatValues: any = useCallback(() => {
+    return Array.isArray(filterData?.colour)
+      ? filterData?.colour
+      : [filterData?.colour];
+  }, [filterData?.colour]);
+
+  useEffect(() => {
+    setValues(formatValues);
+  }, [formatValues]);
 
   const handleSelect = (_id: string) => {
     if (values?.includes(_id)) {
       setValues((prevValues) => prevValues.filter((value) => value !== _id));
     } else setValues((prevValues) => [...prevValues, _id]);
   };
-  
+
   useEffect(() => {
     setFilterData((curr) => ({
       ...curr,

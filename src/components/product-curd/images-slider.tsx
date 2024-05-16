@@ -73,10 +73,10 @@ export function ImagesSlieder({
           </span>
         )}
         <span className="flex items-center gap-1 bg-white text-[16px] border rounded-[30px]  absolute bottom-4 left-2 text-secondMain px-2">
-          <AiOutlineLike className="text-[#0084fd] h-4 w-4" />
           <span className="text-gray-500 text-[13px]">
             ({formatNumber(likes)})
           </span>
+          <AiOutlineLike className="text-[#0084fd] h-4 w-4" />
         </span>
       </div>
       <SliderBalls imagesLength={imagesLength} imageIndex={imageIndex} />

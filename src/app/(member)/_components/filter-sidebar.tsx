@@ -11,22 +11,22 @@ import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/catego
 import { GroupFilters } from "@/types";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import qs from "query-string";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
-
+type QueryItem = string | number | (string | number | null)[] | null;
 export type FilterDataState = {
-  category: string;
-  sortBy: string;
-  colour: string[];
-  brand: string[];
-  condition: string[];
-  seller: string[];
-  deal: string[];
-  minPrice: number;
-  maxPrice: number;
+  category: QueryItem;
+  sortBy: QueryItem;
+  colour: QueryItem;
+  brand: QueryItem;
+  condition: QueryItem;
+  seller: QueryItem;
+  deal: QueryItem;
+  minPrice: QueryItem | undefined;
+  maxPrice: QueryItem | undefined;
 };
 
 export default function FilterSidebar({
@@ -41,45 +41,60 @@ export default function FilterSidebar({
   const { category_id, sub_category_id } = useParams<any>();
   const dispatch = useAppDispatch();
 
-  let searchParams: any;
-  if (typeof window !== "undefined") {
-    const queryParams = qs.parse(window.location.search, {
-      arrayFormat: "comma",
-      parseNumbers: true,
-    });
-    searchParams = queryParams;
-  }
-
+  const [searchParams, setSearchParams] = useState<any>({});
   const [filterData, setFilterData] = useState<FilterDataState>({
-    category: category_id + "/" + (sub_category_id || ""),
-    sortBy: searchParams?.sortBy || "",
-    colour: searchParams?.colour || [],
-    brand: searchParams?.brand || [],
-    condition: searchParams?.condition || [],
-    seller: searchParams?.seller || [],
-    deal: searchParams?.deal || [],
-    minPrice: searchParams?.minPrice || groupFilters?.minPrice,
-    maxPrice: searchParams?.maxPrice || groupFilters?.maxPrice,
+    category: "",
+    sortBy: "",
+    colour: [],
+    brand: [],
+    condition: [],
+    seller: [],
+    deal: [],
+    minPrice: 0,
+    maxPrice: 0,
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const queryParams = qs.parse(window.location.search, {
+        arrayFormat: "comma",
+        parseNumbers: true,
+      });
+      setSearchParams(queryParams);
+      setFilterData({
+        category: `${category_id}/${sub_category_id || ""}`,
+        sortBy: queryParams?.sortBy || "newest",
+        colour: queryParams?.colour || [],
+        brand: queryParams?.brand || [],
+        condition: queryParams?.condition || [],
+        seller: queryParams?.seller || [],
+        deal: queryParams?.deal || [],
+        minPrice: queryParams?.minPrice || groupFilters?.minPrice,
+        maxPrice: queryParams?.maxPrice || groupFilters?.maxPrice,
+      });
+    }
+  }, [category_id, sub_category_id, groupFilters]);
+
   const { category, ...queryData } = filterData;
-  const url = qs.stringifyUrl(
-    {
-      url: pathname,
-      query:
-        {
-          ...queryData,
-          role: pathname?.includes("bestsellers")
-            ? "bestsellers"
-            : pathname?.includes("deals")
-            ? "deals"
-            : "",
-        } || null,
-    },
-    { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
-  );
 
   const applyButton = async () => {
+    const url = qs.stringifyUrl(
+      {
+        url: window?.location?.href,
+        query:
+          {
+            ...searchParams,
+            ...queryData,
+            role: pathname?.includes("bestsellers")
+              ? "bestsellers"
+              : pathname?.includes("deals")
+              ? "deals"
+              : "",
+          } || null,
+      },
+      { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
+    );
+
     const refactorUrl = url.replace(
       category_id + "/" + (sub_category_id || ""),
       category + "/"
@@ -89,8 +104,8 @@ export default function FilterSidebar({
       arrayFormat: "comma",
       parseNumbers: true,
     })?.query;
-    router.push(refactorUrl);
 
+    router.push(refactorUrl);
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id?.replaceAll("-", " "),
@@ -188,37 +203,3 @@ export default function FilterSidebar({
     </div>
   );
 }
-// const [filterData, setFilterData] = useState<FilterDataState>({
-//   category: "",
-//   sortBy: "",
-//   colour: [],
-//   brand: [],
-//   condition: [],
-//   seller: [],
-//   deal: [],
-//   minPrice: 0,
-//   maxPrice: 0,
-// });
-// useEffect(() => {
-//   // if (typeof window !== "undefined") {
-//     const queryParams = qs.parse(window.location.search, {
-//       arrayFormat: "comma",
-//       parseNumbers: true,
-//     });
-//     setSearchParams(queryParams);
-//   // }
-// }, []);
-
-// useEffect(() => {
-//   setFilterData({
-//     category: category_id + "/" + (sub_category_id || ""),
-//     sortBy: searchParams?.sortBy || "",
-//     colour: searchParams?.colour || [],
-//     brand: searchParams?.brand || [],
-//     condition: searchParams?.condition || [],
-//     seller: searchParams?.seller || [],
-//     deal: searchParams?.deal || [],
-//     minPrice: searchParams?.minPrice || groupFilters?.minPrice,
-//     maxPrice: searchParams?.maxPrice || groupFilters?.maxPrice,
-//   });
-// }, [category_id, groupFilters, searchParams, sub_category_id]);
