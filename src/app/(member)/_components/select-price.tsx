@@ -26,8 +26,7 @@ export const SelectPrice = ({
         minPrice: filterData?.minPrice,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterData]);
+  }, [filterData, values.maxPrice, values.minPrice]);
 
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const minPrice =e.target.value||0

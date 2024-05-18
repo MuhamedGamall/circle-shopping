@@ -6,10 +6,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/hooks/redux";
-import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
 import { GroupFilters } from "@/types";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 import SelectCategory from "./select-category";
@@ -32,16 +30,18 @@ export type FilterDataState = {
 export default function FilterSidebar({
   groupFilters,
   loading,
+  searchParams,
+  setSearchParams,
 }: {
   loading: boolean;
   groupFilters: null | GroupFilters;
+  searchParams: any;
+  setSearchParams: any;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const { category_id, sub_category_id } = useParams<any>();
-  const dispatch = useAppDispatch();
 
-  const [searchParams, setSearchParams] = useState<any>({});
+  // const [searchParams, setSearchParams] = useState<any>({});
   const [filterData, setFilterData] = useState<FilterDataState>({
     category: "",
     sortBy: "",
@@ -53,44 +53,34 @@ export default function FilterSidebar({
     minPrice: 0,
     maxPrice: 0,
   });
-
+  
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const queryParams = qs.parse(window.location.search, {
-        arrayFormat: "comma",
-        parseNumbers: true,
-      });
-      setSearchParams(queryParams);
-      setFilterData({
-        category: `${category_id}/${sub_category_id || ""}`,
-        sortBy: queryParams?.sortBy || "newest",
-        colour: queryParams?.colour || [],
-        brand: queryParams?.brand || [],
-        condition: queryParams?.condition || [],
-        seller: queryParams?.seller || [],
-        deal: queryParams?.deal || [],
-        minPrice: queryParams?.minPrice || groupFilters?.minPrice,
-        maxPrice: queryParams?.maxPrice || groupFilters?.maxPrice,
-      });
-    }
-  }, [category_id, sub_category_id, groupFilters]);
+    setFilterData({
+      category: `${category_id}/${sub_category_id || ""}`,
+      sortBy: searchParams?.sortBy || "newest",
+      colour: searchParams?.colour || [],
+      brand: searchParams?.brand || [],
+      condition: searchParams?.condition || [],
+      seller: searchParams?.seller || [],
+      deal: searchParams?.deal || [],
+      minPrice: searchParams?.minPrice || groupFilters?.minPrice,
+      maxPrice: searchParams?.maxPrice || groupFilters?.maxPrice,
+    });
+  }, [
+    category_id,
+    sub_category_id,
+    groupFilters,
+    searchParams
+  ]);
 
   const { category, ...queryData } = filterData;
 
   const applyButton = async () => {
+    setSearchParams(filterData);
     const url = qs.stringifyUrl(
       {
         url: window?.location?.href,
-        query:
-          {
-            ...searchParams,
-            ...queryData,
-            role: pathname?.includes("bestsellers")
-              ? "bestsellers"
-              : pathname?.includes("deals")
-              ? "deals"
-              : "",
-          } || null,
+        query: queryData,
       },
       { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
     );
@@ -100,18 +90,7 @@ export default function FilterSidebar({
       category + "/"
     );
 
-    const params = qs.parseUrl(refactorUrl, {
-      arrayFormat: "comma",
-      parseNumbers: true,
-    })?.query;
-
     router.push(refactorUrl);
-    dispatch(
-      getProductsByMainCategory_member({
-        category_id: category_id?.replaceAll("-", " "),
-        params,
-      })
-    );
   };
 
   const arrayOfFilter = [

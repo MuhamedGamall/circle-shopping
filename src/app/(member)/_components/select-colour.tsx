@@ -7,9 +7,11 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { FilterDataState } from "./filter-sidebar";
+import { useDebounce } from "react-use";
 
 const colourMap: Record<string, string> = {
   blue: "/colours-imgs/blue.png",
@@ -43,21 +45,15 @@ export const SelectColour = ({
 
   const [values, setValues] = useState<string[]>([]);
 
-  const formatValues: any = useCallback(() => {
-    return Array.isArray(filterData?.colour)
+  useEffect(() => {
+    const formatValues: any = Array.isArray(filterData?.colour)
       ? filterData?.colour
       : [filterData?.colour];
+    if (formatValues?.length) {
+      setValues(formatValues);
+    }
   }, [filterData?.colour]);
 
-  useEffect(() => {
-    setValues(formatValues);
-  }, [formatValues]);
-
-  const handleSelect = (_id: string) => {
-    if (values?.includes(_id)) {
-      setValues((prevValues) => prevValues.filter((value) => value !== _id));
-    } else setValues((prevValues) => [...prevValues, _id]);
-  };
 
   useEffect(() => {
     setFilterData((curr) => ({
@@ -65,6 +61,13 @@ export const SelectColour = ({
       colour: values,
     }));
   }, [setFilterData, values]);
+
+  const handleSelect = (_id: string) => {
+    if (values?.includes(_id)) {
+      setValues((prevValues) => prevValues?.filter((value) => value !== _id));
+    } else setValues((prevValues) => [...prevValues, _id]);
+  };
+
 
   const toggleShowAll = () => {
     setShowAll(!showAll);

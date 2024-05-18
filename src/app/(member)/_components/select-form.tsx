@@ -2,7 +2,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { FilterDataState } from "./filter-sidebar";
 
 export const SelectForm = ({
@@ -16,23 +23,20 @@ export const SelectForm = ({
   filterData: FilterDataState;
   formName: "brand" | "condition" | "seller" | "deal";
 }) => {
+  const [showAll, setShowAll] = useState(false);
 
   const [values, setValues] = useState<string[]>([]);
-  const [showAll, setShowAll] = useState(false);
-  const formatValues: any = useCallback(() => {
-   return Array.isArray(filterData?.[formName])
-    ? filterData?.[formName]
-    : [filterData?.[formName]];
-
-  }, [filterData, formName]);
 
   useEffect(() => {
-    // const formatValues: any = Array.isArray(filterData?.[formName])
-    // ? filterData?.[formName]
-    // : [filterData?.[formName]];
+    const formatValues: any = Array.isArray(filterData?.[formName])
+      ? filterData?.[formName]
+      : [filterData?.[formName]];
 
-    setValues(formatValues);
-  }, [formatValues]);
+    if (formatValues?.length) {
+      setValues(formatValues);
+    }
+
+  }, [filterData, formName]);
 
   const handleCheckboxChange = (checked: boolean, _id: string) => {
     if (checked) {
