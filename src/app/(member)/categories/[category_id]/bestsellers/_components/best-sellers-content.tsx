@@ -17,7 +17,7 @@ export default function BestSellersContent() {
   const { productsByMainCategoryForBestsellers, loading } = useAppSelector(
     (state) => state.member_categories
   );
-  const [searchParams, setSearchParams] = useState<any>(null);
+  const [searchParams, setSearchParams] = useState<any>({role: "bestsellers"});
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -49,8 +49,8 @@ export default function BestSellersContent() {
       <div className="w-full">
         <FilterTopbar
           resultsLength={productsByMainCategoryForBestsellers?.products?.length}
-          // searchParams={searchParams}
-          // setSearchParams={setSearchParams}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
         />
       </div>
     </div>

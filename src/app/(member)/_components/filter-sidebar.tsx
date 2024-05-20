@@ -9,11 +9,14 @@ import { Button } from "@/components/ui/button";
 import { GroupFilters } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { FaTruckMoving } from "react-icons/fa";
 type QueryItem = string | number | (string | number | null)[] | null;
 export type FilterDataState = {
   category: QueryItem;
@@ -25,6 +28,7 @@ export type FilterDataState = {
   deal: QueryItem;
   minPrice: QueryItem | undefined;
   maxPrice: QueryItem | undefined;
+  delivery: QueryItem;
 };
 
 export default function FilterSidebar({
@@ -35,13 +39,12 @@ export default function FilterSidebar({
 }: {
   loading: boolean;
   groupFilters: null | GroupFilters;
-  searchParams: any;
-  setSearchParams: any;
+  searchParams: FilterDataState;
+  setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
 }) {
   const router = useRouter();
   const { category_id, sub_category_id } = useParams<any>();
 
-  // const [searchParams, setSearchParams] = useState<any>({});
   const [filterData, setFilterData] = useState<FilterDataState>({
     category: "",
     sortBy: "",
@@ -52,8 +55,9 @@ export default function FilterSidebar({
     deal: [],
     minPrice: 0,
     maxPrice: 0,
+    delivery: "all",
   });
-  
+
   useEffect(() => {
     setFilterData({
       category: `${category_id}/${sub_category_id || ""}`,
@@ -65,18 +69,29 @@ export default function FilterSidebar({
       deal: searchParams?.deal || [],
       minPrice: searchParams?.minPrice || groupFilters?.minPrice,
       maxPrice: searchParams?.maxPrice || groupFilters?.maxPrice,
+      delivery: searchParams?.delivery || "",
     });
   }, [
     category_id,
+    groupFilters?.maxPrice,
+    groupFilters?.minPrice,
+    searchParams?.brand,
+    searchParams?.colour,
+    searchParams?.condition,
+    searchParams?.deal,
+    searchParams?.delivery,
+    searchParams?.maxPrice,
+    searchParams?.minPrice,
+    searchParams?.seller,
+    searchParams?.sortBy,
     sub_category_id,
-    groupFilters,
-    searchParams
   ]);
 
   const { category, ...queryData } = filterData;
 
   const applyButton = async () => {
     setSearchParams(filterData);
+
     const url = qs.stringifyUrl(
       {
         url: window?.location?.href,
@@ -99,10 +114,27 @@ export default function FilterSidebar({
     { data: groupFilters?.filterByDeals, label: "deal" },
     { data: groupFilters?.filterBySellers, label: "seller" },
   ] as any[];
+  
+  const handleCheckboxChange = (checked: boolean) => {
+    setFilterData((prevValues) => ({
+      ...prevValues,
+      delivery: checked ? "free" : "",
+    }));
+  };
 
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
       <LoaderLayout loadingCondition={loading} />
+
+      <Label className="flex cursor-pointer items-center gap-1 font-normal text-[12px]  group-hover:text-blue capitalize">
+        <Checkbox
+          className="data-[state=checked]:bg-blue rounded-[3px]  border-shade  h-3.5 w-3.5 "
+          checked={filterData.delivery === "free"}
+          onCheckedChange={handleCheckboxChange}
+        />
+        Free delivery
+      </Label>
+
       <Accordion
         type="multiple"
         defaultValue={[

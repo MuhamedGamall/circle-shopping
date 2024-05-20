@@ -60,6 +60,8 @@ export const SelectColour = ({
       ...curr,
       colour: values,
     }));
+    console.log(values);
+    
   }, [setFilterData, values]);
 
   const handleSelect = (_id: string) => {

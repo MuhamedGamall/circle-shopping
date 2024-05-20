@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import clientPromise from "@/lib/mongoConnect";
+import clientPromise from "@/lib/mongodb";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { Adapter } from "next-auth/adapters";
 import mongoConnect from "@/utils/mongo-connect";

@@ -11,83 +11,77 @@ import { useAppDispatch } from "@/hooks/redux";
 import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import qs from "query-string";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-use";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FilterDataState } from "./filter-sidebar";
+const selectItems = [
+  { label: "Newest", value: "newest" },
+  { label: "Price: Low to High", value: "asc" },
+  { label: "Price: High to Low", value: "desc" },
+  { label: "Best Rated", value: "best-rated" },
+];
 export default function FilterTopbar({
   resultsLength,
+  searchParams,
+  setSearchParams,
 }: {
+  searchParams: FilterDataState;
+  setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
   resultsLength: number;
 }) {
-  // const { category_id, sub_category_id } = useParams<any>();
+  const { category_id, sub_category_id } = useParams<any>();
 
-  // const pathname = usePathname();
-  // const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // const [searchParams, setSearchParams] = useState<any>(null);
-  // const [value, setValue] = useState<any>("");
+  const [value, setValue] = useState<any>("");
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const queryParams = qs.parse(window.location.search, {
-  //       arrayFormat: "comma",
-  //       parseNumbers: true,
-  //     });
-  //     setSearchParams(queryParams);
-  //     setValue(queryParams.sortBy);
-  //   }
-  // }, []);
-  // // let params: any;
-  // // if (typeof window !== "undefined") {
-  // //   const queryParams = qs.parse(window.location.search, {
-  // //     arrayFormat: "comma",
-  // //     parseNumbers: true,
-  // //   });
-  // //   params = { ...queryParams, role: "bestsellers" };
-  // // }
+  const categoryName = (
+    sub_category_id ? category_id + " / " + sub_category_id : category_id
+  ).replaceAll("-", " ");
+  useEffect(() => {
+    if (searchParams?.sortBy) {
+      setValue(searchParams?.sortBy);
+    }
+  }, [searchParams?.sortBy]);
 
-  // const categoryName = (
-  //   sub_category_id ? category_id + " / " + sub_category_id : category_id
-  // ).replaceAll("-", " ");
+  const handleSelect = (val: string) => {
+    setValue(val);
+    const newSearchParams = {
+      ...searchParams,
+      sortBy: val,
+      role:
+        pathname?.includes("bestsellers") || pathname?.includes("deals")
+          ? pathname.includes("bestsellers")
+            ? "bestsellers"
+            : "deals"
+          : "",
+    };
 
-  // const handleSelect = (val: string) => {
-  //   setValue(val);
+    setSearchParams(newSearchParams);
 
-  //   const newSearchParams = {
-  //     ...searchParams,
-  //     sortBy: val,
-  //     role:
-  //       pathname?.includes("bestsellers") || pathname?.includes("deals")
-  //         ? pathname.includes("bestsellers")
-  //           ? "bestsellers"
-  //           : "deals"
-  //         : "",
-  //   };
+    const url = qs.stringifyUrl(
+      {
+        url: window?.location?.href,
+        query: newSearchParams,
+      },
+      { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
+    );
 
-  //   setSearchParams(newSearchParams);
+    router.push(url);
 
-  //   const url = qs.stringifyUrl(
-  //     {
-  //       url: window?.location?.href ,
-  //       query: newSearchParams,
-  //     },
-  //     { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
-  //   );
-
-  //   router.push(url);
-
-  //   dispatch(
-  //     getProductsByMainCategory_member({
-  //       category_id: category_id.replaceAll("-", " "),
-  //       params: newSearchParams,
-  //     })
-  //   );
-  // };
+    dispatch(
+      getProductsByMainCategory_member({
+        category_id: category_id.replaceAll("-", " "),
+        params: newSearchParams,
+      })
+    );
+  };
   return (
     <div className="flex justify-between gap-2 items-center p-5 ">
-      {/* <div className="flex items-center gap-1">
-        <span>{resultsLength }</span>
+      <div className="flex items-center gap-1">
+        <span>{resultsLength}</span>
         <span>Results for</span>
         <span className=" capitalize font-semibold">
           &#34;{categoryName || "category name"}&#34;
@@ -108,22 +102,15 @@ export default function FilterTopbar({
           <SelectContent className="max-h-[350px] overflow-y-auto">
             <SelectGroup>
               <SelectLabel>Sort By</SelectLabel>
-              <SelectItem value="newest" className="capitalize">
-                Newest
-              </SelectItem>
-              <SelectItem value="asc" className="capitalize">
-                price: low to high
-              </SelectItem>
-              <SelectItem value="desc" className="capitalize">
-                price: high to low
-              </SelectItem>
-              <SelectItem value="best-rated" className="capitalize">
-                best rated
-              </SelectItem>
+              {selectItems.map((el, i) => (
+                <SelectItem key={i} value={el.value}>
+                  {el.label}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div> */}
+      </div>
     </div>
   );
 }
