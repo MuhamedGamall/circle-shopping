@@ -1,17 +1,13 @@
 import { cn } from "@/lib/utils";
-import { FilterItem } from "@/types";
+import { FilterDataState, FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
 import Image from "next/image";
 import {
   Dispatch,
   SetStateAction,
-  useCallback,
   useEffect,
-  useMemo,
-  useState,
+  useState
 } from "react";
-import { FilterDataState } from "./filter-sidebar";
-import { useDebounce } from "react-use";
 
 const colourMap: Record<string, string> = {
   blue: "/colours-imgs/blue.png",

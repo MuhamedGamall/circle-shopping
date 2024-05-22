@@ -51,7 +51,7 @@ export async function GET(
       deal = [],
       condition = [],
       colour = [],
-      sortBy = "newset",
+      sortBy = "best-rated",
       delivery = "",
     } = queryParams as any;
 
@@ -87,32 +87,23 @@ export async function GET(
     if (delivery) {
       additionalFilters.delivery = "free";
     }
-    const currentDate = new Date();
-    const sixtyDaysAgo = new Date();
-    sixtyDaysAgo.setDate(currentDate.getDate() - 60);
 
-    if (sortBy === "newest")
-      additionalFilters.sortBy = {
-        createdAt: { $gte: sixtyDaysAgo },
-      };
-    else if (sortBy === "asc")
-      additionalFilters.sortBy = {
-        createdAt: 1,
-      };
-    else if (sortBy === "desc")
-      additionalFilters.sortBy = {
-        createdAt: -1,
-      };
-    else if (sortBy === "best-rated")
-      additionalFilters.sortBy = {
-        likes: -1,
-      };
+    let sortOption = {};
+    if (sortBy === "newest") {
+      sortOption = { createdAt: -1 };
+    } else if (sortBy === "asc") {
+      sortOption = { "price.base_price": 1 };
+    } else if (sortBy === "desc") {
+      sortOption = { "price.base_price": -1 };
+    } else if (sortBy === "best-rated") {
+      sortOption = { likes: -1 };
+    }
 
     const finalFilter = { ...filter, ...additionalFilters };
-    console.log(finalFilter);
 
     let products = await Product.aggregate([
       { $match: finalFilter },
+      { $sort: sortOption },
       { $limit: +(limit || defaultValues) },
       {
         $addFields: {

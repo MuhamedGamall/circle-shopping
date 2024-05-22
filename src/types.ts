@@ -127,7 +127,23 @@ export type GroupFilters = {
   filterByBrands: FilterItem[];
   filterByColour: FilterItem[];
   filterByDeals: FilterItem[];
-  // maximumLikes: number;
+
   maxPrice: number;
   minPrice: number;
+};
+
+
+
+type QueryItem = string | number | (string | number | null)[] | null;
+export type FilterDataState = {
+  category: QueryItem;
+  sortBy: QueryItem;
+  colour: QueryItem;
+  brand: QueryItem;
+  condition: QueryItem;
+  seller: QueryItem;
+  deal: QueryItem;
+  minPrice: QueryItem | undefined;
+  maxPrice: QueryItem | undefined;
+  delivery: QueryItem;
 };

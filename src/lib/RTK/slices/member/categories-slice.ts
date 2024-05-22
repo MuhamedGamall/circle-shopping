@@ -98,13 +98,11 @@ type categoriesState = {
     products: Product[];
     groupFilters: GroupFilters | null;
   };
-  productsByMainCategoryForDeals: {
+  productsByMainCategoryForDealsSlider: {
     products: Product[];
-    groupFilters: GroupFilters | null;
   };
-  productsByMainCategoryForBestsellers: {
+  productsByMainCategoryForBestsellersSlider: {
     products: Product[];
-    groupFilters: GroupFilters | null;
   };
   categories: Category[];
   category: Category | null;
@@ -118,8 +116,10 @@ type categoriesState = {
 const initialState: categoriesState = {
   productsBySubCategory: { products: [], groupFilters: null },
   productsByMainCategory: { products: [], groupFilters: null },
-  productsByMainCategoryForDeals: { products: [], groupFilters: null },
-  productsByMainCategoryForBestsellers: { products: [], groupFilters: null },
+  productsByMainCategoryForDealsSlider: { products: [] },
+  productsByMainCategoryForBestsellersSlider: {
+    products: [],
+  },
   categories: [],
   subcategoryProducts: [],
   category: null,
@@ -196,9 +196,10 @@ const memberCategoriesSlice = createSlice({
           state.loading = false;
 
           action.payload?.role == "deals"
-            ? (state.productsByMainCategoryForDeals = action.payload?.data)
+            ? (state.productsByMainCategoryForDealsSlider =
+                action.payload?.data)
             : action.payload?.role == "bestsellers"
-            ? (state.productsByMainCategoryForBestsellers =
+            ? (state.productsByMainCategoryForBestsellersSlider =
                 action.payload?.data)
             : (state.productsByMainCategory = action.payload?.data);
         }

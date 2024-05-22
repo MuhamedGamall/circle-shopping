@@ -16,7 +16,7 @@ export default function ProductsDeal({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategoryForDeals, loading } = useAppSelector(
+  const { productsByMainCategoryForDealsSlider, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
@@ -31,10 +31,13 @@ export default function ProductsDeal({
 
   return (
     <ProductsSlider
-      data={productsByMainCategoryForDeals?.products}
+      data={productsByMainCategoryForDealsSlider?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " top deals"}
-      viewAllLink={"/categories/" + category_id + "/deals"}
+      viewAllLink={{
+        pathname: "/categories/" + category_id + "/products",
+        query: { role: "deals" },
+      }}
     />
   );
 }

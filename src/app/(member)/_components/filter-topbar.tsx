@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/select";
 import { useAppDispatch } from "@/hooks/redux";
 import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { FilterDataState } from "@/types";
+import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FilterDataState } from "./filter-sidebar";
+
 const selectItems = [
   { label: "Newest", value: "newest" },
   { label: "Price: Low to High", value: "asc" },
@@ -30,7 +31,6 @@ export default function FilterTopbar({
 }) {
   const { category_id, sub_category_id } = useParams<any>();
 
-  const pathname = usePathname();
   const router = useRouter();
 
   const dispatch = useAppDispatch();
@@ -40,25 +40,23 @@ export default function FilterTopbar({
   const categoryName = (
     sub_category_id ? category_id + " / " + sub_category_id : category_id
   ).replaceAll("-", " ");
+
   useEffect(() => {
     if (searchParams?.sortBy) {
       setValue(searchParams?.sortBy);
     }
   }, [searchParams?.sortBy]);
 
+
   const handleSelect = (val: string) => {
-    setValue(val);
+    if (val) setValue(val);
+
     const newSearchParams = {
       ...searchParams,
+      category:null,
       sortBy: val,
-      role:
-        pathname?.includes("bestsellers") || pathname?.includes("deals")
-          ? pathname.includes("bestsellers")
-            ? "bestsellers"
-            : "deals"
-          : "",
     };
-
+  
     setSearchParams(newSearchParams);
 
     const url = qs.stringifyUrl(
@@ -94,7 +92,7 @@ export default function FilterTopbar({
         <Select
           onValueChange={handleSelect}
           value={value}
-          defaultValue="newest"
+          defaultValue="best-rated"
         >
           <SelectTrigger className=" capitalize min-w-[150px] rounded-none font-bold">
             <SelectValue placeholder={value || "Sort by"} />

@@ -11,13 +11,16 @@ import { useParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 
-export default function BestSellersContent() {
+export default function ProductsCategoryContent() {
   const { category_id, sub_category_id } = useParams() as any;
+
   const dispatch = useAppDispatch();
-  const { productsByMainCategoryForBestsellers, loading } = useAppSelector(
+
+  const { productsByMainCategory, loading } = useAppSelector(
     (state) => state.member_categories
   );
-  const [searchParams, setSearchParams] = useState<any>({role: "bestsellers"});
+
+  const [searchParams, setSearchParams] = useState<any>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -25,7 +28,7 @@ export default function BestSellersContent() {
         arrayFormat: "comma",
         parseNumbers: true,
       });
-      setSearchParams(queryParams);
+      queryParams && setSearchParams(queryParams);
     }
   }, []);
 
@@ -33,22 +36,25 @@ export default function BestSellersContent() {
     dispatch(
       getProductsByMainCategory_member({
         category_id: category_id.replaceAll("-", " "),
-        params: { ...searchParams, role: "bestsellers" },
+        params: searchParams,
       })
     );
+    return () => {
+      dispatch(cleanUp());
+    };
   }, [category_id, dispatch, searchParams]);
 
   return (
     <div className="flex gap-5 bg-[#f7f7fa] ">
       <FilterSidebar
-        groupFilters={productsByMainCategoryForBestsellers?.groupFilters}
+        groupFilters={productsByMainCategory?.groupFilters}
         loading={loading}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
       <div className="w-full">
         <FilterTopbar
-          resultsLength={productsByMainCategoryForBestsellers?.products?.length}
+          resultsLength={productsByMainCategory?.products?.length}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
         />

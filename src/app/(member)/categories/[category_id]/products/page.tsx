@@ -1,11 +1,11 @@
 import CategoriesNavigation from "@/components/navigation-menu/categories-navigation";
-import BestSellersContent from "./_components/best-sellers-content";
+import ProductsCategoryContent from "./_components/products-content";
 
-export default function BestSellersPage() {
+export default function ProductsCategoryPage() {
   return (
     <div>
       <CategoriesNavigation />
-      <BestSellersContent />
+      <ProductsCategoryContent />
     </div>
   );
 }

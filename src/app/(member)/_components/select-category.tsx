@@ -1,7 +1,6 @@
-import { Category } from "@/types";
+import { Category, FilterDataState } from "@/types";
 import { TreeNode } from "./category-tree-node";
 import { Dispatch, SetStateAction } from "react";
-import { FilterDataState } from "./filter-sidebar";
 
 const SelectCategory = ({
   category,

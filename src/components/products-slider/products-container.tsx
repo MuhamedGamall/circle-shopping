@@ -19,7 +19,7 @@ export default function ProductsSlider({
   title: string;
   data: Product[];
   loading: boolean;
-  viewAllLink?: string;
+  viewAllLink?: string | object;
   titleStyle?: string;
 }) {
   return (

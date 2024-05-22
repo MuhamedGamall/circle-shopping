@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { FilterDataState } from "@/types";
 import { MinusSquare, PlusSquare } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FilterDataState } from "./filter-sidebar";
-
 export const TreeNode = ({
   node,
   setFilterData,

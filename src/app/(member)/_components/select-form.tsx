@@ -1,17 +1,13 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { FilterItem } from "@/types";
+import { FilterDataState, FilterItem } from "@/types";
 import { formatNumber } from "@/utils/format";
 import {
   Dispatch,
   SetStateAction,
-  useCallback,
   useEffect,
-  useMemo,
-  useState,
+  useState
 } from "react";
-import { FilterDataState } from "./filter-sidebar";
-
 export const SelectForm = ({
   data,
   setFilterData,

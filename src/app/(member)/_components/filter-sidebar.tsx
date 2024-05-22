@@ -6,7 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { GroupFilters } from "@/types";
+import { FilterDataState, GroupFilters } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -17,19 +17,6 @@ import { SelectPrice } from "./select-price";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FaTruckMoving } from "react-icons/fa";
-type QueryItem = string | number | (string | number | null)[] | null;
-export type FilterDataState = {
-  category: QueryItem;
-  sortBy: QueryItem;
-  colour: QueryItem;
-  brand: QueryItem;
-  condition: QueryItem;
-  seller: QueryItem;
-  deal: QueryItem;
-  minPrice: QueryItem | undefined;
-  maxPrice: QueryItem | undefined;
-  delivery: QueryItem;
-};
 
 export default function FilterSidebar({
   groupFilters,
@@ -61,7 +48,7 @@ export default function FilterSidebar({
   useEffect(() => {
     setFilterData({
       category: `${category_id}/${sub_category_id || ""}`,
-      sortBy: searchParams?.sortBy || "newest",
+      sortBy: searchParams?.sortBy || "best-rated",
       colour: searchParams?.colour || [],
       brand: searchParams?.brand || [],
       condition: searchParams?.condition || [],
@@ -89,7 +76,7 @@ export default function FilterSidebar({
 
   const { category, ...queryData } = filterData;
 
-  const applyButton = async () => {
+  const applyButton =  () => {
     setSearchParams(filterData);
 
     const url = qs.stringifyUrl(
@@ -114,7 +101,7 @@ export default function FilterSidebar({
     { data: groupFilters?.filterByDeals, label: "deal" },
     { data: groupFilters?.filterBySellers, label: "seller" },
   ] as any[];
-  
+
   const handleCheckboxChange = (checked: boolean) => {
     setFilterData((prevValues) => ({
       ...prevValues,

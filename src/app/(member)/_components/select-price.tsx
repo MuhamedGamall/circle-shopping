@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
+import { FilterDataState } from "@/types";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FilterDataState } from "./filter-sidebar";
 
 export const SelectPrice = ({
   data,
@@ -12,30 +12,25 @@ export const SelectPrice = ({
   filterData: FilterDataState;
 }) => {
   const [values, setValues] = useState<any>({
-    maxPrice: filterData?.maxPrice,
-    minPrice: filterData?.minPrice,
+    maxPrice: filterData?.maxPrice ?? 0,
+    minPrice: filterData?.minPrice ?? 0,
   });
 
   useEffect(() => {
-    if (
-      filterData?.maxPrice !== values.maxPrice ||
-      filterData?.minPrice !== values.minPrice
-    ) {
-      setValues({
-        maxPrice: filterData?.maxPrice,
-        minPrice: filterData?.minPrice,
-      });
-    }
-  }, [filterData, values.maxPrice, values.minPrice]);
+    setValues({
+      maxPrice: filterData?.maxPrice ?? 0,
+      minPrice: filterData?.minPrice ?? 0,
+    });
+  }, [filterData]);
 
   const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const minPrice =e.target.value||0
+    const minPrice = Number(e.target.value) || 0;
     setValues((curr: any) => ({ ...curr, minPrice }));
     setFilterData((curr) => ({ ...curr, minPrice }));
   };
 
   const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const maxPrice = e.target.value||0
+    const maxPrice = Number(e.target.value) || 0;
     setValues((curr: any) => ({ ...curr, maxPrice }));
     setFilterData((curr) => ({ ...curr, maxPrice }));
   };
@@ -44,7 +39,7 @@ export const SelectPrice = ({
     <div className="flex gap-1 justify-center items-center">
       <Input
         onChange={handleMinPriceChange}
-        value={values?.minPrice}
+        value={values.minPrice}
         className="rounded-none border w-full p-1 h-9 placeholder:text-[12px]"
         placeholder="Min price"
         type="number"
@@ -53,7 +48,7 @@ export const SelectPrice = ({
       <span className="text-slate-400">TO</span>
       <Input
         onChange={handleMaxPriceChange}
-        value={values?.maxPrice}
+        value={values.maxPrice}
         className="rounded-none border w-full p-1 h-9 placeholder:text-[12px]"
         placeholder="Max price"
         type="number"

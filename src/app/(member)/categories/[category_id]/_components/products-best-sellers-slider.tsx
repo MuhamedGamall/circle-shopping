@@ -16,7 +16,7 @@ export default function ProductsBestSellers({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategoryForBestsellers, loading } = useAppSelector(
+  const { productsByMainCategoryForBestsellersSlider, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
@@ -31,10 +31,13 @@ export default function ProductsBestSellers({
 
   return (
     <ProductsSlider
-      data={productsByMainCategoryForBestsellers?.products}
+      data={productsByMainCategoryForBestsellersSlider?.products}
       loading={loading}
       title={category_id.replaceAll("-", " ") + " bestsellers"}
-      viewAllLink={"/categories/" + category_id + "/bestsellers"}
+      viewAllLink={{
+        pathname: "/categories/" + category_id + "/products",
+        query: { role: "bestsellers" },
+      }}
     />
   );
 }
