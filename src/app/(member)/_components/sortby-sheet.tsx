@@ -13,6 +13,9 @@ import { FilterDataState } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { cn } from "@/lib/utils";
 
 const selectItems = [
   { label: "Newest", value: "newest" },
@@ -20,14 +23,13 @@ const selectItems = [
   { label: "Price: High to Low", value: "desc" },
   { label: "Best Rated", value: "best-rated" },
 ];
-export default function FilterTopbar({
-  resultsLength,
+
+export default function SortBySheet({
   searchParams,
   setSearchParams,
 }: {
   searchParams: FilterDataState;
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
-  resultsLength: number;
 }) {
   const { category_id, sub_category_id } = useParams<any>();
 
@@ -37,26 +39,21 @@ export default function FilterTopbar({
 
   const [value, setValue] = useState<any>("");
 
-  const categoryName = (
-    sub_category_id ? category_id + " / " + sub_category_id : category_id
-  ).replaceAll("-", " ");
-
   useEffect(() => {
     if (searchParams?.sortBy) {
       setValue(searchParams?.sortBy);
     }
   }, [searchParams?.sortBy]);
 
-
   const handleSelect = (val: string) => {
     if (val) setValue(val);
 
     const newSearchParams = {
       ...searchParams,
-      category:null,
+      category: null,
       sortBy: val,
     };
-  
+
     setSearchParams(newSearchParams);
 
     const url = qs.stringifyUrl(
@@ -69,40 +66,48 @@ export default function FilterTopbar({
 
     router.push(url);
 
+    dispatch(
+      getProductsByMainCategory_member({
+        category_id: category_id.replaceAll("-", " "),
+        params: newSearchParams,
+      })
+    );
   };
   return (
-    <div className="flex justify-between gap-2 items-center p-5 ">
-      <div className="flex items-center gap-1">
-        <span>{resultsLength}</span>
-        <span>Results for</span>
-        <span className=" capitalize font-semibold">
-          &#34;{categoryName || "category name"}&#34;
-        </span>
-      </div>
-      <div className=" md:flex  gap-2 items-center hidden">
-        <span className=" font-semibold text-[12px] text-slate-400 whitespace-nowrap">
-          SORT BY
-        </span>
-        <Select
-          onValueChange={handleSelect}
-          value={value}
-          defaultValue="best-rated"
+    <RadioGroup
+      onValueChange={handleSelect}
+      value={value}
+      defaultValue="best-rated"
+      className="w-full"
+    >
+      <Label className=" text-[20px] px-[15px] font-bold">Sort by</Label>
+      {selectItems.map((el, i) => (
+        <ul
+          key={i}
+          className={cn("", {
+            "text-black font-bold": el?.value === value,
+          })}
         >
-          <SelectTrigger className=" capitalize min-w-[150px] rounded-none font-bold">
-            <SelectValue placeholder={value || "Sort by"} />
-          </SelectTrigger>
-          <SelectContent className="max-h-[350px] overflow-y-auto">
-            <SelectGroup>
-              <SelectLabel>Sort By</SelectLabel>
-              {selectItems.map((el, i) => (
-                <SelectItem key={i} value={el.value}>
-                  {el.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-    </div>
+          <li >
+            <Label
+              htmlFor={"r" + i}
+              className={cn(
+                "text-lg cursor-pointer py-[12px] px-[15px] text-shade flex items-center justify-between",
+                {
+                  "text-black font-bold": el?.value === value,
+                }
+              )}
+            >
+              {el.label}
+              <RadioGroupItem
+                value={el.value}
+                id={"r" + i}
+                className="text-blue  h-4 w-4"
+              />
+            </Label>
+          </li>
+        </ul>
+      ))}
+    </RadioGroup>
   );
 }

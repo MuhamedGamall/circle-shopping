@@ -6,6 +6,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { FilterDataState, GroupFilters } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
@@ -14,9 +16,6 @@ import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { FaTruckMoving } from "react-icons/fa";
 
 export default function FilterSidebar({
   groupFilters,
@@ -54,8 +53,8 @@ export default function FilterSidebar({
       condition: searchParams?.condition || [],
       seller: searchParams?.seller || [],
       deal: searchParams?.deal || [],
-      minPrice: searchParams?.minPrice || groupFilters?.minPrice,
-      maxPrice: searchParams?.maxPrice || groupFilters?.maxPrice,
+      minPrice: searchParams?.minPrice ?? groupFilters?.minPrice,
+      maxPrice: searchParams?.maxPrice ?? groupFilters?.maxPrice,
       delivery: searchParams?.delivery || "",
     });
   }, [
