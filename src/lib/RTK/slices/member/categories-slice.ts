@@ -132,9 +132,9 @@ const memberCategoriesSlice = createSlice({
   initialState,
   reducers: {
     cleanUp: (state) => {
-      state.category = null;
+      // state.category = null;
       state.productsByMainCategory = { products: [], groupFilters: null };
-      state.productsBySubCategory = { products: [], groupFilters: null };
+      // state.productsBySubCategory = { products: [], groupFilters: null };
     },
   },
   extraReducers: (builder) => {
@@ -195,13 +195,15 @@ const memberCategoriesSlice = createSlice({
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
 
-          action.payload?.role == "deals"
+          action?.payload?.role == "deals"
             ? (state.productsByMainCategoryForDealsSlider =
-                action.payload?.data)
-            : action.payload?.role == "bestsellers"
-            ? (state.productsByMainCategoryForBestsellersSlider =
-                action.payload?.data)
-            : (state.productsByMainCategory = action.payload?.data);
+                action?.payload?.data)
+            : action?.payload?.role == "bestsellers" &&
+              (state.productsByMainCategoryForBestsellersSlider =
+                action?.payload?.data);
+
+          state.productsByMainCategory = action?.payload?.data;
+
         }
       )
       .addCase(

@@ -38,6 +38,7 @@ export async function GET(
       arrayFormat: "bracket",
       parseNumbers: true,
     });
+    console.log(queryParams);
 
     const defaultValues = 10e10;
     const handleArray = (value: string | string[]) => {

@@ -7,8 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAppDispatch } from "@/hooks/redux";
-import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
 import { FilterDataState } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
@@ -33,7 +31,6 @@ export default function FilterTopbar({
 
   const router = useRouter();
 
-  const dispatch = useAppDispatch();
 
   const [value, setValue] = useState<any>("");
 

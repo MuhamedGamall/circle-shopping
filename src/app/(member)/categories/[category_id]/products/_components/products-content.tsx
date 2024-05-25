@@ -1,23 +1,21 @@
 "use client";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import FilterSidebar from "@/app/(member)/_components/filter-sidebar";
 import FilterTopbar from "@/app/(member)/_components/filter-topbar";
+import SortBySheet from "@/app/(member)/_components/sortby-sheet";
 import ProductCard from "@/components/product-curd/product-card";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
   getProductsByMainCategory_member,
 } from "@/lib/RTK/slices/member/categories-slice";
+import { Separator } from "@radix-ui/react-menubar";
 import { useParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { LuFilter } from "react-icons/lu";
-import { Separator } from "@radix-ui/react-menubar";
 import { BiSort } from "react-icons/bi";
-import SortBySheet from "@/app/(member)/_components/sortby-sheet";
+import { LuFilter } from "react-icons/lu";
 export default function ProductsCategoryContent() {
   const { category_id, sub_category_id } = useParams() as any;
 
@@ -34,27 +32,25 @@ export default function ProductsCategoryContent() {
       const queryParams = qs.parse(window.location.search, {
         arrayFormat: "comma",
         parseNumbers: true,
+        
       });
       queryParams && setSearchParams(queryParams);
     }
   }, []);
-  useEffect(() => {
-  
-   
-      dispatch(cleanUp());
-    
-  }, [ dispatch]);
 
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(cleanUp());
+  //   };
+  // }, [dispatch]);
+  
   useEffect(() => {
     dispatch(
       getProductsByMainCategory_member({
-        category_id: category_id.replaceAll("-", " "),
+        category_id: category_id?.replaceAll("-", " "),
         params: searchParams,
       })
     );
-    // return () => {
-    //   dispatch(cleanUp());
-    // };
   }, [category_id, dispatch, searchParams]);
 
   return (
@@ -69,7 +65,7 @@ export default function ProductsCategoryContent() {
       </div>
       <div className="md:hidden flex gap-2 items-center fixed  h-fit z-[1010] bottom-16 left-[50%] -translate-x-[50%] rounded-full bg-blue px-5 py-2 ">
         <Sheet>
-          <SheetTrigger className={cn("md:hidden ")}>
+          <SheetTrigger>
             <div className="flex gap-1 items-center text-white whitespace-nowrap">
               Sort By
               <BiSort className=" h-5 w-5" />
@@ -87,7 +83,7 @@ export default function ProductsCategoryContent() {
         </Sheet>
         <Separator className="h-5 w-[1px] bg-white" />
         <Sheet>
-          <SheetTrigger >
+          <SheetTrigger>
             <div className="flex gap-1 items-center text-white whitespace-nowrap">
               Filter
               <LuFilter className=" h-5 w-5" />

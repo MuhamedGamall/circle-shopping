@@ -41,7 +41,7 @@ export default function FilterSidebar({
     deal: [],
     minPrice: 0,
     maxPrice: 0,
-    delivery: "all",
+    delivery: "",
   });
 
   useEffect(() => {
