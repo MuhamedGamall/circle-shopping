@@ -23,24 +23,22 @@ export const TreeNode = ({
   };
 
   const handleSelect = (value: string) => {
+    const category = (node?.name + "/" + selectValue).replaceAll(" ", "-");
     setSelectValue((prevValue) => (prevValue === value ? "" : value));
   };
 
-  const category = (node?.name + "/" + selectValue).replaceAll(" ", "-");
   useEffect(() => {
     setFilterData((curr) => ({
       ...curr,
-      category,
+      category: selectValue,
     }));
-  }, [category, selectValue, setFilterData]);
+  }, [selectValue, setFilterData]);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
 
   const { category_id, sub_category_id } = useParams();
-  const mainIsActive = category_id === node?.name?.replaceAll(" ", "-");
-  const subIsActive = category === category_id + "/" + sub_category_id;
 
   return (
     <div className="text-sm text-slate-900 capitalize">
@@ -55,12 +53,13 @@ export const TreeNode = ({
             <PlusSquare className="h-4 w-4 text-slate-400" />
           )}
         </Button>
-        <Link
-          href={""}
-          className={cn("ml-2 ", { "text-black font-bold": mainIsActive })}
+        <button
+          type="button"
+          // href={""}
+          // className={cn("ml-2 ", { "text-black font-bold": mainIsActive })}
         >
           {node?.name}
-        </Link>
+        </button>
       </div>
 
       {isOpen && node?.children && (
@@ -74,15 +73,12 @@ export const TreeNode = ({
                   className="last:m-0 mb-2"
                   onClick={() => handleSelect(childNode?.name)}
                 >
-                  <Link
-                    href={""}
-                    className={cn({
-                      "text-black font-bold":
-                        selectValue === childNode?.name || subIsActive,
-                    })}
+                  <button
+                    // href={""}
+                    type="button"
                   >
                     {childNode?.name}
-                  </Link>
+                  </button>
                 </li>
               ))}
           </ul>

@@ -27,6 +27,10 @@ export async function GET(
     const dealThreshold = 1;
     const getRole = req.nextUrl.searchParams.get("role");
 
+    if (![ "bestsellers", "deals",'all_of_category'].includes(getRole || "")) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+  
     if (getRole === "bestsellers")
       filter.sales_count = { $gte: bestSellerThreshold };
     else if (getRole === "deals")
@@ -38,12 +42,12 @@ export async function GET(
       arrayFormat: "bracket",
       parseNumbers: true,
     });
-    console.log(queryParams);
 
-    const defaultValues = 10e10;
+      const defaultValues = 10e10;
     const handleArray = (value: string | string[]) => {
       return Array.isArray(value) ? value : [value];
     };
+
     const {
       limit,
       brand = [],

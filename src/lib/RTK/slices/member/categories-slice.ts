@@ -190,22 +190,16 @@ const memberCategoriesSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(
-        getProductsByMainCategory_member.fulfilled,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = false;
-
-          action?.payload?.role == "deals"
-            ? (state.productsByMainCategoryForDealsSlider =
-                action?.payload?.data)
-            : action?.payload?.role == "bestsellers" &&
-              (state.productsByMainCategoryForBestsellersSlider =
-                action?.payload?.data);
-
-          state.productsByMainCategory = action?.payload?.data;
-
+      .addCase(getProductsByMainCategory_member.fulfilled, (state, action) => {
+        state.loading = false;
+        const { role, data } = action.payload;
+        if (role === "deals") {
+          state.productsByMainCategoryForDealsSlider = data;
+        } else if (role === "bestsellers") {
+          state.productsByMainCategoryForBestsellersSlider = data;
         }
-      )
+        state.productsByMainCategory = data;
+      })
       .addCase(
         getProductsByMainCategory_member.rejected,
         (state: categoriesState, action: PayloadAction<any>) => {

@@ -75,8 +75,8 @@ export default function FilterSidebar({
 
   const { category, ...queryData } = filterData;
 
-  const applyButton =  () => {
-    setSearchParams(filterData);
+  const applyButton = () => {
+    setSearchParams((curr) => ({ ...curr, ...filterData }));
 
     const url = qs.stringifyUrl(
       {

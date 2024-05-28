@@ -93,9 +93,7 @@ export async function groupFilters({
       { $sort: { count: -1 } },
     ]);
 
-    // const mostLikes = await Product.findOne(filter)
-    //   .sort({ likes: -1 })
-    //   .select("likes");
+
     const filterByPrice = await Product.aggregate([
       { $match: filter },
       {
@@ -109,7 +107,6 @@ export async function groupFilters({
     const defaultValues = 9e10;
 
     const groupFilters = {
-      // maximumLikes: mostLikes?.likes || defaultValues,
       category,
       maxPrice: filterByPrice[0]?.maxPrice || defaultValues,
       minPrice: filterByPrice[0]?.minPrice || 0,
