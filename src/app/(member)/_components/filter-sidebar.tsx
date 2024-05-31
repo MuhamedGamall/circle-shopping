@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { FilterDataState, GroupFilters } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
+
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
@@ -29,10 +30,8 @@ export default function FilterSidebar({
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
 }) {
   const router = useRouter();
-  const { category_id, sub_category_id } = useParams<any>();
 
   const [filterData, setFilterData] = useState<FilterDataState>({
-    category: "",
     sortBy: "",
     colour: [],
     brand: [],
@@ -46,7 +45,6 @@ export default function FilterSidebar({
 
   useEffect(() => {
     setFilterData({
-      category: `${category_id}/${sub_category_id || ""}`,
       sortBy: searchParams?.sortBy || "best-rated",
       colour: searchParams?.colour || [],
       brand: searchParams?.brand || [],
@@ -58,7 +56,6 @@ export default function FilterSidebar({
       delivery: searchParams?.delivery || "",
     });
   }, [
-    category_id,
     groupFilters?.maxPrice,
     groupFilters?.minPrice,
     searchParams?.brand,
@@ -70,10 +67,7 @@ export default function FilterSidebar({
     searchParams?.minPrice,
     searchParams?.seller,
     searchParams?.sortBy,
-    sub_category_id,
   ]);
-
-  const { category, ...queryData } = filterData;
 
   const applyButton = () => {
     setSearchParams((curr) => ({ ...curr, ...filterData }));
@@ -81,17 +75,12 @@ export default function FilterSidebar({
     const url = qs.stringifyUrl(
       {
         url: window?.location?.href,
-        query: queryData,
+        query: filterData,
       },
       { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }
     );
 
-    const refactorUrl = url.replace(
-      category_id + "/" + (sub_category_id || ""),
-      category + "/"
-    );
-
-    router.push(refactorUrl);
+    router.push(url);
   };
 
   const arrayOfFilter = [
@@ -102,8 +91,8 @@ export default function FilterSidebar({
   ] as any[];
 
   const handleCheckboxChange = (checked: boolean) => {
-    setFilterData((prevValues) => ({
-      ...prevValues,
+    setFilterData((curr) => ({
+      ...curr,
       delivery: checked ? "free" : "",
     }));
   };
@@ -140,7 +129,7 @@ export default function FilterSidebar({
           </AccordionTrigger>
           <AccordionContent>
             <SelectCategory
-              category={groupFilters?.category || []}
+              categories={groupFilters?.categories || []}
               setFilterData={setFilterData}
               filterData={filterData}
             />

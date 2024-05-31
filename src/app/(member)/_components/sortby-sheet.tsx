@@ -1,21 +1,12 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useAppDispatch } from "@/hooks/redux";
-import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
+import { getProducts_member } from "@/lib/RTK/slices/member/categories-slice";
+import { cn } from "@/lib/utils";
 import { FilterDataState } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
 
 const selectItems = [
   { label: "Newest", value: "newest" },
@@ -31,7 +22,7 @@ export default function SortBySheet({
   searchParams: FilterDataState;
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
 }) {
-  const { category_id, sub_category_id } = useParams<any>();
+  const { category_id } = useParams<any>();
 
   const router = useRouter();
 
@@ -65,13 +56,6 @@ export default function SortBySheet({
     );
 
     router.push(url);
-
-    dispatch(
-      getProductsByMainCategory_member({
-        category_id: category_id.replaceAll("-", " "),
-        params: newSearchParams,
-      })
-    );
   };
   return (
     <RadioGroup
@@ -86,9 +70,9 @@ export default function SortBySheet({
           key={i}
           className={cn("", {
             "text-black font-bold": el?.value === value,
-          })}
+          })} 
         >
-          <li >
+          <li>
             <Label
               htmlFor={"r" + i}
               className={cn(

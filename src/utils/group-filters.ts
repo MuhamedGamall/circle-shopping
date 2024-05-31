@@ -10,10 +10,12 @@ export async function groupFilters({
   try {
     await mongoConnect();
     const filterCategories = {
-      "main_category.name": filter?.["category.main_category"],
+      ...(filter?.["category.main_category"] && {
+        "main_category.name": filter?.["category.main_category"],
+      }),
     };
 
-    const category = await Category.findOne(filterCategories);
+    const categories = await Category.find(filterCategories);
 
     const filterByCondition = await Product.aggregate([
       { $match: filter },
@@ -93,7 +95,6 @@ export async function groupFilters({
       { $sort: { count: -1 } },
     ]);
 
-
     const filterByPrice = await Product.aggregate([
       { $match: filter },
       {
@@ -107,7 +108,7 @@ export async function groupFilters({
     const defaultValues = 9e10;
 
     const groupFilters = {
-      category,
+      categories,
       maxPrice: filterByPrice[0]?.maxPrice || defaultValues,
       minPrice: filterByPrice[0]?.minPrice || 0,
       filterByBrands,

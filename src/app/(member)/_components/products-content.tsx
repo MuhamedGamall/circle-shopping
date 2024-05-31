@@ -1,20 +1,23 @@
 "use client";
 
 import FilterSidebar from "@/app/(member)/_components/filter-sidebar";
-import FilterTopbar from "@/app/(member)/_components/filter-topbar";
+import ProductsTopbar from "@/app/(member)/_components/products-topbar";
 import FiltersSheetTrigger from "@/app/(member)/_components/sheet-trigger";
 import ProductCard from "@/components/product-curd/product-card";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProductsByMainCategory_member } from "@/lib/RTK/slices/member/categories-slice";
+import {
+  cleanUp,
+  getProducts_member,
+} from "@/lib/RTK/slices/member/categories-slice";
 import { useParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
-export default function ProductsCategoryContent() {
+export default function ProductsContent() {
   const { category_id, sub_category_id } = useParams() as any;
 
   const dispatch = useAppDispatch();
 
-  const { productsByMainCategory, loading } = useAppSelector(
+  const { products, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
@@ -30,31 +33,29 @@ export default function ProductsCategoryContent() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(cleanUp());
-  //   };
-  // }, [dispatch]);
-
   useEffect(() => {
-    if (category_id && searchParams) {
-      const formattedCategoryId = category_id?.replaceAll("-", " ");
-      dispatch(
-        getProductsByMainCategory_member({
-          category_id: formattedCategoryId,
-          params: searchParams,
-        })
-      );
+    const newParams = {
+      ...(category_id && {
+        mainCategory: category_id?.replaceAll("-", " "),
+      }),
+      ...(sub_category_id && {
+        subCategory: sub_category_id?.replaceAll("-", " "),
+      }),
+      ...searchParams,
+    };
+    if ( searchParams) {
+      dispatch(getProducts_member(newParams));
     }
-    console.log(searchParams);
-    
-  }, [category_id, dispatch, searchParams]);
+    return () => {
+      dispatch(cleanUp());
+    };
+  }, [category_id, dispatch, searchParams, sub_category_id]);
 
   return (
     <div className="flex gap-5 bg-[#f7f7fa] ">
       <div className="md:block hidden">
         <FilterSidebar
-          groupFilters={productsByMainCategory?.groupFilters}
+          groupFilters={products?.groupFilters}
           loading={loading}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
@@ -62,19 +63,19 @@ export default function ProductsCategoryContent() {
       </div>
 
       <FiltersSheetTrigger
-        groupFilters={productsByMainCategory?.groupFilters}
+        groupFilters={products?.groupFilters}
         loading={loading}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
       <div className="w-full ">
-        <FilterTopbar
-          resultsLength={productsByMainCategory?.products?.length}
+        <ProductsTopbar
+          resultsLength={products?.products?.length}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
         />
         <div className="products-container my-5">
-          {productsByMainCategory?.products?.map((el, i) => (
+          {products?.products?.map((el, i) => (
             <ProductCard key={i} {...el} />
           ))}
         </div>

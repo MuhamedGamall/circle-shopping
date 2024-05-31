@@ -2,8 +2,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FilterDataState } from "@/types";
 import { MinusSquare, PlusSquare } from "lucide-react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 export const TreeNode = ({
   node,
@@ -15,33 +14,71 @@ export const TreeNode = ({
   filterData: FilterDataState;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectValue, setSelectValue] = useState<string>("");
   const [showAll, setShowAll] = useState(false);
 
+  const { category_id, sub_category_id } = useParams() as any;
+
+  const [selectValue, setSelectValue] = useState<any>(null);
+
+  useEffect(() => {
+    if (category_id || sub_category_id) {
+      setSelectValue({
+        mainCategory: category_id?.replaceAll("-", " ") || "",
+        subCategory: sub_category_id?.replaceAll("-", " ") || "",
+      });
+    }
+  }, [category_id, sub_category_id]);
+
+  const router = useRouter();
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (value: string) => {
-    const category = (node?.name + "/" + selectValue).replaceAll(" ", "-");
-    setSelectValue((prevValue) => (prevValue === value ? "" : value));
+  const handleSelectMainCategory = (value: string) => {
+    const searchParams = location?.search;
+    const url =
+      selectValue?.mainCategory === value
+        ? `/products${searchParams}`
+        : `/categories/${value?.replaceAll(" ", "-")}/products${searchParams}`;
+    setSelectValue((curr: any) => ({
+      subCategory: "",
+      mainCategory: curr?.mainCategory === value ? "" : value,
+    }));
+
+    router.push(url);
   };
 
-  useEffect(() => {
-    setFilterData((curr) => ({
-      ...curr,
-      category: selectValue,
+  const handleSelectSubcategory = (value: any) => {
+    const searchParams = location?.search;
+    const url =
+      selectValue?.subCategory === value?.subCategory
+        ? `/categories/${value?.mainCategory?.replaceAll(
+            " ",
+            "-"
+          )}/products${searchParams}`
+        : `/categories/${value?.mainCategory?.replaceAll(
+            " ",
+            "-"
+          )}/${value?.subCategory?.replaceAll(
+            " ",
+            "-"
+          )}/products${searchParams}`;
+    setSelectValue((curr: any) => ({
+      mainCategory: value?.mainCategory,
+      subCategory:
+        curr?.subCategory === value?.subCategory ? "" : value?.subCategory,
     }));
-  }, [selectValue, setFilterData]);
+    router.push(url);
+  };
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
 
-  const { category_id, sub_category_id } = useParams();
-
+  const activeLink = (categoryName: any, valueSelected: string) =>
+    categoryName?.replaceAll("-", " ") === valueSelected
   return (
-    <div className="text-sm text-slate-900 capitalize">
+    <div className="text-sm text-slate-900 ">
       <div className="flex items-center hover:opacity-[0.6] transition-all">
         <Button
           onClick={handleToggle}
@@ -55,8 +92,10 @@ export const TreeNode = ({
         </Button>
         <button
           type="button"
-          // href={""}
-          // className={cn("ml-2 ", { "text-black font-bold": mainIsActive })}
+          onClick={() => handleSelectMainCategory(node?.name)}
+          className={cn("ml-2 underline capitalize", {
+            "text-black font-bold": activeLink(category_id, node?.name),
+          })}
         >
           {node?.name}
         </button>
@@ -70,12 +109,25 @@ export const TreeNode = ({
               ?.map((childNode: any, i: number) => (
                 <li
                   key={i}
-                  className="last:m-0 mb-2"
-                  onClick={() => handleSelect(childNode?.name)}
+                  className="last:m-0 mb-2 hover:underline hover:opacity-[0.6] transition-all "
+                  onClick={() =>
+                    handleSelectSubcategory({
+                      mainCategory: node?.name,
+                      subCategory: childNode?.name,
+                    })
+                  }
                 >
                   <button
-                    // href={""}
                     type="button"
+                    className={cn(
+                      " hover:underline hover:opacity-[0.8] transition-all capitalize",
+                      {
+                        "text-black font-bold": activeLink(
+                          sub_category_id,
+                          childNode?.name
+                        ),
+                      }
+                    )}
                   >
                     {childNode?.name}
                   </button>
@@ -84,9 +136,12 @@ export const TreeNode = ({
           </ul>
 
           <button
-            className={cn(" w-fit text-sm text-blue underline cursor-pointer", {
-              hidden: node?.children < 10,
-            })}
+            className={cn(
+              " w-fit text-sm text-blue ml-7 underline cursor-pointer",
+              {
+                hidden: node?.children?.length < 10,
+              }
+            )}
             onClick={toggleShowAll}
           >
             {showAll ? "See less" : "See all"}

@@ -121,7 +121,7 @@ export type FilterItem = {
   count: number;
 };
 export type GroupFilters = {
-  category: Category | Category[] | null;
+  categories:  Category[] ;
   filterByCondition: FilterItem[];
   filterBySellers: FilterItem[];
   filterByBrands: FilterItem[];
@@ -132,11 +132,8 @@ export type GroupFilters = {
   minPrice: number;
 };
 
-
-
 type QueryItem = string | number | (string | number | null)[] | null;
 export type FilterDataState = {
-  category: QueryItem;
   sortBy: QueryItem;
   colour: QueryItem;
   brand: QueryItem;
@@ -146,4 +143,6 @@ export type FilterDataState = {
   minPrice: QueryItem | undefined;
   maxPrice: QueryItem | undefined;
   delivery: QueryItem;
+  // mainCategory: QueryItem;
+  // subCategory: QueryItem;
 };

@@ -93,8 +93,7 @@ export async function GET(req: NextRequest) {
 }
 export async function DELETE(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams
-
+    const searchParams = req.nextUrl.searchParams;
 
     const _id = searchParams.get("_id");
     await mongoConnect();

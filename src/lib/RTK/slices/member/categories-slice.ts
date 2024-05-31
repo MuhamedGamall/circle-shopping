@@ -31,13 +31,13 @@ export const getCategory_member: any = createAsyncThunk(
   }
 );
 
-export const getProductsByMainCategory_member: any = createAsyncThunk(
-  "memberCategoriesSlice/getProductsByMainCategory_member",
-  async ({ category_id, params }: any, thunkApi) => {
+export const getProducts_member: any = createAsyncThunk(
+  "memberCategoriesSlice/getProducts_member",
+  async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
       const data = (
-        await axios.get("/api/categories/" + category_id + "/" + "products", {
+        await axios.get("/api/products/", {
           params,
         })
       ).data;
@@ -50,29 +50,27 @@ export const getProductsByMainCategory_member: any = createAsyncThunk(
   }
 );
 
-export const getProductsBySubCategory_member: any = createAsyncThunk(
-  "memberCategoriesSlice/getProductsBySubCategory_member",
-  async ({ category_id, sub_category_id, params }: any, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
-    try {
-      const data = (
-        await axios.get(
-          "/api/categories/" + sub_category_id + "/" + sub_category_id,
-
-          { params }
-        )
-      ).data;
-      return { data, role: params?.role };
-    } catch (error: any) {
-      console.log(error);
-      return rejectWithValue(error.message);
-    }
-  }
-);
+// export const getProductsBySubCategory_member: any = createAsyncThunk(
+//   "memberCategoriesSlice/getProductsBySubCategory_member",
+//   async ({ category_id, params }: any, thunkApi) => {
+//     const { rejectWithValue } = thunkApi;
+//     try {
+//       const data = (
+//         await axios.get("/api/categories/" + category_id + "/" + "products", {
+//           params,
+//         })
+//       ).data;
+//       return { data, role: params?.role };
+//     } catch (error: any) {
+//       console.log(error);
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 // for get products for one sub category
 export const getSubcategoryProducts_member: any = createAsyncThunk(
-  "memberCategoriesSlice/getProductsByCategory_member",
+  "memberCategoriesSlice/getSubcategoryProducts_member",
   async (category_id: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
@@ -89,12 +87,13 @@ export const getSubcategoryProducts_member: any = createAsyncThunk(
     }
   }
 );
+
 type categoriesState = {
-  productsBySubCategory: {
-    products: Product[];
-    groupFilters: GroupFilters | null;
-  };
-  productsByMainCategory: {
+  // productsBySubCategory: {
+  //   products: Product[];
+  //   groupFilters: GroupFilters | null;
+  // };
+  products: {
     products: Product[];
     groupFilters: GroupFilters | null;
   };
@@ -114,8 +113,8 @@ type categoriesState = {
   error: null;
 };
 const initialState: categoriesState = {
-  productsBySubCategory: { products: [], groupFilters: null },
-  productsByMainCategory: { products: [], groupFilters: null },
+
+  products: { products: [], groupFilters: null },
   productsByMainCategoryForDealsSlider: { products: [] },
   productsByMainCategoryForBestsellersSlider: {
     products: [],
@@ -132,9 +131,8 @@ const memberCategoriesSlice = createSlice({
   initialState,
   reducers: {
     cleanUp: (state) => {
-      // state.category = null;
-      state.productsByMainCategory = { products: [], groupFilters: null };
-      // state.productsBySubCategory = { products: [], groupFilters: null };
+      state.category = null;
+      state.products = { products: [], groupFilters: null };
     },
   },
   extraReducers: (builder) => {
@@ -184,13 +182,13 @@ const memberCategoriesSlice = createSlice({
       );
     builder
       .addCase(
-        getProductsByMainCategory_member.pending,
+        getProducts_member.pending,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = true;
           state.error = null;
         }
       )
-      .addCase(getProductsByMainCategory_member.fulfilled, (state, action) => {
+      .addCase(getProducts_member.fulfilled, (state, action) => {
         state.loading = false;
         const { role, data } = action.payload;
         if (role === "deals") {
@@ -198,37 +196,38 @@ const memberCategoriesSlice = createSlice({
         } else if (role === "bestsellers") {
           state.productsByMainCategoryForBestsellersSlider = data;
         }
-        state.productsByMainCategory = data;
+        state.products = data;
       })
       .addCase(
-        getProductsByMainCategory_member.rejected,
+        getProducts_member.rejected,
         (state: categoriesState, action: PayloadAction<any>) => {
           state.loading = false;
           state.error = action.payload;
         }
       );
-    builder
-      .addCase(
-        getProductsBySubCategory_member.pending,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-      .addCase(
-        getProductsBySubCategory_member.fulfilled,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.productsBySubCategory = action.payload;
-        }
-      )
-      .addCase(
-        getProductsBySubCategory_member.rejected,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      );
+
+    // builder
+    //   .addCase(
+    //     getProductsBySubCategory_member.pending,
+    //     (state: categoriesState, action: PayloadAction<any>) => {
+    //       state.loading = true;
+    //       state.error = null;
+    //     }
+    //   )
+    //   .addCase(
+    //     getProductsBySubCategory_member.fulfilled,
+    //     (state: categoriesState, action: PayloadAction<any>) => {
+    //       state.loading = false;
+    //       state.productsBySubCategory = action.payload;
+    //     }
+    //   )
+    //   .addCase(
+    //     getProductsBySubCategory_member.rejected,
+    //     (state: categoriesState, action: PayloadAction<any>) => {
+    //       state.loading = false;
+    //       state.error = action.payload;
+    //     }
+    //   );
     builder
       .addCase(
         getSubcategoryProducts_member.pending,

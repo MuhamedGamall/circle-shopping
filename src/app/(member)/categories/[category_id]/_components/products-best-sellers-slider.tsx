@@ -4,7 +4,7 @@ import ProductsSlider from "@/components/products-slider/products-container";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
-  getProductsByMainCategory_member,
+  getProducts_member,
 } from "@/lib/RTK/slices/member/categories-slice";
 import { useEffect } from "react";
 
@@ -16,13 +16,12 @@ export default function ProductsBestSellers({
   params?: any;
 }) {
   const dispatch = useAppDispatch();
-  const { productsByMainCategoryForBestsellersSlider, loading } = useAppSelector(
-    (state) => state.member_categories
-  );
+  const { productsByMainCategoryForBestsellersSlider, loading } =
+    useAppSelector((state) => state.member_categories);
 
   useEffect(() => {
     dispatch(
-      getProductsByMainCategory_member({
+      getProducts_member({
         category_id: category_id?.replaceAll("-", " "),
         params,
       })

@@ -1,32 +1,44 @@
 import { Category, FilterDataState } from "@/types";
 import { TreeNode } from "./category-tree-node";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 const SelectCategory = ({
-  category,
+  categories,
   setFilterData,
   filterData,
 }: {
-  category: Category | Category[];
-  setFilterData: Dispatch<SetStateAction<FilterDataState >>;
-  filterData: FilterDataState ;
+  categories: Category[];
+  setFilterData: Dispatch<SetStateAction<FilterDataState>>;
+  filterData: FilterDataState;
 }) => {
-  const categoryData = Array.isArray(category) ? category : [category];
-  const categoryTree = categoryData?.map((el) => ({
+  const [showAll, setShowAll] = useState(false);
+  const categoryTree = categories?.map((el) => ({
     name: el?.main_category?.name,
     children: el?.sub_categories?.map((el) => ({ name: el?.name })),
   }));
-
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
   return (
-    <div>
-      {categoryTree.map((rootNode, i) => (
-        <TreeNode
-          key={i}
-          node={rootNode}
-          setFilterData={setFilterData}
-          filterData={filterData}
-        />
-      ))}
+    <div className=" flex flex-col justify-center gap-5">
+      {categoryTree
+        ?.slice(0, showAll ? categoryTree?.length : 9)
+        .map((rootNode, i) => (
+          <TreeNode
+            key={i}
+            node={rootNode}
+            setFilterData={setFilterData}
+            filterData={filterData}
+          />
+        ))}
+          {categoryTree?.length >= 10 && (
+        <button
+          className=" w-fit text-sm text-blue underline cursor-pointer"
+          onClick={toggleShowAll}
+        >
+          {showAll ? "See less" : "See all"}
+        </button>
+      )}
     </div>
   );
 };
