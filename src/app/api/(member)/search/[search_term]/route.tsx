@@ -8,29 +8,6 @@ import qs from "query-string";
 export async function GET(req: NextRequest) {
   try {
     await mongoConnect();
-    const mainCategory = req.nextUrl.searchParams.get("mainCategory");
-    const subCategory = req.nextUrl.searchParams.get("subCategory");
-    const getRole = req.nextUrl.searchParams.get("role")||''
-
-    let filter: any = {
-      ...(mainCategory && { "category.main_category": mainCategory }),
-      ...(subCategory && { "category.sub_category": subCategory }),
-      is_published: true,
-    };
-
-    const bestSellerThreshold = 100;
-    const dealThreshold = 1;
-
-    if (!["bestsellers", "deals", "all_products"].includes(getRole )) {
-      return new NextResponse("Not Found", { status: 404 });
-    }
-
-    if (getRole === "bestsellers")
-      filter.sales_count = { $gte: bestSellerThreshold };
-    else if (getRole === "deals")
-      filter["price.offer.discount_percentage"] = { $gte: dealThreshold };
-
-    const groupFiltersData = await groupFilters({ filter });
 
     const queryParams = qs.parse(req.nextUrl.search, {
       arrayFormat: "bracket",
@@ -41,6 +18,7 @@ export async function GET(req: NextRequest) {
     const handleArray = (value: string | string[]) => {
       return Array.isArray(value) ? value : [value];
     };
+    const groupFiltersData = await groupFilters({});
 
     const {
       limit,
@@ -55,30 +33,29 @@ export async function GET(req: NextRequest) {
     } = queryParams as any;
 
     const handleFilters = () => {
-      const additionalFilters: any = {};
+      const filters: any = {};
       if (brand.length) {
-        additionalFilters["category.brand"] = { $in: handleArray(brand) };
+        filters["category.brand"] = { $in: handleArray(brand) };
       }
       if (deal.length) {
-        additionalFilters["price.offer.deal_type"] = { $in: handleArray(deal) };
+        filters["price.offer.deal_type"] = { $in: handleArray(deal) };
       }
       if (colour.length) {
-        additionalFilters.colour = { $in: handleArray(colour) };
+        filters.colour = { $in: handleArray(colour) };
       }
       if (condition.length) {
-        additionalFilters.item_condition = { $in: handleArray(condition) };
+        filters.item_condition = { $in: handleArray(condition) };
       }
       if (minPrice || maxPrice) {
-        additionalFilters["price.base_price"] = {
+        filters["price.base_price"] = {
           $gte: minPrice,
           $lte: maxPrice,
         };
       }
       if (delivery) {
-        additionalFilters.delivery = "free";
+        filters.delivery = "free";
       }
-      const finalFilter = { ...filter, ...additionalFilters };
-      return finalFilter;
+      return filters;
     };
 
     const handleSort = () => {
@@ -94,7 +71,7 @@ export async function GET(req: NextRequest) {
       }
       return sortOption;
     };
- 
+    const bestSellerThreshold = 100;
 
     let products = await Product.aggregate([
       { $match: handleFilters() },
@@ -109,7 +86,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ products, groupFilters: groupFiltersData });
   } catch (error) {
-    console.log("[MEMBER:PRODUCTS]", error);
+    console.log("[MEMBER:SEARCH]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

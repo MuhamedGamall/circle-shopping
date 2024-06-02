@@ -4,44 +4,34 @@ import { Store } from "@/models/store";
 import { GroupFilters } from "@/types";
 import mongoConnect from "@/utils/mongo-connect";
 
+async function getFilteredProducts(filter:any, groupByField:string) {
+  return Product.aggregate([
+    { $match: filter },
+    {
+      $group: {
+        _id: `$${groupByField}`,
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1 } },
+  ]);
+}
+
 export async function groupFilters({
   filter,
 }: any): Promise<GroupFilters | undefined> {
   try {
     await mongoConnect();
-    const filterCategories = {
+    const findCategory = {
       ...(filter?.["category.main_category"] && {
         "main_category.name": filter?.["category.main_category"],
       }),
     };
 
-    const categories = await Category.find(filterCategories);
+    const categories = await Category.find(findCategory);
 
-    const filterByCondition = await Product.aggregate([
-      { $match: filter },
-      {
-        $group: {
-          _id: "$item_condition",
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]);
 
-    let filterBySellers = await Product.aggregate([
-      { $match: filter },
-      {
-        $group: {
-          _id: "$store_id",
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]);
+    let filterBySellers = await getFilteredProducts(filter, "store_id");
 
     filterBySellers = await Promise.all(
       filterBySellers.map(async (el) => {
@@ -53,30 +43,6 @@ export async function groupFilters({
       })
     );
 
-    const filterByBrands = await Product.aggregate([
-      { $match: filter },
-      {
-        $group: {
-          _id: "$category.brand",
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]);
-    const filterByColour = await Product.aggregate([
-      { $match: filter },
-      {
-        $group: {
-          _id: "$colour",
-          count: {
-            $sum: 1,
-          },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]);
 
     const filterByDeals = await Product.aggregate([
       { $match: filter },
@@ -105,8 +71,11 @@ export async function groupFilters({
         },
       },
     ]);
-    const defaultValues = 9e10;
 
+    const filterByBrands = await getFilteredProducts(filter, "category.brand");
+    const filterByColour = await getFilteredProducts(filter, "colour");
+    const filterByCondition = await getFilteredProducts(filter, "item_condition");
+    const defaultValues = 10e10;
     const groupFilters = {
       categories,
       maxPrice: filterByPrice[0]?.maxPrice || defaultValues,

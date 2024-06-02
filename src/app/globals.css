@@ -124,7 +124,14 @@
     justify-content: center;
   }
 }
+@media (max-width: 420px) {
+  .products-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5;
 
+  }
+}
 .products-slider-container {
   display: grid;
   grid-template-columns: repeat(20, minmax(194px, 216px));

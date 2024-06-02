@@ -1,26 +1,13 @@
-import { BiCartAdd } from "react-icons/bi";
-import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { AiOutlineLike } from "react-icons/ai";
-import { formatNumber } from "@/utils/format";
-import { SliderBalls } from "./handle-balls";
 import Link from "next/link";
+import { ReactNode, useEffect, useState } from "react";
+import { SliderBalls } from "./handle-balls";
 
-export function ImagesSlieder({
-  images,
-  likes,
-  is_bestseller,
-}: {
-  images: string[];
-  likes: number;
-  is_bestseller: boolean;
-}) {
+export function ImagesSlieder({ images }: { images: string[] }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const imagesLength = images?.length;
-  
+
   useEffect(() => {
     let interval: any;
     if (hovered)
@@ -47,7 +34,7 @@ export function ImagesSlieder({
   return (
     <>
       <div className=" bg-slate-100 relative border">
-        <Link href={""} >
+        <Link href={""}>
           <Image
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -59,25 +46,6 @@ export function ImagesSlieder({
             className=" h-[208px] lg:h-[284px] object-cover "
           />
         </Link>
-        <Button
-          className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-4 right-4 text-secondMain p-1"
-        >
-          <BiCartAdd className=" h-7 w-7" />
-        </Button>
-        <Button className="h-7 w-7  bg-white hover:bg-slate-100  rounded-md  shadow-md absolute top-4 right-4 text-secondMain p-1">
-          <Heart className=" h-7 w-7" />
-        </Button>
-        {is_bestseller && (
-          <span className=" bg-slate-700  rounded-[30px] absolute top-4 left-2 text-white pt-0 px-3">
-            Best Seller
-          </span>
-        )}
-        <span className="flex items-center gap-1 bg-white text-[16px] border rounded-[30px]  absolute bottom-4 left-2 text-secondMain px-2">
-          <span className="text-gray-500 text-[13px]">
-            ({formatNumber(likes)})
-          </span>
-          <AiOutlineLike className="text-[#0084fd] h-4 w-4" />
-        </span>
       </div>
       <SliderBalls imagesLength={imagesLength} imageIndex={imageIndex} />
     </>

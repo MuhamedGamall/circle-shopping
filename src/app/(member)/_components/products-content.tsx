@@ -3,19 +3,29 @@
 import FilterSidebar from "@/app/(member)/_components/filter-sidebar";
 import ProductsTopbar from "@/app/(member)/_components/products-topbar";
 import FiltersSheetTrigger from "@/app/(member)/_components/sheet-trigger";
+import MobileProductCard from "@/components/product-curd/mobile-product-curd";
 import ProductCard from "@/components/product-curd/product-card";
+import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
   getProducts_member,
 } from "@/lib/RTK/slices/member/categories-slice";
+import { RxDashboard } from "react-icons/rx";
 import { useParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
+import { useWindowSize } from "react-use";
+import { IoListOutline } from "react-icons/io5";
 export default function ProductsContent() {
   const { category_id, sub_category_id } = useParams() as any;
 
+  const [isGrid, setIsGrid] = useState(true);
+
   const dispatch = useAppDispatch();
+  const { width } = useWindowSize();
+
+  const isSmallScreen = width <= 420;
 
   const { products, loading } = useAppSelector(
     (state) => state.member_categories
@@ -43,7 +53,7 @@ export default function ProductsContent() {
       }),
       ...searchParams,
     };
-    if ( searchParams) {
+    if (searchParams) {
       dispatch(getProducts_member(newParams));
     }
     return () => {
@@ -69,15 +79,32 @@ export default function ProductsContent() {
         setSearchParams={setSearchParams}
       />
       <div className="w-full ">
-        <ProductsTopbar
-          resultsLength={products?.products?.length}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
+        <div className="xs:block flex items-center justify-between">
+          <ProductsTopbar
+            resultsLength={products?.products?.length}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+          <button
+            type="button"
+            className="xs:hidden m-5 "
+            onClick={() => setIsGrid((curr) => !curr)}
+          >
+            {isGrid ? (
+              <RxDashboard className="h-5 w-5 text-shade" />
+            ) : (
+              <IoListOutline className="h-5 w-5 text-shade" />
+            )}
+          </button>
+        </div>
         <div className="products-container my-5">
-          {products?.products?.map((el, i) => (
-            <ProductCard key={i} {...el} />
-          ))}
+          {products?.products?.map((el, i) =>
+            isSmallScreen && isGrid ? (
+              <MobileProductCard key={i} {...el} />
+            ) : (
+              <ProductCard key={i} {...el} />
+            )
+          )}
         </div>
       </div>
     </div>

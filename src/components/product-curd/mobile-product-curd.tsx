@@ -2,15 +2,15 @@ import { Product } from "@/types";
 import { formatNumber, formatPrice } from "@/utils/format";
 import { truncateText } from "@/utils/truncate-text";
 import Link from "next/link";
-import { BiCartAdd } from "react-icons/bi";
-import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
-import { FaTruckMoving } from "react-icons/fa";
-import { ImagesSlieder } from "./images-slider";
-import { cn } from "@/lib/utils";
-import { AiOutlineLike } from "react-icons/ai";
 
-export default function ProductCard({
+import { cn } from "@/lib/utils";
+import { Heart } from "lucide-react";
+import { AiOutlineLike } from "react-icons/ai";
+import { BiCartAdd } from "react-icons/bi";
+import { FaTruckMoving } from "react-icons/fa";
+import { Button } from "../ui/button";
+import { ImagesSlieder } from "./images-slider";
+export default function MobileProductCard({
   images,
   title,
   price,
@@ -22,26 +22,10 @@ export default function ProductCard({
   const offerCalc = (discount_percentage / 100) * price?.base_price;
   const finalPrice = price?.base_price - offerCalc;
   return (
-    <div className="rounded-md bg-white p-2  mx-auto  w-[184px] lg:w-[206px] overflow-hidden  h-full border flex flex-col gap-1">
-      <div className=" relative">
+    <div className=" relative bg-white p-2  mx-auto overflow-hidden  border flex w-full gap-1">
+      <div className="basis-[44%]">
         <ImagesSlieder images={images} />
-        <Button className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-[57px] right-2 text-secondMain p-1">
-          <BiCartAdd className=" h-7 w-7" />
-        </Button>
-        <Button className="h-7 w-7  bg-white hover:bg-slate-100  rounded-md  shadow-md absolute top-2 right-2 text-secondMain p-1">
-          <Heart className=" h-7 w-7" />
-        </Button>
-        {is_bestseller && (
-          <span className=" bg-slate-700  rounded-[30px] absolute top-2 left-2 text-white pt-0 px-3">
-            Best Seller
-          </span>
-        )}
-        <span className="flex items-center gap-1 bg-white text-[16px] border rounded-[30px]  absolute bottom-[57px] left-2 text-secondMain px-2">
-          <span className="text-gray-500 text-[13px]">
-            ({formatNumber(likes)})
-          </span>
-          <AiOutlineLike className="text-[#0084fd] h-4 w-4" />
-        </span>
+
         <div
           className={cn("font-semibold   rounded-b-sm p-1 capitalize text-sm", {
             hidden: !price?.offer?.deal_type,
@@ -56,9 +40,9 @@ export default function ProductCard({
         </div>
       </div>
 
-      <Link href={""} className=" flex flex-col gap-1  h-full ">
-        <div className="text-[#404553] font-semibold text-[17px] leading-[1.24]  ">
-          {truncateText(title, 35)}
+      <Link href={""} className="  relative flex-col flex basis-[54%] gap-1   ">
+        <div className="text-[#404553]  font-semibold text-[17px] leading-[1.24]  ">
+          {truncateText(title, 45)}
         </div>
         {discount_percentage ? (
           <div className="flex gap-2 items-center">
@@ -80,7 +64,25 @@ export default function ProductCard({
           <FaTruckMoving className="h-4 w-4 text-[#3568db]" />
           <span className="text-sm">Free Delivrey</span>
         </div>
+        <span className="flex items-center gap-1 bg-white text-[16px] border rounded-[30px]  absolute bottom-2 left-2 text-secondMain px-2">
+          <span className="text-gray-500 text-[13px]">
+            ({formatNumber(likes)})
+          </span>
+          <AiOutlineLike className="text-[#0084fd] h-4 w-4" />
+        </span>
+        <Button className="h-6 w-6   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-2 right-2 text-secondMain p-1">
+          <BiCartAdd className=" h-6 w-6" />
+        </Button>
+        <Button className="h-6 w-6  bg-white hover:bg-slate-100  rounded-md  shadow-md absolute top-2 right-2 text-secondMain p-1">
+          <Heart className=" h-6 w-6" />
+        </Button>
       </Link>
+
+      {is_bestseller && (
+        <span className=" bg-slate-700  rounded-[30px] absolute top-4 left-2 text-white pt-0 px-3">
+          Best Seller
+        </span>
+      )}
     </div>
   );
 }

@@ -15,9 +15,13 @@ const config = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        xs: "420px",
       },
     },
     extend: {
+      screens: {
+        xs: "420px",
+      },
       boxShadow: {
         "sub-sections": "0px 3px 4px 0px rgba(0, 0, 0, 0.03)",
 
