@@ -20,19 +20,24 @@ export default function ProductsBestSellers({
     useAppSelector((state) => state.member_categories);
 
   useEffect(() => {
-    dispatch(
-      getProducts_member({
-        category_id: category_id?.replaceAll("-", " "),
-        params,
-      })
-    );
+    if (params && category_id) {
+      dispatch(
+        getProducts_member({
+          ...params,
+          mainCategory: category_id?.replaceAll("-", " "),
+        })
+      );
+    }
+    return () => {
+      dispatch(cleanUp());
+    };
   }, [category_id, dispatch, params]);
 
   return (
     <ProductsSlider
       data={productsByMainCategoryForBestsellersSlider?.products}
       loading={loading}
-      title={category_id.replaceAll("-", " ") + " bestsellers"}
+      title={category_id?.replaceAll("-", " ") + " bestsellers"}
       viewAllLink={{
         pathname: "/categories/" + category_id + "/products",
         query: { role: "bestsellers" },

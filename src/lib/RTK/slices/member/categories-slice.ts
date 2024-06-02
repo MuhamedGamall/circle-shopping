@@ -50,23 +50,6 @@ export const getProducts_member: any = createAsyncThunk(
   }
 );
 
-// export const getProductsBySubCategory_member: any = createAsyncThunk(
-//   "memberCategoriesSlice/getProductsBySubCategory_member",
-//   async ({ category_id, params }: any, thunkApi) => {
-//     const { rejectWithValue } = thunkApi;
-//     try {
-//       const data = (
-//         await axios.get("/api/categories/" + category_id + "/" + "products", {
-//           params,
-//         })
-//       ).data;
-//       return { data, role: params?.role };
-//     } catch (error: any) {
-//       console.log(error);
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 // for get products for one sub category
 export const getSubcategoryProducts_member: any = createAsyncThunk(

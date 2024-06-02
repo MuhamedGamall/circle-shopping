@@ -21,19 +21,19 @@ export default function ProductsDeal({
   );
 
   useEffect(() => {
-    dispatch(
-      getProducts_member({
-        category_id: category_id?.replaceAll("-", " "),
-        params,
-      })
-    );
+    if (params && category_id) {
+      dispatch(getProducts_member({ ...params, mainCategory: category_id }));
+      return () => {
+        dispatch(cleanUp());
+      };
+    }
   }, [category_id, dispatch, params]);
 
   return (
     <ProductsSlider
       data={productsByMainCategoryForDealsSlider?.products}
       loading={loading}
-      title={category_id.replaceAll("-", " ") + " top deals"}
+      title={category_id?.replaceAll("-", " ") + " top deals"}
       viewAllLink={{
         pathname: "/categories/" + category_id + "/products",
         query: { role: "deals" },

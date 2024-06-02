@@ -12,20 +12,21 @@ import { CarouselItem } from "@/components/ui/carousel";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Dispatch } from "@reduxjs/toolkit";
 
 export default function SubCategoriesSlider({
   category_id,
 }: {
   category_id: string;
 }) {
-  const dispatch = useAppDispatch();
+  const dispatch: any = useAppDispatch();
   const { category, loading } = useAppSelector(
     (state) => state.member_categories
   );
 
   useEffect(() => {
-    dispatch(cleanUp());
     dispatch(getCategory_member(category_id?.replaceAll("-", " ")));
+    return () => dispatch(cleanUp());
   }, [category_id, dispatch]);
 
   return (
@@ -37,7 +38,10 @@ export default function SubCategoriesSlider({
         )}
       >
         <Link
-          href={"/categories/" + category_id + "/deals"}
+          href={{
+            pathname: "/categories/" + category_id + "/products",
+            query: { role: "deals" },
+          }}
           className="flex flex-col items-center  gap-2"
         >
           <Image
@@ -59,7 +63,10 @@ export default function SubCategoriesSlider({
         )}
       >
         <Link
-          href={"/categories/" + category_id + "/bestsellers"}
+          href={{
+            pathname: "/categories/" + category_id + "/products",
+            query: { role: "bestsellers" },
+          }}
           className="flex flex-col items-center  gap-2"
         >
           <Image
