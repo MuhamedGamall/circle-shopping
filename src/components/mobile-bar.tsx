@@ -5,7 +5,7 @@ import AccountMenu from "./account-menu";
 
 export default function MoblieBar() {
   return (
-    <nav className="mobilebar  -bottom-1 z-[1000]  sm:hidden flex items-center gap-4 justify-center w-full max-w-[400px] rounded-sm bg-white fixed mx-auto left-0 right-0 h-[60px]  px-3 py-2">
+    <nav className="mobilebar  -bottom-1 z-[1000]  md:hidden flex items-center gap-4 justify-center w-full max-w-[400px] rounded-sm bg-white fixed mx-auto left-0 right-0 h-[60px]  px-3 py-2">
       <Link
         href="/"
         className={
