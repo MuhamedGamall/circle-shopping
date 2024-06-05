@@ -9,10 +9,13 @@ import { Button } from "../ui/button";
 import { X } from "lucide-react";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { cn } from "@/lib/utils";
+import { getProducts_member } from "@/lib/RTK/slices/member/products-slice";
+import { useAppDispatch } from "@/hooks/redux";
 
 export default function SearchBar() {
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [recentSearch, setRecentSearch] = useLocalStorage(
     "recent-search",
@@ -22,6 +25,7 @@ export default function SearchBar() {
   const location = useLocation();
   const query = new URLSearchParams(location?.search).get("q");
   const navRef = useRef<HTMLDivElement | null>(null) as any;
+  const dispatch = useAppDispatch();
 
   useOnClickOutside(navRef, () => setOpen(false));
 
@@ -40,28 +44,54 @@ export default function SearchBar() {
     );
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSearch = (e: any) => {
     e.preventDefault();
-    if (!recentSearch?.includes(term.trim())) {
-      console.log(query, term.trim());
+    if (loading) return;
 
-      const url = qs.stringifyUrl(
-        {
-          url: "/search",
-          query: { q: term.trim() },
-        },
-        { skipEmptyString: true, skipNull: true }
-      );
-      if (term.trim()) {
-        router.push(url);
-        if (recentSearch?.length === 10) {
-          recentSearch.pop(9);
-        }
-        recentSearch.unshift(term.trim());
-        setRecentSearch(recentSearch);
+    setLoading(true);
+    const url = qs.stringifyUrl(
+      {
+        url: "/search",
+        query: { q: term.trim() },
+      },
+      { skipEmptyString: true, skipNull: true }
+    );
+    if (term.trim()) {
+      router.push(url);
+      if (recentSearch?.length === 10) {
+        recentSearch.pop(9);
       }
+      recentSearch.unshift(term.trim());
+      setRecentSearch(recentSearch);
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   };
+
+  const searchByRecentSearchValue = (value: string, i: number) => {
+    if (loading) return;
+
+    setLoading(true);
+    const url = qs.stringifyUrl(
+      {
+        url: "/search?role=all_products",
+        query: { q: value },
+      },
+      { skipEmptyString: true, skipNull: true }
+    );
+
+    router.push(url);
+
+    recentSearch.splice(i, 1);
+    recentSearch.unshift(value);
+    setRecentSearch(recentSearch);
+    setTimeout(() => {
+   
+      setLoading(false);
+    }, 1500);
+  };
+
   const handleDeleteOne = (i: number) => {
     const newRecentSearch = [...recentSearch];
     newRecentSearch.splice(i, 1);
@@ -69,7 +99,7 @@ export default function SearchBar() {
   };
   return (
     <div className="relative w-full" ref={navRef}>
-      <form onSubmit={onSubmit} className="relative">
+      <form onSubmit={handleSearch} className="relative">
         <Input
           onFocus={() => setOpen(true)}
           onChange={(e) => handleChange(e?.target?.value)}
@@ -80,17 +110,19 @@ export default function SearchBar() {
         />
         <button
           disabled={!term?.trim()}
-          className="absolute sm:right-7 right-0 sm:border-0 border-l top-[50%] -translate-y-[50%] sm:bg-transparent   bg-blue h-full w-[40px] rounded-r "
+          className="absolute sm:right-10 right-0 sm:border-0 border-l top-[50%] -translate-y-[50%] sm:bg-transparent   bg-blue h-full w-[40px] rounded-r "
         >
           <LuSearch className="h-5 w-5 text-white sm:text-slate-400 m-2" />
         </button>
       </form>
       {open && (
-        <div className="absolute bg-white z-50 h-fit   w-full top-12   p-3 shadow-section rounded-md">
-          <div className="flex justify-between">
+        <div className="absolute bg-white z-50 h-fit   w-full top-12    shadow-section rounded-md">
+          <div className="flex justify-between p-3">
             <div className="font-bold text-[16px]">Recent Seraches</div>{" "}
             <button
-              className={cn("hover:underline text-blue text-sm",{hidden:!recentSearch?.length})}
+              className={cn("hover:underline text-blue text-sm", {
+                hidden: !recentSearch?.length,
+              })}
               onClick={() => setRecentSearch([])}
             >
               Clear all
@@ -100,10 +132,19 @@ export default function SearchBar() {
             recentSearch?.map((el: string, i: number) => (
               <div
                 key={i}
-                className="flex justify-between items-center "
+                className="flex justify-between items-center cursor-pointer hover:bg-slate-100 pl-5 h-[37px]"
               >
-                <div className="text-[13px] text-shade font-semibold">{el}</div>
-                <Button variant={"ghost"} onClick={() => handleDeleteOne(i)}>
+                <div
+                  onClick={() => searchByRecentSearchValue(el, i)}
+                  className="text-[13px] text-shade font-semibold flex items-center w-full"
+                >
+                  {el}
+                </div>
+                <Button
+                  variant={"ghost"}
+                  className="h-full"
+                  onClick={() => handleDeleteOne(i)}
+                >
                   <X className="h-4 w-4 " />
                 </Button>
               </div>
@@ -118,4 +159,3 @@ export default function SearchBar() {
     </div>
   );
 }
-// ?

@@ -4,13 +4,15 @@ import { Product } from "@/models/product";
 import { groupFilters } from "@/utils/group-filters";
 import mongoConnect from "@/utils/mongo-connect";
 import qs from "query-string";
+import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
   try {
     await mongoConnect();
     const mainCategory = req.nextUrl.searchParams.get("mainCategory");
     const subCategory = req.nextUrl.searchParams.get("subCategory");
-    const getRole = req.nextUrl.searchParams.get("role")||''
+    const getRole = req.nextUrl.searchParams.get("role") || "";
+    const query = req.nextUrl.searchParams.get("q") || "";
 
     let filter: any = {
       ...(mainCategory && { "category.main_category": mainCategory }),
@@ -18,10 +20,28 @@ export async function GET(req: NextRequest) {
       is_published: true,
     };
 
+    if (query) {
+      const regex = new RegExp(query, "i");
+      if (mongoose.isValidObjectId(query)) {
+        filter = { _id: new mongoose.Types.ObjectId(query) };
+      } else {
+        filter = {
+          $or: [
+            { title: { $regex: regex } },
+            { "category.main_category": { $regex: regex } },
+            { "colour": { $regex: regex } },
+            { "model_number": { $regex: regex } },
+            { "model_name": { $regex: regex } },
+          ],
+        };
+      }
+    }
+
     const bestSellerThreshold = 100;
     const dealThreshold = 1;
+console.log(query);
 
-    if (!["bestsellers", "deals", "all_products"].includes(getRole )) {
+    if (!["bestsellers", "deals", "all_products"].includes(getRole)) {
       return new NextResponse("Not Found", { status: 404 });
     }
 
@@ -30,7 +50,7 @@ export async function GET(req: NextRequest) {
     else if (getRole === "deals")
       filter["price.offer.discount_percentage"] = { $gte: dealThreshold };
 
-    const groupFiltersData = await groupFilters({ filter });
+    const groupFiltersData = await groupFilters({ filter ,query});
 
     const queryParams = qs.parse(req.nextUrl.search, {
       arrayFormat: "bracket",
@@ -94,7 +114,6 @@ export async function GET(req: NextRequest) {
       }
       return sortOption;
     };
- 
 
     let products = await Product.aggregate([
       { $match: handleFilters() },

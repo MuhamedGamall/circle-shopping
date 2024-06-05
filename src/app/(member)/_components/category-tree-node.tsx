@@ -1,21 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { FilterDataState } from "@/types";
 import { MinusSquare, PlusSquare } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-export const TreeNode = ({
-  node,
-  setFilterData,
-  filterData,
-}: {
-  node: any;
-  setFilterData: Dispatch<SetStateAction<FilterDataState>>;
-  filterData: FilterDataState;
-}) => {
+import qs from "query-string";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-use";
+export const TreeNode = ({ node }: { node: any }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
-
+  const location = useLocation();
   const { category_id, sub_category_id } = useParams() as any;
 
   const [selectValue, setSelectValue] = useState<any>(null);
@@ -30,16 +23,25 @@ export const TreeNode = ({
   }, [category_id, sub_category_id]);
 
   const router = useRouter();
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  const { q, ...data } = qs.parse(location?.search ? location?.search : "", {
+    arrayFormat: "comma",
+  });
+  const params = qs.stringify(data, {
+    arrayFormat: "comma",
+  });
+
   const handleSelectMainCategory = (value: string) => {
-    const searchParams = location?.search;
+    
     const url =
-      selectValue?.mainCategory === value
-        ? `/products${searchParams}`
-        : `/categories/${value?.replaceAll(" ", "-")}/products${searchParams}`;
+    selectValue?.mainCategory === value
+    ? `/products?${params}`
+    : `/categories/${value?.replaceAll(" ", "-")}/products?${params}`;
+    console.log(url);
     setSelectValue((curr: any) => ({
       subCategory: "",
       mainCategory: curr?.mainCategory === value ? "" : value,
@@ -49,20 +51,16 @@ export const TreeNode = ({
   };
 
   const handleSelectSubcategory = (value: any) => {
-    const searchParams = location?.search;
     const url =
       selectValue?.subCategory === value?.subCategory
         ? `/categories/${value?.mainCategory?.replaceAll(
             " ",
             "-"
-          )}/products${searchParams}`
+          )}/products?${params}`
         : `/categories/${value?.mainCategory?.replaceAll(
             " ",
             "-"
-          )}/${value?.subCategory?.replaceAll(
-            " ",
-            "-"
-          )}/products${searchParams}`;
+          )}/${value?.subCategory?.replaceAll(" ", "-")}/products?${params}`;
     setSelectValue((curr: any) => ({
       mainCategory: value?.mainCategory,
       subCategory:
@@ -76,7 +74,7 @@ export const TreeNode = ({
   };
 
   const activeLink = (categoryName: any, valueSelected: string) =>
-    categoryName?.replaceAll("-", " ") === valueSelected
+    categoryName?.replaceAll("-", " ") === valueSelected;
   return (
     <div className="text-sm text-slate-900 ">
       <div className="flex items-center hover:opacity-[0.6] transition-all">

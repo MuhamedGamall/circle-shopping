@@ -24,14 +24,9 @@ const SelectCategory = ({
       {categoryTree
         ?.slice(0, showAll ? categoryTree?.length : 9)
         .map((rootNode, i) => (
-          <TreeNode
-            key={i}
-            node={rootNode}
-            setFilterData={setFilterData}
-            filterData={filterData}
-          />
+          <TreeNode key={i} node={rootNode} />
         ))}
-          {categoryTree?.length >= 10 && (
+      {categoryTree?.length >= 10 && (
         <button
           className=" w-fit text-sm text-blue underline cursor-pointer"
           onClick={toggleShowAll}

@@ -66,11 +66,18 @@ export default function ProductsTopbar({
     <div className="flex justify-between gap-2 items-center p-5 ">
       <div className="flex items-center gap-1">
         <span>{resultsLength}</span>
-        <span>Results for</span>
-
-        <span className=" capitalize font-semibold">
-          &#34;{categoryName || searchParams?.role}&#34;
-        </span>
+        <span>Results </span>
+        {categoryName ||
+          searchParams?.role ||
+          (searchParams?.q && (
+            <>
+              for
+              <span className=" capitalize font-semibold">
+                &#34;{categoryName || searchParams?.role || searchParams?.q}
+                &#34;
+              </span>
+            </>
+          ))}
       </div>
       <div className=" md:flex  gap-2 items-center hidden">
         <span className=" font-semibold text-[12px] text-slate-400 whitespace-nowrap">

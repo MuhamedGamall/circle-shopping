@@ -31,25 +31,6 @@ export const getCategory_member: any = createAsyncThunk(
   }
 );
 
-export const getProducts_member: any = createAsyncThunk(
-  "memberCategoriesSlice/getProducts_member",
-  async (params: any, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
-    try {
-      const data = (
-        await axios.get("/api/products/", {
-          params,
-        })
-      ).data;
-
-      return { data, role: params?.role };
-    } catch (error: any) {
-      console.log(error);
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 
 // for get products for one sub category
 export const getSubcategoryProducts_member: any = createAsyncThunk(
@@ -72,20 +53,7 @@ export const getSubcategoryProducts_member: any = createAsyncThunk(
 );
 
 type categoriesState = {
-  // productsBySubCategory: {
-  //   products: Product[];
-  //   groupFilters: GroupFilters | null;
-  // };
-  products: {
-    products: Product[];
-    groupFilters: GroupFilters | null;
-  };
-  productsByMainCategoryForDealsSlider: {
-    products: Product[];
-  };
-  productsByMainCategoryForBestsellersSlider: {
-    products: Product[];
-  };
+
   categories: Category[];
   category: Category | null;
   subcategoryProducts: {
@@ -97,11 +65,7 @@ type categoriesState = {
 };
 const initialState: categoriesState = {
 
-  products: { products: [], groupFilters: null },
-  productsByMainCategoryForDealsSlider: { products: [] },
-  productsByMainCategoryForBestsellersSlider: {
-    products: [],
-  },
+
   categories: [],
   subcategoryProducts: [],
   category: null,
@@ -115,7 +79,6 @@ const memberCategoriesSlice = createSlice({
   reducers: {
     cleanUp: (state) => {
       state.category = null;
-      state.products = { products: [], groupFilters: null };
     },
   },
   extraReducers: (builder) => {
@@ -163,54 +126,7 @@ const memberCategoriesSlice = createSlice({
           state.error = action.payload;
         }
       );
-    builder
-      .addCase(
-        getProducts_member.pending,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-      .addCase(getProducts_member.fulfilled, (state, action) => {
-        state.loading = false;
-        const { role, data } = action.payload;
-        if (role === "deals") {
-          state.productsByMainCategoryForDealsSlider = data;
-        } else if (role === "bestsellers") {
-          state.productsByMainCategoryForBestsellersSlider = data;
-        }
-        state.products = data;
-      })
-      .addCase(
-        getProducts_member.rejected,
-        (state: categoriesState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      );
 
-    // builder
-    //   .addCase(
-    //     getProductsBySubCategory_member.pending,
-    //     (state: categoriesState, action: PayloadAction<any>) => {
-    //       state.loading = true;
-    //       state.error = null;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductsBySubCategory_member.fulfilled,
-    //     (state: categoriesState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.productsBySubCategory = action.payload;
-    //     }
-    //   )
-    //   .addCase(
-    //     getProductsBySubCategory_member.rejected,
-    //     (state: categoriesState, action: PayloadAction<any>) => {
-    //       state.loading = false;
-    //       state.error = action.payload;
-    //     }
-    //   );
     builder
       .addCase(
         getSubcategoryProducts_member.pending,

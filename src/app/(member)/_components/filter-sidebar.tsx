@@ -70,11 +70,12 @@ export default function FilterSidebar({
   ]);
 
   const applyButton = () => {
+    
     setSearchParams((curr) => ({ ...curr, ...filterData }));
-
+const handleUrl = window?.location?.href?.replace('/search','/products')
     const url = qs.stringifyUrl(
       {
-        url: window?.location?.href,
+        url: handleUrl,
         query: filterData,
       },
       { skipEmptyString: true, skipNull: true, arrayFormat: "comma" }

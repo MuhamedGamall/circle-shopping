@@ -1,10 +1,8 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useAppDispatch } from "@/hooks/redux";
-import { getProducts_member } from "@/lib/RTK/slices/member/categories-slice";
 import { cn } from "@/lib/utils";
 import { FilterDataState } from "@/types";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
@@ -22,11 +20,9 @@ export default function SortBySheet({
   searchParams: FilterDataState;
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
 }) {
-  const { category_id } = useParams<any>();
 
   const router = useRouter();
 
-  const dispatch = useAppDispatch();
 
   const [value, setValue] = useState<any>("");
 

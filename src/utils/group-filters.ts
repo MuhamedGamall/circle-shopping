@@ -3,6 +3,7 @@ import { Product } from "@/models/product";
 import { Store } from "@/models/store";
 import { GroupFilters } from "@/types";
 import mongoConnect from "@/utils/mongo-connect";
+import mongoose from "mongoose";
 
 async function getFilteredProducts(filter:any, groupByField:string) {
   return Product.aggregate([
@@ -31,8 +32,8 @@ export async function groupFilters({
     const categories = await Category.find(findCategory);
 
 
-    let filterBySellers = await getFilteredProducts(filter, "store_id");
 
+    let filterBySellers = await getFilteredProducts(filter, "store_id");
     filterBySellers = await Promise.all(
       filterBySellers.map(async (el) => {
         const store: any = await Store.findById(el._id).lean();

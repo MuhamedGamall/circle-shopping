@@ -5,18 +5,18 @@ import ProductsTopbar from "@/app/(member)/_components/products-topbar";
 import FiltersSheetTrigger from "@/app/(member)/_components/sheet-trigger";
 import MobileProductCard from "@/components/product-curd/mobile-product-curd";
 import ProductCard from "@/components/product-curd/product-card";
-import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+
 import {
   cleanUp,
   getProducts_member,
-} from "@/lib/RTK/slices/member/categories-slice";
-import { RxDashboard } from "react-icons/rx";
+} from "@/lib/RTK/slices/member/products-slice";
 import { useParams } from "next/navigation";
 import qs from "query-string";
 import { useEffect, useState } from "react";
-import { useWindowSize } from "react-use";
 import { IoListOutline } from "react-icons/io5";
+import { RxDashboard } from "react-icons/rx";
+import { useWindowSize } from "react-use";
 export default function ProductsContent() {
   const { category_id, sub_category_id } = useParams() as any;
 
@@ -28,7 +28,7 @@ export default function ProductsContent() {
   const isSmallScreen = width <= 420;
 
   const { products, loading } = useAppSelector(
-    (state) => state.member_categories
+    (state) => state.member_products
   );
 
   const [searchParams, setSearchParams] = useState<any>(null);
