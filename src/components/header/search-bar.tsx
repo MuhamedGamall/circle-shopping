@@ -1,16 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
-import qs from "query-string";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { LuSearch } from "react-icons/lu";
-import { useLocalStorage, useLocation } from "react-use";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { X } from "lucide-react";
+import { useAppDispatch } from "@/hooks/redux";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import qs from "query-string";
+import { useEffect, useRef, useState } from "react";
+import { LuSearch } from "react-icons/lu";
+import { useLocalStorage, useLocation } from "react-use";
+import LoaderLayout from "../loader-layout";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { getProducts_member } from "@/lib/RTK/slices/member/products-slice";
-import { useAppDispatch } from "@/hooks/redux";
 
 export default function SearchBar() {
   const [term, setTerm] = useState("");
@@ -44,6 +45,13 @@ export default function SearchBar() {
     );
   };
 
+  const queryParams =
+    location?.search &&
+    qs.parse(location?.search, {
+      arrayFormat: "comma",
+      parseNumbers: true,
+    });
+
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (loading) return;
@@ -51,7 +59,7 @@ export default function SearchBar() {
     setLoading(true);
     const url = qs.stringifyUrl(
       {
-        url: "/search",
+        url: "/search?role=all_products",
         query: { q: term.trim() },
       },
       { skipEmptyString: true, skipNull: true }
@@ -63,13 +71,17 @@ export default function SearchBar() {
       }
       recentSearch.unshift(term.trim());
       setRecentSearch(recentSearch);
+      setOpen(false);
     }
     setTimeout(() => {
       setLoading(false);
     }, 1500);
+    if (queryParams) {
+      dispatch(getProducts_member({ ...queryParams, q: term.trim() }));
+    }
   };
 
-  const searchByRecentSearchValue = (value: string, i: number) => {
+  const searchBySelectValue = (value: string, i: number) => {
     if (loading) return;
 
     setLoading(true);
@@ -82,14 +94,17 @@ export default function SearchBar() {
     );
 
     router.push(url);
-
     recentSearch.splice(i, 1);
     recentSearch.unshift(value);
     setRecentSearch(recentSearch);
+    setOpen(false);
+
     setTimeout(() => {
-   
       setLoading(false);
     }, 1500);
+    if (queryParams) {
+      dispatch(getProducts_member({ ...queryParams, q: term.trim() }));
+    }
   };
 
   const handleDeleteOne = (i: number) => {
@@ -117,6 +132,7 @@ export default function SearchBar() {
       </form>
       {open && (
         <div className="absolute bg-white z-50 h-fit   w-full top-12    shadow-section rounded-md">
+          <LoaderLayout loadingCondition={loading} />
           <div className="flex justify-between p-3">
             <div className="font-bold text-[16px]">Recent Seraches</div>{" "}
             <button
@@ -135,7 +151,7 @@ export default function SearchBar() {
                 className="flex justify-between items-center cursor-pointer hover:bg-slate-100 pl-5 h-[37px]"
               >
                 <div
-                  onClick={() => searchByRecentSearchValue(el, i)}
+                  onClick={() => searchBySelectValue(el, i)}
                   className="text-[13px] text-shade font-semibold flex items-center w-full"
                 >
                   {el}

@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
@@ -17,6 +17,41 @@ const selectItems = [
   { label: "Price: High to Low", value: "desc" },
   { label: "Best Rated", value: "best-rated" },
 ];
+const TotalResult = ({
+  resultsLength,
+  searchParams,
+  categoryName,
+}: {
+  resultsLength: number;
+  searchParams: any;
+  categoryName: string;
+}) => {
+  const search = useSearchParams()
+  let title;
+  if (searchParams?.role && !categoryName && !search.get('q')) {
+    title = searchParams?.role === 'all_products' ? "All Products" : searchParams?.role 
+  } else if (search.get('q')) {
+    title = search.get('q');
+  } else if (categoryName) {
+    title = categoryName;
+  } 
+
+  return (
+    <div className="flex items-center gap-1">
+      <span>{resultsLength}</span>
+      <span>Results </span>
+      {title && (
+        <>
+          for
+          <span className=" capitalize font-semibold">
+            &#34;{title}
+            &#34;
+          </span>
+        </>
+      )}
+    </div>
+  );
+};
 export default function ProductsTopbar({
   resultsLength,
   searchParams,
@@ -64,21 +99,11 @@ export default function ProductsTopbar({
   };
   return (
     <div className="flex justify-between gap-2 items-center p-5 ">
-      <div className="flex items-center gap-1">
-        <span>{resultsLength}</span>
-        <span>Results </span>
-        {categoryName ||
-          searchParams?.role ||
-          (searchParams?.q && (
-            <>
-              for
-              <span className=" capitalize font-semibold">
-                &#34;{categoryName || searchParams?.role || searchParams?.q}
-                &#34;
-              </span>
-            </>
-          ))}
-      </div>
+      <TotalResult
+        categoryName={categoryName}
+        resultsLength={resultsLength}
+        searchParams={searchParams}
+      />
       <div className=" md:flex  gap-2 items-center hidden">
         <span className=" font-semibold text-[12px] text-slate-400 whitespace-nowrap">
           SORT BY

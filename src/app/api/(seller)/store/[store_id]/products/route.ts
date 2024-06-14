@@ -138,6 +138,7 @@ export async function DELETE(
     if (product?.images?.length) {
       await removeFolder({ folderId });
     }
+    
     return NextResponse.json(deleteProduct);
   } catch (error) {
     console.log("[SELLER:DELETE-PRODUCT]", error);
