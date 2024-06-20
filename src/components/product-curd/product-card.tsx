@@ -22,7 +22,7 @@ export default function ProductCard({
   const offerCalc = (discount_percentage / 100) * price?.base_price;
   const finalPrice = price?.base_price - offerCalc;
   return (
-    <div className="rounded-md bg-white p-2  mx-auto  w-[184px] lg:w-[206px] overflow-hidden  h-full border flex flex-col gap-1">
+    <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px] overflow-hidden  h-full shadow-sm flex flex-col gap-1">
       <div className=" relative">
         <ImagesSlieder images={images} />
         <Button className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-[57px] right-2 text-secondMain p-1">
