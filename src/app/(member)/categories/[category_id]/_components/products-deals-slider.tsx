@@ -4,8 +4,8 @@ import ProductsSlider from "@/components/products-slider/products-container";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   cleanUp,
-  getProducts_member,
 } from "@/lib/RTK/slices/member/categories-slice";
+import { getProducts_member } from "@/lib/RTK/slices/member/products-slice";
 import { useEffect } from "react";
 
 export default function ProductsDeal({
@@ -17,7 +17,7 @@ export default function ProductsDeal({
 }) {
   const dispatch = useAppDispatch();
   const { productsByMainCategoryForDealsSlider, loading } = useAppSelector(
-    (state) => state.member_categories
+    (state) => state.member_products
   );
 
   useEffect(() => {
