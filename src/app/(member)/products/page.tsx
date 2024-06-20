@@ -1,12 +1,11 @@
 import ProductsContent from "@/app/(member)/_components/products-content";
 import CategoriesNavigation from "@/components/navigation-menu/categories-navigation";
 
-export default function ProductsCategoryPage() {
+export default function ProductsPage() {
   return (
     <div>
       <CategoriesNavigation />
       <ProductsContent />
-
     </div>
   );
 }

@@ -22,9 +22,25 @@ export const getProducts_member: any = createAsyncThunk(
   }
 );
 
+export const getProduct_member: any = createAsyncThunk(
+  "memberProductsSlice/getProduct_member",
+  async (id: string, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+    try {
+      const data = (
+        await axios.get("/api/products/"+id)
+      ).data;
+
+      return data
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 type ProductsState = {
-
+  product: Product | null;
   products: {
     products: Product[];
     groupFilters: GroupFilters | null;
@@ -38,8 +54,9 @@ type ProductsState = {
   loading: boolean;
   error: null;
 };
-const initialState: ProductsState = {
 
+const initialState: ProductsState = {
+  product: null,
   products: { products: [], groupFilters: null },
   productsByMainCategoryForDealsSlider: { products: [] },
   productsByMainCategoryForBestsellersSlider: {
@@ -58,7 +75,6 @@ const memberProductsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-
     builder
       .addCase(
         getProducts_member.pending,
@@ -85,6 +101,25 @@ const memberProductsSlice = createSlice({
         }
       );
 
+    builder
+      .addCase(
+        getProduct_member.pending,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addCase(getProduct_member.fulfilled, (state, action) => {
+        state.loading = false;
+        state.product = action.paylod;
+      })
+      .addCase(
+        getProduct_member.rejected,
+        (state: ProductsState, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
   },
 });
 export default memberProductsSlice.reducer;
