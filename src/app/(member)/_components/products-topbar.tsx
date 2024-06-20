@@ -67,7 +67,7 @@ export default function ProductsTopbar({
   const [value, setValue] = useState<any>("");
 
   const categoryName = (
-    sub_category_id ? category_id + " / " + sub_category_id : category_id
+    sub_category_id ? category_id + " & " + sub_category_id : category_id
   )?.replaceAll("-", " ");
 
   useEffect(() => {
