@@ -9,7 +9,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { BiCartAdd } from "react-icons/bi";
 import { FaTruckMoving } from "react-icons/fa";
 import { Button } from "../ui/button";
-import { ImagesSlieder } from "./images-slider";
+import { ImagesSlider } from "./images-slider";
 export default function MobileProductCard({
   images,
   title,
@@ -22,12 +22,12 @@ export default function MobileProductCard({
   const offerCalc = (discount_percentage / 100) * price?.base_price;
   const finalPrice = price?.base_price - offerCalc;
   return (
-    <div className=" relative bg-white p-2  mx-auto overflow-hidden  border flex w-full gap-1">
+    <div className=" relative bg-white p-2  mx-auto overflow-hidden  shadow-sm flex w-full gap-1">
       <div className="basis-[44%]">
-        <ImagesSlieder images={images} />
+        <ImagesSlider images={images} />
 
         <div
-          className={cn("font-semibold   rounded-b-sm p-1 capitalize text-sm", {
+          className={cn("font-semibold    p-1 capitalize text-sm", {
             hidden: !price?.offer?.deal_type,
             "bg-red-600/20 text-red-700 ":
               price?.offer?.deal_type === "mega deal",

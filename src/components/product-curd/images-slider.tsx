@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { SliderBalls } from "./handle-balls";
 
-export function ImagesSlieder({ images }: { images: string[] }) {
+export function ImagesSlider({ images }: { images: string[] }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const imagesLength = images?.length;

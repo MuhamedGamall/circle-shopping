@@ -54,7 +54,7 @@ export default function ProductsSlider({
             {data?.map((el, i) => (
               <CarouselItem
                 key={i}
-                className={cn("w-full h-full min-w-[184px] max-w-[206px]")}
+                className={cn("w-full h-full min-w-[184px] max-w-[206px] py-2")}
               >
                 <ProductCard {...el} />
               </CarouselItem>
