@@ -60,7 +60,7 @@ export function CheckPassword({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4 mt-4 w-full flex flex-col"
         >
-          <LoaderLayout loadingCondition={isSubmitting || loading} />
+          <LoaderLayout loading={isSubmitting || loading} />
           <CustomField
             label="Current password"
             labelClassName={"text-slate-700"}

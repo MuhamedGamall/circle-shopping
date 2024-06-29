@@ -20,7 +20,7 @@ export default function DetialsSection({ user_id }: { user_id: string }) {
   const lastName = user?.name?.split(" ")?.slice(1).join(" ") || "";
   return (
     <div className="flex flex-col gap-4 mt-10">
-      <LoaderLayout loadingCondition={loading} />
+      <LoaderLayout loading={loading} />
       <Label className="flex flex-col gap-2 text-slate-700">
         Image
         {user?.image ? (

@@ -63,7 +63,7 @@ export function GetDataByDate({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0 flex flex-col " align="end">
-          <LoaderLayout loadingCondition={isSubmitting} />
+          <LoaderLayout loading={isSubmitting} />
           <Calendar
             initialFocus
             mode="range"

@@ -120,7 +120,7 @@ export default function SubmitData() {
 
   return (
     <div className="w-full ">
-      <LoaderLayout loadingCondition={isSubmitting || loading} />
+      <LoaderLayout loading={isSubmitting || loading} />
       <div className="flex justify-end items-center my-5">
         <Button disabled={isSubmitting} onClick={onSubmit} variant={"blue"}>
           Update

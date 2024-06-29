@@ -55,7 +55,7 @@ export default function ItemConditionForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
-        <LoaderLayout loadingCondition={isSubmitting || loading} />
+        <LoaderLayout loading={isSubmitting || loading} />
         <div className="  p-5 border-b">
           <SectionTitle
             title="Item Condition."

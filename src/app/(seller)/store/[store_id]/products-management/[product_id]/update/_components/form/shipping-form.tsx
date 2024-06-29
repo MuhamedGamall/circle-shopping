@@ -76,7 +76,7 @@ export default function ShippingForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
-        <LoaderLayout loadingCondition={loading || isSubmitting} />
+        <LoaderLayout loading={loading || isSubmitting} />
         <div className="p-5">
           <SectionTitle
             title="Shipping."

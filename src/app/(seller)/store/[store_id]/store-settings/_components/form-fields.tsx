@@ -45,9 +45,8 @@ export default function FormFields() {
           _id: data?._id,
         })
       );
-      if (req?.payload?.response?.status === 409) 
+      if (req?.payload?.response?.status === 409)
         setCreateStoreError(req?.payload?.response?.data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +68,7 @@ export default function FormFields() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="gap-5 flex flex-col items-center justify-center "
         >
-          <LoaderLayout loadingCondition={loading || isSubmitting} />
+          <LoaderLayout loading={loading || isSubmitting} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3 w-full ">
             <CustomField
               label="Display name *"

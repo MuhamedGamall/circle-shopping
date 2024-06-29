@@ -70,9 +70,8 @@ export default function FilterSidebar({
   ]);
 
   const applyButton = () => {
-    
     setSearchParams((curr) => ({ ...curr, ...filterData }));
-const handleUrl = window?.location?.href?.replace('/search','/products')
+    const handleUrl = window?.location?.href?.replace("/search", "/products");
     const url = qs.stringifyUrl(
       {
         url: handleUrl,
@@ -100,7 +99,7 @@ const handleUrl = window?.location?.href?.replace('/search','/products')
 
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
-      <LoaderLayout loadingCondition={loading} />
+      <LoaderLayout loading={loading} />
 
       <Label className="flex cursor-pointer items-center gap-1 font-normal text-[12px]  group-hover:text-blue capitalize">
         <Checkbox

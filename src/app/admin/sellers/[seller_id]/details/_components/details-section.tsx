@@ -22,9 +22,9 @@ export default function DetialsSection({ seller_id }: { seller_id: string }) {
 
   return (
     <div className="flex flex-col gap-4 mt-10">
-      <LoaderLayout loadingCondition={loading} />
+      <LoaderLayout loading={loading} />
       <Link
-        href={"/admin/sellers/"+seller_id+'/details/products'}
+        href={"/admin/sellers/" + seller_id + "/details/products"}
         className={buttonVariants({
           variant: "blue",
           className: "w-fit ml-auto",

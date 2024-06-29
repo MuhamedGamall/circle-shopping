@@ -19,7 +19,7 @@ export default function ShowProductDetails({
 }) {
   return (
     <div className="rounded-sm border">
-      <LoaderLayout loadingCondition={loading} />
+      <LoaderLayout loading={loading} />
       <div className="p-3 border-b">
         <SectionTitle
           title="Product Details"

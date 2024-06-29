@@ -126,7 +126,7 @@ export default function DetailsForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
-        <LoaderLayout loadingCondition={loading || isSubmitting} />
+        <LoaderLayout loading={loading || isSubmitting} />
         <div className="  p-5 border-b">
           <SectionTitle
             title="Product Details."

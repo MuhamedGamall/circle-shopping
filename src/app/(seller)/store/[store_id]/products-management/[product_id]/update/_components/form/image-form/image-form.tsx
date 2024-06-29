@@ -135,7 +135,7 @@ export default function ImageForm({
 
   return (
     <div className="image-section p-5 border-b relative">
-      <LoaderLayout loadingCondition={isSubmitting || loading} />
+      <LoaderLayout loading={isSubmitting || loading} />
       <SectionTitle
         title="Product Images."
         className="text-[16px] sm:text-[16px] text-slate-700 my-3"

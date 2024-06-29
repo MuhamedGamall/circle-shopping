@@ -25,7 +25,7 @@ export default function ProductsSlider({
   return (
     <div className="relative">
       <div className={cn({ "h-[300px] my-2": loading })}>
-        <LoaderLayout loadingCondition={loading} />
+        <LoaderLayout loading={loading} />
       </div>
 
       {data?.length > 0 && (

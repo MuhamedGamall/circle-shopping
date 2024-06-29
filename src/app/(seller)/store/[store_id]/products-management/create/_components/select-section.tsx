@@ -59,7 +59,7 @@ export default function SelectSection() {
   };
   return (
     <div className="max-w-[650px] w-full  mx-auto p-5">
-      <LoaderLayout loadingCondition={isSubmitting} />
+      <LoaderLayout loading={isSubmitting} />
       <div className="w-full sm:flex hidden justify-end">
         <Button
           onClick={onSubmit}

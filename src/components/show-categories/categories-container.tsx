@@ -13,7 +13,7 @@ export default function ShowCategories() {
   return (
     <div className={"relative"}>
       <div className={cn({ "h-[100px]": loading })}>
-        <LoaderLayout loadingCondition={loading} />
+        <LoaderLayout loading={loading} />
       </div>
       {data?.map((category, i) => (
         <div key={i} className=" pb-3 px-4">

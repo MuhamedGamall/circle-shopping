@@ -63,7 +63,7 @@ export default function FormFields() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 mt-4 w-full flex flex-col"
       >
-        <LoaderLayout loadingCondition={loading || isSubmitting} />
+        <LoaderLayout loading={loading || isSubmitting} />
         <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
           <div className=" flex flex-col gap-3 w-full mt-2  ">
             <Label className={"text-slate-700 "}>Email</Label>

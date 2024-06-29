@@ -125,14 +125,14 @@ export default function SearchBar() {
         />
         <button
           disabled={!term?.trim()}
-          className="absolute sm:right-10 right-0 sm:border-0 border-l top-[50%] -translate-y-[50%] sm:bg-transparent   bg-blue h-full w-[40px] rounded-r "
+          className="absolute sm:right-[5%] right-0 sm:border-0 border-l top-[50%] -translate-y-[50%] sm:bg-transparent   bg-blue h-full w-[40px] rounded-r "
         >
           <LuSearch className="h-5 w-5 text-white sm:text-slate-400 m-2" />
         </button>
       </form>
       {open && (
         <div className="absolute bg-white z-50 h-fit   w-full top-12    shadow-section rounded-md">
-          <LoaderLayout loadingCondition={loading} />
+          <LoaderLayout loading={loading} />
           <div className="flex justify-between p-3">
             <div className="font-bold text-[16px]">Recent Seraches</div>{" "}
             <button

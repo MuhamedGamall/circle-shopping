@@ -23,7 +23,7 @@ export default function Sections() {
   }, [dispatch]);
   return (
     <div className="flex flex-col gap-5">
-      <LoaderLayout loadingCondition={loading} />
+      <LoaderLayout loading={loading} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <TotalSales data={analytics?.total_sales || 0} />
         <SalesCount data={analytics?.sales_count || 0} />
