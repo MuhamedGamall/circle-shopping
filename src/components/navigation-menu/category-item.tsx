@@ -38,8 +38,9 @@ export default function CategoryItem({
           <Link
             href={
               "/categories/" +
-              main_category?.name?.replaceAll(" ", "-") +
-              "/products?role=all_products"
+          main_category?.name?.replaceAll(" ", "-") +
+          "/"
+  
             }
           >
             {main_category?.name}
