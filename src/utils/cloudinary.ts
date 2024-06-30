@@ -19,6 +19,11 @@ export const uploadImages = async ({
     for (const image of images) {
       const uploadOptions = {
         folder: folderName,
+        transformation: [
+          { format: "webp" },
+
+          { width: 240, height: 327, crop: "fill", quality: "auto" },
+        ],
       };
       if (image?.startsWith("data:image") && image?.includes("base64")) {
         const result = await cloudinaryV2.uploader.upload(image, {
@@ -47,6 +52,11 @@ export const uploadSubCategoryImages = async ({
     for (const el of data) {
       const uploadOptions = {
         folder: folderName,
+        transformation: [
+          { format: "webp" },
+          { width: 1000, crop: "scale", quality: "auto" }
+        ],
+      
       };
       if (
         el?.image?.startsWith("data:image") &&

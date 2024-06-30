@@ -2,11 +2,11 @@
 
 import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProduct_member } from "@/lib/RTK/slices/member/products-slice";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import ImagesSection from "./images-section";
+import ProductImagesSection from "./product-images-section";
 import LoaderLayout from "@/components/loader-layout";
+import { getProduct_member } from "@/lib/RTK/slices/member/products-slice";
 
 export default function ProductContent() {
   const { product_id } = useParams();
@@ -21,10 +21,10 @@ export default function ProductContent() {
   }, [dispatch, product_id]);
 
   return (
-    <MaxWidthWrapper className="relative">
+    <MaxWidthWrapper className="relative ">
       <LoaderLayout loading={loading} />
-      <div className="bg-red-200 w-full flex">
-        <ImagesSection images={product?.images} />
+      <div className="w-full flex bg-white p-8">
+        <ProductImagesSection images={product?.images} />
       </div>
     </MaxWidthWrapper>
   );

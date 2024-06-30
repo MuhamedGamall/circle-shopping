@@ -18,7 +18,7 @@ export default function ImageForm({
   const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const image: File | undefined = e.target.files?.[0];
     if (!image) return;
-    if (!["image/jpg", "image/png", "image/jpeg"].includes(image.type))
+    if (!["image/jpg", "image/png", "image/jpeg", "image/webp"].includes(image.type))
       return toast.error("We do not support this file type");
 
     if (image?.size > 10 * 1024 * 1024)
@@ -35,13 +35,13 @@ export default function ImageForm({
     };
 
     const isValidImage = await checkImageDimensions(image);
-    if (isValidImage) {
+    // if (isValidImage) {
       readerImage(image, id);
-    } else {
-      toast.error(
-        "Image dimensions should be at least 660px width and 900px height."
-      );
-    }
+    // } else {
+    //   toast.error(
+    //     "Image dimensions should be at least 660px width and 900px height."
+    //   );
+    // }
   };
 
   return (
@@ -89,7 +89,7 @@ export default function ImageForm({
               type="file"
               id={"upload-" + id}
               className="hidden"
-              accept=".png,.jpg,.jpeg"
+              accept=".png,.jpg,.jpeg,webp"
             />
             <FaCirclePlus
               className={cn("text-slate-500 h-4 w-4", { hidden: imageValue })}

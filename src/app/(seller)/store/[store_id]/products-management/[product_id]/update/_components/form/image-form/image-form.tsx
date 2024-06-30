@@ -52,7 +52,7 @@ export default function ImageForm({
     const filteredImages = Array.from(images).filter(
       (file) =>
         file.size <= 10 * 1024 * 1024 &&
-        ["image/jpg", "image/png", "image/jpeg"].includes(file.type)
+        ["image/jpg", "image/png", "image/jpeg","image/webp"].includes(file.type)
     );
 
     if (images.length !== filteredImages.length)
@@ -64,14 +64,14 @@ export default function ImageForm({
       return toast.error("You can only upload up to 10 images.");
 
     for (const image of filteredImages) {
-      const isValidImage = await checkImageDimensions(image);
-      if (true) {
+      // const isValidImage = await checkImageDimensions(image);
+      // if (isValidImage) {
         readerImage(image);
-      } else {
-        toast.error(
-          "Image dimensions should be at least 660px width and 900px height."
-        );
-      }
+      // } else {
+      //   toast.error(
+      //     "Image dimensions should be at least 660px width and 900px height."
+      //   );
+      // }
     }
   };
 
@@ -185,7 +185,7 @@ export default function ImageForm({
             type="file"
             id="upload"
             className="hidden"
-            accept=".png,.jpg,.jpeg"
+            accept=".png,.jpg,.jpeg,.webp"
             multiple
             disabled={imageValue?.length === 10 || isSubmitting || loading}
           />

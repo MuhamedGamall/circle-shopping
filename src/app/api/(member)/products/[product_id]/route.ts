@@ -17,7 +17,7 @@ export async function GET(
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     if (!mongoose.isValidObjectId(product_id)) {
       return new NextResponse("Not Found", { status: 404 });
     }
@@ -25,8 +25,6 @@ export async function GET(
     const product = await Product.findOne({
       _id: product_id,
     }).lean();
-    console.log(product);
-
     if (!product) {
       return new NextResponse("Not Found", { status: 404 });
     }

@@ -27,11 +27,9 @@ export const getProduct_member: any = createAsyncThunk(
   async (id: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (
-        await axios.get("/api/products/"+id)
-      ).data;
+      const data = (await axios.get("/api/products/" + id)).data;
 
-      return data
+      return data;
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);
@@ -111,7 +109,7 @@ const memberProductsSlice = createSlice({
       )
       .addCase(getProduct_member.fulfilled, (state, action) => {
         state.loading = false;
-        state.product = action.paylod;
+        state.product = action.payload;
       })
       .addCase(
         getProduct_member.rejected,

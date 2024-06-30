@@ -1,5 +1,5 @@
 import Navbar from "./_components/navbar";
-
+import "./style.css";
 export default function StoreLayout({
   children,
 }: Readonly<{
