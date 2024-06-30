@@ -1,4 +1,3 @@
-import LoaderLayout from "@/components/loader-layout";
 import {
   Accordion,
   AccordionContent,
@@ -9,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FilterDataState, GroupFilters } from "@/types";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import qs from "query-string";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -20,11 +19,9 @@ import { SelectPrice } from "./select-price";
 
 export default function FilterSidebar({
   groupFilters,
-  loading,
   searchParams,
   setSearchParams,
 }: {
-  loading: boolean;
   groupFilters: null | GroupFilters;
   searchParams: FilterDataState;
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
@@ -99,7 +96,6 @@ export default function FilterSidebar({
 
   return (
     <div className="w-[250px] p-3 h-[100%] relative">
-      <LoaderLayout loading={loading} />
 
       <Label className="flex cursor-pointer items-center gap-1 font-normal text-[12px]  group-hover:text-blue capitalize">
         <Checkbox

@@ -62,6 +62,7 @@ export type Product = {
   is_published: boolean;
   store_id: string;
   likes: number;
+  delivery: "free" | "paid";
   store_personal_email: string;
   title: string;
   images: string[];
@@ -121,7 +122,7 @@ export type FilterItem = {
   count: number;
 };
 export type GroupFilters = {
-  categories:  Category[] ;
+  categories: Category[];
   filterByCondition: FilterItem[];
   filterBySellers: FilterItem[];
   filterByBrands: FilterItem[];

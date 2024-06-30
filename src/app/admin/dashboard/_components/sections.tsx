@@ -12,6 +12,7 @@ import TopSales from "./top-sales";
 import TopUsers from "./top-users";
 import TopSellers from "./top-sellers";
 import LoaderLayout from "@/components/loader-layout";
+import Loader from "@/components/loader";
 
 export default function Sections() {
   const dispatch = useAppDispatch();
@@ -23,7 +24,8 @@ export default function Sections() {
   }, [dispatch]);
   return (
     <div className="flex flex-col gap-5">
-      <LoaderLayout loading={loading} />
+      {loading && <Loader />}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <TotalSales data={analytics?.total_sales || 0} />
         <SalesCount data={analytics?.sales_count || 0} />

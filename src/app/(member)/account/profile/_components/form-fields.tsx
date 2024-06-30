@@ -15,6 +15,7 @@ import { useAppDispatch } from "@/hooks/redux";
 import { updateAccount } from "@/lib/RTK/slices/member/account-slice";
 import LoaderLayout from "@/components/loader-layout";
 import { Label } from "@/components/ui/label";
+import Loader from "@/components/loader";
 
 export default function FormFields() {
   const [country, setCountry] = useState("");
@@ -63,7 +64,8 @@ export default function FormFields() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 mt-4 w-full flex flex-col"
       >
-        <LoaderLayout loading={loading || isSubmitting} />
+        {loading && <Loader />}
+        <LoaderLayout loading={isSubmitting} />
         <div className="items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-7">
           <div className=" flex flex-col gap-3 w-full mt-2  ">
             <Label className={"text-slate-700 "}>Email</Label>

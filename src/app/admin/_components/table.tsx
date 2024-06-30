@@ -24,6 +24,7 @@ import {
 
 import { LoadingSkeleton } from "@/components/table/table-loading";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/loader";
 
 export function DataTable({
   data,
@@ -63,6 +64,8 @@ export function DataTable({
   });
   return (
     <div className="w-full ">
+      {loading && <Loader />}
+
       <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
         <Input
           placeholder={`Search`}

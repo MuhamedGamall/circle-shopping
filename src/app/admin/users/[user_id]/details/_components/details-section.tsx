@@ -1,7 +1,7 @@
 "use client";
 
 import Icons from "@/components/icons";
-import LoaderLayout from "@/components/loader-layout";
+import Loader from "@/components/loader";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getUser_admin } from "@/lib/RTK/slices/admin/users";
@@ -18,9 +18,10 @@ export default function DetialsSection({ user_id }: { user_id: string }) {
   }, [dispatch, user_id]);
   const firstName = user?.name?.split(" ")?.[0] || "";
   const lastName = user?.name?.split(" ")?.slice(1).join(" ") || "";
+
   return (
     <div className="flex flex-col gap-4 mt-10">
-      <LoaderLayout loading={loading} />
+      {loading && <Loader />}
       <Label className="flex flex-col gap-2 text-slate-700">
         Image
         {user?.image ? (

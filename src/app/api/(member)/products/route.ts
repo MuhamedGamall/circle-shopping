@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 export async function GET(req: NextRequest) {
   try {
     await mongoConnect();
+    
     const mainCategory = req.nextUrl.searchParams.get("mainCategory");
     const subCategory = req.nextUrl.searchParams.get("subCategory");
     const getRole = req.nextUrl.searchParams.get("role") || "";
@@ -29,17 +30,17 @@ export async function GET(req: NextRequest) {
           $or: [
             { title: { $regex: regex } },
             { "category.main_category": { $regex: regex } },
-            { "colour": { $regex: regex } },
-            { "model_number": { $regex: regex } },
-            { "model_name": { $regex: regex } },
+            { colour: { $regex: regex } },
+            { model_number: { $regex: regex } },
+            { model_name: { $regex: regex } },
           ],
+          is_published: true,
         };
       }
     }
 
     const bestSellerThreshold = 100;
     const dealThreshold = 1;
-console.log(query);
 
     if (!["bestsellers", "deals", "all_products"].includes(getRole)) {
       return new NextResponse("Not Found", { status: 404 });
@@ -50,7 +51,7 @@ console.log(query);
     else if (getRole === "deals")
       filter["price.offer.discount_percentage"] = { $gte: dealThreshold };
 
-    const groupFiltersData = await groupFilters({ filter ,query});
+    const groupFiltersData = await groupFilters({ filter, query });
 
     const queryParams = qs.parse(req.nextUrl.search, {
       arrayFormat: "bracket",
@@ -65,8 +66,8 @@ console.log(query);
     const {
       limit,
       brand = [],
-      minPrice = groupFiltersData?.minPrice || 0,
-      maxPrice = groupFiltersData?.maxPrice || defaultValues,
+      minPrice = groupFiltersData?.minPrice,
+      maxPrice = groupFiltersData?.maxPrice,
       deal = [],
       condition = [],
       colour = [],

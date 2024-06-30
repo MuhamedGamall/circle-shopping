@@ -30,6 +30,7 @@ import { Product } from "@/types";
 import { Input } from "../ui/input";
 import { CategoriesFilter } from "./categories-filter";
 import { LoadingSkeleton } from "./table-loading";
+import Loader from "../loader";
 
 export function ProductsTable({
   data,
@@ -87,6 +88,8 @@ export function ProductsTable({
   });
   return (
     <div className="w-full ">
+      {loading && <Loader />}
+      
       <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
         <div className="bg-[#eff3fd] p-1  flex items-center justify-between w-full gap-2">
           <Input

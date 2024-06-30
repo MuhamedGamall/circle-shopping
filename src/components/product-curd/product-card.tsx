@@ -16,6 +16,8 @@ export default function ProductCard({
   price,
   is_bestseller,
   likes,
+  _id,
+  delivery,
 }: Product) {
   const discount_percentage = price?.offer?.discount_percentage;
 
@@ -23,9 +25,9 @@ export default function ProductCard({
   const finalPrice = price?.base_price - offerCalc;
   return (
     <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px]  h-full shadow-sm   flex flex-col gap-1">
-      <div >
+      <div>
         <div className=" relative">
-          <ImagesSlider images={images} />
+          <ImagesSlider images={images} id={_id} />
           <Button className="h-7 w-7   bg-white hover:bg-slate-100 rounded-md shadow-md absolute bottom-6 right-2 text-secondMain p-1">
             <BiCartAdd className=" h-7 w-7" />
           </Button>
@@ -59,7 +61,7 @@ export default function ProductCard({
         </div>
       </div>
 
-      <Link href={""} className=" flex flex-col gap-1  h-full ">
+      <Link href={"/products/" + _id} className=" flex flex-col gap-1  h-full ">
         <div className="text-[#404553] font-semibold text-[17px] leading-[1.24]  ">
           {truncateText(title, 35)}
         </div>
@@ -79,10 +81,12 @@ export default function ProductCard({
           </strong>
         )}
 
-        <div className="flex gap-2 items-center ">
-          <FaTruckMoving className="h-4 w-4 text-[#3568db]" />
-          <span className="text-sm">Free Delivrey</span>
-        </div>
+        {delivery === "free" && (
+          <div className="flex gap-2 items-center ">
+            <FaTruckMoving className="h-4 w-4 text-[#3568db]" />
+            <span className="text-sm">Free Delivrey</span>
+          </div>
+        )}
       </Link>
     </div>
   );

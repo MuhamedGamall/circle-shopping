@@ -9,6 +9,7 @@ import { FaPlus } from "react-icons/fa";
 import { columns } from "./table-columns";
 import { ProductsTable } from "@/components/table/table";
 import { useState } from "react";
+import Loader from "@/components/loader";
 
 export function DataTable() {
   const { store_id } = useParams();
@@ -17,6 +18,7 @@ export function DataTable() {
 
   return (
     <div>
+      {loading && <Loader />}
       <Link
         href={"/store/" + store_id + "/products-management/create"}
         className={cn(

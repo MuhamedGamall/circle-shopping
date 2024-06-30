@@ -12,6 +12,7 @@ import { useState } from "react";
 import { BsChevronRight } from "react-icons/bs";
 import { TbBuildingWarehouse } from "react-icons/tb";
 import SelectCategory from "./select-category";
+import Loader from "@/components/loader";
 
 export default function SelectSection() {
   const dispatch = useAppDispatch();
@@ -59,6 +60,8 @@ export default function SelectSection() {
   };
   return (
     <div className="max-w-[650px] w-full  mx-auto p-5">
+      {loading && <Loader />}
+
       <LoaderLayout loading={isSubmitting} />
       <div className="w-full sm:flex hidden justify-end">
         <Button

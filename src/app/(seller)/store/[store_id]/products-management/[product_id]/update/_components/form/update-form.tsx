@@ -16,6 +16,7 @@ import { resetForm } from "@/lib/RTK/slices/seller/products";
 import useProductSeller from "@/hooks/seller/use-product_seller";
 import CategoryForm from "./category-form";
 import Banner from "@/components/banner";
+import Loader from "@/components/loader";
 
 export default function UpdateForm() {
   const { store_id, product_id } = useParams();
@@ -30,6 +31,8 @@ export default function UpdateForm() {
 
   return (
     <div>
+      {loading && <Loader />}
+
       <ProductDetailsHeader
         data={data}
         loading={loading}

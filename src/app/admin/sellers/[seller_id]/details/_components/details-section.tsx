@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/loader";
 import LoaderLayout from "@/components/loader-layout";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -22,7 +23,7 @@ export default function DetialsSection({ seller_id }: { seller_id: string }) {
 
   return (
     <div className="flex flex-col gap-4 mt-10">
-      <LoaderLayout loading={loading} />
+      {loading && <Loader />}
       <Link
         href={"/admin/sellers/" + seller_id + "/details/products"}
         className={buttonVariants({

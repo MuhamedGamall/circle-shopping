@@ -16,6 +16,8 @@ export default function MobileProductCard({
   price,
   is_bestseller,
   likes,
+  _id,
+  delivery,
 }: Product) {
   const discount_percentage = price?.offer?.discount_percentage;
 
@@ -24,8 +26,7 @@ export default function MobileProductCard({
   return (
     <div className=" relative bg-white p-2  mx-auto overflow-hidden  shadow-sm flex w-full gap-1">
       <div className="basis-[44%]">
-        <ImagesSlider images={images} />
-
+        <ImagesSlider images={images} id={_id} />
         <div
           className={cn("font-semibold    p-1 capitalize text-sm", {
             hidden: !price?.offer?.deal_type,
@@ -60,10 +61,12 @@ export default function MobileProductCard({
           </strong>
         )}
 
-        <div className="flex gap-2 items-center ">
-          <FaTruckMoving className="h-4 w-4 text-[#3568db]" />
-          <span className="text-sm">Free Delivrey</span>
-        </div>
+        {delivery === "free" && (
+          <div className="flex gap-2 items-center ">
+            <FaTruckMoving className="h-4 w-4 text-[#3568db]" />
+            <span className="text-sm">Free Delivrey</span>
+          </div>
+        )}
         <span className="flex items-center gap-1 bg-white text-[16px] border rounded-[30px]  absolute bottom-2 left-2 text-secondMain px-2">
           <span className="text-gray-500 text-[13px]">
             ({formatNumber(likes)})

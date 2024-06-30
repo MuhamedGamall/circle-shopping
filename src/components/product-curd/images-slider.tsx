@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { SliderBalls } from "./handle-balls";
 
-export function ImagesSlider({ images }: { images: string[] }) {
+export function ImagesSlider({ images, id }: { images: string[]; id: string }) {
   const [imageIndex, setImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const imagesLength = images?.length;
@@ -34,7 +34,7 @@ export function ImagesSlider({ images }: { images: string[] }) {
   return (
     <>
       <div className=" bg-slate-100 relative border">
-        <Link href={""}>
+        <Link href={"/products/" + id}>
           <Image
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

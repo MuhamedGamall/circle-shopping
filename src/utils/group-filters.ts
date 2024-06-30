@@ -5,7 +5,7 @@ import { GroupFilters } from "@/types";
 import mongoConnect from "@/utils/mongo-connect";
 import mongoose from "mongoose";
 
-async function getFilteredProducts(filter:any, groupByField:string) {
+async function getFilteredProducts(filter: any, groupByField: string) {
   return Product.aggregate([
     { $match: filter },
     {
@@ -31,8 +31,6 @@ export async function groupFilters({
 
     const categories = await Category.find(findCategory);
 
-
-
     let filterBySellers = await getFilteredProducts(filter, "store_id");
     filterBySellers = await Promise.all(
       filterBySellers.map(async (el) => {
@@ -43,7 +41,6 @@ export async function groupFilters({
         };
       })
     );
-
 
     const filterByDeals = await Product.aggregate([
       { $match: filter },
@@ -72,14 +69,20 @@ export async function groupFilters({
         },
       },
     ]);
-
+    const defaultValues = 10e10;
+    const maxPrice =
+      filterByPrice[0]?.maxPrice == filterByPrice[0]?.minPrice
+        ? defaultValues
+        : filterByPrice[0]?.maxPrice;
     const filterByBrands = await getFilteredProducts(filter, "category.brand");
     const filterByColour = await getFilteredProducts(filter, "colour");
-    const filterByCondition = await getFilteredProducts(filter, "item_condition");
-    const defaultValues = 10e10;
+    const filterByCondition = await getFilteredProducts(
+      filter,
+      "item_condition"
+    );
     const groupFilters = {
       categories,
-      maxPrice: filterByPrice[0]?.maxPrice || defaultValues,
+      maxPrice: maxPrice,
       minPrice: filterByPrice[0]?.minPrice || 0,
       filterByBrands,
       filterByDeals,

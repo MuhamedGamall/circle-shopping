@@ -26,17 +26,19 @@ const TotalResult = ({
   searchParams: any;
   categoryName: string;
 }) => {
-  const search = useSearchParams()
+  const search = useSearchParams();
   let title;
-  if (searchParams?.role && !categoryName && !search.get('q')) {
-    title = searchParams?.role === 'all_products' ? "All Products" : searchParams?.role 
-  } else if (search.get('q')) {
-    title = search.get('q');
+  if (searchParams?.role && !categoryName && !search.get("q")) {
+    title = searchParams?.role;
+  } else if (search.get("q")) {
+    title = search.get("q");
   } else if (categoryName) {
     title = categoryName;
-  } 
+  }
 
-  return (
+  return title == "all_products" ? (
+    <div></div>
+  ) : (
     <div className="flex items-center gap-1">
       <span>{resultsLength}</span>
       <span>Results </span>
@@ -70,11 +72,13 @@ export default function ProductsTopbar({
     sub_category_id ? category_id + " & " + sub_category_id : category_id
   )?.replaceAll("-", " ");
 
+  const sortBy = useSearchParams().get("sortBy") || "best-rated";
+
   useEffect(() => {
-    if (searchParams?.sortBy) {
-      setValue(searchParams?.sortBy);
+    if (sortBy) {
+      setValue(sortBy);
     }
-  }, [searchParams?.sortBy]);
+  }, [sortBy]);
 
   const handleSelect = (val: string) => {
     if (val) setValue(val);

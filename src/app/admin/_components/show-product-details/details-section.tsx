@@ -9,6 +9,7 @@ import ImagesSection from "./sections/images";
 import OfferSection from "./sections/offer";
 import ProductDetailsSection from "./sections/product-details";
 import ShippingSection from "./sections/shipping";
+import Loader from "@/components/loader";
 
 export default function ShowProductDetails({
   product,
@@ -19,7 +20,7 @@ export default function ShowProductDetails({
 }) {
   return (
     <div className="rounded-sm border">
-      <LoaderLayout loading={loading} />
+      {loading && <Loader />}
       <div className="p-3 border-b">
         <SectionTitle
           title="Product Details"

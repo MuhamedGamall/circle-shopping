@@ -14,6 +14,7 @@ import useStore from "@/hooks/seller/use-store_seller";
 import { updateStore_seller } from "@/lib/RTK/slices/seller/store";
 import { useState } from "react";
 import { storeSchema } from "../schema";
+import Loader from "@/components/loader";
 
 export default function FormFields() {
   const dispatch = useAppDispatch();
@@ -63,12 +64,14 @@ export default function FormFields() {
           variant={"warning"}
         />
       )}
+      {loading && <Loader />}
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="gap-5 flex flex-col items-center justify-center "
         >
-          <LoaderLayout loading={loading || isSubmitting} />
+          <LoaderLayout loading={isSubmitting} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-3 w-full ">
             <CustomField
               label="Display name *"

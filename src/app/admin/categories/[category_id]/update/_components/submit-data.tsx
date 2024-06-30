@@ -13,14 +13,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import MainCategoryForm from "./sections/main-category-form";
 import SubCategortiesForm from "./sections/sub-categories-form";
+import Loader from "@/components/loader";
 export default function SubmitData() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { category_id } = useParams();
-  const { data: categories } = useAdminCategories();
-  const { category, loading } = useAppSelector(
-    (state) => state.admin_categories
-  );
+  const { data: categories, loading } = useAdminCategories();
+  const { category } = useAppSelector((state) => state.admin_categories);
 
   const [
     categoriesIdsForDeleteFromCloudinary,
@@ -120,7 +119,8 @@ export default function SubmitData() {
 
   return (
     <div className="w-full ">
-      <LoaderLayout loading={isSubmitting || loading} />
+      {loading && <Loader />}
+      <LoaderLayout loading={isSubmitting} />
       <div className="flex justify-end items-center my-5">
         <Button disabled={isSubmitting} onClick={onSubmit} variant={"blue"}>
           Update
