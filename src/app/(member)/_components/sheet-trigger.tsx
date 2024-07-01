@@ -13,12 +13,10 @@ export default function FiltersSheetTrigger({
   searchParams,
   setSearchParams,
   groupFilters,
-  loading,
 }: {
   searchParams: FilterDataState;
   setSearchParams: Dispatch<SetStateAction<FilterDataState>>;
   groupFilters: null | GroupFilters;
-  loading: boolean;
 }) {
   return (
     <div className="md:hidden flex gap-2 items-center fixed  h-fit z-[1010] bottom-16 left-[50%] -translate-x-[50%] rounded-full bg-blue px-5 py-2 ">
@@ -54,7 +52,6 @@ export default function FiltersSheetTrigger({
         >
           <FilterSidebar
             groupFilters={groupFilters}
-            loading={loading}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
           />

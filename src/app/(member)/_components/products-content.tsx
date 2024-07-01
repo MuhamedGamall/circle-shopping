@@ -84,7 +84,6 @@ export default function ProductsContent() {
 
       <FiltersSheetTrigger
         groupFilters={products?.groupFilters}
-        loading={loading}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
       />
