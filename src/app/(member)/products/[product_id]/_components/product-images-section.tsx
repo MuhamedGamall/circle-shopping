@@ -40,7 +40,7 @@ export default function ProductImagesSection({
           images?.map((img, i) => (
             <SwiperSlide
               key={i}
-              className={cn("h-[100px] w-full  ")}
+              className={cn("h-[80px] w-full  ")}
               onClick={() => handleActiveImg(i)}
             >
               <Image
@@ -49,7 +49,7 @@ export default function ProductImagesSection({
                 width={70}
                 height={100}
                 className={cn(
-                  "w-full h-full object-cover rounded-md cursor-pointer  hover:border-2 border-slate-500 transition-all",
+                  "w-full h-full object-cover rounded-sm cursor-pointer  hover:border-2 border-slate-500 transition-all",
                   {
                     "border-2 border-[blue]": isActive === i,
                   }
@@ -58,14 +58,14 @@ export default function ProductImagesSection({
             </SwiperSlide>
           ))}
       </Swiper>
-      <div className="flex-[3.2]">
+      <div className="flex-[4]">
         {images?.length && (
           <Image
             src={images?.[isActive] || ""}
             alt="product"
             width={500}
             height={500}
-            className=" w-full h-full object-cover object-center"
+            className="  object-contain "
           />
         )}
       </div>

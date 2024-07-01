@@ -12,6 +12,7 @@ import LoaderLayout from "../loader-layout";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { getProducts_member } from "@/lib/RTK/slices/member/products-slice";
+import Loader from "../loader";
 
 export default function SearchBar() {
   const [term, setTerm] = useState("");
@@ -54,9 +55,7 @@ export default function SearchBar() {
 
   const handleSearch = (e: any) => {
     e.preventDefault();
-    if (loading) return;
-
-    setLoading(true);
+    if (!term.trim()) return;
     const url = qs.stringifyUrl(
       {
         url: "/search?role=all_products",
@@ -64,18 +63,21 @@ export default function SearchBar() {
       },
       { skipEmptyString: true, skipNull: true }
     );
-    if (term.trim()) {
-      router.push(url);
-      if (recentSearch?.length === 10) {
-        recentSearch.pop();
-      }
-      recentSearch.unshift(term.trim());
-      setRecentSearch(recentSearch);
-      setOpen(false);
+    router.push(url);
+
+    if (loading) return;
+
+    setLoading(true);
+    if (recentSearch?.length === 10) {
+      recentSearch.pop();
     }
+    recentSearch.unshift(term.trim());
+    setRecentSearch(recentSearch);
+    setOpen(false);
     setTimeout(() => {
       setLoading(false);
     }, 1500);
+    
     if (queryParams) {
       dispatch(getProducts_member({ ...queryParams, q: term.trim() }));
     }
@@ -86,11 +88,6 @@ export default function SearchBar() {
   }, [router]);
 
   const searchBySelectValue = (value: string, i: number) => {
-    if (loading) return;
-
-    setLoading(true);
-    setTerm(value);
-  
     const url = qs.stringifyUrl(
       {
         url: "/search?role=all_products",
@@ -99,6 +96,10 @@ export default function SearchBar() {
       { skipEmptyString: true, skipNull: true }
     );
     router.push(url);
+    if (loading) return;
+
+    setLoading(true);
+    setTerm(value);
     recentSearch.splice(i, 1);
     recentSearch.unshift(value);
     setRecentSearch(recentSearch);
@@ -107,9 +108,9 @@ export default function SearchBar() {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
-    // if (queryParams) {
-    dispatch(getProducts_member({ ...queryParams, q: value.trim() }));
-    // }
+    if (queryParams) {
+      dispatch(getProducts_member({ ...queryParams, q: value.trim() }));
+    }
   };
 
   const handleDeleteOne = (i: number) => {
@@ -119,7 +120,7 @@ export default function SearchBar() {
   };
   return (
     <>
-      <LoaderLayout loading={loading} />
+      {loading && <Loader />}
       <div className="relative w-full" ref={navRef}>
         <form onSubmit={handleSearch} className="relative">
           <Input

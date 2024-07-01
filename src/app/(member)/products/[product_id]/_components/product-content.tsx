@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import ProductImagesSection from "./product-images-section";
 import LoaderLayout from "@/components/loader-layout";
 import { getProduct_member } from "@/lib/RTK/slices/member/products-slice";
+import ProductDetailsSection from "./product-details-section";
 
 export default function ProductContent() {
   const { product_id } = useParams();
@@ -23,8 +24,9 @@ export default function ProductContent() {
   return (
     <MaxWidthWrapper className="relative ">
       <LoaderLayout loading={loading} />
-      <div className="w-full flex bg-white p-8">
+      <div className="w-full flex bg-white p-8 gap-8">
         <ProductImagesSection images={product?.images} />
+        <ProductDetailsSection {...product} />
       </div>
     </MaxWidthWrapper>
   );
