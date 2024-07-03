@@ -70,7 +70,6 @@ export default function ProductDetailsSection({
         {title}
       </h1>
       <p className="text-slate-600 max-w-[350px]   capitalize text-sm">
-        <div className="font-semibold ">Description :</div>
         {description}
       </p>
       <div className="flex flex-col gap-4 items-start  ">
@@ -159,7 +158,7 @@ export default function ProductDetailsSection({
         <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
         <Select defaultValue="small">
           <SelectTrigger className=" capitalize ">
-            <SelectValue placeholder={'Select Size'} />
+            <SelectValue placeholder={"Select Size"} />
           </SelectTrigger>
           <SelectContent className="max-h-[350px] overflow-y-auto">
             <SelectGroup>
