@@ -1,5 +1,9 @@
 import { Product } from "@/types";
-import { formatNumber, formatPrice } from "@/utils/format";
+import {
+  formatNumber,
+  formatPrice,
+  handleDiscountPercentage,
+} from "@/utils/format";
 import Link from "next/link";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaHandHoldingUsd, FaTruckMoving } from "react-icons/fa";
@@ -15,10 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label";
 
-const productFeatures = [
+const shippingInfos = [
   {
     Logo: <FaTruckMoving className="min-h-5 min-w-5" />,
     label: "deilvery by circle",
@@ -48,10 +50,11 @@ export default function ProductDetailsSection({
   description,
   sizes,
 }: Product | any) {
-  const discount_percentage = price?.offer?.discount_percentage;
-
-  const offerCalc = (discount_percentage / 100) * price?.base_price;
-  const finalPrice = price?.base_price - offerCalc;
+  const  discountPercentage = price?.offer?.discount_percentage
+  const {finalPrice,offerCalc} = handleDiscountPercentage(
+    price?.base_price,
+    price?.offer?.discount_percentage
+  );
   return (
     <div className="flex flex-col gap-3 w-full items-start border-r">
       {!is_bestseller && (
@@ -83,7 +86,7 @@ export default function ProductDetailsSection({
           </div>
         </div>
         <div className="grid text-[#404553] gap-[12px_6px] text-sm font-semibold  items-center justify-start grid-cols-[auto_1fr]">
-          {discount_percentage && (
+          {discountPercentage && (
             <>
               <div>Was: </div>
               <span className=" text-slate-500 line-through">
@@ -95,14 +98,14 @@ export default function ProductDetailsSection({
           <span className=" font-bold text-[20px] ">
             {formatPrice(finalPrice || 0)}
           </span>
-          {discount_percentage && (
+          {discountPercentage && (
             <>
               <div>Saving: </div>
               <span className=" flex items-center ">
                 {formatPrice(offerCalc || 0)}
 
                 <span className="font-semibold text-[11px]  py-0 leading-4 text-[#37ae02] bg-[#dff1d9] px-1 mx-3 border-1 flex justify-center items-center">
-                  {discount_percentage}% off
+                  {discountPercentage}% off
                 </span>
               </span>
             </>
@@ -115,16 +118,18 @@ export default function ProductDetailsSection({
               "linear-gradient(91deg, rgba(253, 241, 114, 0.45) 1.08%, rgba(253, 241, 114, 0.2) 50.57%, rgba(253, 241, 114, 0) 96.9%)",
           }}
         >
-          <div
-            className="bg-main opacity-[.8] pr-4 pl-1 py-1 capitalize text-[#493202] font-bold text-[12px]"
-            style={{
-              clipPath: "polygon(0px 0px, 100% 0px, 85% 100%, 0% 100%)",
-            }}
-          >
-            {price?.offer?.deal_type}
-          </div>
+          {discountPercentage && (
+            <div
+              className="bg-main  opacity-[.8] pr-4 pl-1 py-1 capitalize text-[#493202] font-bold text-[12px]"
+              style={{
+                clipPath: "polygon(0px 0px, 100% 0px, 85% 100%, 0% 100%)",
+              }}
+            >
+              {price?.offer?.deal_type}
+            </div>
+          )}
           {delivery === "free" && (
-            <div className="flex gap-1  items-center ">
+            <div className="flex gap-1  items-center px-1">
               <FaTruckMoving className="h-3 w-3 text-[#3568db]" />
               <span className="text-[12px] font-semibold tex-shade">
                 Free Delivrey
@@ -137,7 +142,7 @@ export default function ProductDetailsSection({
         className="flex items-center border border-[#f3f4f8] gap-3 mt-3 p-[14px_4px]  bg-white rounded-md "
         style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px" }}
       >
-        {productFeatures.map((el, i) => (
+        {shippingInfos.map((el, i) => (
           <div key={i} className="flex flex-col items-center gap-2 ">
             <div
               className="rounded-md p-3 w-[42px] h-[42px] text-blue flex items-center justify-center"
@@ -154,7 +159,7 @@ export default function ProductDetailsSection({
           </div>
         ))}
       </div>
-      <div className="mt-3 w-full">
+      <div className="mt-3 w-full max-w-[326px]">
         <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
         <Select defaultValue="small">
           <SelectTrigger className=" capitalize ">

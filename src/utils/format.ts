@@ -15,11 +15,22 @@ export function formatPrice(price: number) {
 export function formatNumber(number: number) {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "decimal",
-    maximumFractionDigits:2
+    maximumFractionDigits: 2,
   });
 
   if (number >= 1e9) return formatter.format(number / 1e9) + "b";
   if (number >= 1e6) return formatter.format(number / 1e6) + "m";
   if (number >= 1e3) return formatter.format(number / 1e3) + "k";
   return formatter.format(number);
+}
+export function handleDiscountPercentage(
+  basePrice: number,
+  discountPercentage: number
+) {
+  const offerCalc = (discountPercentage / 100) * basePrice;
+  const finalPrice = basePrice - offerCalc;
+  return {
+    offerCalc,
+    finalPrice,
+  };
 }

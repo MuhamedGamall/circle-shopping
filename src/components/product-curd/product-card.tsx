@@ -1,5 +1,5 @@
 import { Product } from "@/types";
-import { formatNumber, formatPrice } from "@/utils/format";
+import { formatNumber, formatPrice, handleDiscountPercentage } from "@/utils/format";
 import { truncateText } from "@/utils/truncate-text";
 import Link from "next/link";
 import { BiCartAdd } from "react-icons/bi";
@@ -19,10 +19,11 @@ export default function ProductCard({
   _id,
   delivery,
 }: Product) {
-  const discount_percentage = price?.offer?.discount_percentage;
-
-  const offerCalc = (discount_percentage / 100) * price?.base_price;
-  const finalPrice = price?.base_price - offerCalc;
+  const  discountPercentage = price?.offer?.discount_percentage
+  const {finalPrice,offerCalc} = handleDiscountPercentage(
+    price?.base_price,
+    price?.offer?.discount_percentage
+  );
   return (
     <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px]  h-full shadow-sm   flex flex-col gap-1">
       <div>
@@ -65,14 +66,14 @@ export default function ProductCard({
         <div className="text-[#404553] font-semibold text-[17px] leading-[1.24]  ">
           {truncateText(title, 35)}
         </div>
-        {discount_percentage ? (
+        {discountPercentage ? (
           <div className="flex gap-2 items-center">
             <strong className="text-[17px]">{formatPrice(finalPrice)}</strong>
             <span className="text-shade text-sm line-through">
               {price?.base_price}
             </span>
             <span className=" text-[15px] text-[#38ae04]">
-              {discount_percentage}% OFF
+              {discountPercentage}% OFF
             </span>
           </div>
         ) : (
