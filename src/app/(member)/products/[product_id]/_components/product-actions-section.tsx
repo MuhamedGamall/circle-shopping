@@ -1,12 +1,10 @@
 import AddToCart from "@/app/(member)/_components/add-to-cart";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Product } from "@/types";
 import { formatPrice, handleDiscountPercentage } from "@/utils/format";
-import { FaTruckMoving } from "react-icons/fa";
-import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { GiReturnArrow } from "react-icons/gi";
 import { RiDoorOpenFill } from "react-icons/ri";
+import { VscWorkspaceTrusted } from "react-icons/vsc";
 const shippingInfos = [
   {
     Logo: <GiReturnArrow className="min-h-5 min-w-5" />,
@@ -46,20 +44,22 @@ export default function ProductActionsSection({
         {quantity_in_stock ? "In Stock" : "Out of Stock"}
       </div>
       <div className="flex flex-col gap-3 ">
-        <AddToCart>
-          <div className="flex justify-center">
-            <button className="w-full bg-yellow-300 p-3 hover:brightness-[.9] rounded-md font-bold text-slate-700 border-yellow-500 mx-auto transition-all">
-              ADD TO CART
+        <div className="flex gap-3 items-center w-full ">
+          <AddToCart>
+            <div className="flex justify-center ">
+              <button className="w-full whitespace-nowrap bg-yellow-300 p-3 hover:brightness-[.9] rounded-md font-bold text-slate-700 border-yellow-500 mx-auto transition-all">
+                ADD TO CART
+              </button>
+            </div>
+          </AddToCart>
+          <div className="flex justify-center w-full">
+            <button className="w-full whitespace-nowrap border p-3 hover:brightness-[.8] bg-shade text-white  rounded-md font-bold    mx-auto transition-all">
+              BUY NOW
             </button>
           </div>
-        </AddToCart>
-        <div className="flex justify-center">
-          <button className="w-full border p-3 hover:brightness-[.8] bg-shade text-white  rounded-md font-bold    mx-auto transition-all">
-            BUY NOW
-          </button>
         </div>
         <div className="flex justify-center">
-          <button className="w-full border p-3 hover:backdrop-brightness-[0.9]  rounded-md font-bold text-slate-700   mx-auto transition-all">
+          <button className="w-full border whitespace-nowrap p-3 hover:backdrop-brightness-[0.9]  rounded-md font-bold text-slate-700   mx-auto transition-all">
             ADD TO WISHLIST
           </button>
         </div>
@@ -67,7 +67,9 @@ export default function ProductActionsSection({
       <div className="flex flex-col justify-center border-t mt-3 pt-3">
         {shippingInfos.map((info, i) => (
           <div key={i} className="flex  gap-2 py-3">
-            <div className="text-blue bg-slate-100 p-2 rounded-full h-fit w-fit">  {info.Logo}</div>
+            <div className="text-blue bg-slate-100 p-2 rounded-full h-fit w-fit">
+              {info.Logo}
+            </div>
             <div className=" capitalize">
               <div className="text-sm ">{info.title}</div>
               <p className="text-[12px] text-slate-500">{info.description}</p>

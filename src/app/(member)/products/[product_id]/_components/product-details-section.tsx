@@ -50,8 +50,8 @@ export default function ProductDetailsSection({
   description,
   sizes,
 }: Product | any) {
-  const  discountPercentage = price?.offer?.discount_percentage
-  const {finalPrice,offerCalc} = handleDiscountPercentage(
+  const discountPercentage = price?.offer?.discount_percentage;
+  const { finalPrice, offerCalc } = handleDiscountPercentage(
     price?.base_price,
     price?.offer?.discount_percentage
   );
@@ -138,8 +138,26 @@ export default function ProductDetailsSection({
           )}
         </div>
       </div>
+      <div className="w-full max-w-[326px]">
+        <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
+        <Select defaultValue="small">
+          <SelectTrigger className=" capitalize ">
+            <SelectValue placeholder={"Select Size"} />
+          </SelectTrigger>
+          <SelectContent className="max-h-[350px] overflow-y-auto">
+            <SelectGroup>
+              <SelectLabel>Size</SelectLabel>
+              {sizes?.map((el: string, i: number) => (
+                <SelectItem key={i} value={el} className="capitalize">
+                  {el}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
       <div
-        className="flex items-center border border-[#f3f4f8] gap-3 mt-3 p-[14px_4px]  bg-white rounded-md "
+        className="flex items-center border border-[#f3f4f8] gap-3 p-[14px_4px]  bg-white rounded-md "
         style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px" }}
       >
         {shippingInfos.map((el, i) => (
@@ -158,24 +176,6 @@ export default function ProductDetailsSection({
             </span>
           </div>
         ))}
-      </div>
-      <div className="mt-3 w-full max-w-[326px]">
-        <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
-        <Select defaultValue="small">
-          <SelectTrigger className=" capitalize ">
-            <SelectValue placeholder={"Select Size"} />
-          </SelectTrigger>
-          <SelectContent className="max-h-[350px] overflow-y-auto">
-            <SelectGroup>
-              <SelectLabel>Size</SelectLabel>
-              {sizes?.map((el: string, i: number) => (
-                <SelectItem key={i} value={el} className="capitalize">
-                  {el}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
       </div>
     </div>
   );
