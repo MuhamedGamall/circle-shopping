@@ -20,10 +20,7 @@ export default function ProductCard({
   delivery,
 }: Product) {
   const  discountPercentage = price?.offer?.discount_percentage
-  const {finalPrice,offerCalc} = handleDiscountPercentage(
-    price?.base_price,
-    price?.offer?.discount_percentage
-  );
+
   return (
     <div className=" bg-white p-2  mx-auto  w-[184px] lg:w-[206px]  h-full shadow-sm   flex flex-col gap-1">
       <div>
@@ -68,7 +65,7 @@ export default function ProductCard({
         </div>
         {discountPercentage ? (
           <div className="flex gap-2 items-center">
-            <strong className="text-[17px]">{formatPrice(finalPrice)}</strong>
+            <strong className="text-[17px]">{formatPrice(price?.offer?.final_price )}</strong>
             <span className="text-shade text-sm line-through">
               {price?.base_price}
             </span>

@@ -3,8 +3,6 @@ import { Product } from "@/models/product";
 import { Store } from "@/models/store";
 import { GroupFilters } from "@/types";
 import mongoConnect from "@/utils/mongo-connect";
-import mongoose from "mongoose";
-import { handleDiscountPercentage } from "./format";
 
 async function getFilteredProducts(filter: any, groupByField: string) {
   return Product.aggregate([
@@ -74,22 +72,10 @@ export async function groupFilters({
     ]);
 
     const defaultValues = 10e10;
-
-    const handleMaxPrice = handleDiscountPercentage(
-      filterByPrice[0]?.maxPrice,
-      filterByPrice[0]?.maxDiscount
-    );
-
-    const handleMainPrice =
-      handleDiscountPercentage(
-        filterByPrice[0]?.minPrice,
-        filterByPrice[0]?.minDiscount
-      ) || 0;
-
     const maxPrice =
-      handleMaxPrice?.finalPrice == handleMainPrice?.finalPrice
+      filterByPrice[0]?.minPrice == filterByPrice[0]?.maxPrice
         ? defaultValues
-        : handleMaxPrice?.finalPrice;
+        : filterByPrice[0]?.maxPrice;
 
     const filterByBrands = await getFilteredProducts(filter, "category.brand");
     const filterByColour = await getFilteredProducts(filter, "colour");
@@ -101,7 +87,7 @@ export async function groupFilters({
     const groupFilters = {
       categories,
       maxPrice,
-      minPrice: handleMainPrice?.finalPrice,
+      minPrice: filterByPrice[0]?.minPrice||0,
       filterByBrands,
       filterByDeals,
       filterBySellers,

@@ -16,7 +16,6 @@ import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
-import { handleDiscountPercentage } from "@/utils/format";
 
 export default function FilterSidebar({
   groupFilters,

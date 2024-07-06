@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 export async function GET(req: NextRequest) {
   try {
     await mongoConnect();
-    
+
     const mainCategory = req.nextUrl.searchParams.get("mainCategory");
     const subCategory = req.nextUrl.searchParams.get("subCategory");
     const getRole = req.nextUrl.searchParams.get("role") || "";
@@ -123,6 +123,27 @@ export async function GET(req: NextRequest) {
       {
         $addFields: {
           is_bestseller: { $gte: ["$sales_count", bestSellerThreshold] },
+        },
+      },
+  
+      {
+        $addFields: {
+          'price.offer.offer_calc': {
+            $multiply: [
+              { $divide: ["$price.offer.discount_percentage", 100] },
+              "$price.base_price"
+            ]
+          },
+        },
+      },
+      {
+        $addFields: {
+          'price.offer.final_price': {
+            $subtract: [
+              "$price.base_price",
+              "$price.offer.offer_calc"
+            ]
+          },
         },
       },
     ]);

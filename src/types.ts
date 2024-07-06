@@ -61,6 +61,7 @@ export type Product = {
   is_bestseller: boolean;
   is_published: boolean;
   store_id: string;
+  store_name: string;
   likes: number;
   delivery: "free" | "paid";
   store_personal_email: string;
@@ -99,6 +100,8 @@ export type Product = {
       end_date: Date | string;
       deal_type: string;
       discount_percentage: number;
+      final_price: number;
+      offer_calc: number;
     };
   };
   quantity_in_stock: number;

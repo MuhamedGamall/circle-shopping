@@ -20,7 +20,7 @@ export default function ProductImagesSection({
   };
 
   return (
-    <div className="flex gap-2 ">
+    <div className="flex gap-2">
       <Swiper
         cssMode={true}
         navigation={{

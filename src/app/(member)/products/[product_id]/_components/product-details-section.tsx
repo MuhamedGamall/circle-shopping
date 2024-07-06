@@ -1,15 +1,3 @@
-import { Product } from "@/types";
-import {
-  formatNumber,
-  formatPrice,
-  handleDiscountPercentage,
-} from "@/utils/format";
-import Link from "next/link";
-import { AiOutlineLike } from "react-icons/ai";
-import { FaHandHoldingUsd, FaTruckMoving } from "react-icons/fa";
-import { GiStarMedal } from "react-icons/gi";
-import { LuMousePointerClick } from "react-icons/lu";
-import { RiSecurePaymentFill } from "react-icons/ri";
 import {
   Select,
   SelectContent,
@@ -19,6 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Product } from "@/types";
+import {
+  formatNumber,
+  formatPrice
+} from "@/utils/format";
+import { AiOutlineLike } from "react-icons/ai";
+import { FaHandHoldingUsd, FaTruckMoving } from "react-icons/fa";
+import { GiStarMedal } from "react-icons/gi";
+import { RiSecurePaymentFill } from "react-icons/ri";
+import TitleAndBages from "./title-and-bages";
 
 const shippingInfos = [
   {
@@ -47,34 +45,19 @@ export default function ProductDetailsSection({
   price,
   likes,
   delivery,
-  description,
   sizes,
 }: Product | any) {
   const discountPercentage = price?.offer?.discount_percentage;
-  const { finalPrice, offerCalc } = handleDiscountPercentage(
-    price?.base_price,
-    price?.offer?.discount_percentage
-  );
   return (
-    <div className="flex flex-col gap-3 w-full items-start border-r">
-      {!is_bestseller && (
-        <Link
-          href={`/products?role=bestsellers`}
-          className=" bg-slate-700 w-fit  rounded-[30px]  py-[2px] px-2  flex items-center gap-1 text-white"
-        >
-          <LuMousePointerClick className="rotate-90 h-5 w-50" />
-          <span className="">Best Seller</span>
-        </Link>
-      )}
-      <div className="bg-[#f3f4f8] p-2 rounded-[30px] w-fit uppercase font-bold text-black text-[15px]">
-        {category?.brand}
+    <div className="flex flex-col gap-3 w-full items-start border-r p-3">
+      <div className=" md:block  hidden">
+        <TitleAndBages
+          title={title}
+          is_bestsellers={is_bestseller}
+          category={category}
+        />
       </div>
-      <h1 className="text-[#404553] max-w-[300px]   capitalize font-semibold  text-[1.3em]">
-        {title}
-      </h1>
-      <p className="text-slate-600 max-w-[350px]   capitalize text-sm">
-        {description}
-      </p>
+
       <div className="flex flex-col gap-4 items-start  ">
         <div className="flex items-center flex-wrap gap-y-3 text-slate-400 text-[13px]">
           <div className="pr-2 mr-2 border-r font-semibold">
@@ -96,13 +79,13 @@ export default function ProductDetailsSection({
           )}
           <div>Now: </div>
           <span className=" font-bold text-[20px] ">
-            {formatPrice(finalPrice || 0)}
+            {formatPrice(price?.offer?.final_price || 0)}
           </span>
           {discountPercentage && (
             <>
               <div>Saving: </div>
               <span className=" flex items-center ">
-                {formatPrice(offerCalc || 0)}
+                {formatPrice(price?.offer?.offer_calc || 0)}
 
                 <span className="font-semibold text-[11px]  py-0 leading-4 text-[#37ae02] bg-[#dff1d9] px-1 mx-3 border-1 flex justify-center items-center">
                   {discountPercentage}% off
@@ -138,7 +121,7 @@ export default function ProductDetailsSection({
           )}
         </div>
       </div>
-      <div className="w-full max-w-[326px]">
+      {/* <div className="w-full max-w-[326px]">
         <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
         <Select defaultValue="small">
           <SelectTrigger className=" capitalize ">
@@ -155,7 +138,7 @@ export default function ProductDetailsSection({
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
       <div
         className="flex items-center border border-[#f3f4f8] gap-3 p-[14px_4px]  bg-white rounded-md "
         style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px" }}
