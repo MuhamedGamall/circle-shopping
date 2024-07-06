@@ -39,6 +39,7 @@ export async function POST(
       },
       store_id,
       store_personal_email: email,
+      store_name: store.display_name,
     });
 
     return NextResponse.json(createProduct);

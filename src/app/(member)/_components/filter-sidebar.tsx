@@ -16,6 +16,7 @@ import SelectCategory from "./select-category";
 import { SelectColour } from "./select-colour";
 import { SelectForm } from "./select-form";
 import { SelectPrice } from "./select-price";
+import { handleDiscountPercentage } from "@/utils/format";
 
 export default function FilterSidebar({
   groupFilters,
@@ -39,7 +40,6 @@ export default function FilterSidebar({
     maxPrice: 0,
     delivery: "",
   });
-
   useEffect(() => {
     setFilterData({
       sortBy: searchParams?.sortBy || "best-rated",
