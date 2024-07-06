@@ -11,6 +11,7 @@ const ProductSchema = new Schema(
     sales_count: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
     store_id: { type: String, required: true },
+    store_name: { type: String, required: true },
     store_personal_email: { type: String, required: true },
     title: { type: String },
     images: [{ type: String }],
