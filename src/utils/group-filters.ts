@@ -4,6 +4,7 @@ import { Store } from "@/models/store";
 import { GroupFilters } from "@/types";
 import mongoConnect from "@/utils/mongo-connect";
 import mongoose from "mongoose";
+import { handleDiscountPercentage } from "./format";
 
 async function getFilteredProducts(filter: any, groupByField: string) {
   return Product.aggregate([
@@ -66,24 +67,41 @@ export async function groupFilters({
           _id: null,
           minPrice: { $min: "$price.base_price" },
           maxPrice: { $max: "$price.base_price" },
+          minDiscount: { $min: "$price.offer.discount_percentage" },
+          maxDiscount: { $max: "$price.offer.discount_percentage" },
         },
       },
     ]);
+
     const defaultValues = 10e10;
+
+    const handleMaxPrice = handleDiscountPercentage(
+      filterByPrice[0]?.maxPrice,
+      filterByPrice[0]?.maxDiscount
+    );
+
+    const handleMainPrice =
+      handleDiscountPercentage(
+        filterByPrice[0]?.minPrice,
+        filterByPrice[0]?.minDiscount
+      ) || 0;
+
     const maxPrice =
-      filterByPrice[0]?.maxPrice == filterByPrice[0]?.minPrice
+      handleMaxPrice?.finalPrice == handleMainPrice?.finalPrice
         ? defaultValues
-        : filterByPrice[0]?.maxPrice;
+        : handleMaxPrice?.finalPrice;
+
     const filterByBrands = await getFilteredProducts(filter, "category.brand");
     const filterByColour = await getFilteredProducts(filter, "colour");
     const filterByCondition = await getFilteredProducts(
       filter,
       "item_condition"
     );
+
     const groupFilters = {
       categories,
-      maxPrice: maxPrice,
-      minPrice: filterByPrice[0]?.minPrice || 0,
+      maxPrice,
+      minPrice: handleMainPrice?.finalPrice,
       filterByBrands,
       filterByDeals,
       filterBySellers,
