@@ -1,22 +1,13 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Product } from "@/types";
-import {
-  formatNumber,
-  formatPrice
-} from "@/utils/format";
+import { formatNumber, formatPrice } from "@/utils/format";
+import Link from "next/link";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaHandHoldingUsd, FaTruckMoving } from "react-icons/fa";
-import { GiStarMedal } from "react-icons/gi";
-import { RiSecurePaymentFill } from "react-icons/ri";
-import TitleAndBages from "./title-and-bages";
+import { GiReturnArrow, GiStarMedal } from "react-icons/gi";
+import { IoStorefrontSharp } from "react-icons/io5";
+import { RiDoorOpenFill, RiSecurePaymentFill } from "react-icons/ri";
+import TitleAndBages from "./title-and-bages-section";
+import ShippingInfos from "./shipping-infos-section";
 
 const shippingInfos = [
   {
@@ -36,7 +27,19 @@ const shippingInfos = [
     label: "secure transaction",
   },
 ];
-
+const mobileShippingInfos = [
+  {
+    Logo: <GiReturnArrow className="min-h-5 min-w-5" />,
+    title: "free returns",
+    description: "Get free returns on eligible items",
+  },
+  {
+    Logo: <RiDoorOpenFill className="min-h-5 min-w-5" />,
+    title: "conctactless delivery",
+    description:
+      "Your delivery will be left at your door, valid on prepaid orders only.",
+  },
+];
 export default function ProductDetailsSection({
   title,
   is_bestseller,
@@ -46,11 +49,12 @@ export default function ProductDetailsSection({
   likes,
   delivery,
   sizes,
+  store_name,
 }: Product | any) {
   const discountPercentage = price?.offer?.discount_percentage;
   return (
-    <div className="flex flex-col gap-3 w-full items-start border-r p-3">
-      <div className=" md:block  hidden">
+    <div className="flex flex-col gap-3 w-full items-start md:border-r md:p-3">
+      <div className=" ">
         <TitleAndBages
           title={title}
           is_bestsellers={is_bestseller}
@@ -121,45 +125,7 @@ export default function ProductDetailsSection({
           )}
         </div>
       </div>
-      {/* <div className="w-full max-w-[326px]">
-        <div className="mb-3 text-gray-400 text-[12px] ">Size</div>
-        <Select defaultValue="small">
-          <SelectTrigger className=" capitalize ">
-            <SelectValue placeholder={"Select Size"} />
-          </SelectTrigger>
-          <SelectContent className="max-h-[350px] overflow-y-auto">
-            <SelectGroup>
-              <SelectLabel>Size</SelectLabel>
-              {sizes?.map((el: string, i: number) => (
-                <SelectItem key={i} value={el} className="capitalize">
-                  {el}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div> */}
-      <div
-        className="flex items-center border border-[#f3f4f8] gap-3 p-[14px_4px]  bg-white rounded-md "
-        style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px" }}
-      >
-        {shippingInfos.map((el, i) => (
-          <div key={i} className="flex flex-col items-center gap-2 ">
-            <div
-              className="rounded-md p-3 w-[42px] h-[42px] text-blue flex items-center justify-center"
-              style={{
-                background:
-                  "linear-gradient(rgb(243, 244, 248) 0%, rgb(255, 255, 255) 85.71%)",
-              }}
-            >
-              {el.Logo}
-            </div>
-            <span className="text-[12px] text-[#404553] text-center max-w-[70px]">
-              {el.label}
-            </span>
-          </div>
-        ))}
-      </div>
+      <ShippingInfos store_name={store_name}/>
     </div>
   );
 }

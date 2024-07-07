@@ -26,10 +26,10 @@ export default function ProductActionsSection({
   quantity_in_stock,
   store_name,
   sizes,
-  max_purchase_quantity
-}: Product|any) {
+  max_purchase_quantity,
+}: Product | any) {
   return (
-    <div className="flex  flex-col gap-3 flex-2">
+    <div className="hidden md:flex  flex-col gap-3 flex-2">
       <div className="flex items-end gap-1">
         <span className=" font-bold text-[25px] ">
           {formatPrice(price?.offer?.final_price || 0)}
@@ -44,17 +44,13 @@ export default function ProductActionsSection({
         <VscWorkspaceTrusted className="h-5 w-5 text-blue" />
         <p className="text-sm text-[#404553] ">{warranty}</p>
       </div>
-      <div
-        className={cn("text-[#00763f] text-lg font-semibold", {
-          "text-red-600": !quantity_in_stock,
-        })}
-      >
-        {quantity_in_stock ? "In Stock" : "Out of Stock"}
-      </div>
-      
-      <div className="md:block hidden">
-      <ButtonsActions sizes={sizes} max_purchase_quantity={max_purchase_quantity}/>  
-      </div>
+    
+      <ButtonsActions
+        sizes={sizes}
+        quantity_in_stock={quantity_in_stock}
+        max_purchase_quantity={max_purchase_quantity}
+      />
+
       <div className="flex flex-col justify-center border-t mt-3 pt-3">
         <div className="flex  gap-2 py-3">
           <div className="text-blue bg-slate-100 p-2 rounded-full h-fit w-fit">

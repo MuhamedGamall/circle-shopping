@@ -1,5 +1,4 @@
 import AddToCart from "@/app/(member)/_components/add-to-cart";
-import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -9,14 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Heart } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { GoHeartFill } from "react-icons/go";
 export default function ButtonsActions({
   sizes,
   max_purchase_quantity,
+  quantity_in_stock
 }: {
   sizes: string[];
   max_purchase_quantity: number;
+  quantity_in_stock: number;
 }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedQuantity, setSelectedQuantity] = useState("1");
@@ -28,6 +30,14 @@ export default function ButtonsActions({
 
   return (
     <div className="flex flex-col gap-2 text-sm">
+      <div
+        className={cn("text-[#00763f] text-[16px] font-semibold", {
+          "text-red-600": !quantity_in_stock,
+        })}
+      >
+        {quantity_in_stock ? "In Stock" : "Out of Stock"}
+      </div>
+
       <div className="w-full flex items-center gap-2">
         {sizes?.length && (
           <div className="flex flex-col w-full">

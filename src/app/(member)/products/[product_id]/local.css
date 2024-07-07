@@ -25,3 +25,10 @@
 .custom-swiper .swiper-button-next::after {
   font-size: 20px;
 }
+
+
+@media (min-width: 768px) {
+  .custom-pagination-swiper  {
+    display: none !important;
+   }
+}

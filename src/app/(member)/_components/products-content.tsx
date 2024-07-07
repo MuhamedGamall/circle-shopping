@@ -88,7 +88,7 @@ export default function ProductsContent() {
         setSearchParams={setSearchParams}
       />
       <div className="w-full ">
-        <div className="xs:block flex items-center justify-between">
+        <div className="xxs:block flex items-center justify-between">
           <ProductsTopbar
             resultsLength={products?.products?.length}
             searchParams={searchParams}
@@ -96,7 +96,7 @@ export default function ProductsContent() {
           />
           <button
             type="button"
-            className="xs:hidden m-5 "
+            className="xxs:hidden m-5 "
             onClick={() => setIsGrid((curr) => !curr)}
           >
             {isGrid ? (
