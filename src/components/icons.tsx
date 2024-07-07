@@ -6,8 +6,8 @@ const Icons = {
     <Link href={"/"} className="flex items-center gap-1  whitespace-nowrap ">
       <svg
         id="logo-83"
-        width="40"
-        height="45"
+        width="35"
+        height="40"
         viewBox="0 0 40 35"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ const Icons = {
           fill="#404553"
         ></path>
       </svg>
-      <span className="font-semibold text-secondMain text-[35px] tracking-[0px] flex items-center whitespace-nowrap">
+      <span className="font-semibold text-secondMain text-[30px] tracking-[0px] flex items-center whitespace-nowrap">
         circle
       </span>
     </Link>
@@ -43,13 +43,13 @@ const Icons = {
       <div className="flex items-center">
         <Link
           href={"/"}
-          className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap"
+          className="  font-semibold text-secondMain text-[30px] tracking-[0px]  whitespace-nowrap"
         >
           circle
         </Link>
         <Link
           href={store_id ? sellerLink : "/"}
-          className="font-[200] text-secondMain text-[38px]"
+          className="font-[200] text-secondMain text-[32px]"
         >
           Store
         </Link>
@@ -60,13 +60,13 @@ const Icons = {
     <div className="flex items-center">
       <Link
         href={"/"}
-        className="  font-semibold text-secondMain text-[35px] tracking-[0px]  whitespace-nowrap"
+        className="  font-semibold text-secondMain text-[30px] tracking-[0px]  whitespace-nowrap"
       >
         circle
       </Link>
       <Link
         href={"/admin/dashboard"}
-        className="font-[200] text-secondMain text-[38px]"
+        className="font-[200] text-secondMain text-[32px]"
       >
         Admin
       </Link>

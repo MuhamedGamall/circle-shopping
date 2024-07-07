@@ -28,7 +28,7 @@ export default function ButtonsActions({
 
   return (
     <div className="flex flex-col gap-2 text-sm">
-       <div className="w-full flex items-center gap-2">
+      <div className="w-full flex items-center gap-2">
         {sizes?.length && (
           <div className="flex flex-col w-full">
             <div className="mb-1 text-gray-400 text-[12px]">Size</div>
@@ -95,7 +95,6 @@ export default function ButtonsActions({
           </button>
         </div>
       </div>
-     
     </div>
   );
 }
