@@ -140,7 +140,7 @@ export function ProductsTable({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="text-center text-[12px] ">
+                  <TableCell key={cell.id} className="text-center text-[12px] max-w-[150px] overflow-x-auto">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

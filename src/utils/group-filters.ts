@@ -30,16 +30,7 @@ export async function groupFilters({
 
     const categories = await Category.find(findCategory);
 
-    let filterBySellers = await getFilteredProducts(filter, "store_id");
-    filterBySellers = await Promise.all(
-      filterBySellers.map(async (el) => {
-        const store: any = await Store.findById(el._id).lean();
-        return {
-          ...el,
-          _id: store ? store?.display_name : null,
-        };
-      })
-    );
+    const filterBySellers = await getFilteredProducts(filter, "store_name");
 
     const filterByDeals = await Product.aggregate([
       { $match: filter },
@@ -63,10 +54,7 @@ export async function groupFilters({
       {
         $group: {
           _id: null,
-          minPrice: { $min: "$price.base_price" },
           maxPrice: { $max: "$price.base_price" },
-          minDiscount: { $min: "$price.offer.discount_percentage" },
-          maxDiscount: { $max: "$price.offer.discount_percentage" },
         },
       },
     ]);
@@ -87,7 +75,7 @@ export async function groupFilters({
     const groupFilters = {
       categories,
       maxPrice,
-      minPrice: filterByPrice[0]?.minPrice||0,
+      minPrice: filterByPrice[0]?.minPrice || 0,
       filterByBrands,
       filterByDeals,
       filterBySellers,

@@ -38,7 +38,7 @@ export default function ShippingInfos({store_name}:{store_name:string}) {
   return (
     <>
       <div
-        className="flex items-start  w-fit mx-auto  border border-[#f3f4f8] gap-3 p-[14px_4px]  bg-white rounded-md "
+        className="flex items-start w-fit mx-auto sm:mx-0  border border-[#f3f4f8] gap-3 p-[14px_4px]  bg-white rounded-md "
         style={{ boxShadow: "rgba(0, 0, 0, 0.05) 0px 2px 8px 0px" }}
       >
         {shippingInfos.map((el, i) => (

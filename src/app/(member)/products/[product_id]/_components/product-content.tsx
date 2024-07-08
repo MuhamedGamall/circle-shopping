@@ -11,6 +11,7 @@ import ProductDetailsSection from "./product-details-section";
 import ProductImagesSection from "./product-images-section";
 import ButtonsActions from "./buttons-actions";
 import Loader from "@/components/loader";
+import ProductOverView from "./product-overview";
 
 export default function ProductContent() {
   const { product_id } = useParams();
@@ -27,7 +28,7 @@ export default function ProductContent() {
   return (
     <MaxWidthWrapper className="relative ">
       {loading && <Loader />}
-      <div className="w-full flex bg-white p-8 gap-8">
+      <div className="w-full flex bg-white p-8 gap-8  shadow-section">
         <div className="w-full  flex flex-[0_0_70%] gap-8">
           <div className="md:flex-1 w-[40%]">
             <ProductImagesSection images={product?.images} />
@@ -48,6 +49,7 @@ export default function ProductContent() {
           <ProductActionsSection {...product} />
         </div>
       </div>
+      <ProductOverView {...product}/>
     </MaxWidthWrapper>
   );
 }

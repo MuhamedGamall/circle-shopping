@@ -21,8 +21,6 @@ export default function MobileProductCard({
 }: Product) {
   const discount_percentage = price?.offer?.discount_percentage;
 
-  const offerCalc = (discount_percentage / 100) * price?.base_price;
-  const finalPrice = price?.base_price - offerCalc;
   return (
     <div className=" relative bg-white p-2  mx-auto overflow-hidden  shadow-sm flex w-full gap-1">
       <div className="basis-[44%]">
@@ -47,7 +45,7 @@ export default function MobileProductCard({
         </div>
         {discount_percentage ? (
           <div className="flex gap-2 items-center">
-            <strong className="text-[17px]">{formatPrice(finalPrice)}</strong>
+            <strong className="text-[17px]">{formatPrice(price?.offer?.final_price )}</strong>
             <span className="text-shade text-sm line-through">
               {price?.base_price}
             </span>

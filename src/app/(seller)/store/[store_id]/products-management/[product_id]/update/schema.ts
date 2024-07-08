@@ -158,7 +158,7 @@ export const productDetailsSchema = z.object({
   model_height: z
     .string()
     .trim()
-    .min(5, { message: "It must contain 5 characters." })
+    .min(1, { message: "It must contain 1 characters." })
     .max(1000, {
       message: "Should be on a lot of 1000 characters.",
     })

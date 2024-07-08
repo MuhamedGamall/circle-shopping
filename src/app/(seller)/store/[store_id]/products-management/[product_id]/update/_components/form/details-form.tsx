@@ -107,7 +107,7 @@ export default function DetailsForm({
 
     const removeRepeateValue = {
       specifications: [...(new Set(specifications) as any)],
-      highlights: [...(new Set(highlights) as any)],
+      highlights: [...(new Set(highlights) as any)].slice(0, -1),
     };
 
     const update = await dispatch(

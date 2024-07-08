@@ -45,9 +45,9 @@ export const columns: ColumnDef<any>[] = [
     },
     cell: ({ row }: any) => {
       return (
-        <span className=" max-w-[150px] overflow-x-auto  text-center   whitespace-nowrap">
+        <div className="max-w-[150px] overflow-x-auto  text-center   whitespace-nowrap">
           {row.getValue("title") || "--"}
-        </span>
+        </div>
       );
     },
   },

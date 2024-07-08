@@ -26,9 +26,24 @@
   font-size: 20px;
 }
 
-
 @media (min-width: 768px) {
-  .custom-pagination-swiper  {
+  .custom-pagination-swiper {
     display: none !important;
-   }
+  }
+}
+
+.specifications-table-body td {
+  padding: 7px 15px;
+}
+.specifications-table-body td:first-child {
+  color: rgb(126, 133, 155);
+  width: 40%;
+}
+.specifications-table-body td:last-child {
+  width: 60%;
+  color: rgb(64, 69, 83);
+}
+
+.specifications-table-body tr:nth-child(odd) {
+  background-color: #f0f4fd;
 }
