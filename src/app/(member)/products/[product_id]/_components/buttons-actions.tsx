@@ -1,4 +1,4 @@
-import AddToCart from "@/app/(member)/_components/add-to-cart";
+import AddToCart from "@/app/(member)/_components/products-content/add-to-cart";
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import { GoHeartFill } from "react-icons/go";
 export default function ButtonsActions({
   sizes,
   max_purchase_quantity,
-  quantity_in_stock
+  quantity_in_stock,
 }: {
   sizes: string[];
   max_purchase_quantity: number;

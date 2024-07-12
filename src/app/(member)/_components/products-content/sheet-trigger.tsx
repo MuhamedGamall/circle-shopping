@@ -1,7 +1,7 @@
 "use client";
 
-import FilterSidebar from "@/app/(member)/_components/filter-sidebar";
-import SortBySheet from "@/app/(member)/_components/sortby-sheet";
+import FilterSidebar from "@/app/(member)/_components/products-content/filter-sidebar";
+import SortBySheet from "@/app/(member)/_components/products-content/sortby-sheet";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { FilterDataState, GroupFilters } from "@/types";
@@ -32,7 +32,6 @@ export default function FiltersSheetTrigger({
           className="pb-0  z-[1050] rounded-t-[30px]"
         >
           <SortBySheet
-          
             searchParams={searchParams}
             setSearchParams={setSearchParams}
           />

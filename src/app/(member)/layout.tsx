@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
-import Navbar from "@/components/header/navbar";
-import MoblieBar from "@/components/mobile-bar";
+import Navbar from "@/app/(member)/_components/header/navbar";
+import MoblieBar from "./_components/products-content/mobile-bar";
 
 export default function MemberLayout({
   children,

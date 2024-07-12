@@ -1,14 +1,12 @@
 "use client";
 
-import React from "react";
 
-import AccountMenu from "./account-menu";
+import MoodAccountMenu from "@/components/mood-account-menu";
 
 export default function NavLinks() {
   return (
     <nav>
-      
-      <AccountMenu />
+      <MoodAccountMenu />
     </nav>
   );
 }

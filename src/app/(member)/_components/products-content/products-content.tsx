@@ -1,8 +1,8 @@
 "use client";
 
-import FilterSidebar from "@/app/(member)/_components/filter-sidebar";
-import ProductsTopbar from "@/app/(member)/_components/products-topbar";
-import FiltersSheetTrigger from "@/app/(member)/_components/sheet-trigger";
+import FilterSidebar from "@/app/(member)/_components/products-content/filter-sidebar";
+import ProductsTopbar from "@/app/(member)/_components/products-content/products-topbar";
+import FiltersSheetTrigger from "@/app/(member)/_components/products-content/sheet-trigger";
 import Loader from "@/components/loader";
 import MobileProductCard from "@/components/product-curd/mobile-product-curd";
 import ProductCard from "@/components/product-curd/product-card";

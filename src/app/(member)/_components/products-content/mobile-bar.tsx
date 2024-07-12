@@ -1,7 +1,7 @@
 import { Home, Shirt, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
-import AccountMenu from "./account-menu";
+import AccountMenu from "../account-menu";
 
 export default function MoblieBar() {
   return (

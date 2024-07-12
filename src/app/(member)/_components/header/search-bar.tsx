@@ -8,11 +8,11 @@ import qs from "query-string";
 import { useEffect, useRef, useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { useLocalStorage, useLocation } from "react-use";
-import LoaderLayout from "../loader-layout";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import LoaderLayout from "../../../../components/loader-layout";
+import { Button } from "../../../../components/ui/button";
+import { Input } from "../../../../components/ui/input";
 import { getProducts_member } from "@/lib/RTK/slices/member/products-slice";
-import Loader from "../loader";
+import Loader from "../../../../components/loader";
 
 export default function SearchBar() {
   const [term, setTerm] = useState("");
@@ -77,7 +77,7 @@ export default function SearchBar() {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
-    
+
     if (queryParams) {
       dispatch(getProducts_member({ ...queryParams, q: term.trim() }));
     }

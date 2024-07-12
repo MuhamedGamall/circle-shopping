@@ -22,7 +22,7 @@ import Link from "next/link";
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdStorefront } from "react-icons/md";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../../../components/ui/skeleton";
 
 const LoadingSkeleton = () => {
   return <Skeleton className="h-[25px] w-[150px] rounded-md bg-slate-400" />;

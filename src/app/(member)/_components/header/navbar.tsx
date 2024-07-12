@@ -1,4 +1,4 @@
-import Icons from "../icons";
+import Icons from "../../../../components/icons";
 import NavLinks from "./nav-links";
 import SearchBar from "./search-bar";
 

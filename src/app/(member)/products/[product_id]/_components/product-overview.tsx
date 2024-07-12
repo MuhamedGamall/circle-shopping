@@ -21,7 +21,7 @@ export default function ProductOverView({
             <div className="flex flex-col gap-3">
               <h3 className="font-semibold ">Highlights</h3>
               <ul className="text-slate-500 list-disc">
-                {highlights?.map((el, i) => (
+                {highlights?.map((el:string, i:number) => (
                   <li key={i} className="ml-5">
                     {el}
                   </li>

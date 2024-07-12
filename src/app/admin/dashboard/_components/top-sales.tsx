@@ -25,53 +25,57 @@ export default function TopSales({ data }: any) {
         </Link>
       </div>
       {check ? (
-        <ul className="mx-auto w-full h-full flex flex-col ">
+        <div className="mx-auto w-full h-full flex flex-col ">
           <div className="flex justify-between gap-2 items-center text-slate-400 text-[13px] font-semibold px-2">
             <div>ITEM</div>
             <div>STATISTIC</div>
           </div>
-          {data?.map((el: Product, i: number) => (
-            <li
-              key={i}
-              className=" border-dashed  border-b last:border-b-0 mb-2 pb-2"
-            >
-              <Link
-                href={"/admin/products/" + el?._id + "/details"}
-                className="flex gap-2 justify-between items-center  p-2 hover:shadow-sub-sections transition-all"
+          <ul className="mx-auto w-full h-full flex flex-col max-h-[400px] overflow-y-auto">
+            {data?.map((el: Product, i: number) => (
+              <li
+                key={i}
+                className=" border-dashed  border-b last:border-b-0 mb-2 pb-2"
               >
-                <div className="flex gap-2 items-end">
-                  <Image
-                    src={el?.images?.[0]}
-                    alt="product Image"
-                    className="object-contain w-[40px] h-[60]"
-                    width={40}
-                    height={60}
-                  />
-                  <div>
-                    <TooltipWrapper label={el?.title}>
-                      <div className="font-medium text-sm ">
-                        {truncateText(el?.title, 15)}
-                      </div>
-                    </TooltipWrapper>
-                    <TooltipWrapper label={el?._id}>
-                      <p className="text-slate-500 text-[11px] ">
-                        ID: {truncateText(el?._id, 15)}
-                      </p>
-                    </TooltipWrapper>
+                <Link
+                  href={"/admin/products/" + el?._id + "/details"}
+                  className="flex gap-2 justify-between items-center  p-2 hover:shadow-sub-sections transition-all"
+                >
+                  <div className="flex gap-2 items-end">
+                    <Image
+                      src={el?.images?.[0]}
+                      alt="product Image"
+                      className="object-cover w-[45px] h-[60px]"
+                      width={100}
+                      height={100}
+                    />
+                    <div>
+                      <TooltipWrapper label={el?.title}>
+                        <div className="font-medium text-sm ">
+                          {truncateText(el?.title, 15)}
+                        </div>
+                      </TooltipWrapper>
+                      <TooltipWrapper label={el?._id}>
+                        <p className="text-slate-500 text-[11px] ">
+                          ID: {truncateText(el?._id, 15)}
+                        </p>
+                      </TooltipWrapper>
+                    </div>
                   </div>
-                </div>
-                <TooltipWrapper label={formatNumber(el?.sales_count || 0) + ""}>
-                  <span className="flex flex-col items-end text-[13px]">
-                    <span className="text-[11px] text-slate-500">
-                      Sales count
+                  <TooltipWrapper
+                    label={formatNumber(el?.sales_count || 0) + ""}
+                  >
+                    <span className="flex flex-col items-end text-[13px]">
+                      <span className="text-[11px] text-slate-500">
+                        Sales count
+                      </span>
+                      {truncateText(formatNumber(el?.sales_count || 0), 15)}
                     </span>
-                    {truncateText(formatNumber(el?.sales_count || 0), 15)}
-                  </span>
-                </TooltipWrapper>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                  </TooltipWrapper>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
         <span className="text-slate-300 text-[20px] md:text-[40px] h-[400px] flex items-center justify-center">
           No sales

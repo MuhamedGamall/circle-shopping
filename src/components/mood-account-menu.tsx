@@ -1,10 +1,7 @@
 "use client";
-import React from "react";
 
 import { AvatarContainer } from "@/components/avatar";
-import useAccount from "@/hooks/use-account";
-import { truncateText } from "@/utils/truncate-text";
-import { signOut } from "next-auth/react";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Menubar,
   MenubarContent,
@@ -13,9 +10,12 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import useAccount from "@/hooks/use-account";
+import { cn } from "@/lib/utils";
+import { truncateText } from "@/utils/truncate-text";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 const LoadingSkeleton = () => {
   return (
     <div className="sm:flex hidden items-center gap-2 w-[250px]">
@@ -27,7 +27,7 @@ const LoadingSkeleton = () => {
     </div>
   );
 };
-export default function AccountMenu() {
+export default function MoodAccountMenu() {
   const { data, loading } = useAccount();
   const username =
     data?.name?.split(" ")?.[0] || data?.email?.split("@")?.[0] || "";
@@ -50,19 +50,23 @@ export default function AccountMenu() {
             </div>
           </div>
         </MenubarTrigger>
-        <MenubarContent className="w-[320px] h-[180px] mr-3 ">
+        <MenubarContent className="w-[320px] h-[180px] mr-3 z-[500]">
           <div className="flex flex-col justify-center items-center gap-1 ">
-            <div className="mt-3">
+            <Link href={"/account/profile"} className="block mt-3">
               <AvatarContainer {...data} username={username} />
-            </div>
-            <div className=" flex flex-col items-center ">
+            </Link>
+            <Link
+              href={"/account/profile"}
+              className=" flex flex-col items-center "
+            >
               <h3 className=" font-bold text-[16x]  text-secondMain whitespace-nowrap ">
                 {truncateText(username || "", 20)}
               </h3>
-              <p className="font-[400] text-[#7e859b] text-[14px]  ">
+
+              <span className="font-[400] text-[#7e859b] text-[14px]  ">
                 {truncateText(data?.email || "", 30)}
-              </p>
-            </div>
+              </span>
+            </Link>
             <MenubarSeparator />
             <MenubarItem
               className={cn(
