@@ -89,6 +89,8 @@ export default function BasicForm({
   }, [data?.colours, data?.sizes]);
 
   async function onSubmit(values: z.infer<typeof productBasicSchema>) {
+    console.log(values);
+    
     const update = await dispatch(
       updateProduct_seller({
         data: {
@@ -163,12 +165,12 @@ export default function BasicForm({
             className="mt-5"
           />
           <CustomTextarea
-            label="Long Description"
+            label="Long Description *"
             labelClassName={"text-shade text-[12px] "}
             form={form}
             disabled={isSubmitting || loading}
             name="description"
-            className={"w-full h-[200px] resize-none"}
+            className={"w-ful h-[200px] resize-none"}
             placeholder="Long Description"
           />
           <Button

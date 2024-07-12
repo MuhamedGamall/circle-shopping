@@ -37,7 +37,7 @@ export default function CustomTextarea({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="w-full mt-5">
           <FormLabel className={cn('capitalize',labelClassName)}>{label}</FormLabel>
           <FormControl>
             <Textarea

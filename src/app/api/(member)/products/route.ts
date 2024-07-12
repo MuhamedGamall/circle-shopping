@@ -33,6 +33,7 @@ export async function GET(req: NextRequest) {
             { colour: { $regex: regex } },
             { model_number: { $regex: regex } },
             { model_name: { $regex: regex } },
+            { store_name: { $regex: regex } },
           ],
           is_published: true,
         };

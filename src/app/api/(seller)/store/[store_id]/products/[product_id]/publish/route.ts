@@ -44,6 +44,7 @@ export async function PATCH(
     if (
       product?.is_published ||
       !product?.title ||
+      !product?.description ||
       !product?.model_name ||
       !product?.model_height ||
       !product?.warranty ||

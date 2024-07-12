@@ -46,6 +46,9 @@ export const productBasicSchema = z.object({
   description: z
     .string()
     .trim()
+    .min(250, {
+      message: "It should contain at least 250 characters.",
+    })
     .max(4000, {
       message: "description should be on a lot of 4000 characters.",
     })
@@ -61,7 +64,7 @@ export const productBasicSchema = z.object({
           "Please enter English characters, numbers, and symbols only. The value should not start or end with symbols.",
       }
     )
-    .optional(),
+    ,
   model_number: z
     .string()
     .trim()

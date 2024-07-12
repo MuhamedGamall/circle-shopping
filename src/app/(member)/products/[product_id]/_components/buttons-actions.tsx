@@ -39,7 +39,7 @@ export default function ButtonsActions({
       </div>
 
       <div className="w-full flex items-center gap-2">
-        {sizes?.length && (
+        {sizes?.length >0 && (
           <div className="flex flex-col w-full">
             <div className="mb-1 text-gray-400 text-[12px]">Size</div>
             <Select

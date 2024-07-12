@@ -17,6 +17,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import ShippingInfos from "./shipping-infos-section";
 import { FaTruckMoving } from "react-icons/fa";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
+import ProductOverview from "./product-overview";
 
 export default function MobileProductContent() {
   const { product_id } = useParams();
@@ -34,7 +35,7 @@ export default function MobileProductContent() {
   return (
     <MaxWidthWrapper>
       {loading && <Loader />}
-      <div className="w-full  bg-white p-8 flex flex-col gap-3">
+      <div className="w-full  bg-white shadow-section p-8 flex flex-col gap-3">
         <TitleAndBages {...product} />
         <div className="relative">
           <div className="w-[80%] mx-auto">
@@ -93,7 +94,7 @@ export default function MobileProductContent() {
         />
         <div>
           <ShippingInfos store_name={product?.store_name || ""} />
-        
+
           <div className="flex  gap-2 py-3">
             <div className="text-blue bg-slate-100 p-2 rounded-full h-fit w-fit">
               <VscWorkspaceTrusted className="min-h-5 min-w-5" />
@@ -101,13 +102,13 @@ export default function MobileProductContent() {
             <div className=" capitalize">
               <div className="text-sm ">warranty</div>
               <div className="text-[12px] text-slate-500">
-             
                 {product?.warranty}
               </div>
             </div>
           </div>
         </div>
       </div>
+        <ProductOverview {...product} />
     </MaxWidthWrapper>
   );
 }

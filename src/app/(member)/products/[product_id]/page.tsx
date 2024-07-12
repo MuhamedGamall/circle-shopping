@@ -4,7 +4,7 @@ import "./local.css";
 import MobileProductContent from "./_components/mobile-product-content";
 export default function ProductPage() {
   return (
-    <div className="bg-[#f7f7fa] ">
+    <div className="bg-[#f7f7fa] pb-1">
       <CategoriesNavigation />
       <div className=" xs:block hidden ">
         <ProductContent />
