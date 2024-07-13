@@ -78,7 +78,7 @@ const memberCategoriesSlice = createSlice({
   initialState,
   reducers: {
     cleanUp: (state) => {
-      state.category = null;
+      // state.category = null;
     },
   },
   extraReducers: (builder) => {

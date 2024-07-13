@@ -6,12 +6,15 @@ import ProductsBestSellers from "./_components/products-best-sellers-slider";
 import ProductsByCategory from "./_components/products-by-category";
 import ProductsDeal from "./_components/products-deals-slider";
 import SubCategoriesSlider from "./_components/sub-categories-slider";
+import getProductsByCategory from "./actions/get-products-by-category";
 
-export default function CategoryPage({
+export default async function CategoryPage({
   params: { category_id },
 }: {
   params: { category_id: string };
 }) {
+  const { data, loading } = await getProductsByCategory({ category_id });
+  console.log(data);
   return (
     <>
       <CategoriesNavigation />
@@ -34,7 +37,11 @@ export default function CategoryPage({
             />
           </div>
           <div>
-            <ProductsByCategory category_id={category_id} />
+            <ProductsByCategory
+              category_id={category_id}
+              data={data}
+              loading={loading}
+            />
           </div>
         </MaxWidthWrapper>
       </div>

@@ -58,13 +58,66 @@ export async function GET(
           products: { $slice: ["$products", 50] },
         },
       },
+
       {
         $addFields: {
-          "products.is_bestseller": { $gte: ["$products.sales_count", bestSellerThreshold] }
-        }
-      }
+          products: {
+            $map: {
+              input: "$products",
+              as: "product",
+              in: {
+                $mergeObjects: [
+                  "$$product",
+                  {
+                    price: {
+                      $mergeObjects: [
+                        "$$product.price",
+                        {
+                          offer: {
+                            $mergeObjects: [
+                              "$$product.price.offer", // Keep existing fields intact
+                              {
+                                // offer_calc: {
+                                //   $multiply: [
+                                //     {
+                                //       $divide: [
+                                //         "$$product.price.offer.discount_percentage",
+                                //         100,
+                                //       ],
+                                //     },
+                                //     "$$product.price.base_price",
+                                //   ],
+                                // },
+                                final_price: {
+                                  $subtract: [
+                                    "$$product.price.base_price",
+                                    {
+                                      $multiply: [
+                                        {
+                                          $divide: [
+                                            "$$product.price.offer.discount_percentage",
+                                            100,
+                                          ],
+                                        },
+                                        "$$product.price.base_price",
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
     ]);
-
     return NextResponse.json(data);
   } catch (error) {
     console.log("[MEMBER:CATEGORY>PRODUCTS_BY_CATEGORY]", error);
