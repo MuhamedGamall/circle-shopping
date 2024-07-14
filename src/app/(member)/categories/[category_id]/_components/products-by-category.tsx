@@ -18,15 +18,15 @@ export default function ProductsByCategory({
   loading: boolean;
   category_id: string;
 }) {
-  const dispatch = useAppDispatch();
-  const { subcategoryProducts, } = useAppSelector(
-    (state) => state.member_categories
-  );
-  useEffect(() => {
-    dispatch(getSubcategoryProducts_member(category_id?.replaceAll("-", " ")));
-  }, [category_id, dispatch]);
+  // const dispatch = useAppDispatch();
+  // const { subcategoryProducts, } = useAppSelector(
+  //   (state) => state.member_categories
+  // );
+  // useEffect(() => {
+  //   dispatch(getSubcategoryProducts_member(category_id?.replaceAll("-", " ")));
+  // }, [category_id, dispatch]);
 
-  return subcategoryProducts?.map((category, i) => (
+  return data?.map((category, i) => (
     <ProductsSlider
       key={i}
       data={category?.products}

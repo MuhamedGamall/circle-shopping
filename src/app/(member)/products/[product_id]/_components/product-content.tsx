@@ -12,18 +12,29 @@ import ProductImagesSection from "./product-images-section";
 import ButtonsActions from "./buttons-actions";
 import Loader from "@/components/loader";
 import ProductOverview from "./product-overview";
+import { Product } from "@/types";
 
-export default function ProductContent() {
-  const { product_id } = useParams();
-  const dispatch = useAppDispatch();
+export default function ProductContent(
+  {
+  product,
+  loading,
+}: {
+  product: Product | null;
+  loading: boolean;
+}
+) {
+  console.log( ' product ',product);
+  
+  // const { product_id } = useParams();
+  // const dispatch = useAppDispatch();
 
-  const { product, loading } = useAppSelector((state) => state.member_products);
+  // const { product, loading } = useAppSelector((state) => state.member_products);
 
-  useEffect(() => {
-    if (product_id) {
-      dispatch(getProduct_member(product_id));
-    }
-  }, [dispatch, product_id]);
+  // useEffect(() => {
+  //   if (product_id) {
+  //     dispatch(getProduct_member(product_id));
+  //   }
+  // }, [dispatch, product_id]);
 
   return (
     <MaxWidthWrapper className="relative ">

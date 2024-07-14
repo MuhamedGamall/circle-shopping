@@ -27,9 +27,10 @@ export const getProduct_member: any = createAsyncThunk(
   async (id: string, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (await axios.get("/api/products/" + id)).data;
+      // const data = (await axios.get("/api/products/" + id)).data;
+      const req = await fetch("/api/products/" + id, { cache: "force-cache" });
 
-      return data;
+      return await req.json();
     } catch (error: any) {
       console.log(error);
       return rejectWithValue(error.message);

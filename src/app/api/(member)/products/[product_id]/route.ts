@@ -11,13 +11,7 @@ export async function GET(
 ) {
   try {
     await mongoConnect();
-    const session = await getServerSession(authOptions);
-    const user = session?.user;
-
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
+ 
     if (!mongoose.isValidObjectId(product_id)) {
       return new NextResponse("Not Found", { status: 404 });
     }

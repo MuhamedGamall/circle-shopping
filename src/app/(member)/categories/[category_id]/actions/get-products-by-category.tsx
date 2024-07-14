@@ -1,3 +1,4 @@
+
 let loading = false;
 
 const getProductsByCategory = async ({
@@ -12,9 +13,10 @@ const getProductsByCategory = async ({
   loading = true;
 
   try {
-    // const req = await fetch(url);
-    // const data = await req.json();
-    return { data:[], loading: false };
+    const response = await fetch(url,{cache: 'force-cache'});
+    const data = await response.json();
+    
+    return { data, loading: false };
   } catch (error) {
     console.log("[ERROR:getProductsByCategory]", error);
     return { data: [], loading: false };

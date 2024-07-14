@@ -69,13 +69,14 @@ export async function GET(
                 $mergeObjects: [
                   "$$product",
                   {
+                    is_bestseller: { $gte: ["$$product.sales_count", bestSellerThreshold] },
                     price: {
                       $mergeObjects: [
                         "$$product.price",
                         {
                           offer: {
                             $mergeObjects: [
-                              "$$product.price.offer", // Keep existing fields intact
+                              "$$product.price.offer", 
                               {
                                 // offer_calc: {
                                 //   $multiply: [
@@ -118,6 +119,7 @@ export async function GET(
         },
       },
     ]);
+
     return NextResponse.json(data);
   } catch (error) {
     console.log("[MEMBER:CATEGORY>PRODUCTS_BY_CATEGORY]", error);

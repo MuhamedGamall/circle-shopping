@@ -1,17 +1,19 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Category, Product } from "@/types";
-import { GroupFilters } from "../../../../types";
 
 export const getCategories_member: any = createAsyncThunk(
   "memberCategoriesSlice/getCategories_member",
   async (_, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const categories = (await axios.get("/api/categories")).data;
-      return categories;
+      const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/categories`;
+
+      const req = await fetch(url, { cache: "force-cache" });
+      const data = await req.json();
+
+      return data;
     } catch (error: any) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -30,7 +32,6 @@ export const getCategory_member: any = createAsyncThunk(
     }
   }
 );
-
 
 // for get products for one sub category
 export const getSubcategoryProducts_member: any = createAsyncThunk(
@@ -53,7 +54,6 @@ export const getSubcategoryProducts_member: any = createAsyncThunk(
 );
 
 type categoriesState = {
-
   categories: Category[];
   category: Category | null;
   subcategoryProducts: {
@@ -64,8 +64,6 @@ type categoriesState = {
   error: null;
 };
 const initialState: categoriesState = {
-
-
   categories: [],
   subcategoryProducts: [],
   category: null,

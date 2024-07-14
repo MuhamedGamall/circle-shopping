@@ -13,21 +13,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Dispatch } from "@reduxjs/toolkit";
+import getCategory from "../actions/get-category";
+import { Category } from "@/types";
 
 export default function SubCategoriesSlider({
   category_id,
+  category,
+  loading,
 }: {
+  loading: boolean;
+  category: Category;
   category_id: string;
 }) {
-  const dispatch: any = useAppDispatch();
-  const { category, loading } = useAppSelector(
-    (state) => state.member_categories
-  );
+  // const dispatch: any = useAppDispatch();
+  // const { category, loading } = useAppSelector(
+  //   (state) => state.member_categories
+  // );
 
-  useEffect(() => {
-    dispatch(getCategory_member(category_id?.replaceAll("-", " ")));
-    return () => dispatch(cleanUp());
-  }, [category_id, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCategory_member(category_id?.replaceAll("-", " ")));
+  //   return () => dispatch(cleanUp());
+  // }, [category_id, dispatch]);
 
   return (
     <CategoriesImagesWrapper loading={loading} className="p-0">

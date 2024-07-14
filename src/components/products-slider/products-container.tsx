@@ -33,7 +33,7 @@ export default function ProductsSlider({
           <div className="flex justify-between items-center mt-2">
             <SectionTitle
               title={title}
-              className={cn("text-[18px] sm:text-[20px] pb-4 pt-3", titleStyle)}
+              className={cn("text-[18px] whitespace-normal sm:text-[20px] pb-4 pt-3", titleStyle)}
             />
             {viewAllLink && (
               <Link

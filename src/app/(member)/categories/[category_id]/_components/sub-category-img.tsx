@@ -26,7 +26,7 @@ export default function CategoryImg({
           width={100}
           height={100}
           src={image}
-          alt=""
+          alt={name+"/category img"}
           className="w-full h-full object-cover rounded-full border-[#d6d6d6] block border"
         />
         <p className="  break-keep text-center font-bold leading-4 lg:leading-5 capitalize text-slate-600 lg:text-[16px] text-[12px] md:text-sm ">

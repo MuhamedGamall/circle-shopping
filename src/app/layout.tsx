@@ -7,6 +7,7 @@ import AuthSessionProvider from "@/components/providers/session-provider";
 
 import ToastProvider from "@/components/providers/toast-provider";
 import StoreProvider from "@/components/providers/redux-provider";
+import { revalidatePath } from "next/cache";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // revalidatePath('/','layout')
   return (
     <AuthSessionProvider>
       <StoreProvider>

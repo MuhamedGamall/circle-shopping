@@ -9,34 +9,36 @@ import { useEffect } from "react";
 
 export default function ProductsBestSellers({
   category_id,
-  params,
+  data,
+  loading,
 }: {
+  data: any;
+  loading: boolean;
   category_id: string;
-  params?: any;
 }) {
-  const dispatch = useAppDispatch();
-  const { productsByMainCategoryForBestsellersSlider, loading } =
-    useAppSelector((state) => state.member_products);
+  // const dispatch = useAppDispatch();
+  // const { productsByMainCategoryForBestsellersSlider, loading } =
+  //   useAppSelector((state) => state.member_products);
 
-  useEffect(() => {
-    if (params && category_id) {
-      dispatch(
-        getProducts_member({
-          ...params,
-          mainCategory: category_id?.replaceAll("-", " "),
-        })
-      );
-    }
-    return () => {
-      dispatch(cleanUp());
-    };
-  }, [category_id, dispatch, params]);
+  // useEffect(() => {
+  //   if (params && category_id) {
+  //     dispatch(
+  //       getProducts_member({
+  //         ...params,
+  //         mainCategory: category_id?.replaceAll("-", " "),
+  //       })
+  //     );
+  //   }
+  //   return () => {
+  //     dispatch(cleanUp());
+  //   };
+  // }, [category_id, dispatch, params]);
 
   return (
     <>
      {loading && <Loader />}
       <ProductsSlider
-        data={productsByMainCategoryForBestsellersSlider?.products}
+        data={data?.products}
         loading={loading}
         title={category_id?.replaceAll("-", " ") + " bestsellers"}
         viewAllLink={{

@@ -1,36 +1,38 @@
 "use client";
 
-import LoaderLayout from "@/components/loader-layout";
-import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getProduct_member } from "@/lib/RTK/slices/member/products-slice";
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
-import ProductActionsSection from "./product-actions-section";
-import ProductDetailsSection from "./product-details-section";
-import ProductImagesSection from "./product-images-section";
-import ButtonsActions from "./buttons-actions";
 import Loader from "@/components/loader";
-import TitleAndBages from "./title-and-bages-section";
+import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
+import { Product } from "@/types";
 import { formatNumber, formatPrice } from "@/utils/format";
 import { AiOutlineLike } from "react-icons/ai";
-import ShippingInfos from "./shipping-infos-section";
 import { FaTruckMoving } from "react-icons/fa";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
+import ButtonsActions from "./buttons-actions";
+import ProductImagesSection from "./product-images-section";
 import ProductOverview from "./product-overview";
+import ShippingInfos from "./shipping-infos-section";
+import TitleAndBages from "./title-and-bages-section";
 
-export default function MobileProductContent() {
-  const { product_id } = useParams();
-  const dispatch = useAppDispatch();
-
-  const { product, loading } = useAppSelector((state) => state.member_products);
-
-  useEffect(() => {
-    if (product_id) {
-      dispatch(getProduct_member(product_id));
-    }
-  }, [dispatch, product_id]);
+export default function MobileProductContent({
+  product,
+  loading,
+}: {
+  product: Product | null;
+  loading: boolean;
+}) {
   const discountPercentage = product?.price?.offer?.discount_percentage;
+  console.log( ' product mobile',product);
+  
+  // const { product_id } = useParams();
+  // const dispatch = useAppDispatch();
+
+  // const { product, loading } = useAppSelector((state) => state.member_products);
+
+  // useEffect(() => {
+  //   if (product_id) {
+  //     dispatch(getProduct_member(product_id));
+  //   }
+  // }, [dispatch, product_id]);
 
   return (
     <MaxWidthWrapper>
@@ -108,7 +110,7 @@ export default function MobileProductContent() {
           </div>
         </div>
       </div>
-        <ProductOverview {...product} />
+      <ProductOverview {...product} />
     </MaxWidthWrapper>
   );
 }
