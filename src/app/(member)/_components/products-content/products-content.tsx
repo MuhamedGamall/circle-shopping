@@ -55,8 +55,13 @@ export default function ProductsContent() {
       q: searchQuery,
       sortBy: sortByParam,
     };
+    const toString = qs.stringify(newParams, {
+      arrayFormat: "comma",
+      skipEmptyString: true,
+      skipNull: true,
+    })
     if (searchParams) {
-      dispatch(getProducts_member(newParams));
+      dispatch(getProducts_member(toString));
     }
 
     return () => {

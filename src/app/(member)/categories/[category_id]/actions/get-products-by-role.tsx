@@ -1,12 +1,15 @@
+import qs from "query-string";
 let loading = false;
 
 const getProductsByRole = async (
   params: any
 ): Promise<{ data: any; loading: boolean }> => {
-  const newParams = new URLSearchParams(params);
-  const url = `${
-    process.env.NEXT_PUBLIC_APP_URL
-  }/api/products?${newParams.toString()}`;
+  const newParams = qs.stringify(params, {
+    arrayFormat: "comma",
+    skipEmptyString: true,
+    skipNull: true,
+  });
+  const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/products?${newParams}`;
 
   try {
     loading = true;

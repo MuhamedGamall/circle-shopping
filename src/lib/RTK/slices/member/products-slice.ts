@@ -2,17 +2,22 @@ import { Product } from "@/types";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { GroupFilters } from "../../../../types";
+import qs from 'query-string';
 
 export const getProducts_member: any = createAsyncThunk(
   "memberProductsSlice/getProducts_member",
   async (params: any, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const data = (
-        await axios.get("/api/products/", {
-          params,
-        })
-      ).data;
+      // const data = (
+      //   await axios.get("/api/products/", {
+      //     params,
+      //   })
+      // ).data;
+
+      const url = `${process.env.NEXT_PUBLIC_APP_URL}/api/products?${params}`;
+      const req = await fetch(url, { cache: "force-cache" });
+      const data = await req.json();
 
       return { data, role: params?.role };
     } catch (error: any) {
@@ -22,45 +27,45 @@ export const getProducts_member: any = createAsyncThunk(
   }
 );
 
-export const getProduct_member: any = createAsyncThunk(
-  "memberProductsSlice/getProduct_member",
-  async (id: string, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
-    try {
-      // const data = (await axios.get("/api/products/" + id)).data;
-      const req = await fetch("/api/products/" + id, { cache: "force-cache" });
+// export const getProduct_member: any = createAsyncThunk(
+//   "memberProductsSlice/getProduct_member",
+//   async (id: string, thunkApi) => {
+//     const { rejectWithValue } = thunkApi;
+//     try {
+//       // const data = (await axios.get("/api/products/" + id)).data;
+//       const req = await fetch("/api/products/" + id, { cache: "force-cache" });
 
-      return await req.json();
-    } catch (error: any) {
-      console.log(error);
-      return rejectWithValue(error.message);
-    }
-  }
-);
+//       return await req.json();
+//     } catch (error: any) {
+//       console.log(error);
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 
 type ProductsState = {
-  product: Product | null;
+  // product: Product | null;
   products: {
     products: Product[];
     groupFilters: GroupFilters | null;
   };
-  productsByMainCategoryForDealsSlider: {
-    products: Product[];
-  };
-  productsByMainCategoryForBestsellersSlider: {
-    products: Product[];
-  };
+  // productsByMainCategoryForDealsSlider: {
+  //   products: Product[];
+  // };
+  // productsByMainCategoryForBestsellersSlider: {
+  //   products: Product[];
+  // };
   loading: boolean;
   error: null;
 };
 
 const initialState: ProductsState = {
-  product: null,
+  // product: null,
   products: { products: [], groupFilters: null },
-  productsByMainCategoryForDealsSlider: { products: [] },
-  productsByMainCategoryForBestsellersSlider: {
-    products: [],
-  },
+  // productsByMainCategoryForDealsSlider: { products: [] },
+  // productsByMainCategoryForBestsellersSlider: {
+  //   products: [],
+  // },
   loading: false,
   error: null,
 };
@@ -85,11 +90,11 @@ const memberProductsSlice = createSlice({
       .addCase(getProducts_member.fulfilled, (state, action) => {
         state.loading = false;
         const { role, data } = action.payload;
-        if (role === "deals") {
-          state.productsByMainCategoryForDealsSlider = data;
-        } else if (role === "bestsellers") {
-          state.productsByMainCategoryForBestsellersSlider = data;
-        }
+        // if (role === "deals") {
+        //   state.productsByMainCategoryForDealsSlider = data;
+        // } else if (role === "bestsellers") {
+        //   state.productsByMainCategoryForBestsellersSlider = data;
+        // }
         state.products = data;
       })
       .addCase(
@@ -100,25 +105,25 @@ const memberProductsSlice = createSlice({
         }
       );
 
-    builder
-      .addCase(
-        getProduct_member.pending,
-        (state: ProductsState, action: PayloadAction<any>) => {
-          state.loading = true;
-          state.error = null;
-        }
-      )
-      .addCase(getProduct_member.fulfilled, (state, action) => {
-        state.loading = false;
-        state.product = action.payload;
-      })
-      .addCase(
-        getProduct_member.rejected,
-        (state: ProductsState, action: PayloadAction<any>) => {
-          state.loading = false;
-          state.error = action.payload;
-        }
-      );
+    // builder
+    //   .addCase(
+    //     getProduct_member.pending,
+    //     (state: ProductsState, action: PayloadAction<any>) => {
+    //       state.loading = true;
+    //       state.error = null;
+    //     }
+    //   )
+    //   .addCase(getProduct_member.fulfilled, (state, action) => {
+    //     state.loading = false;
+    //     state.product = action.payload;
+    //   })
+    //   .addCase(
+    //     getProduct_member.rejected,
+    //     (state: ProductsState, action: PayloadAction<any>) => {
+    //       state.loading = false;
+    //       state.error = action.payload;
+    //     }
+    //   );
   },
 });
 export default memberProductsSlice.reducer;
