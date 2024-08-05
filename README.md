@@ -1,4 +1,4 @@
-![The development of this application has been paused until further notice.](https://img.shields.io/badge/Under%20Construction-green?style=for-the-badge)
+![Development Paused](https://img.shields.io/badge/Development%20Paused-green?style=for-the-badge)
 
 ## Getting Started
 
