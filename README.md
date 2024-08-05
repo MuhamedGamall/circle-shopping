@@ -1,9 +1,8 @@
-![Under Construction](https://img.shields.io/badge/Under%20Construction-green?style=for-the-badge)
+![The development of this application has been paused until further notice.](https://img.shields.io/badge/Under%20Construction-green?style=for-the-badge)
 
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 
 First, run the development server:
 
