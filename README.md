@@ -1,4 +1,4 @@
-![Development Paused](https://img.shields.io/badge/Development%20Paused-green?style=for-the-badge)
+![Development Paused](https://img.shields.io/badge/Development%20Paused-red?style=for-the-badge)
 
 ## Getting Started
 
